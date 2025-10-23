@@ -1,0 +1,28 @@
+{
+  "asset_id": "nice_mob_variants:entity/cat/all_black_green_eyes",
+  "spawn_conditions": [
+    {
+      "condition": {
+        "type": "minecraft:structure",
+        "structures": "#nice_mob_variants:mob_variant_spawnable/cat/all_black_green_eyes"
+      },
+      "priority": 1
+    },
+    {
+      "condition": {
+        "type": "minecraft:biome",
+        "biomes": "#nice_mob_variants:mob_variant_spawnable/cat/all_black_green_eyes"
+      },
+      "priority": 1
+    },
+    {
+      "condition": {
+        "type": "minecraft:moon_brightness",
+        "range": {
+          "min": 0.9
+        }
+      },
+      "priority": 0
+    }
+  ]
+}

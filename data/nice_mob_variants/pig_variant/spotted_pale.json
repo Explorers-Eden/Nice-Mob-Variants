@@ -1,0 +1,22 @@
+{
+  "asset_id": "nice_mob_variants:entity/pig/spotted_pale",
+  "spawn_conditions": [
+    {
+      "condition": {
+        "type": "minecraft:structure",
+        "structures": "#nice_mob_variants:mob_variant_spawnable/pig/spotted_pale"
+      },
+      "priority": 1
+    },
+    {
+      "condition": {
+        "type": "minecraft:biome",
+        "biomes": "#nice_mob_variants:mob_variant_spawnable/pig/spotted_pale"
+      },
+      "priority": 1
+    },
+    {
+      "priority": 0
+    }
+  ]
+}

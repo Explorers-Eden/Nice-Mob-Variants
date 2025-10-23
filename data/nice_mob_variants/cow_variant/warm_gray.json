@@ -1,0 +1,20 @@
+{
+  "asset_id": "nice_mob_variants:entity/cow/warm_gray",
+  "model": "warm",
+  "spawn_conditions": [
+    {
+      "condition": {
+        "type": "minecraft:structure",
+        "structures": "#nice_mob_variants:mob_variant_spawnable/cow/warm_gray"
+      },
+      "priority": 1
+    },
+    {
+      "condition": {
+        "type": "minecraft:biome",
+        "biomes": "#nice_mob_variants:mob_variant_spawnable/cow/warm_gray"
+      },
+      "priority": 1
+    }
+  ]
+}

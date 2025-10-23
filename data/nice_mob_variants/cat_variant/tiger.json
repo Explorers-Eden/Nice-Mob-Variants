@@ -1,0 +1,19 @@
+{
+  "asset_id": "nice_mob_variants:entity/cat/tiger",
+  "spawn_conditions": [
+    {
+      "condition": {
+        "type": "minecraft:structure",
+        "structures": "#nice_mob_variants:mob_variant_spawnable/cat/tiger"
+      },
+      "priority": 0.1
+    },
+    {
+      "condition": {
+        "type": "minecraft:biome",
+        "biomes": "#nice_mob_variants:mob_variant_spawnable/cat/tiger"
+      },
+      "priority": 0.1
+    }
+  ]
+}

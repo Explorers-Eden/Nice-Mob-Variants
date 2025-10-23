@@ -1,0 +1,12 @@
+{
+  "asset_id": "nice_mob_variants:entity/chicken/invis_base",
+  "spawn_conditions": [
+    {
+      "condition": {
+        "type": "minecraft:biome",
+        "biomes": []
+      },
+      "priority": 1
+    }
+  ]
+}

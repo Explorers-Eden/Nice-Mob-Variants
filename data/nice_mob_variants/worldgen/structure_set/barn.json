@@ -1,0 +1,17 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "spacing": 32,
+    "separation": 24,
+    "salt": 392975629,
+    "spread_type": "triangular",
+    "frequency_reduction_method": "default",
+    "frequency": 0.8
+  },
+  "structures": [
+    {
+      "structure": "nice_mob_variants:barn",
+      "weight": 8
+    }
+  ]
+}

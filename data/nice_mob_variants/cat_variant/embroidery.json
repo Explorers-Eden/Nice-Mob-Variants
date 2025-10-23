@@ -1,0 +1,19 @@
+{
+    "asset_id": "nice_mob_variants:entity/cat/embroidery",
+    "spawn_conditions": [
+      {
+        "condition": {
+          "type": "minecraft:structure",
+          "structures": "#nice_mob_variants:mob_variant_spawnable/cat/embroidery"
+        },
+        "priority": 999
+      },
+      {
+        "condition": {
+          "type": "minecraft:biome",
+          "biomes": "#nice_mob_variants:mob_variant_spawnable/cat/embroidery"
+        },
+        "priority": 999
+      }
+    ]
+  }

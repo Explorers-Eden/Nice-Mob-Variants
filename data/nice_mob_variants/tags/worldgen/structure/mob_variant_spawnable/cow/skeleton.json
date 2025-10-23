@@ -1,0 +1,9 @@
+{
+    "values": [
+      {"id": "nice_mob_variants:fossil","required": false},
+      {"id": "nice_mob_variants:graveyard","required": false},
+      {"id": "minecraft:nether_fossil","required": false},
+      {"id": "kattersstructures:graveyard","required": false},
+      {"id": "kattersstructures:ruined_village","required": false}
+    ]
+  }

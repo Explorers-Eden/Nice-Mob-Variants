@@ -1,0 +1,15 @@
+{
+      "entity.rooster.crowing": {
+        "sounds": [
+            "nice_mob_variants:entity/rooster/rooster_1",
+            "nice_mob_variants:entity/rooster/rooster_2",
+            "nice_mob_variants:entity/rooster/rooster_3"
+        ]
+      },
+      "entity.pigeon.cooing": {
+        "sounds": [
+            "nice_mob_variants:entity/pigeon/pigeon_1",
+            "nice_mob_variants:entity/pigeon/pigeon_2"
+        ]
+      }
+}

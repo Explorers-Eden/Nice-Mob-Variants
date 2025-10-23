@@ -1,0 +1,19 @@
+{
+  "asset_id": "nice_mob_variants:entity/chicken/duck",
+  "spawn_conditions": [
+    {
+      "condition": {
+        "type": "minecraft:structure",
+        "structures": "#nice_mob_variants:mob_variant_spawnable/chicken/duck"
+      },
+      "priority": 999
+    },
+    {
+      "condition": {
+        "type": "minecraft:biome",
+        "biomes": "#nice_mob_variants:mob_variant_spawnable/chicken/duck"
+      },
+      "priority": 999
+    }
+  ]
+}

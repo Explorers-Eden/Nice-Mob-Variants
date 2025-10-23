@@ -1,0 +1,11 @@
+{
+	"values": [
+        "nice_mob_variants:benny/init",
+        "nice_mob_variants:chicken_jockey/init",
+        "nice_mob_variants:pigeon/init",
+        "nice_mob_variants:rooster/init",
+        "nice_mob_variants:ender/init",
+        "nice_mob_variants:skeleton_trap/init",
+        "nice_mob_variants:wandering/init"
+    ]
+}

@@ -1,0 +1,19 @@
+{
+  "asset_id": "nice_mob_variants:entity/cow/ender",
+  "spawn_conditions": [
+    {
+      "condition": {
+        "type": "minecraft:biome",
+        "biomes": "#nice_mob_variants:mob_variant_spawnable/cow/ender"
+      },
+      "priority": 999
+    },
+    {
+      "condition": {
+        "type": "minecraft:structure",
+        "structures": "#nice_mob_variants:mob_variant_spawnable/cow/ender"
+      },
+      "priority": 999
+    }
+  ]
+}

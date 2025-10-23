@@ -1,0 +1,19 @@
+{
+  "asset_id": "nice_mob_variants:entity/pig/wandering",
+  "spawn_conditions": [
+    {
+      "condition": {
+        "type": "minecraft:biome",
+        "biomes": "#nice_mob_variants:mob_variant_spawnable/pig/wandering"
+      },
+      "priority": 999
+    },
+    {
+      "condition": {
+        "type": "minecraft:structure",
+        "structures": "#nice_mob_variants:mob_variant_spawnable/pig/wandering"
+      },
+      "priority": 999
+    }
+  ]
+}
