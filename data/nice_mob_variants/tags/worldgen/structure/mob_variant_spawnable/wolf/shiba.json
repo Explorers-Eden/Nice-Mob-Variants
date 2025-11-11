@@ -1,5 +1,6 @@
 {
     "values": [
-      {"id": "kattersstructures:cherry_tree","required": false}
+      {"id": "kattersstructures:cherry_tree","required": false},
+      {"id": "nice_mob_variants:hot_springs","required": false}
     ]
   }

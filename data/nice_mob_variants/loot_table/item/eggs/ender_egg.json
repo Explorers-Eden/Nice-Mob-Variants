@@ -15,7 +15,6 @@
                 "function": "minecraft:set_components",
                 "components": {
                   "minecraft:item_name": {
-                    "fallback": "Ender Egg",
                     "translate": "item.nice_mob_variants.ender_egg"
                   },
                   "minecraft:item_model": "nice_mob_variants:ender_egg",

@@ -1,0 +1,1 @@
+$execute as @s[predicate=nice_mob_variants:percentages/10] at @s run playsound nice_mob_variants:entity.ostrich.grunting neutral @a ~ ~ ~ .5 $(grunt_pitch)

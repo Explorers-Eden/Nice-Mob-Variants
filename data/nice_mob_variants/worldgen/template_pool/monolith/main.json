@@ -1,0 +1,24 @@
+{
+    "name": "nice_mob_variants:monolith/main",
+    "fallback": "minecraft:empty",
+    "elements": [
+        {
+        "weight": 1,
+        "element": {
+            "location": "nice_mob_variants:monolith/type_1",
+            "processors": "minecraft:empty",
+            "projection": "rigid",
+            "element_type": "minecraft:single_pool_element"
+        }
+    },
+    {
+        "weight": 1,
+        "element": {
+            "location": "nice_mob_variants:monolith/type_2",
+            "processors": "minecraft:empty",
+            "projection": "rigid",
+            "element_type": "minecraft:single_pool_element"
+        }
+    }
+]
+}

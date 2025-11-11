@@ -1,0 +1,32 @@
+{
+  "values": [
+    {
+      "id": "minecraft:desert",
+      "required": false
+    },
+    {
+      "id": "minecraft:warm_ocean",
+      "required": false
+    },
+    {
+      "id": "#minecraft:is_jungle",
+      "required": false
+    },
+    {
+      "id": "#minecraft:is_savanna",
+      "required": false
+    },
+    {
+      "id": "#minecraft:is_badlands",
+      "required": false
+    },
+    {
+      "id": "minecraft:deep_lukewarm_ocean",
+      "required": false
+    },
+    {
+      "id": "minecraft:lukewarm_ocean",
+      "required": false
+    }
+  ]
+}

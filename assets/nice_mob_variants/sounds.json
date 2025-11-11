@@ -11,5 +11,16 @@
             "nice_mob_variants:entity/pigeon/pigeon_1",
             "nice_mob_variants:entity/pigeon/pigeon_2"
         ]
+      },
+      "entity.duck.quacking": {
+        "sounds": [
+            "nice_mob_variants:entity/duck/duck_1",
+            "nice_mob_variants:entity/duck/duck_2"
+        ]
+      },
+      "entity.ostrich.grunting": {
+        "sounds": [
+            "nice_mob_variants:entity/ostrich/ostrich_1"
+        ]
       }
 }

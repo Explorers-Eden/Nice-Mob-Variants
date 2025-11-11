@@ -156,6 +156,21 @@
                     }
                   }
                 ]
+              },
+              {
+                "type": "minecraft:loot_table",
+                "value": "nice_mob_variants:item/eggs/ostrich_egg",
+                "conditions": [
+                  {
+                    "condition": "minecraft:entity_properties",
+                    "entity": "this",
+                    "predicate": {
+                      "components": {
+                        "minecraft:chicken/variant": "nice_mob_variants:ostrich"
+                      }
+                    }
+                  }
+                ]
               }
             ]
           }

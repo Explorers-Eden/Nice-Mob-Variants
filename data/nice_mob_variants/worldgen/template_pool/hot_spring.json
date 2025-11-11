@@ -1,0 +1,60 @@
+{
+    "name": "nice_mob_variants:hot_spring",
+    "fallback": "minecraft:empty",
+    "elements": [
+        {
+        "weight": 1,
+        "element": {
+            "location": "nice_mob_variants:hot_spring/type_1",
+            "processors": "minecraft:empty",
+            "projection": "rigid",
+            "element_type": "minecraft:single_pool_element"
+        }
+    },
+    {
+        "weight": 1,
+        "element": {
+            "location": "nice_mob_variants:hot_spring/type_2",
+            "processors": "minecraft:empty",
+            "projection": "rigid",
+            "element_type": "minecraft:single_pool_element"
+        }
+    },
+    {
+        "weight": 1,
+        "element": {
+            "location": "nice_mob_variants:hot_spring/type_3",
+            "processors": "minecraft:empty",
+            "projection": "rigid",
+            "element_type": "minecraft:single_pool_element"
+        }
+    },
+    {
+        "weight": 1,
+        "element": {
+            "location": "nice_mob_variants:hot_spring/type_4",
+            "processors": "minecraft:empty",
+            "projection": "rigid",
+            "element_type": "minecraft:single_pool_element"
+        }
+    },
+    {
+        "weight": 1,
+        "element": {
+            "location": "nice_mob_variants:hot_spring/type_5",
+            "processors": "minecraft:empty",
+            "projection": "rigid",
+            "element_type": "minecraft:single_pool_element"
+        }
+    },
+    {
+        "weight": 1,
+        "element": {
+            "location": "nice_mob_variants:hot_spring/type_6",
+            "processors": "minecraft:empty",
+            "projection": "rigid",
+            "element_type": "minecraft:single_pool_element"
+        }
+    }
+]
+}

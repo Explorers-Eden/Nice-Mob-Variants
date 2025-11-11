@@ -1,0 +1,23 @@
+{
+    "assets": {
+      "angry": "nice_mob_variants:entity/wolf/dark_angry",
+      "tame": "nice_mob_variants:entity/wolf/dark_tame",
+      "wild": "nice_mob_variants:entity/wolf/dark"
+    },
+    "spawn_conditions": [
+      {
+        "condition": {
+          "type": "minecraft:biome",
+          "biomes": "#nice_mob_variants:mob_variant_spawnable/wolf/dark"
+        },
+        "priority": 1
+      },
+      {
+        "condition": {
+          "type": "minecraft:structure",
+          "structures": "#nice_mob_variants:mob_variant_spawnable/wolf/dark"
+        },
+        "priority": 1
+      }
+    ]
+  }
