@@ -1,0 +1,19 @@
+{
+  "asset_id": "nice_mob_variants:entity/zombie_nautilus/cold",
+  "spawn_conditions": [
+    {
+      "condition": {
+        "type": "minecraft:biome",
+        "biomes": "#nice_mob_variants:mob_variant_spawnable/zombie_nautilus/cold"
+      },
+      "priority": 999
+    },
+    {
+      "condition": {
+        "type": "minecraft:structure",
+        "structures": "#nice_mob_variants:mob_variant_spawnable/zombie_nautilus/cold"
+      },
+      "priority": 999
+    }
+  ]
+}

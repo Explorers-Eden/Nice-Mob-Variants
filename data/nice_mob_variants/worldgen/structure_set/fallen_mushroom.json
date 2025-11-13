@@ -1,0 +1,17 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "spacing": 18,
+    "separation": 9,
+    "salt": 534877142,
+    "spread_type": "triangular",
+    "frequency_reduction_method": "default",
+    "frequency": 1
+  },
+  "structures": [
+    {
+      "structure": "nice_mob_variants:fallen_mushroom",
+      "weight": 1
+    }
+  ]
+}
