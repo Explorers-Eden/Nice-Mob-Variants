@@ -1,0 +1,23 @@
+{
+    "assets": {
+      "angry": "nice_mob_variants:entity/wolf/creaking_angry",
+      "tame": "nice_mob_variants:entity/wolf/creaking_tame",
+      "wild": "nice_mob_variants:entity/wolf/creaking"
+    },
+    "spawn_conditions": [
+      {
+        "condition": {
+          "type": "minecraft:biome",
+          "biomes": "#nice_mob_variants:mob_variant_spawnable/wolf/creaking"
+        },
+        "priority": 1
+      },
+      {
+        "condition": {
+          "type": "minecraft:structure",
+          "structures": "#nice_mob_variants:mob_variant_spawnable/wolf/creaking"
+        },
+        "priority": 1
+      }
+    ]
+  }
