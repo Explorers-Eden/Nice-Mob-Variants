@@ -1,0 +1,9 @@
+{
+  "condition": "minecraft:entity_properties",
+  "entity": "this",
+  "predicate": {
+    "components": {
+      "minecraft:chicken/variant": "nice_mob_variants:pigeon"
+    }
+  }
+}
