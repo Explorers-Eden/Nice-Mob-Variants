@@ -1,0 +1,10 @@
+## Changes:
+- Added Husk Zombie Nautilus variant (Spawns in the same biomes as warm ocean ruins generate. Doesn't burn in sunlight)
+- Added Guardian Zombie Nautilus variant (Spawns in the same biomes as Ocean Monuments generate)
+- Added Creaking Frog variant (Can be bred/spawns in Pale Gardens. Drops Pale Moss Blocks when eating)
+- Added Golden Frog variant (Can be bred/spawns in Badlands Biomes. Drops commonly Raw Gold or rarely Emeralds when eating)
+- Frogs can now eat Silverfish and Endermite
+- Silverfish have a chance to drop Gravel on player kill
+- Endermite have a chance to drop Ender Pearl on player kill
+
+## Fixes:
