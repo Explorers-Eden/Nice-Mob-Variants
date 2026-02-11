@@ -1,5 +1,6 @@
 {
     "values": [
-      {"id": "nice_mob_variants:monolith","required": false}
+      {"id": "nice_mob_variants:monolith","required": false},
+      {"id": "kattersstructures:graveyard","required": false}
     ]
   }

@@ -1,5 +1,6 @@
 {
     "values": [
-      {"id": "nice_mob_variants:fallen_mushroom","required": false}
+      {"id": "nice_mob_variants:fallen_mushroom","required": false},
+      {"id": "kattersstructures:shroom_cave","required": false}
     ]
   }

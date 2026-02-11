@@ -1,5 +1,6 @@
 {
     "values": [
-      {"id": "kattersstructures:villager_ocean","required": false}
+      {"id": "kattersstructures:villager_ocean","required": false},
+      {"id": "kattersstructures:far_watch","required": false}
     ]
   }

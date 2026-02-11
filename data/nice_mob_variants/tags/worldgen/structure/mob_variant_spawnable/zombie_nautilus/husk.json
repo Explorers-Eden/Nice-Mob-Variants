@@ -1,5 +1,6 @@
 {
   "values": [
-    "minecraft:ocean_ruin_warm"
+    "minecraft:ocean_ruin_warm",
+    {"id": "kattersstructures:desert_dungeon","required": false}
   ]
 }

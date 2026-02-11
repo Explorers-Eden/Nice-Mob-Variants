@@ -1,5 +1,6 @@
 {
     "values": [
-      {"id": "minecraft:monument","required": false}
+      {"id": "minecraft:monument","required": false},
+      {"id": "kattersstructures:villager_ocean","required": false}
     ]
   }

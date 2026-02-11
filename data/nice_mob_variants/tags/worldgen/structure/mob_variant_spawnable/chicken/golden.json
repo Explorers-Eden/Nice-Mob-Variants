@@ -1,5 +1,6 @@
 {
     "values": [
-      {"id": "#minecraft:village","required": false}
+      {"id": "#minecraft:village","required": false},
+       {"id": "#kattersstructures:village","required": false}
     ]
   }
