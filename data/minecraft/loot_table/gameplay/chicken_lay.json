@@ -171,6 +171,21 @@
                     }
                   }
                 ]
+              },
+              {
+                "type": "minecraft:loot_table",
+                "value": "nice_mob_variants:item/eggs/goose_egg",
+                "conditions": [
+                  {
+                    "condition": "minecraft:entity_properties",
+                    "entity": "this",
+                    "predicate": {
+                      "components": {
+                        "minecraft:chicken/variant": "nice_mob_variants:goose"
+                      }
+                    }
+                  }
+                ]
               }
             ]
           }

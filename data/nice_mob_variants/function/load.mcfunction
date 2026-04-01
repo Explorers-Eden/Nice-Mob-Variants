@@ -6,4 +6,4 @@ scoreboard objectives add nice_mob_variants.technical dummy
 scoreboard objectives add nice_mob_variants.frog_feeder dummy
 
 ##set data pack version
-data modify storage eden:datapack nice_mob_variants.version set value "1.3"
+data modify storage eden:datapack nice_mob_variants.version set value "1.4"

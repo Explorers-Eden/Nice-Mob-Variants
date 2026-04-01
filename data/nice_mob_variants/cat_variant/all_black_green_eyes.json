@@ -1,5 +1,6 @@
 {
   "asset_id": "nice_mob_variants:entity/cat/all_black_green_eyes",
+  "baby_asset_id": "nice_mob_variants:entity/cat/all_black_green_eyes_baby",
   "spawn_conditions": [
     {
       "condition": {

@@ -1,0 +1,14 @@
+{
+  "adult_sounds": {
+    "ambient_sound": "minecraft:entity.skeleton.ambient",
+    "death_sound": "minecraft:entity.skeleton.death",
+    "hurt_sound": "minecraft:entity.skeleton.hurt",
+    "step_sound": "minecraft:entity.skeleton.step"
+  },
+  "baby_sounds": {
+    "ambient_sound": "minecraft:entity.skeleton.ambient",
+    "death_sound": "minecraft:entity.skeleton.death",
+    "hurt_sound": "minecraft:entity.skeleton.hurt",
+    "step_sound": "minecraft:entity.skeleton.step"
+  }
+}

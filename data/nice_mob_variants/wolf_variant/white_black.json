@@ -4,6 +4,11 @@
       "tame": "nice_mob_variants:entity/wolf/white_black_tame",
       "wild": "nice_mob_variants:entity/wolf/white_black"
     },
+    "baby_assets": {
+      "angry": "nice_mob_variants:entity/wolf/white_black_angry_baby",
+      "tame": "nice_mob_variants:entity/wolf/white_black_tame_baby",
+      "wild": "nice_mob_variants:entity/wolf/white_black_baby"
+    },
     "spawn_conditions": [
       {
         "condition": {

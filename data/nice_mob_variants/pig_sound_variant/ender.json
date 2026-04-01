@@ -1,0 +1,16 @@
+{
+  "adult_sounds": {
+    "ambient_sound": "minecraft:entity.enderman.ambient",
+    "death_sound": "minecraft:entity.endermite.death",
+    "eat_sound": "minecraft:entity.pig.eat",
+    "hurt_sound": "minecraft:entity.enderman.hurt",
+    "step_sound": "minecraft:entity.endermite.step"
+  },
+  "baby_sounds": {
+    "ambient_sound": "minecraft:entity.enderman.ambient",
+    "death_sound": "minecraft:entity.endermite.death",
+    "eat_sound": "minecraft:entity.baby_pig.eat",
+    "hurt_sound": "minecraft:entity.enderman.hurt",
+    "step_sound": "minecraft:entity.endermite.step"
+  }
+}

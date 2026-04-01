@@ -1,5 +1,6 @@
 {
   "asset_id": "nice_mob_variants:entity/pig/muddy_creamy",
+  "baby_asset_id": "nice_mob_variants:entity/pig/muddy_creamy_baby",
   "spawn_conditions": [
     {
       "condition": {

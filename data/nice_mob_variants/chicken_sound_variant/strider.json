@@ -1,0 +1,14 @@
+{
+  "adult_sounds": {
+    "ambient_sound": "minecraft:entity.strider.ambient",
+    "death_sound": "minecraft:entity.strider.death",
+    "hurt_sound": "minecraft:entity.strider.hurt",
+    "step_sound": "minecraft:entity.strider.step"
+  },
+  "baby_sounds": {
+    "ambient_sound": "minecraft:entity.strider.ambient",
+    "death_sound": "minecraft:entity.strider.death",
+    "hurt_sound": "minecraft:entity.strider.hurt",
+    "step_sound": "minecraft:entity.strider.step"
+  }
+}

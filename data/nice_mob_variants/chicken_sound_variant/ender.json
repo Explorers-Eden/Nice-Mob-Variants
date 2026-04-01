@@ -1,0 +1,14 @@
+{
+  "adult_sounds": {
+    "ambient_sound": "minecraft:entity.enderman.ambient",
+    "death_sound": "minecraft:entity.endermite.death",
+    "hurt_sound": "minecraft:entity.enderman.hurt",
+    "step_sound": "minecraft:entity.endermite.step"
+  },
+  "baby_sounds": {
+    "ambient_sound": "minecraft:entity.enderman.ambient",
+    "death_sound": "minecraft:entity.endermite.death",
+    "hurt_sound": "minecraft:entity.enderman.hurt",
+    "step_sound": "minecraft:entity.endermite.step"
+  }
+}

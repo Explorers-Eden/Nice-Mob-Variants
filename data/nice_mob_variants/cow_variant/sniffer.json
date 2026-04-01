@@ -1,0 +1,21 @@
+{
+  "asset_id": "nice_mob_variants:entity/cow/sniffer",
+  "baby_asset_id": "nice_mob_variants:entity/cow/sniffer_baby",
+  "model": "cold",
+  "spawn_conditions": [
+    {
+      "condition": {
+        "type": "minecraft:structure",
+        "structures": "#nice_mob_variants:mob_variant_spawnable/cow/sniffer"
+      },
+      "priority": 0.2
+    },
+    {
+      "condition": {
+        "type": "minecraft:biome",
+        "biomes": "#nice_mob_variants:mob_variant_spawnable/cow/sniffer"
+      },
+      "priority": 0.2
+    }
+  ]
+}

@@ -1,5 +1,6 @@
 {
   "asset_id": "nice_mob_variants:entity/cow/cold_white",
+  "baby_asset_id": "nice_mob_variants:entity/cow/cold_white_baby",
   "model": "cold",
   "spawn_conditions": [
     {
@@ -12,7 +13,7 @@
     {
       "condition": {
         "type": "minecraft:biome",
-        "biomes": "#nice_mob_variants:mob_variant_spawnable/cow/cold_dark"
+        "biomes": "#nice_mob_variants:mob_variant_spawnable/cow/cold_white"
       },
       "priority": 1
     }

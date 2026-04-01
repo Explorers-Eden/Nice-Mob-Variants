@@ -4,6 +4,11 @@
       "tame": "nice_mob_variants:entity/wolf/shiba_tame",
       "wild": "nice_mob_variants:entity/wolf/shiba"
     },
+    "baby_assets": {
+      "angry": "nice_mob_variants:entity/wolf/shiba_angry_baby",
+      "tame": "nice_mob_variants:entity/wolf/shiba_tame_baby",
+      "wild": "nice_mob_variants:entity/wolf/shiba_baby"
+    },
     "spawn_conditions": [
       {
         "condition": {

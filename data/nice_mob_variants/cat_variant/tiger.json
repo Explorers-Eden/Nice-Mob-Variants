@@ -1,5 +1,6 @@
 {
   "asset_id": "nice_mob_variants:entity/cat/tiger",
+  "baby_asset_id": "nice_mob_variants:entity/cat/tiger_baby",
   "spawn_conditions": [
     {
       "condition": {

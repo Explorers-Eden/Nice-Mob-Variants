@@ -1,5 +1,6 @@
 {
     "asset_id": "nice_mob_variants:entity/cat/embroidery",
+    "baby_asset_id": "nice_mob_variants:entity/cat/embroidery_baby",
     "spawn_conditions": [
       {
         "condition": {

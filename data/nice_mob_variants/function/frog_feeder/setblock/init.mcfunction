@@ -1,2 +1,2 @@
 execute as @e[type=minecraft:item_frame,tag=nice_mob_variants.frog_feeder.spawner] at @s run function nice_mob_variants:frog_feeder/setblock/exec
-execute as @e[type=minecraft:item_display,tag=nice_mob_variants.frog_feeder.block] at @s unless block ~ ~-.5 ~ petrified_oak_slab[type=double] run function nice_mob_variants:frog_feeder/setblock/remove
+execute as @e[type=minecraft:item_display,tag=nice_mob_variants.frog_feeder.block] at @s unless block ~ ~-.5 ~ petrified_oak_slab run function nice_mob_variants:frog_feeder/setblock/remove

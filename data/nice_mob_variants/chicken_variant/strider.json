@@ -1,5 +1,6 @@
 {
   "asset_id": "nice_mob_variants:entity/chicken/strider",
+  "baby_asset_id": "nice_mob_variants:entity/chicken/strider_baby",
   "spawn_conditions": [
     {
       "condition": {

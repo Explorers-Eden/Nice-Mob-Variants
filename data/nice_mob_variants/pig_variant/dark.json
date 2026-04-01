@@ -1,5 +1,6 @@
 {
   "asset_id": "nice_mob_variants:entity/pig/dark",
+  "baby_asset_id": "nice_mob_variants:entity/pig/dark_baby",
   "spawn_conditions": [
     {
       "condition": {

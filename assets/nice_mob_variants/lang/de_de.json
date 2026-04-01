@@ -1,9 +1,15 @@
 {
     "item.nice_mob_variants.duck_egg": "Entenei",
     "item.nice_mob_variants.zombie_egg": "Zombie Ei",
+    "item.nice_mob_variants.golden_egg": "Goldenes Ei",
     "item.nice_mob_variants.cluckshroom_egg": "Cluckshroom Ei",
     "item.nice_mob_variants.dark_brown_egg": "Dunkelbraunes Ei",
     "item.nice_mob_variants.creamy_egg": "Cremiges Ei",
-    "item.nice_mob_variants.ender_egg": "Ender Ei"
+    "item.nice_mob_variants.pigeon_egg": "Taubenei",
+    "item.nice_mob_variants.goose_egg": "Gänseei",
+    "item.nice_mob_variants.ostrich_egg": "Straußenei",
+    "item.nice_mob_variants.ender_egg": "Ender Ei",
+    "block.nice_mob_variants.frog_feeder": "Frosch Fütterer",
+    "block.nice_mob_variants.livestock_breeder": "Viehzüchter"
 }
     

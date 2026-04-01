@@ -1,0 +1,20 @@
+{
+  "asset_id": "nice_mob_variants:entity/chicken/goose",
+  "baby_asset_id": "nice_mob_variants:entity/chicken/goose_baby",
+  "spawn_conditions": [
+    {
+      "condition": {
+        "type": "minecraft:structure",
+        "structures": "#nice_mob_variants:mob_variant_spawnable/chicken/goose"
+      },
+      "priority": 1
+    },
+    {
+      "condition": {
+        "type": "minecraft:biome",
+        "biomes": "#nice_mob_variants:mob_variant_spawnable/chicken/goose"
+      },
+      "priority": 1
+    }
+  ]
+}

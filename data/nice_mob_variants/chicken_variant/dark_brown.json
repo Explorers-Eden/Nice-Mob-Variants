@@ -1,5 +1,6 @@
 {
   "asset_id": "nice_mob_variants:entity/chicken/dark_brown",
+  "baby_asset_id": "nice_mob_variants:entity/chicken/dark_brown_baby",
   "spawn_conditions": [
     {
       "condition": {
@@ -14,9 +15,6 @@
         "biomes": "#nice_mob_variants:mob_variant_spawnable/chicken/dark_brown"
       },
       "priority": 1
-    },
-    {
-      "priority": 0
     }
   ]
 }
