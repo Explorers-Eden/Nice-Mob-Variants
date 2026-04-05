@@ -1,5 +1,6 @@
 {
 	"values": [
-		"nice_mob_variants:frog_feeder/setblock/init"
+		"nice_mob_variants:frog_feeder/setblock/init",
+		"nice_mob_variants:livestock_breeder/setblock/init"
 	]
 }

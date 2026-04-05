@@ -1,0 +1,32 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "category": "misc",
+    "pattern": [
+        "III",
+        "IBI",
+        "III"
+    ],
+    "key": {
+        "I": "minecraft:hay_block",
+        "B": "minecraft:barrel"
+    },
+    "result": {
+        "id": "minecraft:item_frame",
+        "components": {
+                "minecraft:item_model": "nice_mob_variants:livestock_breeder",
+                "minecraft:max_stack_size": 64,
+                "minecraft:item_name": {
+                  "translate": "block.nice_mob_variants.livestock_breeder"
+                },
+                "minecraft:custom_data": "{nice_mob_variants:livestock_breeder}",
+                "minecraft:entity_data": {
+                  "id": "minecraft:item_frame",
+                  "Tags": [
+                    "nice_mob_variants.livestock_breeder.spawner"
+                  ],
+                  "Invisible": true
+                }
+              },
+        "count": 1
+    }
+}
