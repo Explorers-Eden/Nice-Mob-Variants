@@ -10,6 +10,7 @@
 - Added Livestock Breeder Block:
     - Can be crafted from 8 Hay Blocks and a Barrel
     - When placed makes Livestock Animals (Sheeps, Pigs, Rabbits, Cows, Chickens) breed every 10 minutes
+    - Emits a block update whenever breeding has started
 - Changed & improved how custom sounds for Mob variants work:
     - Mob Variants with custom sounds now play them like vanilla Mobs
     - Creeper Cat variant now uses Creeper Mob sounds for some of its sounds
