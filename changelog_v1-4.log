@@ -7,6 +7,9 @@
 - Added Frozen Frog variant (Can be bred in Ice Spike Biomes. Drops Ice when eating)
 - Added Goose Chicken variant (Spawns in Old Growth Spruce/Pine Taiga & Dark Forests)
 - Wandering Trader Mob variants now spawn less often with a Wandering Trader
+- Added Livestock Breeder Block:
+    - Can be crafted from 8 Hay Blocks and a Barrel
+    - When placed makes Livestock Animals (Sheeps, Pigs, Rabbits, Cows, Chickens) breed every 10 minutes
 - Changed & improved how custom sounds for Mob variants work:
     - Mob Variants with custom sounds now play them like vanilla Mobs
     - Creeper Cat variant now uses Creeper Mob sounds for some of its sounds
