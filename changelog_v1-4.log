@@ -1,11 +1,13 @@
 ## Changes:
 - Frog Feeder now emit a block update when Food Mobs are being spawned
+- Updated Textures for Timber Wolf variant
 - Added "Baby" textures for all custom Mob Variants (Cat, Chicken, Cow, Pig, Wolf)
 - Added Cold Yellow Cow variant (Spawns in the same biomes as Vanilla Cold variant)
 - Added Warm Brown Cow variant (Spawns in the same biomes as Vanilla warm variant)
 - Added Sniffer Cow variant (Spawns in Sunflower Plains & Flower Forests. Drops Torchflower/Pitcher Plant)
 - Added Frozen Frog variant (Can be bred in Ice Spike Biomes. Drops Ice when eating)
 - Added Goose Chicken variant (Spawns in Old Growth Spruce/Pine Taiga & Dark Forests)
+- Added Swamp Zombie Nautilus variant (Spawns in Swamp & Mangrove Swamp Biomes)
 - Wandering Trader Mob variants now spawn less often with a Wandering Trader
 - Added Livestock Breeder Block:
     - Can be crafted from 8 Hay Blocks and a Barrel
