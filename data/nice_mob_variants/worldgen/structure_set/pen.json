@@ -1,0 +1,25 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 25945170,
+    "separation": 13,
+    "spacing": 24,
+    "spread_type": "triangular",
+    "frequency": 0.4
+  },
+  "structures": [
+    {
+      "structure": "nice_mob_variants:pen_cold",
+      "weight": 1
+    },{
+      "structure": "nice_mob_variants:pen_wild",
+      "weight": 1
+    },{
+      "structure": "nice_mob_variants:pen_wood",
+      "weight": 1
+    },{
+      "structure": "nice_mob_variants:pen_jungle",
+      "weight": 1
+    }
+  ]
+}

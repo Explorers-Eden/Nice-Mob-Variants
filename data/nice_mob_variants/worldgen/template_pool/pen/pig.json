@@ -1,0 +1,33 @@
+{
+    "name": "nice_mob_variants:pen/pig",
+    "fallback": "minecraft:empty",
+    "elements": [
+        {
+        "weight": 3,
+        "element": {
+            "location": "nice_mob_variants:pen/pig_1",
+            "processors": "minecraft:empty",
+            "projection": "rigid",
+            "element_type": "minecraft:single_pool_element"
+        }
+    },
+    {
+        "weight": 2,
+        "element": {
+            "location": "nice_mob_variants:pen/pig_2",
+            "processors": "minecraft:empty",
+            "projection": "rigid",
+            "element_type": "minecraft:single_pool_element"
+        }
+    },
+    {
+        "weight": 1,
+        "element": {
+            "location": "nice_mob_variants:pen/pig_3",
+            "processors": "minecraft:empty",
+            "projection": "rigid",
+            "element_type": "minecraft:single_pool_element"
+        }
+    }
+]
+}

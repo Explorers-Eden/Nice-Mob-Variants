@@ -1,0 +1,15 @@
+{
+    "name": "nice_mob_variants:pen/wood",
+    "fallback": "minecraft:empty",
+    "elements": [
+        {
+        "weight": 3,
+        "element": {
+            "location": "nice_mob_variants:pen/pen_wood",
+            "processors": "minecraft:empty",
+            "projection": "rigid",
+            "element_type": "minecraft:single_pool_element"
+        }
+    }
+]
+}

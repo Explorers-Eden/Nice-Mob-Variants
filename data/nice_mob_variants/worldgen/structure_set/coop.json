@@ -1,0 +1,25 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 29849864,
+    "separation": 13,
+    "spacing": 24,
+    "spread_type": "triangular",
+    "frequency": 0.4
+  },
+  "structures": [
+    {
+      "structure": "nice_mob_variants:coop_bamboo",
+      "weight": 1
+    },{
+      "structure": "nice_mob_variants:coop_cold",
+      "weight": 1
+    },{
+      "structure": "nice_mob_variants:coop_shroom",
+      "weight": 1
+    },{
+      "structure": "nice_mob_variants:coop_wood",
+      "weight": 1
+    }
+  ]
+}

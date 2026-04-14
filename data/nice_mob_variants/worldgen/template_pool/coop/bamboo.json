@@ -1,0 +1,15 @@
+{
+    "name": "nice_mob_variants:coop/bamboo",
+    "fallback": "minecraft:empty",
+    "elements": [
+        {
+        "weight": 3,
+        "element": {
+            "location": "nice_mob_variants:coop/coop_bamboo",
+            "processors": "minecraft:empty",
+            "projection": "rigid",
+            "element_type": "minecraft:single_pool_element"
+        }
+    }
+]
+}
