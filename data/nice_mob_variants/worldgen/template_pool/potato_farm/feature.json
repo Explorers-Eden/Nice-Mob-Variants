@@ -1,0 +1,79 @@
+
+{
+    "name": "nice_mob_variants:potato_farm/feature",
+    "fallback": "minecraft:empty",
+    "elements": [  
+    {
+        "weight": 4,
+        "element": {
+            "location": "nice_mob_variants:potato_farm/field_1",
+            "processors": "nice_mob_variants:potato_farm",
+            "projection": "rigid",
+            "element_type": "minecraft:single_pool_element"
+        }
+    },
+    {
+        "weight": 4,
+        "element": {
+            "location": "nice_mob_variants:potato_farm/field_2",
+            "processors": "nice_mob_variants:potato_farm",
+            "projection": "rigid",
+            "element_type": "minecraft:single_pool_element"
+        }
+    },
+    {
+        "weight": 4,
+        "element": {
+            "location": "nice_mob_variants:potato_farm/field_3",
+            "processors": "nice_mob_variants:potato_farm",
+            "projection": "rigid",
+            "element_type": "minecraft:single_pool_element"
+        }
+    },
+    {
+        "weight": 4,
+        "element": {
+            "location": "nice_mob_variants:potato_farm/pen_1",
+            "processors": "minecraft:empty",
+            "projection": "rigid",
+            "element_type": "minecraft:single_pool_element"
+        }
+    },
+    {
+        "weight": 2,
+        "element": {
+            "location": "nice_mob_variants:potato_farm/pen_2",
+            "processors": "minecraft:empty",
+            "projection": "rigid",
+            "element_type": "minecraft:single_pool_element"
+        }
+    },
+    {
+        "weight": 4,
+        "element": {
+            "location": "nice_mob_variants:potato_farm/pen_3",
+            "processors": "minecraft:empty",
+            "projection": "rigid",
+            "element_type": "minecraft:single_pool_element"
+        }
+    },
+    {
+        "weight": 2,
+        "element": {
+            "location": "nice_mob_variants:potato_farm/pen_4",
+            "processors": "minecraft:empty",
+            "projection": "rigid",
+            "element_type": "minecraft:single_pool_element"
+        }
+    },
+    {
+        "weight": 4,
+        "element": {
+            "location": "nice_mob_variants:potato_farm/pen_5",
+            "processors": "minecraft:empty",
+            "projection": "rigid",
+            "element_type": "minecraft:single_pool_element"
+        }
+    }
+]
+}

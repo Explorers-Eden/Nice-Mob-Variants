@@ -1,20 +1,20 @@
 {
   "placement": {
     "type": "minecraft:random_spread",
-    "spacing": 48,
-    "separation": 24,
-    "salt": 392975629,
+    "spacing": 96,
+    "separation": 48,
+    "salt": 392412329,
     "spread_type": "triangular",
     "frequency_reduction_method": "default",
-    "frequency": 0.8,
+    "frequency": 0.6,
     "exclusion_zone": {
-      "other_set": "nice_mob_variants:potato_farm",
+      "other_set": "minecraft:villages",
       "chunk_count": 1
     }
   },
   "structures": [
     {
-      "structure": "nice_mob_variants:barn",
+      "structure": "nice_mob_variants:potato_farm",
       "weight": 8
     }
   ]

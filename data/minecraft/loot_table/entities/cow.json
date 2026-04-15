@@ -84,6 +84,21 @@
             },
             {
               "type": "minecraft:loot_table",
+              "value": "nice_mob_variants:entity/potato_cow",
+              "conditions": [
+                {
+                  "condition": "minecraft:entity_properties",
+                  "entity": "this",
+                  "predicate": {
+                    "components": {
+                      "minecraft:cow/variant": "nice_mob_variants:potato"
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "type": "minecraft:loot_table",
               "value": "nice_mob_variants:entity/vanilla/cow"
             }
           ]

@@ -1,0 +1,20 @@
+{
+  "asset_id": "nice_mob_variants:entity/chicken/flamingo",
+  "baby_asset_id": "nice_mob_variants:entity/chicken/flamingo_baby",
+  "spawn_conditions": [
+    {
+      "condition": {
+        "type": "minecraft:structure",
+        "structures": "#nice_mob_variants:mob_variant_spawnable/chicken/flamingo"
+      },
+      "priority": 1
+    },
+    {
+      "condition": {
+        "type": "minecraft:biome",
+        "biomes": "#nice_mob_variants:mob_variant_spawnable/chicken/flamingo"
+      },
+      "priority": 1
+    }
+  ]
+}

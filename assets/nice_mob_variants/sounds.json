@@ -28,5 +28,17 @@
         "sounds": [
             "nice_mob_variants:entity/ostrich/ostrich_1"
         ]
+      },
+      "entity.flamingo.honking": {
+        "sounds": [
+            "nice_mob_variants:entity/flamingo/flamingo_1",
+            "nice_mob_variants:entity/flamingo/flamingo_2"
+        ]
+      },
+      "entity.penguin.braying": {
+        "sounds": [
+            "nice_mob_variants:entity/penguin/penguin_1",
+            "nice_mob_variants:entity/penguin/penguin_2"
+        ]
       }
 }

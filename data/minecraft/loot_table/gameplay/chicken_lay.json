@@ -186,6 +186,51 @@
                     }
                   }
                 ]
+              },
+              {
+                "type": "minecraft:loot_table",
+                "value": "nice_mob_variants:item/eggs/potato_egg",
+                "conditions": [
+                  {
+                    "condition": "minecraft:entity_properties",
+                    "entity": "this",
+                    "predicate": {
+                      "components": {
+                        "minecraft:chicken/variant": "nice_mob_variants:potato"
+                      }
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "minecraft:loot_table",
+                "value": "nice_mob_variants:item/eggs/flamingo_egg",
+                "conditions": [
+                  {
+                    "condition": "minecraft:entity_properties",
+                    "entity": "this",
+                    "predicate": {
+                      "components": {
+                        "minecraft:chicken/variant": "nice_mob_variants:flamingo"
+                      }
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "minecraft:loot_table",
+                "value": "nice_mob_variants:item/eggs/penguin_egg",
+                "conditions": [
+                  {
+                    "condition": "minecraft:entity_properties",
+                    "entity": "this",
+                    "predicate": {
+                      "components": {
+                        "minecraft:chicken/variant": "nice_mob_variants:penguin"
+                      }
+                    }
+                  }
+                ]
               }
             ]
           }

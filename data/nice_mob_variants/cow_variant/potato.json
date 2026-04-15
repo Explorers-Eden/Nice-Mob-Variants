@@ -1,0 +1,20 @@
+{
+  "asset_id": "nice_mob_variants:entity/cow/potato",
+  "baby_asset_id": "nice_mob_variants:entity/cow/potato_baby",
+  "spawn_conditions": [
+    {
+      "condition": {
+        "type": "minecraft:structure",
+        "structures": "#nice_mob_variants:mob_variant_spawnable/cow/potato"
+      },
+      "priority": 999
+    },
+    {
+      "condition": {
+        "type": "minecraft:biome",
+        "biomes": "#nice_mob_variants:mob_variant_spawnable/cow/potato"
+      },
+      "priority": 999
+    }
+  ]
+}
