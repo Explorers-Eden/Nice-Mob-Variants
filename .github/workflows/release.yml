@@ -42,7 +42,8 @@ jobs:
               info = yaml.safe_load(f)
 
           project_id = info.get("Project-ID")
-          meta_versions = info.get("Meta Data", {}).get("Versions", [])
+          raw_versions = info.get("Meta Data", {}).get("Versions", [])
+          meta_versions = [str(v) for v in raw_versions]
           details = info.get("Details", {})
 
           version_type = str(details.get("Version type", "Release")).strip()
