@@ -33,15 +33,15 @@ jobs:
           preserve_hierarchy: true
 
           files:
-            - source: /assets/mob_variants/lang/en_us.json
+            - source: /assets/nice_mob_variants/lang/en_us.json
               dest: /Nice Mob Variants.json
-              translation: /assets/mob_variants/lang/%locale_with_underscore%.json
+              translation: /assets/nice_mob_variants/lang/%locale_with_underscore%.json
           EOF
 
       - name: Backup English source lang
         run: |
           mkdir -p "$RUNNER_TEMP/crowdin-backup"
-          cp assets/mob_variants/lang/en_us.json "$RUNNER_TEMP/crowdin-backup/en_us.json"
+          cp assets/nice_mob_variants/lang/en_us.json "$RUNNER_TEMP/crowdin-backup/en_us.json"
 
       - name: Upload source to Crowdin
         uses: crowdin/github-action@v2
@@ -72,13 +72,13 @@ jobs:
       - name: Cleanup Crowdin files and protect en_us
         run: |
           rm -f .crowdin-temp.yml
-          rm -f assets/mob_variants/lang/en_US.json
-          rm -f assets/mob_variants/lang/en_MY.json
-          cp "$RUNNER_TEMP/crowdin-backup/en_us.json" assets/mob_variants/lang/en_us.json
+          rm -f assets/nice_mob_variants/lang/en_US.json
+          rm -f assets/nice_mob_variants/lang/en_MY.json
+          cp "$RUNNER_TEMP/crowdin-backup/en_us.json" assets/nice_mob_variants/lang/en_us.json
 
       - name: Normalize lang filenames
         run: |
-          for f in assets/mob_variants/lang/*.json; do
+          for f in assets/nice_mob_variants/lang/*.json; do
             lower=$(echo "$f" | tr 'A-Z' 'a-z')
             if [ "$f" != "$lower" ]; then
               mv "$f" "$lower"
@@ -90,7 +90,7 @@ jobs:
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
 
-          git add assets/mob_variants/lang/
+          git add assets/nice_mob_variants/lang/
 
           if ! git diff --cached --quiet; then
             git commit -m "Update Nice Mob Variants translations from Crowdin"
@@ -188,7 +188,7 @@ jobs:
           slug = "nice-mob-variants"
           description = "Nice Mob Variants packaged as a universal data/resource mod."
           icon = "nice-mob-variants_pack.png"
-          namespace = "mob_variants"
+          namespace = "nice_mob_variants"
           homepage = f"https://modrinth.com/datapack/{slug}"
           sources = f"https://github.com/Explorers-Eden/{slug}"
 
