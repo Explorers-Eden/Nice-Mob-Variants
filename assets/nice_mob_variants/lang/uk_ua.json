@@ -1,0 +1,17 @@
+{
+    "item.nice_mob_variants.duck_egg": "Качине яйце",
+    "item.nice_mob_variants.golden_egg": "Золоте яйце",
+    "item.nice_mob_variants.zombie_egg": "Яйце зомбі",
+    "item.nice_mob_variants.cluckshroom_egg": "Яйце грибного курча",
+    "item.nice_mob_variants.dark_brown_egg": "Темно-коричневе яйце",
+    "item.nice_mob_variants.creamy_egg": "Вершкове яйце",
+    "item.nice_mob_variants.goose_egg": "Goose Egg",
+    "item.nice_mob_variants.pigeon_egg": "Pigeon Egg",
+    "item.nice_mob_variants.ender_egg": "Яйце Ендеру",
+    "item.nice_mob_variants.ostrich_egg": "Страусине яйце",
+    "item.nice_mob_variants.potato_egg": "Potato Egg",
+    "item.nice_mob_variants.flamingo_egg": "Flamingo Egg",
+    "item.nice_mob_variants.penguin_egg": "Penguin Egg",
+    "block.nice_mob_variants.frog_feeder": "Жаба Годівниця",
+    "block.nice_mob_variants.livestock_breeder": "Livestock Breeder"
+}

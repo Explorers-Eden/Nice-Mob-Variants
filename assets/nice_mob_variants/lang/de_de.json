@@ -1,18 +1,17 @@
 {
     "item.nice_mob_variants.duck_egg": "Entenei",
-    "item.nice_mob_variants.zombie_egg": "Zombie Ei",
     "item.nice_mob_variants.golden_egg": "Goldenes Ei",
+    "item.nice_mob_variants.zombie_egg": "Zombie Ei",
     "item.nice_mob_variants.cluckshroom_egg": "Cluckshroom Ei",
     "item.nice_mob_variants.dark_brown_egg": "Dunkelbraunes Ei",
     "item.nice_mob_variants.creamy_egg": "Cremiges Ei",
-    "item.nice_mob_variants.pigeon_egg": "Taubenei",
-    "item.nice_mob_variants.goose_egg": "Gänseei",
-    "item.nice_mob_variants.ostrich_egg": "Straußenei",
+    "item.nice_mob_variants.goose_egg": "Goose Egg",
+    "item.nice_mob_variants.pigeon_egg": "Pigeon Egg",
     "item.nice_mob_variants.ender_egg": "Ender Ei",
-    "item.nice_mob_variants.potato_egg": "Kartoffelei",
-    "item.nice_mob_variants.flamingo_egg": "Flamingoei",
-    "item.nice_mob_variants.penguin_egg": "Pinguinei",
+    "item.nice_mob_variants.ostrich_egg": "Straußenei",
+    "item.nice_mob_variants.potato_egg": "Potato Egg",
+    "item.nice_mob_variants.flamingo_egg": "Flamingo Egg",
+    "item.nice_mob_variants.penguin_egg": "Penguin Egg",
     "block.nice_mob_variants.frog_feeder": "Frosch Fütterer",
-    "block.nice_mob_variants.livestock_breeder": "Viehzüchter"
+    "block.nice_mob_variants.livestock_breeder": "Livestock Breeder"
 }
-    
