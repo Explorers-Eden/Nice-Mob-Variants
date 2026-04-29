@@ -1,25 +1,16 @@
-# Barn
-
-## Summary
+# Contents
 
 The structure is composed of the following blocks: Weathered Cut Copper Slab, Spruce Fence, Coarse Dirt, Weathered Cut Copper Stairs, Hay Block, Mangrove Planks, Oak Planks, Spruce Planks, Spruce Slab, Spruce Trapdoor, Stripped Birch Log, Stripped Dark Oak Log, Stripped Spruce Log, Spruce Stairs, Birch Stairs, Dark Oak Stairs, Moss Carpet, Lantern, Moss Block, Birch Slab, Dark Oak Slab, Spruce Log, Birch Fence, Cobblestone, Dark Oak Fence, Cobbled Deepslate, Chain, Mossy Cobblestone, Spruce Fence Gate, Fern, Large Fern, Dark Oak Trapdoor, Waxed Exposed Copper Trapdoor, Cobweb, Oak Trapdoor, Polished Tuff Stairs, Spruce Wall Sign, Polished Andesite, Polished Deepslate, Polished Tuff, Decorated Pot, Chest, Composter, Hanging Roots, Melon, Barrel, Cauldron, Flower Pot, Pumpkin, Dark Oak Fence Gate, Grindstone, Oxidized Cut Copper Stairs, Mangrove Stairs, Oak Stairs, Spore Blossom, Brown Wool, Carved Pumpkin, Gray Wool, Light Gray Wool, Potted Azalea Bush, Potted Fern, Potted Flowering Azalea Bush, Potted Oak Sapling, Potted Spruce Sapling, Water Cauldron, White Wool.
 
 Additionally, the following entities may spawn during its generation: Villager, Chicken, Cow, Pig.
 
-### Loot Tables
 
-| Loot Table |
-|:-----|
-| minecraft:chests/village/village_shepherd |
-| nice_mob_variants:structure/barn/barrel |
-| nice_mob_variants:structure/barn/chest |
-
-
+## Per-Structure File Contents
 
 <details>
 <summary><strong>Barn/Building 1</strong></summary>
 
-The structure is composed of the following blocks: Oak Planks, Weathered Cut Copper Slab, Spruce Fence, Stripped Spruce Log, Coarse Dirt, Weathered Cut Copper Stairs, Spruce Stairs, Hay Block, Spruce Slab, Cobblestone, Moss Carpet, Mossy Cobblestone, Spruce Trapdoor, Lantern, Moss Block, Spruce Log, Chain, Polished Tuff, Fern, Hanging Roots, Large Fern, Cobweb, Spruce Fence Gate, Oak Stairs, Cauldron, Dark Oak Fence Gate, Grindstone, Oxidized Cut Copper Stairs.
+The structure part is composed of the following blocks: Oak Planks, Weathered Cut Copper Slab, Spruce Fence, Stripped Spruce Log, Coarse Dirt, Weathered Cut Copper Stairs, Spruce Stairs, Hay Block, Spruce Slab, Cobblestone, Moss Carpet, Mossy Cobblestone, Spruce Trapdoor, Lantern, Moss Block, Spruce Log, Chain, Polished Tuff, Fern, Hanging Roots, Large Fern, Cobweb, Spruce Fence Gate, Oak Stairs, Cauldron, Dark Oak Fence Gate, Grindstone, Oxidized Cut Copper Stairs.
 
 Additionally, the following entities may spawn during its generation: Villager, Chicken.
 
@@ -67,7 +58,7 @@ Additionally, the following entities may spawn during its generation: Villager, 
 
 ### Loot Tables
 
-None found.
+*None*
 
 
 </details>
@@ -75,7 +66,7 @@ None found.
 <details>
 <summary><strong>Barn/Building 2</strong></summary>
 
-The structure is composed of the following blocks: Mangrove Planks, Weathered Cut Copper Slab, Stripped Birch Log, Coarse Dirt, Weathered Cut Copper Stairs, Birch Stairs, Hay Block, Spruce Fence, Birch Slab, Birch Fence, Moss Carpet, Cobblestone, Mossy Cobblestone, Waxed Exposed Copper Trapdoor, Lantern, Moss Block, Spruce Log, Spruce Slab, Chain, Polished Andesite, Fern, Large Fern, Cobweb, Spruce Fence Gate, Mangrove Stairs, Spore Blossom, Cauldron, Dark Oak Fence Gate, Grindstone, Oxidized Cut Copper Stairs.
+The structure part is composed of the following blocks: Mangrove Planks, Weathered Cut Copper Slab, Stripped Birch Log, Coarse Dirt, Weathered Cut Copper Stairs, Birch Stairs, Hay Block, Spruce Fence, Birch Slab, Birch Fence, Moss Carpet, Cobblestone, Mossy Cobblestone, Waxed Exposed Copper Trapdoor, Lantern, Moss Block, Spruce Log, Spruce Slab, Chain, Polished Andesite, Fern, Large Fern, Cobweb, Spruce Fence Gate, Mangrove Stairs, Spore Blossom, Cauldron, Dark Oak Fence Gate, Grindstone, Oxidized Cut Copper Stairs.
 
 Additionally, the following entities may spawn during its generation: Villager, Chicken.
 
@@ -125,7 +116,7 @@ Additionally, the following entities may spawn during its generation: Villager, 
 
 ### Loot Tables
 
-None found.
+*None*
 
 
 </details>
@@ -133,7 +124,7 @@ None found.
 <details>
 <summary><strong>Barn/Building 3</strong></summary>
 
-The structure is composed of the following blocks: Spruce Planks, Weathered Cut Copper Slab, Stripped Dark Oak Log, Coarse Dirt, Weathered Cut Copper Stairs, Dark Oak Stairs, Hay Block, Spruce Fence, Dark Oak Slab, Dark Oak Fence, Cobbled Deepslate, Moss Carpet, Dark Oak Trapdoor, Lantern, Moss Block, Spruce Log, Spruce Slab, Chain, Polished Deepslate, Fern, Large Fern, Cobweb, Spruce Fence Gate, Spruce Stairs, Cauldron, Dark Oak Fence Gate, Grindstone, Oxidized Cut Copper Stairs.
+The structure part is composed of the following blocks: Spruce Planks, Weathered Cut Copper Slab, Stripped Dark Oak Log, Coarse Dirt, Weathered Cut Copper Stairs, Dark Oak Stairs, Hay Block, Spruce Fence, Dark Oak Slab, Dark Oak Fence, Cobbled Deepslate, Moss Carpet, Dark Oak Trapdoor, Lantern, Moss Block, Spruce Log, Spruce Slab, Chain, Polished Deepslate, Fern, Large Fern, Cobweb, Spruce Fence Gate, Spruce Stairs, Cauldron, Dark Oak Fence Gate, Grindstone, Oxidized Cut Copper Stairs.
 
 Additionally, the following entities may spawn during its generation: Villager, Chicken.
 
@@ -181,7 +172,7 @@ Additionally, the following entities may spawn during its generation: Villager, 
 
 ### Loot Tables
 
-None found.
+*None*
 
 
 </details>
@@ -189,7 +180,7 @@ None found.
 <details>
 <summary><strong>Barn/Features/Barrel 1</strong></summary>
 
-The structure is composed of the following blocks: Barrel.
+The structure part is composed of the following blocks: Barrel.
 
 ### Blocks
 
@@ -200,7 +191,7 @@ The structure is composed of the following blocks: Barrel.
 
 ### Entities
 
-None found.
+*None*
 
 
 ### Loot Tables
@@ -215,7 +206,7 @@ None found.
 <details>
 <summary><strong>Barn/Features/Barrel 2</strong></summary>
 
-The structure is composed of the following blocks: Barrel.
+The structure part is composed of the following blocks: Barrel.
 
 ### Blocks
 
@@ -226,7 +217,7 @@ The structure is composed of the following blocks: Barrel.
 
 ### Entities
 
-None found.
+*None*
 
 
 ### Loot Tables
@@ -241,7 +232,7 @@ None found.
 <details>
 <summary><strong>Barn/Features/Barrel 3</strong></summary>
 
-The structure is composed of the following blocks: Barrel.
+The structure part is composed of the following blocks: Barrel.
 
 ### Blocks
 
@@ -252,7 +243,7 @@ The structure is composed of the following blocks: Barrel.
 
 ### Entities
 
-None found.
+*None*
 
 
 ### Loot Tables
@@ -267,7 +258,7 @@ None found.
 <details>
 <summary><strong>Barn/Features/Barrel 4</strong></summary>
 
-The structure is composed of the following blocks: Barrel.
+The structure part is composed of the following blocks: Barrel.
 
 ### Blocks
 
@@ -278,7 +269,7 @@ The structure is composed of the following blocks: Barrel.
 
 ### Entities
 
-None found.
+*None*
 
 
 ### Loot Tables
@@ -293,7 +284,7 @@ None found.
 <details>
 <summary><strong>Barn/Features/Cauldron 1</strong></summary>
 
-The structure is composed of the following blocks: Water Cauldron.
+The structure part is composed of the following blocks: Water Cauldron.
 
 ### Blocks
 
@@ -304,12 +295,12 @@ The structure is composed of the following blocks: Water Cauldron.
 
 ### Entities
 
-None found.
+*None*
 
 
 ### Loot Tables
 
-None found.
+*None*
 
 
 </details>
@@ -317,7 +308,7 @@ None found.
 <details>
 <summary><strong>Barn/Features/Cauldron 2</strong></summary>
 
-The structure is composed of the following blocks: Cauldron.
+The structure part is composed of the following blocks: Cauldron.
 
 ### Blocks
 
@@ -328,12 +319,12 @@ The structure is composed of the following blocks: Cauldron.
 
 ### Entities
 
-None found.
+*None*
 
 
 ### Loot Tables
 
-None found.
+*None*
 
 
 </details>
@@ -341,7 +332,7 @@ None found.
 <details>
 <summary><strong>Barn/Features/Chest 1</strong></summary>
 
-The structure is composed of the following blocks: Chest.
+The structure part is composed of the following blocks: Chest.
 
 ### Blocks
 
@@ -352,7 +343,7 @@ The structure is composed of the following blocks: Chest.
 
 ### Entities
 
-None found.
+*None*
 
 
 ### Loot Tables
@@ -367,7 +358,7 @@ None found.
 <details>
 <summary><strong>Barn/Features/Chest 2</strong></summary>
 
-The structure is composed of the following blocks: Chest.
+The structure part is composed of the following blocks: Chest.
 
 ### Blocks
 
@@ -378,7 +369,7 @@ The structure is composed of the following blocks: Chest.
 
 ### Entities
 
-None found.
+*None*
 
 
 ### Loot Tables
@@ -393,7 +384,7 @@ None found.
 <details>
 <summary><strong>Barn/Features/Chest 3</strong></summary>
 
-The structure is composed of the following blocks: Chest.
+The structure part is composed of the following blocks: Chest.
 
 ### Blocks
 
@@ -404,7 +395,7 @@ The structure is composed of the following blocks: Chest.
 
 ### Entities
 
-None found.
+*None*
 
 
 ### Loot Tables
@@ -419,7 +410,7 @@ None found.
 <details>
 <summary><strong>Barn/Features/Chest 4</strong></summary>
 
-The structure is composed of the following blocks: Chest.
+The structure part is composed of the following blocks: Chest.
 
 ### Blocks
 
@@ -430,7 +421,7 @@ The structure is composed of the following blocks: Chest.
 
 ### Entities
 
-None found.
+*None*
 
 
 ### Loot Tables
@@ -445,13 +436,13 @@ None found.
 <details>
 <summary><strong>Barn/Features/Chicken</strong></summary>
 
-The structure does not contain any notable blocks.
+The structure part does not contain any notable blocks.
 
 Additionally, the following entities may spawn during its generation: Chicken.
 
 ### Blocks
 
-None found.
+*None*
 
 
 ### Entities
@@ -463,7 +454,7 @@ None found.
 
 ### Loot Tables
 
-None found.
+*None*
 
 
 </details>
@@ -471,7 +462,7 @@ None found.
 <details>
 <summary><strong>Barn/Features/Composter 1</strong></summary>
 
-The structure is composed of the following blocks: Composter.
+The structure part is composed of the following blocks: Composter.
 
 ### Blocks
 
@@ -482,12 +473,12 @@ The structure is composed of the following blocks: Composter.
 
 ### Entities
 
-None found.
+*None*
 
 
 ### Loot Tables
 
-None found.
+*None*
 
 
 </details>
@@ -495,7 +486,7 @@ None found.
 <details>
 <summary><strong>Barn/Features/Composter 2</strong></summary>
 
-The structure is composed of the following blocks: Composter.
+The structure part is composed of the following blocks: Composter.
 
 ### Blocks
 
@@ -506,12 +497,12 @@ The structure is composed of the following blocks: Composter.
 
 ### Entities
 
-None found.
+*None*
 
 
 ### Loot Tables
 
-None found.
+*None*
 
 
 </details>
@@ -519,7 +510,7 @@ None found.
 <details>
 <summary><strong>Barn/Features/Composter 3</strong></summary>
 
-The structure is composed of the following blocks: Composter.
+The structure part is composed of the following blocks: Composter.
 
 ### Blocks
 
@@ -530,12 +521,12 @@ The structure is composed of the following blocks: Composter.
 
 ### Entities
 
-None found.
+*None*
 
 
 ### Loot Tables
 
-None found.
+*None*
 
 
 </details>
@@ -543,7 +534,7 @@ None found.
 <details>
 <summary><strong>Barn/Features/Composter 4</strong></summary>
 
-The structure is composed of the following blocks: Composter.
+The structure part is composed of the following blocks: Composter.
 
 ### Blocks
 
@@ -554,12 +545,12 @@ The structure is composed of the following blocks: Composter.
 
 ### Entities
 
-None found.
+*None*
 
 
 ### Loot Tables
 
-None found.
+*None*
 
 
 </details>
@@ -567,7 +558,7 @@ None found.
 <details>
 <summary><strong>Barn/Features/Composter 5</strong></summary>
 
-The structure is composed of the following blocks: Composter.
+The structure part is composed of the following blocks: Composter.
 
 ### Blocks
 
@@ -578,12 +569,12 @@ The structure is composed of the following blocks: Composter.
 
 ### Entities
 
-None found.
+*None*
 
 
 ### Loot Tables
 
-None found.
+*None*
 
 
 </details>
@@ -591,13 +582,13 @@ None found.
 <details>
 <summary><strong>Barn/Features/Cow</strong></summary>
 
-The structure does not contain any notable blocks.
+The structure part does not contain any notable blocks.
 
 Additionally, the following entities may spawn during its generation: Cow.
 
 ### Blocks
 
-None found.
+*None*
 
 
 ### Entities
@@ -609,7 +600,7 @@ None found.
 
 ### Loot Tables
 
-None found.
+*None*
 
 
 </details>
@@ -617,7 +608,7 @@ None found.
 <details>
 <summary><strong>Barn/Features/Decorated Pot 1</strong></summary>
 
-The structure is composed of the following blocks: Decorated Pot.
+The structure part is composed of the following blocks: Decorated Pot.
 
 ### Blocks
 
@@ -628,12 +619,12 @@ The structure is composed of the following blocks: Decorated Pot.
 
 ### Entities
 
-None found.
+*None*
 
 
 ### Loot Tables
 
-None found.
+*None*
 
 
 </details>
@@ -641,7 +632,7 @@ None found.
 <details>
 <summary><strong>Barn/Features/Decorated Pot 2</strong></summary>
 
-The structure is composed of the following blocks: Decorated Pot.
+The structure part is composed of the following blocks: Decorated Pot.
 
 ### Blocks
 
@@ -652,12 +643,12 @@ The structure is composed of the following blocks: Decorated Pot.
 
 ### Entities
 
-None found.
+*None*
 
 
 ### Loot Tables
 
-None found.
+*None*
 
 
 </details>
@@ -665,7 +656,7 @@ None found.
 <details>
 <summary><strong>Barn/Features/Decorated Pot 3</strong></summary>
 
-The structure is composed of the following blocks: Decorated Pot.
+The structure part is composed of the following blocks: Decorated Pot.
 
 ### Blocks
 
@@ -676,12 +667,12 @@ The structure is composed of the following blocks: Decorated Pot.
 
 ### Entities
 
-None found.
+*None*
 
 
 ### Loot Tables
 
-None found.
+*None*
 
 
 </details>
@@ -689,7 +680,7 @@ None found.
 <details>
 <summary><strong>Barn/Features/Decorated Pot 4</strong></summary>
 
-The structure is composed of the following blocks: Decorated Pot.
+The structure part is composed of the following blocks: Decorated Pot.
 
 ### Blocks
 
@@ -700,12 +691,12 @@ The structure is composed of the following blocks: Decorated Pot.
 
 ### Entities
 
-None found.
+*None*
 
 
 ### Loot Tables
 
-None found.
+*None*
 
 
 </details>
@@ -713,7 +704,7 @@ None found.
 <details>
 <summary><strong>Barn/Features/Decorated Pot 5</strong></summary>
 
-The structure is composed of the following blocks: Decorated Pot.
+The structure part is composed of the following blocks: Decorated Pot.
 
 ### Blocks
 
@@ -724,12 +715,12 @@ The structure is composed of the following blocks: Decorated Pot.
 
 ### Entities
 
-None found.
+*None*
 
 
 ### Loot Tables
 
-None found.
+*None*
 
 
 </details>
@@ -737,7 +728,7 @@ None found.
 <details>
 <summary><strong>Barn/Features/Decorated Pot 6</strong></summary>
 
-The structure is composed of the following blocks: Decorated Pot.
+The structure part is composed of the following blocks: Decorated Pot.
 
 ### Blocks
 
@@ -748,12 +739,12 @@ The structure is composed of the following blocks: Decorated Pot.
 
 ### Entities
 
-None found.
+*None*
 
 
 ### Loot Tables
 
-None found.
+*None*
 
 
 </details>
@@ -761,13 +752,13 @@ None found.
 <details>
 <summary><strong>Barn/Features/Pig</strong></summary>
 
-The structure does not contain any notable blocks.
+The structure part does not contain any notable blocks.
 
 Additionally, the following entities may spawn during its generation: Pig.
 
 ### Blocks
 
-None found.
+*None*
 
 
 ### Entities
@@ -779,7 +770,7 @@ None found.
 
 ### Loot Tables
 
-None found.
+*None*
 
 
 </details>
@@ -787,7 +778,7 @@ None found.
 <details>
 <summary><strong>Barn/Features/Pot 1</strong></summary>
 
-The structure is composed of the following blocks: Potted Fern.
+The structure part is composed of the following blocks: Potted Fern.
 
 ### Blocks
 
@@ -798,12 +789,12 @@ The structure is composed of the following blocks: Potted Fern.
 
 ### Entities
 
-None found.
+*None*
 
 
 ### Loot Tables
 
-None found.
+*None*
 
 
 </details>
@@ -811,7 +802,7 @@ None found.
 <details>
 <summary><strong>Barn/Features/Pot 2</strong></summary>
 
-The structure is composed of the following blocks: Potted Oak Sapling.
+The structure part is composed of the following blocks: Potted Oak Sapling.
 
 ### Blocks
 
@@ -822,12 +813,12 @@ The structure is composed of the following blocks: Potted Oak Sapling.
 
 ### Entities
 
-None found.
+*None*
 
 
 ### Loot Tables
 
-None found.
+*None*
 
 
 </details>
@@ -835,7 +826,7 @@ None found.
 <details>
 <summary><strong>Barn/Features/Pot 3</strong></summary>
 
-The structure is composed of the following blocks: Potted Azalea Bush.
+The structure part is composed of the following blocks: Potted Azalea Bush.
 
 ### Blocks
 
@@ -846,12 +837,12 @@ The structure is composed of the following blocks: Potted Azalea Bush.
 
 ### Entities
 
-None found.
+*None*
 
 
 ### Loot Tables
 
-None found.
+*None*
 
 
 </details>
@@ -859,7 +850,7 @@ None found.
 <details>
 <summary><strong>Barn/Features/Pot 4</strong></summary>
 
-The structure is composed of the following blocks: Potted Flowering Azalea Bush.
+The structure part is composed of the following blocks: Potted Flowering Azalea Bush.
 
 ### Blocks
 
@@ -870,12 +861,12 @@ The structure is composed of the following blocks: Potted Flowering Azalea Bush.
 
 ### Entities
 
-None found.
+*None*
 
 
 ### Loot Tables
 
-None found.
+*None*
 
 
 </details>
@@ -883,7 +874,7 @@ None found.
 <details>
 <summary><strong>Barn/Features/Pot 5</strong></summary>
 
-The structure is composed of the following blocks: Potted Spruce Sapling.
+The structure part is composed of the following blocks: Potted Spruce Sapling.
 
 ### Blocks
 
@@ -894,12 +885,12 @@ The structure is composed of the following blocks: Potted Spruce Sapling.
 
 ### Entities
 
-None found.
+*None*
 
 
 ### Loot Tables
 
-None found.
+*None*
 
 
 </details>
@@ -907,7 +898,7 @@ None found.
 <details>
 <summary><strong>Barn/Features/Wagon 1</strong></summary>
 
-The structure is composed of the following blocks: Spruce Trapdoor, Spruce Slab, Oak Trapdoor, Polished Tuff Stairs, Spruce Fence Gate, Spruce Wall Sign, Brown Wool, Chest, Flower Pot, Gray Wool, Light Gray Wool, White Wool.
+The structure part is composed of the following blocks: Spruce Trapdoor, Spruce Slab, Oak Trapdoor, Polished Tuff Stairs, Spruce Fence Gate, Spruce Wall Sign, Brown Wool, Chest, Flower Pot, Gray Wool, Light Gray Wool, White Wool.
 
 ### Blocks
 
@@ -929,7 +920,7 @@ The structure is composed of the following blocks: Spruce Trapdoor, Spruce Slab,
 
 ### Entities
 
-None found.
+*None*
 
 
 ### Loot Tables
@@ -944,7 +935,7 @@ None found.
 <details>
 <summary><strong>Barn/Features/Wagon 2</strong></summary>
 
-The structure is composed of the following blocks: Spruce Trapdoor, Hay Block, Spruce Slab, Oak Trapdoor, Polished Tuff Stairs, Spruce Fence Gate, Spruce Wall Sign, Flower Pot.
+The structure part is composed of the following blocks: Spruce Trapdoor, Hay Block, Spruce Slab, Oak Trapdoor, Polished Tuff Stairs, Spruce Fence Gate, Spruce Wall Sign, Flower Pot.
 
 ### Blocks
 
@@ -962,12 +953,12 @@ The structure is composed of the following blocks: Spruce Trapdoor, Hay Block, S
 
 ### Entities
 
-None found.
+*None*
 
 
 ### Loot Tables
 
-None found.
+*None*
 
 
 </details>
@@ -975,7 +966,7 @@ None found.
 <details>
 <summary><strong>Barn/Features/Wagon 3</strong></summary>
 
-The structure is composed of the following blocks: Spruce Trapdoor, Pumpkin, Spruce Slab, Oak Trapdoor, Polished Tuff Stairs, Spruce Fence Gate, Spruce Wall Sign, Carved Pumpkin, Flower Pot.
+The structure part is composed of the following blocks: Spruce Trapdoor, Pumpkin, Spruce Slab, Oak Trapdoor, Polished Tuff Stairs, Spruce Fence Gate, Spruce Wall Sign, Carved Pumpkin, Flower Pot.
 
 ### Blocks
 
@@ -994,12 +985,12 @@ The structure is composed of the following blocks: Spruce Trapdoor, Pumpkin, Spr
 
 ### Entities
 
-None found.
+*None*
 
 
 ### Loot Tables
 
-None found.
+*None*
 
 
 </details>
@@ -1007,7 +998,7 @@ None found.
 <details>
 <summary><strong>Barn/Features/Wagon 4</strong></summary>
 
-The structure is composed of the following blocks: Spruce Trapdoor, Melon, Spruce Slab, Oak Trapdoor, Polished Tuff Stairs, Spruce Fence Gate, Spruce Wall Sign, Flower Pot.
+The structure part is composed of the following blocks: Spruce Trapdoor, Melon, Spruce Slab, Oak Trapdoor, Polished Tuff Stairs, Spruce Fence Gate, Spruce Wall Sign, Flower Pot.
 
 ### Blocks
 
@@ -1025,12 +1016,12 @@ The structure is composed of the following blocks: Spruce Trapdoor, Melon, Spruc
 
 ### Entities
 
-None found.
+*None*
 
 
 ### Loot Tables
 
-None found.
+*None*
 
 
 </details>

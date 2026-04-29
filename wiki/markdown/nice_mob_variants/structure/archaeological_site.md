@@ -1,23 +1,16 @@
-# Archaeological Site
-
-## Summary
+# Contents
 
 The structure is composed of the following blocks: Sand, Birch Fence, Birch Stairs, Birch Trapdoor, Light Blue Wool, Red Wool, White Wool, Yellow Wool, Sandstone Wall, Birch Slab, Loom, Short Dry Grass, Tall Dry Grass, Lantern, Chest, Water Cauldron, Stripped Birch Log, Torch, White Banner, Yellow Banner, Light Blue Banner, Red Banner, Light Blue Bed, Red Bed, White Bed, Yellow Bed.
 
 Additionally, the following entities may spawn during its generation: Cat, Item Frame, Villager.
 
-### Loot Tables
 
-| Loot Table |
-|:-----|
-| nice_mob_variants:structure/archaeological_site/feature |
-
-
+## Per-Structure File Contents
 
 <details>
 <summary><strong>Archaeological Site/Banner 1</strong></summary>
 
-The structure is composed of the following blocks: Red Banner.
+The structure part is composed of the following blocks: Red Banner.
 
 ### Blocks
 
@@ -28,12 +21,12 @@ The structure is composed of the following blocks: Red Banner.
 
 ### Entities
 
-None found.
+*None*
 
 
 ### Loot Tables
 
-None found.
+*None*
 
 
 </details>
@@ -41,7 +34,7 @@ None found.
 <details>
 <summary><strong>Archaeological Site/Banner 10</strong></summary>
 
-The structure is composed of the following blocks: Yellow Banner.
+The structure part is composed of the following blocks: Yellow Banner.
 
 ### Blocks
 
@@ -52,12 +45,12 @@ The structure is composed of the following blocks: Yellow Banner.
 
 ### Entities
 
-None found.
+*None*
 
 
 ### Loot Tables
 
-None found.
+*None*
 
 
 </details>
@@ -65,7 +58,7 @@ None found.
 <details>
 <summary><strong>Archaeological Site/Banner 11</strong></summary>
 
-The structure is composed of the following blocks: Red Banner.
+The structure part is composed of the following blocks: Red Banner.
 
 ### Blocks
 
@@ -76,12 +69,12 @@ The structure is composed of the following blocks: Red Banner.
 
 ### Entities
 
-None found.
+*None*
 
 
 ### Loot Tables
 
-None found.
+*None*
 
 
 </details>
@@ -89,7 +82,7 @@ None found.
 <details>
 <summary><strong>Archaeological Site/Banner 12</strong></summary>
 
-The structure is composed of the following blocks: White Banner.
+The structure part is composed of the following blocks: White Banner.
 
 ### Blocks
 
@@ -100,12 +93,12 @@ The structure is composed of the following blocks: White Banner.
 
 ### Entities
 
-None found.
+*None*
 
 
 ### Loot Tables
 
-None found.
+*None*
 
 
 </details>
@@ -113,7 +106,7 @@ None found.
 <details>
 <summary><strong>Archaeological Site/Banner 13</strong></summary>
 
-The structure is composed of the following blocks: Yellow Banner.
+The structure part is composed of the following blocks: Yellow Banner.
 
 ### Blocks
 
@@ -124,12 +117,12 @@ The structure is composed of the following blocks: Yellow Banner.
 
 ### Entities
 
-None found.
+*None*
 
 
 ### Loot Tables
 
-None found.
+*None*
 
 
 </details>
@@ -137,7 +130,7 @@ None found.
 <details>
 <summary><strong>Archaeological Site/Banner 14</strong></summary>
 
-The structure is composed of the following blocks: White Banner.
+The structure part is composed of the following blocks: White Banner.
 
 ### Blocks
 
@@ -148,12 +141,12 @@ The structure is composed of the following blocks: White Banner.
 
 ### Entities
 
-None found.
+*None*
 
 
 ### Loot Tables
 
-None found.
+*None*
 
 
 </details>
@@ -161,7 +154,7 @@ None found.
 <details>
 <summary><strong>Archaeological Site/Banner 2</strong></summary>
 
-The structure is composed of the following blocks: Light Blue Banner.
+The structure part is composed of the following blocks: Light Blue Banner.
 
 ### Blocks
 
@@ -172,12 +165,12 @@ The structure is composed of the following blocks: Light Blue Banner.
 
 ### Entities
 
-None found.
+*None*
 
 
 ### Loot Tables
 
-None found.
+*None*
 
 
 </details>
@@ -185,7 +178,7 @@ None found.
 <details>
 <summary><strong>Archaeological Site/Banner 3</strong></summary>
 
-The structure is composed of the following blocks: White Banner.
+The structure part is composed of the following blocks: White Banner.
 
 ### Blocks
 
@@ -196,12 +189,12 @@ The structure is composed of the following blocks: White Banner.
 
 ### Entities
 
-None found.
+*None*
 
 
 ### Loot Tables
 
-None found.
+*None*
 
 
 </details>
@@ -209,7 +202,7 @@ None found.
 <details>
 <summary><strong>Archaeological Site/Banner 4</strong></summary>
 
-The structure is composed of the following blocks: White Banner.
+The structure part is composed of the following blocks: White Banner.
 
 ### Blocks
 
@@ -220,12 +213,12 @@ The structure is composed of the following blocks: White Banner.
 
 ### Entities
 
-None found.
+*None*
 
 
 ### Loot Tables
 
-None found.
+*None*
 
 
 </details>
@@ -233,7 +226,7 @@ None found.
 <details>
 <summary><strong>Archaeological Site/Banner 5</strong></summary>
 
-The structure is composed of the following blocks: Yellow Banner.
+The structure part is composed of the following blocks: Yellow Banner.
 
 ### Blocks
 
@@ -244,12 +237,12 @@ The structure is composed of the following blocks: Yellow Banner.
 
 ### Entities
 
-None found.
+*None*
 
 
 ### Loot Tables
 
-None found.
+*None*
 
 
 </details>
@@ -257,7 +250,7 @@ None found.
 <details>
 <summary><strong>Archaeological Site/Banner 6</strong></summary>
 
-The structure is composed of the following blocks: Light Blue Banner.
+The structure part is composed of the following blocks: Light Blue Banner.
 
 ### Blocks
 
@@ -268,12 +261,12 @@ The structure is composed of the following blocks: Light Blue Banner.
 
 ### Entities
 
-None found.
+*None*
 
 
 ### Loot Tables
 
-None found.
+*None*
 
 
 </details>
@@ -281,7 +274,7 @@ None found.
 <details>
 <summary><strong>Archaeological Site/Banner 7</strong></summary>
 
-The structure is composed of the following blocks: Yellow Banner.
+The structure part is composed of the following blocks: Yellow Banner.
 
 ### Blocks
 
@@ -292,12 +285,12 @@ The structure is composed of the following blocks: Yellow Banner.
 
 ### Entities
 
-None found.
+*None*
 
 
 ### Loot Tables
 
-None found.
+*None*
 
 
 </details>
@@ -305,7 +298,7 @@ None found.
 <details>
 <summary><strong>Archaeological Site/Banner 8</strong></summary>
 
-The structure is composed of the following blocks: Light Blue Banner.
+The structure part is composed of the following blocks: Light Blue Banner.
 
 ### Blocks
 
@@ -316,12 +309,12 @@ The structure is composed of the following blocks: Light Blue Banner.
 
 ### Entities
 
-None found.
+*None*
 
 
 ### Loot Tables
 
-None found.
+*None*
 
 
 </details>
@@ -329,7 +322,7 @@ None found.
 <details>
 <summary><strong>Archaeological Site/Banner 9</strong></summary>
 
-The structure is composed of the following blocks: Red Banner.
+The structure part is composed of the following blocks: Red Banner.
 
 ### Blocks
 
@@ -340,12 +333,12 @@ The structure is composed of the following blocks: Red Banner.
 
 ### Entities
 
-None found.
+*None*
 
 
 ### Loot Tables
 
-None found.
+*None*
 
 
 </details>
@@ -353,7 +346,7 @@ None found.
 <details>
 <summary><strong>Archaeological Site/Base</strong></summary>
 
-The structure is composed of the following blocks: Sand, Birch Fence, Stripped Birch Log, Torch.
+The structure part is composed of the following blocks: Sand, Birch Fence, Stripped Birch Log, Torch.
 
 ### Blocks
 
@@ -367,12 +360,12 @@ The structure is composed of the following blocks: Sand, Birch Fence, Stripped B
 
 ### Entities
 
-None found.
+*None*
 
 
 ### Loot Tables
 
-None found.
+*None*
 
 
 </details>
@@ -380,7 +373,7 @@ None found.
 <details>
 <summary><strong>Archaeological Site/Feature 1</strong></summary>
 
-The structure is composed of the following blocks: Birch Fence, Short Dry Grass, Chest, Lantern, Loom, Sandstone Wall, Tall Dry Grass, Water Cauldron.
+The structure part is composed of the following blocks: Birch Fence, Short Dry Grass, Chest, Lantern, Loom, Sandstone Wall, Tall Dry Grass, Water Cauldron.
 
 Additionally, the following entities may spawn during its generation: Cat.
 
@@ -417,7 +410,7 @@ Additionally, the following entities may spawn during its generation: Cat.
 <details>
 <summary><strong>Archaeological Site/Feature 2</strong></summary>
 
-The structure is composed of the following blocks: Loom, Short Dry Grass, Birch Fence, Chest, Lantern, Sandstone Wall, Tall Dry Grass, Water Cauldron.
+The structure part is composed of the following blocks: Loom, Short Dry Grass, Birch Fence, Chest, Lantern, Sandstone Wall, Tall Dry Grass, Water Cauldron.
 
 Additionally, the following entities may spawn during its generation: Cat.
 
@@ -454,7 +447,7 @@ Additionally, the following entities may spawn during its generation: Cat.
 <details>
 <summary><strong>Archaeological Site/Feature 3</strong></summary>
 
-The structure is composed of the following blocks: Short Dry Grass, Tall Dry Grass, Birch Fence, Chest, Lantern, Loom, Sandstone Wall, Water Cauldron.
+The structure part is composed of the following blocks: Short Dry Grass, Tall Dry Grass, Birch Fence, Chest, Lantern, Loom, Sandstone Wall, Water Cauldron.
 
 Additionally, the following entities may spawn during its generation: Cat.
 
@@ -491,7 +484,7 @@ Additionally, the following entities may spawn during its generation: Cat.
 <details>
 <summary><strong>Archaeological Site/Feature 4</strong></summary>
 
-The structure is composed of the following blocks: Tall Dry Grass, Short Dry Grass, Birch Fence, Chest, Lantern, Loom, Sandstone Wall, Water Cauldron.
+The structure part is composed of the following blocks: Tall Dry Grass, Short Dry Grass, Birch Fence, Chest, Lantern, Loom, Sandstone Wall, Water Cauldron.
 
 Additionally, the following entities may spawn during its generation: Cat.
 
@@ -528,7 +521,7 @@ Additionally, the following entities may spawn during its generation: Cat.
 <details>
 <summary><strong>Archaeological Site/Feature 5</strong></summary>
 
-The structure is composed of the following blocks: Tall Dry Grass, Short Dry Grass, Birch Fence, Chest, Lantern, Loom, Sandstone Wall, Water Cauldron.
+The structure part is composed of the following blocks: Tall Dry Grass, Short Dry Grass, Birch Fence, Chest, Lantern, Loom, Sandstone Wall, Water Cauldron.
 
 Additionally, the following entities may spawn during its generation: Cat.
 
@@ -565,7 +558,7 @@ Additionally, the following entities may spawn during its generation: Cat.
 <details>
 <summary><strong>Archaeological Site/Pit</strong></summary>
 
-The structure is composed of the following blocks: Sand.
+The structure part is composed of the following blocks: Sand.
 
 ### Blocks
 
@@ -576,12 +569,12 @@ The structure is composed of the following blocks: Sand.
 
 ### Entities
 
-None found.
+*None*
 
 
 ### Loot Tables
 
-None found.
+*None*
 
 
 </details>
@@ -589,7 +582,7 @@ None found.
 <details>
 <summary><strong>Archaeological Site/Post 1</strong></summary>
 
-The structure is composed of the following blocks: Birch Fence, Sandstone Wall.
+The structure part is composed of the following blocks: Birch Fence, Sandstone Wall.
 
 ### Blocks
 
@@ -601,12 +594,12 @@ The structure is composed of the following blocks: Birch Fence, Sandstone Wall.
 
 ### Entities
 
-None found.
+*None*
 
 
 ### Loot Tables
 
-None found.
+*None*
 
 
 </details>
@@ -614,7 +607,7 @@ None found.
 <details>
 <summary><strong>Archaeological Site/Post 2</strong></summary>
 
-The structure is composed of the following blocks: Sandstone Wall, Birch Fence.
+The structure part is composed of the following blocks: Sandstone Wall, Birch Fence.
 
 ### Blocks
 
@@ -626,12 +619,12 @@ The structure is composed of the following blocks: Sandstone Wall, Birch Fence.
 
 ### Entities
 
-None found.
+*None*
 
 
 ### Loot Tables
 
-None found.
+*None*
 
 
 </details>
@@ -639,7 +632,7 @@ None found.
 <details>
 <summary><strong>Archaeological Site/Post 3</strong></summary>
 
-The structure is composed of the following blocks: Birch Fence.
+The structure part is composed of the following blocks: Birch Fence.
 
 ### Blocks
 
@@ -650,12 +643,12 @@ The structure is composed of the following blocks: Birch Fence.
 
 ### Entities
 
-None found.
+*None*
 
 
 ### Loot Tables
 
-None found.
+*None*
 
 
 </details>
@@ -663,7 +656,7 @@ None found.
 <details>
 <summary><strong>Archaeological Site/Post 4</strong></summary>
 
-The structure is composed of the following blocks: Birch Fence, Sandstone Wall.
+The structure part is composed of the following blocks: Birch Fence, Sandstone Wall.
 
 ### Blocks
 
@@ -675,12 +668,12 @@ The structure is composed of the following blocks: Birch Fence, Sandstone Wall.
 
 ### Entities
 
-None found.
+*None*
 
 
 ### Loot Tables
 
-None found.
+*None*
 
 
 </details>
@@ -688,7 +681,7 @@ None found.
 <details>
 <summary><strong>Archaeological Site/Post 5</strong></summary>
 
-The structure is composed of the following blocks: Birch Fence.
+The structure part is composed of the following blocks: Birch Fence.
 
 ### Blocks
 
@@ -699,12 +692,12 @@ The structure is composed of the following blocks: Birch Fence.
 
 ### Entities
 
-None found.
+*None*
 
 
 ### Loot Tables
 
-None found.
+*None*
 
 
 </details>
@@ -712,7 +705,7 @@ None found.
 <details>
 <summary><strong>Archaeological Site/Post 6</strong></summary>
 
-The structure is composed of the following blocks: Birch Fence, Sandstone Wall.
+The structure part is composed of the following blocks: Birch Fence, Sandstone Wall.
 
 ### Blocks
 
@@ -724,12 +717,12 @@ The structure is composed of the following blocks: Birch Fence, Sandstone Wall.
 
 ### Entities
 
-None found.
+*None*
 
 
 ### Loot Tables
 
-None found.
+*None*
 
 
 </details>
@@ -737,7 +730,7 @@ None found.
 <details>
 <summary><strong>Archaeological Site/Post 7</strong></summary>
 
-The structure is composed of the following blocks: Birch Fence, Sandstone Wall.
+The structure part is composed of the following blocks: Birch Fence, Sandstone Wall.
 
 ### Blocks
 
@@ -749,12 +742,12 @@ The structure is composed of the following blocks: Birch Fence, Sandstone Wall.
 
 ### Entities
 
-None found.
+*None*
 
 
 ### Loot Tables
 
-None found.
+*None*
 
 
 </details>
@@ -762,7 +755,7 @@ None found.
 <details>
 <summary><strong>Archaeological Site/Post 8</strong></summary>
 
-The structure is composed of the following blocks: Sandstone Wall.
+The structure part is composed of the following blocks: Sandstone Wall.
 
 ### Blocks
 
@@ -773,12 +766,12 @@ The structure is composed of the following blocks: Sandstone Wall.
 
 ### Entities
 
-None found.
+*None*
 
 
 ### Loot Tables
 
-None found.
+*None*
 
 
 </details>
@@ -786,7 +779,7 @@ None found.
 <details>
 <summary><strong>Archaeological Site/Post 9</strong></summary>
 
-The structure is composed of the following blocks: Birch Fence, Sandstone Wall.
+The structure part is composed of the following blocks: Birch Fence, Sandstone Wall.
 
 ### Blocks
 
@@ -798,12 +791,12 @@ The structure is composed of the following blocks: Birch Fence, Sandstone Wall.
 
 ### Entities
 
-None found.
+*None*
 
 
 ### Loot Tables
 
-None found.
+*None*
 
 
 </details>
@@ -811,7 +804,7 @@ None found.
 <details>
 <summary><strong>Archaeological Site/Tent 1</strong></summary>
 
-The structure is composed of the following blocks: Red Wool, Birch Stairs, Birch Trapdoor, Birch Fence, Birch Slab, Yellow Bed, Lantern, Loom.
+The structure part is composed of the following blocks: Red Wool, Birch Stairs, Birch Trapdoor, Birch Fence, Birch Slab, Yellow Bed, Lantern, Loom.
 
 Additionally, the following entities may spawn during its generation: Item Frame, Villager.
 
@@ -839,7 +832,7 @@ Additionally, the following entities may spawn during its generation: Item Frame
 
 ### Loot Tables
 
-None found.
+*None*
 
 
 </details>
@@ -847,7 +840,7 @@ None found.
 <details>
 <summary><strong>Archaeological Site/Tent 2</strong></summary>
 
-The structure is composed of the following blocks: Light Blue Wool, Birch Stairs, Birch Trapdoor, Birch Fence, Birch Slab, Red Bed, Lantern, Loom.
+The structure part is composed of the following blocks: Light Blue Wool, Birch Stairs, Birch Trapdoor, Birch Fence, Birch Slab, Red Bed, Lantern, Loom.
 
 Additionally, the following entities may spawn during its generation: Cat, Item Frame, Villager.
 
@@ -876,7 +869,7 @@ Additionally, the following entities may spawn during its generation: Cat, Item 
 
 ### Loot Tables
 
-None found.
+*None*
 
 
 </details>
@@ -884,7 +877,7 @@ None found.
 <details>
 <summary><strong>Archaeological Site/Tent 3</strong></summary>
 
-The structure is composed of the following blocks: Yellow Wool, Birch Stairs, Birch Trapdoor, Birch Fence, Birch Slab, White Bed, Lantern, Loom.
+The structure part is composed of the following blocks: Yellow Wool, Birch Stairs, Birch Trapdoor, Birch Fence, Birch Slab, White Bed, Lantern, Loom.
 
 Additionally, the following entities may spawn during its generation: Item Frame, Villager.
 
@@ -912,7 +905,7 @@ Additionally, the following entities may spawn during its generation: Item Frame
 
 ### Loot Tables
 
-None found.
+*None*
 
 
 </details>
@@ -920,7 +913,7 @@ None found.
 <details>
 <summary><strong>Archaeological Site/Tent 4</strong></summary>
 
-The structure is composed of the following blocks: White Wool, Birch Stairs, Birch Trapdoor, Birch Fence, Birch Slab, Light Blue Bed, Lantern, Loom.
+The structure part is composed of the following blocks: White Wool, Birch Stairs, Birch Trapdoor, Birch Fence, Birch Slab, Light Blue Bed, Lantern, Loom.
 
 Additionally, the following entities may spawn during its generation: Cat, Item Frame, Villager.
 
@@ -949,7 +942,7 @@ Additionally, the following entities may spawn during its generation: Cat, Item 
 
 ### Loot Tables
 
-None found.
+*None*
 
 
 </details>

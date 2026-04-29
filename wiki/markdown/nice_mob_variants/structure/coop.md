@@ -1,27 +1,22 @@
-# Coop
-
-## Summary
+# Contents
 
 The structure is composed of the following blocks: Grass Block, Bamboo Fence, Pale Oak Slab, Podzol, Coarse Dirt, Mycelium, Pale Oak Fence, Red Mushroom Block, Dirt Path, Spruce Fence, Rooted Dirt, Mangrove Planks, Dead Horn Coral Fan, Bamboo Mosaic Stairs, Spruce Trapdoor, Hay Block, Spruce Slab, Diorite, Stripped Mangrove Log, Bamboo Trapdoor, Stripped Pale Oak Log, Mangrove Stairs, Oak Log, Mangrove Wall Sign, Spruce Stairs, Bamboo Block, Mangrove Trapdoor, Bamboo, Bamboo Mosaic Slab, Spruce Wall Sign, Mushroom Stem, Bamboo Fence Gate, Bamboo Wall Sign, Dirt, Lantern, Spruce Shelf, Oak Slab, Bamboo Sapling, Spruce Fence Gate, Spruce Planks, Turtle Egg, Acacia Trapdoor, Bamboo Hanging Sign.
 
 Additionally, the following entities may spawn during its generation: Chicken.
 
-### Loot Tables
 
-None found.
-
-
+## Per-Structure File Contents
 
 <details>
 <summary><strong>Coop/Chicken 1</strong></summary>
 
-The structure does not contain any notable blocks.
+The structure part does not contain any notable blocks.
 
 Additionally, the following entities may spawn during its generation: Chicken.
 
 ### Blocks
 
-None found.
+*None*
 
 
 ### Entities
@@ -33,7 +28,7 @@ None found.
 
 ### Loot Tables
 
-None found.
+*None*
 
 
 </details>
@@ -41,13 +36,13 @@ None found.
 <details>
 <summary><strong>Coop/Chicken 2</strong></summary>
 
-The structure does not contain any notable blocks.
+The structure part does not contain any notable blocks.
 
 Additionally, the following entities may spawn during its generation: Chicken.
 
 ### Blocks
 
-None found.
+*None*
 
 
 ### Entities
@@ -59,7 +54,7 @@ None found.
 
 ### Loot Tables
 
-None found.
+*None*
 
 
 </details>
@@ -67,13 +62,13 @@ None found.
 <details>
 <summary><strong>Coop/Chicken 3</strong></summary>
 
-The structure does not contain any notable blocks.
+The structure part does not contain any notable blocks.
 
 Additionally, the following entities may spawn during its generation: Chicken.
 
 ### Blocks
 
-None found.
+*None*
 
 
 ### Entities
@@ -85,7 +80,7 @@ None found.
 
 ### Loot Tables
 
-None found.
+*None*
 
 
 </details>
@@ -93,7 +88,7 @@ None found.
 <details>
 <summary><strong>Coop/Coop Bamboo</strong></summary>
 
-The structure is composed of the following blocks: Bamboo Fence, Grass Block, Bamboo Mosaic Stairs, Coarse Dirt, Bamboo Trapdoor, Rooted Dirt, Bamboo Block, Dirt Path, Bamboo, Bamboo Mosaic Slab, Dead Horn Coral Fan, Bamboo Fence Gate, Bamboo Wall Sign, Diorite, Dirt, Bamboo Sapling, Bamboo Hanging Sign, Lantern.
+The structure part is composed of the following blocks: Bamboo Fence, Grass Block, Bamboo Mosaic Stairs, Coarse Dirt, Bamboo Trapdoor, Rooted Dirt, Bamboo Block, Dirt Path, Bamboo, Bamboo Mosaic Slab, Dead Horn Coral Fan, Bamboo Fence Gate, Bamboo Wall Sign, Diorite, Dirt, Bamboo Sapling, Bamboo Hanging Sign, Lantern.
 
 ### Blocks
 
@@ -121,12 +116,12 @@ The structure is composed of the following blocks: Bamboo Fence, Grass Block, Ba
 
 ### Entities
 
-None found.
+*None*
 
 
 ### Loot Tables
 
-None found.
+*None*
 
 
 </details>
@@ -134,7 +129,7 @@ None found.
 <details>
 <summary><strong>Coop/Coop Cold</strong></summary>
 
-The structure is composed of the following blocks: Grass Block, Pale Oak Slab, Pale Oak Fence, Podzol, Coarse Dirt, Mangrove Planks, Dirt Path, Stripped Mangrove Log, Stripped Pale Oak Log, Mangrove Stairs, Hay Block, Mangrove Wall Sign, Rooted Dirt, Mangrove Trapdoor, Dead Horn Coral Fan, Diorite, Oak Slab, Lantern.
+The structure part is composed of the following blocks: Grass Block, Pale Oak Slab, Pale Oak Fence, Podzol, Coarse Dirt, Mangrove Planks, Dirt Path, Stripped Mangrove Log, Stripped Pale Oak Log, Mangrove Stairs, Hay Block, Mangrove Wall Sign, Rooted Dirt, Mangrove Trapdoor, Dead Horn Coral Fan, Diorite, Oak Slab, Lantern.
 
 ### Blocks
 
@@ -162,12 +157,12 @@ The structure is composed of the following blocks: Grass Block, Pale Oak Slab, P
 
 ### Entities
 
-None found.
+*None*
 
 
 ### Loot Tables
 
-None found.
+*None*
 
 
 </details>
@@ -175,7 +170,7 @@ None found.
 <details>
 <summary><strong>Coop/Coop Shroom</strong></summary>
 
-The structure is composed of the following blocks: Mycelium, Red Mushroom Block, Pale Oak Slab, Dead Horn Coral Fan, Diorite, Hay Block, Mushroom Stem, Acacia Trapdoor, Grass Block, Turtle Egg.
+The structure part is composed of the following blocks: Mycelium, Red Mushroom Block, Pale Oak Slab, Dead Horn Coral Fan, Diorite, Hay Block, Mushroom Stem, Acacia Trapdoor, Grass Block, Turtle Egg.
 
 ### Blocks
 
@@ -195,12 +190,12 @@ The structure is composed of the following blocks: Mycelium, Red Mushroom Block,
 
 ### Entities
 
-None found.
+*None*
 
 
 ### Loot Tables
 
-None found.
+*None*
 
 
 </details>
@@ -208,7 +203,7 @@ None found.
 <details>
 <summary><strong>Coop/Coop Wood</strong></summary>
 
-The structure is composed of the following blocks: Grass Block, Spruce Fence, Spruce Trapdoor, Spruce Slab, Oak Log, Podzol, Coarse Dirt, Spruce Stairs, Dirt Path, Rooted Dirt, Spruce Wall Sign, Dead Horn Coral Fan, Diorite, Spruce Shelf, Lantern, Spruce Fence Gate, Spruce Planks, Turtle Egg.
+The structure part is composed of the following blocks: Grass Block, Spruce Fence, Spruce Trapdoor, Spruce Slab, Oak Log, Podzol, Coarse Dirt, Spruce Stairs, Dirt Path, Rooted Dirt, Spruce Wall Sign, Dead Horn Coral Fan, Diorite, Spruce Shelf, Lantern, Spruce Fence Gate, Spruce Planks, Turtle Egg.
 
 ### Blocks
 
@@ -236,12 +231,12 @@ The structure is composed of the following blocks: Grass Block, Spruce Fence, Sp
 
 ### Entities
 
-None found.
+*None*
 
 
 ### Loot Tables
 
-None found.
+*None*
 
 
 </details>

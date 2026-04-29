@@ -1,21 +1,14 @@
-# Graveyard
-
-## Summary
+# Contents
 
 The structure is composed of the following blocks: Grass Block, Leaf Litter, Tuff, Stone Bricks, Fern, Cobweb, Iron Bars, Coarse Dirt, Large Fern, Polished Tuff Stairs, Spruce Fence, Bush, Stone Brick Wall, Spruce Slab, Composter, Polished Andesite Stairs, Polished Deepslate Stairs, Spruce Wall Sign, Chiseled Stone Bricks, Skeleton Skull, Spruce Trapdoor, Waxed Weathered Copper Bulb, White Candle, Potted Dead Bush, Potted Lily Of The Valley, Redstone Torch, Soul Lantern, Water Cauldron, Chest, Potted Red Tulip, Cauldron.
 
-### Loot Tables
 
-| Loot Table |
-|:-----|
-| nice_mob_variants:structure/graveyard |
-
-
+## Per-Structure File Contents
 
 <details>
 <summary><strong>Graveyard/Base 1</strong></summary>
 
-The structure is composed of the following blocks: Grass Block, Tuff, Stone Bricks, Cobweb, Iron Bars, Fern, Leaf Litter, Coarse Dirt, Spruce Slab, Chiseled Stone Bricks, Spruce Fence, Spruce Trapdoor, Stone Brick Wall.
+The structure part is composed of the following blocks: Grass Block, Tuff, Stone Bricks, Cobweb, Iron Bars, Fern, Leaf Litter, Coarse Dirt, Spruce Slab, Chiseled Stone Bricks, Spruce Fence, Spruce Trapdoor, Stone Brick Wall.
 
 ### Blocks
 
@@ -38,12 +31,12 @@ The structure is composed of the following blocks: Grass Block, Tuff, Stone Bric
 
 ### Entities
 
-None found.
+*None*
 
 
 ### Loot Tables
 
-None found.
+*None*
 
 
 </details>
@@ -51,7 +44,7 @@ None found.
 <details>
 <summary><strong>Graveyard/Grave 1</strong></summary>
 
-The structure is composed of the following blocks: Polished Tuff Stairs, Spruce Wall Sign, White Candle.
+The structure part is composed of the following blocks: Polished Tuff Stairs, Spruce Wall Sign, White Candle.
 
 ### Blocks
 
@@ -64,12 +57,12 @@ The structure is composed of the following blocks: Polished Tuff Stairs, Spruce 
 
 ### Entities
 
-None found.
+*None*
 
 
 ### Loot Tables
 
-None found.
+*None*
 
 
 </details>
@@ -77,7 +70,7 @@ None found.
 <details>
 <summary><strong>Graveyard/Grave 10</strong></summary>
 
-The structure is composed of the following blocks: Polished Andesite Stairs, Spruce Wall Sign, White Candle.
+The structure part is composed of the following blocks: Polished Andesite Stairs, Spruce Wall Sign, White Candle.
 
 ### Blocks
 
@@ -90,12 +83,12 @@ The structure is composed of the following blocks: Polished Andesite Stairs, Spr
 
 ### Entities
 
-None found.
+*None*
 
 
 ### Loot Tables
 
-None found.
+*None*
 
 
 </details>
@@ -103,7 +96,7 @@ None found.
 <details>
 <summary><strong>Graveyard/Grave 11</strong></summary>
 
-The structure is composed of the following blocks: Polished Deepslate Stairs, Potted Lily Of The Valley, Skeleton Skull.
+The structure part is composed of the following blocks: Polished Deepslate Stairs, Potted Lily Of The Valley, Skeleton Skull.
 
 ### Blocks
 
@@ -116,12 +109,12 @@ The structure is composed of the following blocks: Polished Deepslate Stairs, Po
 
 ### Entities
 
-None found.
+*None*
 
 
 ### Loot Tables
 
-None found.
+*None*
 
 
 </details>
@@ -129,7 +122,7 @@ None found.
 <details>
 <summary><strong>Graveyard/Grave 12</strong></summary>
 
-The structure is composed of the following blocks: Polished Deepslate Stairs, Spruce Wall Sign, White Candle.
+The structure part is composed of the following blocks: Polished Deepslate Stairs, Spruce Wall Sign, White Candle.
 
 ### Blocks
 
@@ -142,12 +135,12 @@ The structure is composed of the following blocks: Polished Deepslate Stairs, Sp
 
 ### Entities
 
-None found.
+*None*
 
 
 ### Loot Tables
 
-None found.
+*None*
 
 
 </details>
@@ -155,7 +148,7 @@ None found.
 <details>
 <summary><strong>Graveyard/Grave 13</strong></summary>
 
-The structure is composed of the following blocks: Polished Deepslate Stairs, Potted Red Tulip, Soul Lantern.
+The structure part is composed of the following blocks: Polished Deepslate Stairs, Potted Red Tulip, Soul Lantern.
 
 ### Blocks
 
@@ -168,12 +161,12 @@ The structure is composed of the following blocks: Polished Deepslate Stairs, Po
 
 ### Entities
 
-None found.
+*None*
 
 
 ### Loot Tables
 
-None found.
+*None*
 
 
 </details>
@@ -181,7 +174,7 @@ None found.
 <details>
 <summary><strong>Graveyard/Grave 14</strong></summary>
 
-The structure is composed of the following blocks: Polished Deepslate Stairs, Spruce Wall Sign, White Candle.
+The structure part is composed of the following blocks: Polished Deepslate Stairs, Spruce Wall Sign, White Candle.
 
 ### Blocks
 
@@ -194,12 +187,12 @@ The structure is composed of the following blocks: Polished Deepslate Stairs, Sp
 
 ### Entities
 
-None found.
+*None*
 
 
 ### Loot Tables
 
-None found.
+*None*
 
 
 </details>
@@ -207,7 +200,7 @@ None found.
 <details>
 <summary><strong>Graveyard/Grave 15</strong></summary>
 
-The structure is composed of the following blocks: Polished Deepslate Stairs, Potted Dead Bush, Redstone Torch.
+The structure part is composed of the following blocks: Polished Deepslate Stairs, Potted Dead Bush, Redstone Torch.
 
 ### Blocks
 
@@ -220,12 +213,12 @@ The structure is composed of the following blocks: Polished Deepslate Stairs, Po
 
 ### Entities
 
-None found.
+*None*
 
 
 ### Loot Tables
 
-None found.
+*None*
 
 
 </details>
@@ -233,7 +226,7 @@ None found.
 <details>
 <summary><strong>Graveyard/Grave 2</strong></summary>
 
-The structure is composed of the following blocks: Polished Tuff Stairs, Skeleton Skull.
+The structure part is composed of the following blocks: Polished Tuff Stairs, Skeleton Skull.
 
 ### Blocks
 
@@ -245,12 +238,12 @@ The structure is composed of the following blocks: Polished Tuff Stairs, Skeleto
 
 ### Entities
 
-None found.
+*None*
 
 
 ### Loot Tables
 
-None found.
+*None*
 
 
 </details>
@@ -258,7 +251,7 @@ None found.
 <details>
 <summary><strong>Graveyard/Grave 3</strong></summary>
 
-The structure is composed of the following blocks: Polished Tuff Stairs, Potted Red Tulip, Redstone Torch.
+The structure part is composed of the following blocks: Polished Tuff Stairs, Potted Red Tulip, Redstone Torch.
 
 ### Blocks
 
@@ -271,12 +264,12 @@ The structure is composed of the following blocks: Polished Tuff Stairs, Potted 
 
 ### Entities
 
-None found.
+*None*
 
 
 ### Loot Tables
 
-None found.
+*None*
 
 
 </details>
@@ -284,7 +277,7 @@ None found.
 <details>
 <summary><strong>Graveyard/Grave 4</strong></summary>
 
-The structure is composed of the following blocks: Polished Tuff Stairs, Potted Dead Bush, Spruce Wall Sign.
+The structure part is composed of the following blocks: Polished Tuff Stairs, Potted Dead Bush, Spruce Wall Sign.
 
 ### Blocks
 
@@ -297,12 +290,12 @@ The structure is composed of the following blocks: Polished Tuff Stairs, Potted 
 
 ### Entities
 
-None found.
+*None*
 
 
 ### Loot Tables
 
-None found.
+*None*
 
 
 </details>
@@ -310,7 +303,7 @@ None found.
 <details>
 <summary><strong>Graveyard/Grave 5</strong></summary>
 
-The structure is composed of the following blocks: Polished Tuff Stairs, Potted Lily Of The Valley, Soul Lantern.
+The structure part is composed of the following blocks: Polished Tuff Stairs, Potted Lily Of The Valley, Soul Lantern.
 
 ### Blocks
 
@@ -323,12 +316,12 @@ The structure is composed of the following blocks: Polished Tuff Stairs, Potted 
 
 ### Entities
 
-None found.
+*None*
 
 
 ### Loot Tables
 
-None found.
+*None*
 
 
 </details>
@@ -336,7 +329,7 @@ None found.
 <details>
 <summary><strong>Graveyard/Grave 6</strong></summary>
 
-The structure is composed of the following blocks: Polished Andesite Stairs, Redstone Torch.
+The structure part is composed of the following blocks: Polished Andesite Stairs, Redstone Torch.
 
 ### Blocks
 
@@ -348,12 +341,12 @@ The structure is composed of the following blocks: Polished Andesite Stairs, Red
 
 ### Entities
 
-None found.
+*None*
 
 
 ### Loot Tables
 
-None found.
+*None*
 
 
 </details>
@@ -361,7 +354,7 @@ None found.
 <details>
 <summary><strong>Graveyard/Grave 7</strong></summary>
 
-The structure is composed of the following blocks: Polished Andesite Stairs, Skeleton Skull.
+The structure part is composed of the following blocks: Polished Andesite Stairs, Skeleton Skull.
 
 ### Blocks
 
@@ -373,12 +366,12 @@ The structure is composed of the following blocks: Polished Andesite Stairs, Ske
 
 ### Entities
 
-None found.
+*None*
 
 
 ### Loot Tables
 
-None found.
+*None*
 
 
 </details>
@@ -386,7 +379,7 @@ None found.
 <details>
 <summary><strong>Graveyard/Grave 8</strong></summary>
 
-The structure is composed of the following blocks: Polished Andesite Stairs, Potted Dead Bush, Skeleton Skull.
+The structure part is composed of the following blocks: Polished Andesite Stairs, Potted Dead Bush, Skeleton Skull.
 
 ### Blocks
 
@@ -399,12 +392,12 @@ The structure is composed of the following blocks: Polished Andesite Stairs, Pot
 
 ### Entities
 
-None found.
+*None*
 
 
 ### Loot Tables
 
-None found.
+*None*
 
 
 </details>
@@ -412,7 +405,7 @@ None found.
 <details>
 <summary><strong>Graveyard/Grave 9</strong></summary>
 
-The structure is composed of the following blocks: Polished Andesite Stairs, Potted Lily Of The Valley, Soul Lantern.
+The structure part is composed of the following blocks: Polished Andesite Stairs, Potted Lily Of The Valley, Soul Lantern.
 
 ### Blocks
 
@@ -425,12 +418,12 @@ The structure is composed of the following blocks: Polished Andesite Stairs, Pot
 
 ### Entities
 
-None found.
+*None*
 
 
 ### Loot Tables
 
-None found.
+*None*
 
 
 </details>
@@ -438,7 +431,7 @@ None found.
 <details>
 <summary><strong>Graveyard/Main Feature 1</strong></summary>
 
-The structure is composed of the following blocks: Leaf Litter, Polished Tuff Stairs, Bush, Fern.
+The structure part is composed of the following blocks: Leaf Litter, Polished Tuff Stairs, Bush, Fern.
 
 ### Blocks
 
@@ -452,12 +445,12 @@ The structure is composed of the following blocks: Leaf Litter, Polished Tuff St
 
 ### Entities
 
-None found.
+*None*
 
 
 ### Loot Tables
 
-None found.
+*None*
 
 
 </details>
@@ -465,7 +458,7 @@ None found.
 <details>
 <summary><strong>Graveyard/Main Feature 2</strong></summary>
 
-The structure is composed of the following blocks: Leaf Litter, Large Fern, Spruce Fence, Bush, Fern, Stone Brick Wall, Waxed Weathered Copper Bulb.
+The structure part is composed of the following blocks: Leaf Litter, Large Fern, Spruce Fence, Bush, Fern, Stone Brick Wall, Waxed Weathered Copper Bulb.
 
 ### Blocks
 
@@ -482,12 +475,12 @@ The structure is composed of the following blocks: Leaf Litter, Large Fern, Spru
 
 ### Entities
 
-None found.
+*None*
 
 
 ### Loot Tables
 
-None found.
+*None*
 
 
 </details>
@@ -495,7 +488,7 @@ None found.
 <details>
 <summary><strong>Graveyard/Main Feature 3</strong></summary>
 
-The structure is composed of the following blocks: Leaf Litter, Polished Tuff Stairs, Large Fern, Bush, Fern.
+The structure part is composed of the following blocks: Leaf Litter, Polished Tuff Stairs, Large Fern, Bush, Fern.
 
 ### Blocks
 
@@ -510,12 +503,12 @@ The structure is composed of the following blocks: Leaf Litter, Polished Tuff St
 
 ### Entities
 
-None found.
+*None*
 
 
 ### Loot Tables
 
-None found.
+*None*
 
 
 </details>
@@ -523,7 +516,7 @@ None found.
 <details>
 <summary><strong>Graveyard/Main Feature 4</strong></summary>
 
-The structure is composed of the following blocks: Leaf Litter, Polished Tuff Stairs, Bush.
+The structure part is composed of the following blocks: Leaf Litter, Polished Tuff Stairs, Bush.
 
 ### Blocks
 
@@ -536,12 +529,12 @@ The structure is composed of the following blocks: Leaf Litter, Polished Tuff St
 
 ### Entities
 
-None found.
+*None*
 
 
 ### Loot Tables
 
-None found.
+*None*
 
 
 </details>
@@ -549,7 +542,7 @@ None found.
 <details>
 <summary><strong>Graveyard/Main Feature 5</strong></summary>
 
-The structure is composed of the following blocks: Leaf Litter, Bush, Composter, Large Fern, Fern.
+The structure part is composed of the following blocks: Leaf Litter, Bush, Composter, Large Fern, Fern.
 
 ### Blocks
 
@@ -564,12 +557,12 @@ The structure is composed of the following blocks: Leaf Litter, Bush, Composter,
 
 ### Entities
 
-None found.
+*None*
 
 
 ### Loot Tables
 
-None found.
+*None*
 
 
 </details>
@@ -577,7 +570,7 @@ None found.
 <details>
 <summary><strong>Graveyard/Main Feature 6</strong></summary>
 
-The structure is composed of the following blocks: Large Fern, Spruce Fence, Bush, Chest, Fern, Stone Brick Wall, Water Cauldron, Waxed Weathered Copper Bulb.
+The structure part is composed of the following blocks: Large Fern, Spruce Fence, Bush, Chest, Fern, Stone Brick Wall, Water Cauldron, Waxed Weathered Copper Bulb.
 
 ### Blocks
 
@@ -595,7 +588,7 @@ The structure is composed of the following blocks: Large Fern, Spruce Fence, Bus
 
 ### Entities
 
-None found.
+*None*
 
 
 ### Loot Tables
@@ -610,7 +603,7 @@ None found.
 <details>
 <summary><strong>Graveyard/Main Feature 7</strong></summary>
 
-The structure is composed of the following blocks: Fern, Large Fern, Bush, Cauldron, Water Cauldron.
+The structure part is composed of the following blocks: Fern, Large Fern, Bush, Cauldron, Water Cauldron.
 
 ### Blocks
 
@@ -625,12 +618,12 @@ The structure is composed of the following blocks: Fern, Large Fern, Bush, Cauld
 
 ### Entities
 
-None found.
+*None*
 
 
 ### Loot Tables
 
-None found.
+*None*
 
 
 </details>
@@ -638,7 +631,7 @@ None found.
 <details>
 <summary><strong>Graveyard/Main Feature 8</strong></summary>
 
-The structure is composed of the following blocks: Leaf Litter, Large Fern, Spruce Fence, Bush, Composter, Fern, Stone Brick Wall, Water Cauldron, Waxed Weathered Copper Bulb.
+The structure part is composed of the following blocks: Leaf Litter, Large Fern, Spruce Fence, Bush, Composter, Fern, Stone Brick Wall, Water Cauldron, Waxed Weathered Copper Bulb.
 
 ### Blocks
 
@@ -657,12 +650,12 @@ The structure is composed of the following blocks: Leaf Litter, Large Fern, Spru
 
 ### Entities
 
-None found.
+*None*
 
 
 ### Loot Tables
 
-None found.
+*None*
 
 
 </details>
@@ -670,7 +663,7 @@ None found.
 <details>
 <summary><strong>Graveyard/Main Feature 9</strong></summary>
 
-The structure is composed of the following blocks: Leaf Litter, Composter, Large Fern, Spruce Fence, Chest, Fern, Stone Brick Wall, Waxed Weathered Copper Bulb.
+The structure part is composed of the following blocks: Leaf Litter, Composter, Large Fern, Spruce Fence, Chest, Fern, Stone Brick Wall, Waxed Weathered Copper Bulb.
 
 ### Blocks
 
@@ -688,7 +681,7 @@ The structure is composed of the following blocks: Leaf Litter, Composter, Large
 
 ### Entities
 
-None found.
+*None*
 
 
 ### Loot Tables

@@ -1,21 +1,16 @@
-# Pen
-
-## Summary
+# Contents
 
 The structure is composed of the following blocks: Grass Block, Polished Deepslate Slab, Coarse Dirt, Spruce Stairs, Spruce Trapdoor, Waxed Oxidized Copper Bars, Jungle Fence, Muddy Mangrove Roots, Mud, Packed Mud, Rooted Dirt, Campfire, Jungle Planks, Stripped Spruce Log, Waxed Weathered Copper Bars, Spruce Wall Sign, Mangrove Shelf, Spruce Fence, Spruce Slab, Jungle Slab, Jungle Fence Gate, Dirt, Jungle Leaves, Jungle Log, Jungle Stairs, Mud Brick Stairs, Pale Oak Fence, Vine, Jungle Button, Spruce Fence Gate, Jungle Wall Sign, Lantern, Stripped Jungle Log, Jungle Trapdoor, Red Mushroom, Brown Mushroom, Mangrove Stairs, Mangrove Trapdoor, Mangrove Slab.
 
 Additionally, the following entities may spawn during its generation: Pig.
 
-### Loot Tables
 
-None found.
-
-
+## Per-Structure File Contents
 
 <details>
 <summary><strong>Pen/Pen Cold</strong></summary>
 
-The structure is composed of the following blocks: Grass Block, Waxed Oxidized Copper Bars, Polished Deepslate Slab, Waxed Weathered Copper Bars, Mangrove Shelf, Muddy Mangrove Roots, Coarse Dirt, Pale Oak Fence, Mud, Packed Mud, Rooted Dirt, Mud Brick Stairs, Mangrove Stairs, Mangrove Trapdoor, Dirt, Lantern, Mangrove Slab.
+The structure part is composed of the following blocks: Grass Block, Waxed Oxidized Copper Bars, Polished Deepslate Slab, Waxed Weathered Copper Bars, Mangrove Shelf, Muddy Mangrove Roots, Coarse Dirt, Pale Oak Fence, Mud, Packed Mud, Rooted Dirt, Mud Brick Stairs, Mangrove Stairs, Mangrove Trapdoor, Dirt, Lantern, Mangrove Slab.
 
 ### Blocks
 
@@ -42,12 +37,12 @@ The structure is composed of the following blocks: Grass Block, Waxed Oxidized C
 
 ### Entities
 
-None found.
+*None*
 
 
 ### Loot Tables
 
-None found.
+*None*
 
 
 </details>
@@ -55,7 +50,7 @@ None found.
 <details>
 <summary><strong>Pen/Pen Jungle</strong></summary>
 
-The structure is composed of the following blocks: Polished Deepslate Slab, Jungle Planks, Grass Block, Jungle Fence, Packed Mud, Rooted Dirt, Jungle Fence Gate, Coarse Dirt, Jungle Stairs, Mud, Jungle Button, Muddy Mangrove Roots, Jungle Wall Sign, Jungle Trapdoor, Mud Brick Stairs, Dirt, Lantern.
+The structure part is composed of the following blocks: Polished Deepslate Slab, Jungle Planks, Grass Block, Jungle Fence, Packed Mud, Rooted Dirt, Jungle Fence Gate, Coarse Dirt, Jungle Stairs, Mud, Jungle Button, Muddy Mangrove Roots, Jungle Wall Sign, Jungle Trapdoor, Mud Brick Stairs, Dirt, Lantern.
 
 ### Blocks
 
@@ -82,12 +77,12 @@ The structure is composed of the following blocks: Polished Deepslate Slab, Jung
 
 ### Entities
 
-None found.
+*None*
 
 
 ### Loot Tables
 
-None found.
+*None*
 
 
 </details>
@@ -95,7 +90,7 @@ None found.
 <details>
 <summary><strong>Pen/Pen Wild</strong></summary>
 
-The structure is composed of the following blocks: Grass Block, Jungle Slab, Coarse Dirt, Jungle Leaves, Jungle Log, Vine, Jungle Fence, Muddy Mangrove Roots, Mud, Stripped Jungle Log, Red Mushroom, Brown Mushroom, Jungle Stairs, Mud Brick Stairs, Packed Mud, Rooted Dirt.
+The structure part is composed of the following blocks: Grass Block, Jungle Slab, Coarse Dirt, Jungle Leaves, Jungle Log, Vine, Jungle Fence, Muddy Mangrove Roots, Mud, Stripped Jungle Log, Red Mushroom, Brown Mushroom, Jungle Stairs, Mud Brick Stairs, Packed Mud, Rooted Dirt.
 
 ### Blocks
 
@@ -121,12 +116,12 @@ The structure is composed of the following blocks: Grass Block, Jungle Slab, Coa
 
 ### Entities
 
-None found.
+*None*
 
 
 ### Loot Tables
 
-None found.
+*None*
 
 
 </details>
@@ -134,7 +129,7 @@ None found.
 <details>
 <summary><strong>Pen/Pen Wood</strong></summary>
 
-The structure is composed of the following blocks: Grass Block, Spruce Stairs, Spruce Trapdoor, Campfire, Stripped Spruce Log, Spruce Wall Sign, Spruce Fence, Spruce Slab, Mud, Dirt, Rooted Dirt, Packed Mud, Spruce Fence Gate, Coarse Dirt, Muddy Mangrove Roots, Lantern, Mud Brick Stairs.
+The structure part is composed of the following blocks: Grass Block, Spruce Stairs, Spruce Trapdoor, Campfire, Stripped Spruce Log, Spruce Wall Sign, Spruce Fence, Spruce Slab, Mud, Dirt, Rooted Dirt, Packed Mud, Spruce Fence Gate, Coarse Dirt, Muddy Mangrove Roots, Lantern, Mud Brick Stairs.
 
 ### Blocks
 
@@ -161,12 +156,12 @@ The structure is composed of the following blocks: Grass Block, Spruce Stairs, S
 
 ### Entities
 
-None found.
+*None*
 
 
 ### Loot Tables
 
-None found.
+*None*
 
 
 </details>
@@ -174,13 +169,13 @@ None found.
 <details>
 <summary><strong>Pen/Pig 1</strong></summary>
 
-The structure does not contain any notable blocks.
+The structure part does not contain any notable blocks.
 
 Additionally, the following entities may spawn during its generation: Pig.
 
 ### Blocks
 
-None found.
+*None*
 
 
 ### Entities
@@ -192,7 +187,7 @@ None found.
 
 ### Loot Tables
 
-None found.
+*None*
 
 
 </details>
@@ -200,13 +195,13 @@ None found.
 <details>
 <summary><strong>Pen/Pig 2</strong></summary>
 
-The structure does not contain any notable blocks.
+The structure part does not contain any notable blocks.
 
 Additionally, the following entities may spawn during its generation: Pig.
 
 ### Blocks
 
-None found.
+*None*
 
 
 ### Entities
@@ -218,7 +213,7 @@ None found.
 
 ### Loot Tables
 
-None found.
+*None*
 
 
 </details>
@@ -226,13 +221,13 @@ None found.
 <details>
 <summary><strong>Pen/Pig 3</strong></summary>
 
-The structure does not contain any notable blocks.
+The structure part does not contain any notable blocks.
 
 Additionally, the following entities may spawn during its generation: Pig.
 
 ### Blocks
 
-None found.
+*None*
 
 
 ### Entities
@@ -244,7 +239,7 @@ None found.
 
 ### Loot Tables
 
-None found.
+*None*
 
 
 </details>

@@ -1,24 +1,16 @@
-# End Farm
-
-## Summary
+# Contents
 
 The structure is composed of the following blocks: Purpur Block, Purpur Stairs, End Stone Bricks, Purpur Pillar, Purpur Slab, Magenta Stained Glass, End Stone Brick Slab, End Stone Brick Wall, End Rod, Magenta Wall Banner, Chorus Flower, End Stone, Composter, Chest, Ender Chest, Furnace, Carved Pumpkin, End Stone Brick Stairs, Pumpkin.
 
 Additionally, the following entities may spawn during its generation: Chicken, Cow, Frog, Pig.
 
-### Loot Tables
 
-| Loot Table |
-|:-----|
-| fabled_roots:structure/endling/village |
-| nice_mob_variants:structure/end_farm |
-
-
+## Per-Structure File Contents
 
 <details>
 <summary><strong>End Farm/Base 1</strong></summary>
 
-The structure is composed of the following blocks: End Stone Bricks, Purpur Block, Purpur Pillar, Purpur Stairs, Purpur Slab, Magenta Stained Glass, End Rod.
+The structure part is composed of the following blocks: End Stone Bricks, Purpur Block, Purpur Pillar, Purpur Stairs, Purpur Slab, Magenta Stained Glass, End Rod.
 
 ### Blocks
 
@@ -35,12 +27,12 @@ The structure is composed of the following blocks: End Stone Bricks, Purpur Bloc
 
 ### Entities
 
-None found.
+*None*
 
 
 ### Loot Tables
 
-None found.
+*None*
 
 
 </details>
@@ -48,7 +40,7 @@ None found.
 <details>
 <summary><strong>End Farm/Farm Platform 1</strong></summary>
 
-The structure is composed of the following blocks: Purpur Block, Purpur Stairs, End Stone Bricks, Purpur Pillar, End Stone Brick Slab, End Stone Brick Wall, Magenta Stained Glass, Purpur Slab, End Rod, Magenta Wall Banner, Carved Pumpkin, Chorus Flower, Composter, End Stone, End Stone Brick Stairs, Chest, Pumpkin.
+The structure part is composed of the following blocks: Purpur Block, Purpur Stairs, End Stone Bricks, Purpur Pillar, End Stone Brick Slab, End Stone Brick Wall, Magenta Stained Glass, Purpur Slab, End Rod, Magenta Wall Banner, Carved Pumpkin, Chorus Flower, Composter, End Stone, End Stone Brick Stairs, Chest, Pumpkin.
 
 Additionally, the following entities may spawn during its generation: Cow, Pig.
 
@@ -95,7 +87,7 @@ Additionally, the following entities may spawn during its generation: Cow, Pig.
 <details>
 <summary><strong>End Farm/Farm Platform 2</strong></summary>
 
-The structure is composed of the following blocks: Purpur Block, Purpur Stairs, End Stone Bricks, Purpur Pillar, End Stone Brick Slab, End Stone Brick Wall, Magenta Stained Glass, Chorus Flower, End Stone, Purpur Slab, End Rod, Magenta Wall Banner, Furnace, Chest, Ender Chest.
+The structure part is composed of the following blocks: Purpur Block, Purpur Stairs, End Stone Bricks, Purpur Pillar, End Stone Brick Slab, End Stone Brick Wall, Magenta Stained Glass, Chorus Flower, End Stone, Purpur Slab, End Rod, Magenta Wall Banner, Furnace, Chest, Ender Chest.
 
 Additionally, the following entities may spawn during its generation: Chicken, Cow, Pig.
 
@@ -141,7 +133,7 @@ Additionally, the following entities may spawn during its generation: Chicken, C
 <details>
 <summary><strong>End Farm/Farm Platform 3</strong></summary>
 
-The structure is composed of the following blocks: Purpur Block, Purpur Stairs, End Stone Bricks, End Stone Brick Slab, End Stone Brick Wall, Purpur Pillar, Purpur Slab, End Rod, Magenta Stained Glass, End Stone Brick Stairs, Magenta Wall Banner, Composter, Ender Chest.
+The structure part is composed of the following blocks: Purpur Block, Purpur Stairs, End Stone Bricks, End Stone Brick Slab, End Stone Brick Wall, Purpur Pillar, Purpur Slab, End Rod, Magenta Stained Glass, End Stone Brick Stairs, Magenta Wall Banner, Composter, Ender Chest.
 
 Additionally, the following entities may spawn during its generation: Chicken, Cow, Pig.
 
@@ -175,7 +167,7 @@ Additionally, the following entities may spawn during its generation: Chicken, C
 
 ### Loot Tables
 
-None found.
+*None*
 
 
 </details>
@@ -183,7 +175,7 @@ None found.
 <details>
 <summary><strong>End Farm/Farm Platform 4</strong></summary>
 
-The structure is composed of the following blocks: Purpur Block, Purpur Stairs, End Stone Bricks, End Stone Brick Slab, Purpur Pillar, End Stone Brick Wall, Purpur Slab, End Rod, Magenta Stained Glass, Magenta Wall Banner, Composter, Chest, End Stone Brick Stairs, Ender Chest.
+The structure part is composed of the following blocks: Purpur Block, Purpur Stairs, End Stone Bricks, End Stone Brick Slab, Purpur Pillar, End Stone Brick Wall, Purpur Slab, End Rod, Magenta Stained Glass, Magenta Wall Banner, Composter, Chest, End Stone Brick Stairs, Ender Chest.
 
 Additionally, the following entities may spawn during its generation: Chicken, Cow, Pig.
 
@@ -228,7 +220,7 @@ Additionally, the following entities may spawn during its generation: Chicken, C
 <details>
 <summary><strong>End Farm/Farm Platform 5</strong></summary>
 
-The structure is composed of the following blocks: Purpur Block, Purpur Stairs, End Stone Brick Slab, End Stone Brick Wall, Purpur Pillar, Purpur Slab, Chorus Flower, End Stone, End Rod, End Stone Bricks, Magenta Wall Banner, Composter.
+The structure part is composed of the following blocks: Purpur Block, Purpur Stairs, End Stone Brick Slab, End Stone Brick Wall, Purpur Pillar, Purpur Slab, Chorus Flower, End Stone, End Rod, End Stone Bricks, Magenta Wall Banner, Composter.
 
 Additionally, the following entities may spawn during its generation: Pig, Cow.
 
@@ -260,7 +252,7 @@ Additionally, the following entities may spawn during its generation: Pig, Cow.
 
 ### Loot Tables
 
-None found.
+*None*
 
 
 </details>
@@ -268,7 +260,7 @@ None found.
 <details>
 <summary><strong>End Farm/Farm Platform 6</strong></summary>
 
-The structure is composed of the following blocks: Purpur Block, Purpur Stairs, End Stone Brick Slab, End Stone Brick Wall, Purpur Pillar, Purpur Slab, Chorus Flower, End Stone, Magenta Wall Banner, End Rod, Composter, End Stone Bricks.
+The structure part is composed of the following blocks: Purpur Block, Purpur Stairs, End Stone Brick Slab, End Stone Brick Wall, Purpur Pillar, Purpur Slab, Chorus Flower, End Stone, Magenta Wall Banner, End Rod, Composter, End Stone Bricks.
 
 Additionally, the following entities may spawn during its generation: Cow, Chicken.
 
@@ -300,7 +292,7 @@ Additionally, the following entities may spawn during its generation: Cow, Chick
 
 ### Loot Tables
 
-None found.
+*None*
 
 
 </details>
@@ -308,7 +300,7 @@ None found.
 <details>
 <summary><strong>End Farm/Main House 1</strong></summary>
 
-The structure is composed of the following blocks: Purpur Block, End Stone Bricks, Purpur Stairs, Purpur Pillar, Magenta Stained Glass, End Rod, Magenta Wall Banner, Purpur Slab, Chest, Composter, Carved Pumpkin, Ender Chest, Pumpkin.
+The structure part is composed of the following blocks: Purpur Block, End Stone Bricks, Purpur Stairs, Purpur Pillar, Magenta Stained Glass, End Rod, Magenta Wall Banner, Purpur Slab, Chest, Composter, Carved Pumpkin, Ender Chest, Pumpkin.
 
 ### Blocks
 
@@ -331,7 +323,7 @@ The structure is composed of the following blocks: Purpur Block, End Stone Brick
 
 ### Entities
 
-None found.
+*None*
 
 
 ### Loot Tables
@@ -346,7 +338,7 @@ None found.
 <details>
 <summary><strong>End Farm/Main House 2</strong></summary>
 
-The structure is composed of the following blocks: Purpur Block, End Stone Bricks, Purpur Stairs, Purpur Pillar, Magenta Stained Glass, End Rod, Chorus Flower, End Stone, Magenta Wall Banner, Purpur Slab, Chest, Composter, Carved Pumpkin, Furnace.
+The structure part is composed of the following blocks: Purpur Block, End Stone Bricks, Purpur Stairs, Purpur Pillar, Magenta Stained Glass, End Rod, Chorus Flower, End Stone, Magenta Wall Banner, Purpur Slab, Chest, Composter, Carved Pumpkin, Furnace.
 
 Additionally, the following entities may spawn during its generation: Frog.
 
@@ -389,7 +381,7 @@ Additionally, the following entities may spawn during its generation: Frog.
 <details>
 <summary><strong>End Farm/Main House 3</strong></summary>
 
-The structure is composed of the following blocks: Purpur Block, End Stone Bricks, Purpur Stairs, Purpur Pillar, Magenta Stained Glass, End Rod, Chorus Flower, End Stone, Magenta Wall Banner, Purpur Slab, Chest, Carved Pumpkin, Composter, Ender Chest, Furnace, Pumpkin.
+The structure part is composed of the following blocks: Purpur Block, End Stone Bricks, Purpur Stairs, Purpur Pillar, Magenta Stained Glass, End Rod, Chorus Flower, End Stone, Magenta Wall Banner, Purpur Slab, Chest, Carved Pumpkin, Composter, Ender Chest, Furnace, Pumpkin.
 
 ### Blocks
 
@@ -415,7 +407,7 @@ The structure is composed of the following blocks: Purpur Block, End Stone Brick
 
 ### Entities
 
-None found.
+*None*
 
 
 ### Loot Tables
@@ -430,7 +422,7 @@ None found.
 <details>
 <summary><strong>End Farm/Main House 4</strong></summary>
 
-The structure is composed of the following blocks: Purpur Block, End Stone Bricks, Purpur Stairs, Purpur Pillar, Magenta Stained Glass, End Rod, Purpur Slab, Magenta Wall Banner, Chest, Composter, Carved Pumpkin, Ender Chest, Furnace, Pumpkin.
+The structure part is composed of the following blocks: Purpur Block, End Stone Bricks, Purpur Stairs, Purpur Pillar, Magenta Stained Glass, End Rod, Purpur Slab, Magenta Wall Banner, Chest, Composter, Carved Pumpkin, Ender Chest, Furnace, Pumpkin.
 
 ### Blocks
 
@@ -454,7 +446,7 @@ The structure is composed of the following blocks: Purpur Block, End Stone Brick
 
 ### Entities
 
-None found.
+*None*
 
 
 ### Loot Tables
@@ -469,7 +461,7 @@ None found.
 <details>
 <summary><strong>End Farm/Main House 5</strong></summary>
 
-The structure is composed of the following blocks: Purpur Block, Purpur Stairs, End Stone Bricks, Purpur Pillar, Magenta Stained Glass, Chorus Flower, End Stone, End Rod, Purpur Slab, Magenta Wall Banner, Chest, Carved Pumpkin, Composter, Pumpkin.
+The structure part is composed of the following blocks: Purpur Block, Purpur Stairs, End Stone Bricks, Purpur Pillar, Magenta Stained Glass, Chorus Flower, End Stone, End Rod, Purpur Slab, Magenta Wall Banner, Chest, Carved Pumpkin, Composter, Pumpkin.
 
 ### Blocks
 
@@ -493,7 +485,7 @@ The structure is composed of the following blocks: Purpur Block, Purpur Stairs, 
 
 ### Entities
 
-None found.
+*None*
 
 
 ### Loot Tables
@@ -508,7 +500,7 @@ None found.
 <details>
 <summary><strong>End Farm/Main House 6</strong></summary>
 
-The structure is composed of the following blocks: Purpur Block, Purpur Stairs, End Stone Bricks, Purpur Pillar, Magenta Stained Glass, End Rod, Purpur Slab, Chorus Flower, End Stone, Magenta Wall Banner, Composter, Furnace, Chest, Ender Chest.
+The structure part is composed of the following blocks: Purpur Block, Purpur Stairs, End Stone Bricks, Purpur Pillar, Magenta Stained Glass, End Rod, Purpur Slab, Chorus Flower, End Stone, Magenta Wall Banner, Composter, Furnace, Chest, Ender Chest.
 
 ### Blocks
 
@@ -532,7 +524,7 @@ The structure is composed of the following blocks: Purpur Block, Purpur Stairs, 
 
 ### Entities
 
-None found.
+*None*
 
 
 ### Loot Tables
@@ -547,7 +539,7 @@ None found.
 <details>
 <summary><strong>End Farm/Main Staircase 1</strong></summary>
 
-The structure is composed of the following blocks: Purpur Block, Purpur Slab, Purpur Stairs.
+The structure part is composed of the following blocks: Purpur Block, Purpur Slab, Purpur Stairs.
 
 ### Blocks
 
@@ -560,12 +552,12 @@ The structure is composed of the following blocks: Purpur Block, Purpur Slab, Pu
 
 ### Entities
 
-None found.
+*None*
 
 
 ### Loot Tables
 
-None found.
+*None*
 
 
 </details>
@@ -573,7 +565,7 @@ None found.
 <details>
 <summary><strong>End Farm/Main Staircase 2</strong></summary>
 
-The structure is composed of the following blocks: Purpur Block, Purpur Slab, Purpur Stairs.
+The structure part is composed of the following blocks: Purpur Block, Purpur Slab, Purpur Stairs.
 
 ### Blocks
 
@@ -586,12 +578,12 @@ The structure is composed of the following blocks: Purpur Block, Purpur Slab, Pu
 
 ### Entities
 
-None found.
+*None*
 
 
 ### Loot Tables
 
-None found.
+*None*
 
 
 </details>
@@ -599,7 +591,7 @@ None found.
 <details>
 <summary><strong>End Farm/Main Staircase 3</strong></summary>
 
-The structure is composed of the following blocks: Purpur Block, Purpur Slab, Purpur Stairs.
+The structure part is composed of the following blocks: Purpur Block, Purpur Slab, Purpur Stairs.
 
 ### Blocks
 
@@ -612,12 +604,12 @@ The structure is composed of the following blocks: Purpur Block, Purpur Slab, Pu
 
 ### Entities
 
-None found.
+*None*
 
 
 ### Loot Tables
 
-None found.
+*None*
 
 
 </details>
@@ -625,7 +617,7 @@ None found.
 <details>
 <summary><strong>End Farm/Side Platform 1</strong></summary>
 
-The structure is composed of the following blocks: Purpur Block, Purpur Stairs, End Stone Bricks, Purpur Pillar, Magenta Stained Glass, End Rod, Magenta Wall Banner, Purpur Slab.
+The structure part is composed of the following blocks: Purpur Block, Purpur Stairs, End Stone Bricks, Purpur Pillar, Magenta Stained Glass, End Rod, Magenta Wall Banner, Purpur Slab.
 
 Additionally, the following entities may spawn during its generation: Frog.
 
@@ -652,7 +644,7 @@ Additionally, the following entities may spawn during its generation: Frog.
 
 ### Loot Tables
 
-None found.
+*None*
 
 
 </details>
@@ -660,7 +652,7 @@ None found.
 <details>
 <summary><strong>End Farm/Side Platform 2</strong></summary>
 
-The structure is composed of the following blocks: Purpur Block, End Stone Bricks, Purpur Stairs, Purpur Pillar, Magenta Stained Glass, Magenta Wall Banner, End Rod, Purpur Slab, Chest, Ender Chest, Furnace.
+The structure part is composed of the following blocks: Purpur Block, End Stone Bricks, Purpur Stairs, Purpur Pillar, Magenta Stained Glass, Magenta Wall Banner, End Rod, Purpur Slab, Chest, Ender Chest, Furnace.
 
 Additionally, the following entities may spawn during its generation: Frog.
 
@@ -700,7 +692,7 @@ Additionally, the following entities may spawn during its generation: Frog.
 <details>
 <summary><strong>End Farm/Side Platform 3</strong></summary>
 
-The structure is composed of the following blocks: Purpur Block, Purpur Stairs, Purpur Pillar, End Stone Brick Slab, End Stone Brick Wall, Purpur Slab, Magenta Wall Banner, End Rod, Chest, Chorus Flower, End Stone, Ender Chest.
+The structure part is composed of the following blocks: Purpur Block, Purpur Stairs, Purpur Pillar, End Stone Brick Slab, End Stone Brick Wall, Purpur Slab, Magenta Wall Banner, End Rod, Chest, Chorus Flower, End Stone, Ender Chest.
 
 Additionally, the following entities may spawn during its generation: Chicken.
 
@@ -741,7 +733,7 @@ Additionally, the following entities may spawn during its generation: Chicken.
 <details>
 <summary><strong>End Farm/Side Staircase 1</strong></summary>
 
-The structure is composed of the following blocks: Purpur Block, Purpur Slab.
+The structure part is composed of the following blocks: Purpur Block, Purpur Slab.
 
 ### Blocks
 
@@ -753,12 +745,12 @@ The structure is composed of the following blocks: Purpur Block, Purpur Slab.
 
 ### Entities
 
-None found.
+*None*
 
 
 ### Loot Tables
 
-None found.
+*None*
 
 
 </details>
@@ -766,7 +758,7 @@ None found.
 <details>
 <summary><strong>End Farm/Side Staircase 2</strong></summary>
 
-The structure is composed of the following blocks: Purpur Block, Purpur Slab, Purpur Stairs.
+The structure part is composed of the following blocks: Purpur Block, Purpur Slab, Purpur Stairs.
 
 ### Blocks
 
@@ -779,12 +771,12 @@ The structure is composed of the following blocks: Purpur Block, Purpur Slab, Pu
 
 ### Entities
 
-None found.
+*None*
 
 
 ### Loot Tables
 
-None found.
+*None*
 
 
 </details>
@@ -792,7 +784,7 @@ None found.
 <details>
 <summary><strong>End Farm/Side Staircase 3</strong></summary>
 
-The structure is composed of the following blocks: Purpur Block, Purpur Slab, Purpur Stairs.
+The structure part is composed of the following blocks: Purpur Block, Purpur Slab, Purpur Stairs.
 
 ### Blocks
 
@@ -805,12 +797,12 @@ The structure is composed of the following blocks: Purpur Block, Purpur Slab, Pu
 
 ### Entities
 
-None found.
+*None*
 
 
 ### Loot Tables
 
-None found.
+*None*
 
 
 </details>

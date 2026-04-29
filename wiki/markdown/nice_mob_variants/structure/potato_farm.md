@@ -1,23 +1,16 @@
-# Potato Farm
-
-## Summary
+# Contents
 
 The structure is composed of the following blocks: Grass Block, Bamboo Block, Bamboo Fence, Farmland, Potatoes, Bamboo Mosaic Stairs, Mossy Cobblestone, Copper Torch, Bamboo Mosaic, Hay Block, Lime Stained Glass Pane, Mossy Stone Bricks, Copper Wall Torch, Bamboo Fence Gate, Mossy Cobblestone Wall, Composter, Waxed Weathered Copper Door, Chest, Dirt, Smoker.
 
 Additionally, the following entities may spawn during its generation: Villager.
 
-### Loot Tables
 
-| Loot Table |
-|:-----|
-| nice_mob_variants:structure/potato_farm |
-
-
+## Per-Structure File Contents
 
 <details>
 <summary><strong>Potato Farm/Base</strong></summary>
 
-The structure is composed of the following blocks: Bamboo Mosaic Stairs, Mossy Cobblestone, Bamboo Block, Grass Block, Bamboo Mosaic, Bamboo Fence, Lime Stained Glass Pane, Mossy Stone Bricks, Copper Wall Torch, Mossy Cobblestone Wall, Waxed Weathered Copper Door, Copper Torch, Chest, Smoker.
+The structure part is composed of the following blocks: Bamboo Mosaic Stairs, Mossy Cobblestone, Bamboo Block, Grass Block, Bamboo Mosaic, Bamboo Fence, Lime Stained Glass Pane, Mossy Stone Bricks, Copper Wall Torch, Mossy Cobblestone Wall, Waxed Weathered Copper Door, Copper Torch, Chest, Smoker.
 
 Additionally, the following entities may spawn during its generation: Villager.
 
@@ -60,7 +53,7 @@ Additionally, the following entities may spawn during its generation: Villager.
 <details>
 <summary><strong>Potato Farm/Field 1</strong></summary>
 
-The structure is composed of the following blocks: Grass Block, Bamboo Block, Farmland, Potatoes, Composter, Dirt.
+The structure part is composed of the following blocks: Grass Block, Bamboo Block, Farmland, Potatoes, Composter, Dirt.
 
 ### Blocks
 
@@ -76,12 +69,12 @@ The structure is composed of the following blocks: Grass Block, Bamboo Block, Fa
 
 ### Entities
 
-None found.
+*None*
 
 
 ### Loot Tables
 
-None found.
+*None*
 
 
 </details>
@@ -89,7 +82,7 @@ None found.
 <details>
 <summary><strong>Potato Farm/Field 2</strong></summary>
 
-The structure is composed of the following blocks: Grass Block, Farmland, Potatoes, Bamboo Block, Composter, Dirt.
+The structure part is composed of the following blocks: Grass Block, Farmland, Potatoes, Bamboo Block, Composter, Dirt.
 
 ### Blocks
 
@@ -105,12 +98,12 @@ The structure is composed of the following blocks: Grass Block, Farmland, Potato
 
 ### Entities
 
-None found.
+*None*
 
 
 ### Loot Tables
 
-None found.
+*None*
 
 
 </details>
@@ -118,7 +111,7 @@ None found.
 <details>
 <summary><strong>Potato Farm/Field 3</strong></summary>
 
-The structure is composed of the following blocks: Grass Block, Bamboo Block, Farmland, Potatoes, Composter, Hay Block.
+The structure part is composed of the following blocks: Grass Block, Bamboo Block, Farmland, Potatoes, Composter, Hay Block.
 
 ### Blocks
 
@@ -134,12 +127,12 @@ The structure is composed of the following blocks: Grass Block, Bamboo Block, Fa
 
 ### Entities
 
-None found.
+*None*
 
 
 ### Loot Tables
 
-None found.
+*None*
 
 
 </details>
@@ -147,7 +140,7 @@ None found.
 <details>
 <summary><strong>Potato Farm/Pen 1</strong></summary>
 
-The structure is composed of the following blocks: Grass Block, Bamboo Fence, Copper Torch, Hay Block, Bamboo Fence Gate.
+The structure part is composed of the following blocks: Grass Block, Bamboo Fence, Copper Torch, Hay Block, Bamboo Fence Gate.
 
 ### Blocks
 
@@ -162,12 +155,12 @@ The structure is composed of the following blocks: Grass Block, Bamboo Fence, Co
 
 ### Entities
 
-None found.
+*None*
 
 
 ### Loot Tables
 
-None found.
+*None*
 
 
 </details>
@@ -175,7 +168,7 @@ None found.
 <details>
 <summary><strong>Potato Farm/Pen 2</strong></summary>
 
-The structure is composed of the following blocks: Grass Block, Bamboo Fence, Copper Torch, Hay Block, Bamboo Fence Gate, Chest.
+The structure part is composed of the following blocks: Grass Block, Bamboo Fence, Copper Torch, Hay Block, Bamboo Fence Gate, Chest.
 
 ### Blocks
 
@@ -191,7 +184,7 @@ The structure is composed of the following blocks: Grass Block, Bamboo Fence, Co
 
 ### Entities
 
-None found.
+*None*
 
 
 ### Loot Tables
@@ -206,7 +199,7 @@ None found.
 <details>
 <summary><strong>Potato Farm/Pen 3</strong></summary>
 
-The structure is composed of the following blocks: Grass Block, Bamboo Fence, Copper Torch, Bamboo Fence Gate.
+The structure part is composed of the following blocks: Grass Block, Bamboo Fence, Copper Torch, Bamboo Fence Gate.
 
 ### Blocks
 
@@ -220,12 +213,12 @@ The structure is composed of the following blocks: Grass Block, Bamboo Fence, Co
 
 ### Entities
 
-None found.
+*None*
 
 
 ### Loot Tables
 
-None found.
+*None*
 
 
 </details>
@@ -233,7 +226,7 @@ None found.
 <details>
 <summary><strong>Potato Farm/Pen 4</strong></summary>
 
-The structure is composed of the following blocks: Grass Block, Bamboo Fence, Copper Torch, Hay Block, Bamboo Fence Gate, Chest.
+The structure part is composed of the following blocks: Grass Block, Bamboo Fence, Copper Torch, Hay Block, Bamboo Fence Gate, Chest.
 
 ### Blocks
 
@@ -249,7 +242,7 @@ The structure is composed of the following blocks: Grass Block, Bamboo Fence, Co
 
 ### Entities
 
-None found.
+*None*
 
 
 ### Loot Tables
@@ -264,7 +257,7 @@ None found.
 <details>
 <summary><strong>Potato Farm/Pen 5</strong></summary>
 
-The structure is composed of the following blocks: Grass Block, Bamboo Fence, Copper Torch, Hay Block, Bamboo Fence Gate.
+The structure part is composed of the following blocks: Grass Block, Bamboo Fence, Copper Torch, Hay Block, Bamboo Fence Gate.
 
 ### Blocks
 
@@ -279,12 +272,12 @@ The structure is composed of the following blocks: Grass Block, Bamboo Fence, Co
 
 ### Entities
 
-None found.
+*None*
 
 
 ### Loot Tables
 
-None found.
+*None*
 
 
 </details>

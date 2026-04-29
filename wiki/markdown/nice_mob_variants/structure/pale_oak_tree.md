@@ -1,21 +1,16 @@
-# Pale Oak Tree
-
-## Summary
+# Contents
 
 The structure is composed of the following blocks: Pale Moss Block, Pale Oak Log, Pale Moss Carpet, Creaking Heart.
 
 Additionally, the following entities may spawn during its generation: Wolf.
 
-### Loot Tables
 
-None found.
-
-
+## Per-Structure File Contents
 
 <details>
 <summary><strong>Pale Oak Tree/Type 1</strong></summary>
 
-The structure is composed of the following blocks: Pale Moss Block, Pale Oak Log, Pale Moss Carpet, Creaking Heart.
+The structure part is composed of the following blocks: Pale Moss Block, Pale Oak Log, Pale Moss Carpet, Creaking Heart.
 
 Additionally, the following entities may spawn during its generation: Wolf.
 
@@ -38,7 +33,7 @@ Additionally, the following entities may spawn during its generation: Wolf.
 
 ### Loot Tables
 
-None found.
+*None*
 
 
 </details>
@@ -46,7 +41,7 @@ None found.
 <details>
 <summary><strong>Pale Oak Tree/Type 2</strong></summary>
 
-The structure is composed of the following blocks: Pale Moss Block, Pale Moss Carpet, Pale Oak Log, Creaking Heart.
+The structure part is composed of the following blocks: Pale Moss Block, Pale Moss Carpet, Pale Oak Log, Creaking Heart.
 
 Additionally, the following entities may spawn during its generation: Wolf.
 
@@ -69,7 +64,7 @@ Additionally, the following entities may spawn during its generation: Wolf.
 
 ### Loot Tables
 
-None found.
+*None*
 
 
 </details>

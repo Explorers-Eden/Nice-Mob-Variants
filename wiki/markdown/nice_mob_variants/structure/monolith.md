@@ -1,35 +1,30 @@
-# Monolith
-
-## Summary
+# Contents
 
 The structure is composed of the following blocks: Cracked Nether Bricks, Nether Bricks, Vine, Chiseled Nether Bricks, Nether Brick Stairs, Soul Soil, Soul Sand, Nether Brick Slab.
 
 Additionally, the following entities may spawn during its generation: Cat.
 
-### Loot Tables
 
-None found.
-
-
+## Per-Structure File Contents
 
 <details>
 <summary><strong>Monolith/Center</strong></summary>
 
-The structure does not contain any notable blocks.
+The structure part does not contain any notable blocks.
 
 ### Blocks
 
-None found.
+*None*
 
 
 ### Entities
 
-None found.
+*None*
 
 
 ### Loot Tables
 
-None found.
+*None*
 
 
 </details>
@@ -37,7 +32,7 @@ None found.
 <details>
 <summary><strong>Monolith/Type 1</strong></summary>
 
-The structure is composed of the following blocks: Cracked Nether Bricks, Nether Bricks, Vine, Chiseled Nether Bricks, Soul Sand, Soul Soil, Nether Brick Stairs, Nether Brick Slab.
+The structure part is composed of the following blocks: Cracked Nether Bricks, Nether Bricks, Vine, Chiseled Nether Bricks, Soul Sand, Soul Soil, Nether Brick Stairs, Nether Brick Slab.
 
 Additionally, the following entities may spawn during its generation: Cat.
 
@@ -64,7 +59,7 @@ Additionally, the following entities may spawn during its generation: Cat.
 
 ### Loot Tables
 
-None found.
+*None*
 
 
 </details>
@@ -72,7 +67,7 @@ None found.
 <details>
 <summary><strong>Monolith/Type 2</strong></summary>
 
-The structure is composed of the following blocks: Cracked Nether Bricks, Nether Bricks, Vine, Chiseled Nether Bricks, Nether Brick Stairs, Soul Soil, Soul Sand.
+The structure part is composed of the following blocks: Cracked Nether Bricks, Nether Bricks, Vine, Chiseled Nether Bricks, Nether Brick Stairs, Soul Soil, Soul Sand.
 
 Additionally, the following entities may spawn during its generation: Cat.
 
@@ -98,7 +93,7 @@ Additionally, the following entities may spawn during its generation: Cat.
 
 ### Loot Tables
 
-None found.
+*None*
 
 
 </details>

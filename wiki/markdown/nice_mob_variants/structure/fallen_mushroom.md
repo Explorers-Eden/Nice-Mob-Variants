@@ -1,21 +1,16 @@
-# Fallen Mushroom
-
-## Summary
+# Contents
 
 The structure is composed of the following blocks: Red Mushroom Block, Brown Mushroom Block, Mycelium, Brown Mushroom, Mushroom Stem, Red Mushroom.
 
 Additionally, the following entities may spawn during its generation: Chicken.
 
-### Loot Tables
 
-None found.
-
-
+## Per-Structure File Contents
 
 <details>
 <summary><strong>Fallen Mushroom/Type 1</strong></summary>
 
-The structure is composed of the following blocks: Red Mushroom Block, Mycelium, Red Mushroom, Mushroom Stem.
+The structure part is composed of the following blocks: Red Mushroom Block, Mycelium, Red Mushroom, Mushroom Stem.
 
 Additionally, the following entities may spawn during its generation: Chicken.
 
@@ -38,7 +33,7 @@ Additionally, the following entities may spawn during its generation: Chicken.
 
 ### Loot Tables
 
-None found.
+*None*
 
 
 </details>
@@ -46,7 +41,7 @@ None found.
 <details>
 <summary><strong>Fallen Mushroom/Type 2</strong></summary>
 
-The structure is composed of the following blocks: Brown Mushroom Block, Brown Mushroom, Mycelium, Mushroom Stem.
+The structure part is composed of the following blocks: Brown Mushroom Block, Brown Mushroom, Mycelium, Mushroom Stem.
 
 Additionally, the following entities may spawn during its generation: Chicken.
 
@@ -69,7 +64,7 @@ Additionally, the following entities may spawn during its generation: Chicken.
 
 ### Loot Tables
 
-None found.
+*None*
 
 
 </details>
