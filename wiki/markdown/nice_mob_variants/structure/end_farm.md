@@ -1,8 +1,41 @@
+# Generated Loot.
+
+There are 2 loot tables used in this structure:
+
+<details>
+<summary><strong>fabled_roots:structure/endling/village</strong> (5 uses)</summary>
+
+Could not find this loot table locally or in mcmeta 26.1.2.
+
+</details>
+
+<details>
+<summary><strong>nice_mob_variants:structure/end_farm</strong> (11 uses)</summary>
+
+| Item | Stack Size | Pool | Weight | Chance |
+|:-----|:----------:|:----:|:------:|:------:|
+| Bucket | 1–2 | 1 | 15 | 9.1% |
+| Carved Pumpkin | 1 | 1 | 15 | 9.1% |
+| Chorus Flower | 1–4 | 1 | 15 | 9.1% |
+| Chorus Fruit | 2–5 | 1 | 15 | 9.1% |
+| End Stone | 2–5 | 1 | 15 | 9.1% |
+| Ender Pearl | 1–3 | 1 | 15 | 9.1% |
+| Popped Chorus Fruit | 2–4 | 1 | 15 | 9.1% |
+| Pumpkin | 1 | 1 | 15 | 9.1% |
+| Pumpkin Seeds | 2–6 | 1 | 15 | 9.1% |
+| Water Bucket | 1 | 1 | 15 | 9.1% |
+| Diamond | 1 | 1 | 5 | 3.0% |
+| Diamond Hoe | 1 | 1 | 5 | 3.0% |
+| Shears | 1 | 1 | 5 | 3.0% |
+
+</details>
+
 # Contents
 
 The structure is composed of the following blocks: Purpur Block, Purpur Stairs, End Stone Bricks, Purpur Pillar, Purpur Slab, Magenta Stained Glass, End Stone Brick Slab, End Stone Brick Wall, End Rod, Magenta Wall Banner, Chorus Flower, End Stone, Composter, Chest, Ender Chest, Furnace, Carved Pumpkin, End Stone Brick Stairs, Pumpkin.
 
 Additionally, the following entities may spawn during its generation: Chicken, Cow, Frog, Pig.
+
 
 
 ## Per-Structure File Contents
@@ -77,9 +110,9 @@ Additionally, the following entities may spawn during its generation: Cow, Pig.
 
 ### Loot Tables
 
-| Loot Table |
-|:-----|
-| nice_mob_variants:structure/end_farm |
+| Loot Table | Count |
+|:-----|:-----:|
+| nice_mob_variants:structure/end_farm | 1 |
 
 
 </details>
@@ -123,9 +156,9 @@ Additionally, the following entities may spawn during its generation: Chicken, C
 
 ### Loot Tables
 
-| Loot Table |
-|:-----|
-| nice_mob_variants:structure/end_farm |
+| Loot Table | Count |
+|:-----|:-----:|
+| nice_mob_variants:structure/end_farm | 1 |
 
 
 </details>
@@ -210,9 +243,9 @@ Additionally, the following entities may spawn during its generation: Chicken, C
 
 ### Loot Tables
 
-| Loot Table |
-|:-----|
-| nice_mob_variants:structure/end_farm |
+| Loot Table | Count |
+|:-----|:-----:|
+| nice_mob_variants:structure/end_farm | 1 |
 
 
 </details>
@@ -328,9 +361,9 @@ The structure part is composed of the following blocks: Purpur Block, End Stone 
 
 ### Loot Tables
 
-| Loot Table |
-|:-----|
-| nice_mob_variants:structure/end_farm |
+| Loot Table | Count |
+|:-----|:-----:|
+| nice_mob_variants:structure/end_farm | 2 |
 
 
 </details>
@@ -371,9 +404,9 @@ Additionally, the following entities may spawn during its generation: Frog.
 
 ### Loot Tables
 
-| Loot Table |
-|:-----|
-| nice_mob_variants:structure/end_farm |
+| Loot Table | Count |
+|:-----|:-----:|
+| nice_mob_variants:structure/end_farm | 2 |
 
 
 </details>
@@ -412,9 +445,9 @@ The structure part is composed of the following blocks: Purpur Block, End Stone 
 
 ### Loot Tables
 
-| Loot Table |
-|:-----|
-| nice_mob_variants:structure/end_farm |
+| Loot Table | Count |
+|:-----|:-----:|
+| nice_mob_variants:structure/end_farm | 2 |
 
 
 </details>
@@ -451,9 +484,9 @@ The structure part is composed of the following blocks: Purpur Block, End Stone 
 
 ### Loot Tables
 
-| Loot Table |
-|:-----|
-| fabled_roots:structure/endling/village |
+| Loot Table | Count |
+|:-----|:-----:|
+| fabled_roots:structure/endling/village | 2 |
 
 
 </details>
@@ -490,9 +523,9 @@ The structure part is composed of the following blocks: Purpur Block, Purpur Sta
 
 ### Loot Tables
 
-| Loot Table |
-|:-----|
-| fabled_roots:structure/endling/village |
+| Loot Table | Count |
+|:-----|:-----:|
+| fabled_roots:structure/endling/village | 2 |
 
 
 </details>
@@ -529,9 +562,9 @@ The structure part is composed of the following blocks: Purpur Block, Purpur Sta
 
 ### Loot Tables
 
-| Loot Table |
-|:-----|
-| fabled_roots:structure/endling/village |
+| Loot Table | Count |
+|:-----|:-----:|
+| fabled_roots:structure/endling/village | 1 |
 
 
 </details>
@@ -682,9 +715,9 @@ Additionally, the following entities may spawn during its generation: Frog.
 
 ### Loot Tables
 
-| Loot Table |
-|:-----|
-| nice_mob_variants:structure/end_farm |
+| Loot Table | Count |
+|:-----|:-----:|
+| nice_mob_variants:structure/end_farm | 1 |
 
 
 </details>
@@ -723,9 +756,9 @@ Additionally, the following entities may spawn during its generation: Chicken.
 
 ### Loot Tables
 
-| Loot Table |
-|:-----|
-| nice_mob_variants:structure/end_farm |
+| Loot Table | Count |
+|:-----|:-----:|
+| nice_mob_variants:structure/end_farm | 1 |
 
 
 </details>

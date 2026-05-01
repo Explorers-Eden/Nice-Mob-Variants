@@ -1,8 +1,24 @@
+# Generated Loot.
+
+There is one loot table used in this structure:
+
+<details>
+<summary><strong>nice_mob_variants:structure/archaeological_site/feature</strong> (5 uses)</summary>
+
+| Item | Stack Size | Pool | Weight | Chance |
+|:-----|:----------:|:----:|:------:|:------:|
+| Tag (minecraft:banners) | 1 | 1 | 1 | 50.0% |
+| Tag (nice_mob_variants:dyes) | 1 | 1 | 1 | 50.0% |
+| Brush | 1 | 2 | 1 | 100.0% |
+
+</details>
+
 # Contents
 
 The structure is composed of the following blocks: Sand, Birch Fence, Birch Stairs, Birch Trapdoor, Light Blue Wool, Red Wool, White Wool, Yellow Wool, Sandstone Wall, Birch Slab, Loom, Short Dry Grass, Tall Dry Grass, Lantern, Chest, Water Cauldron, Stripped Birch Log, Torch, White Banner, Yellow Banner, Light Blue Banner, Red Banner, Light Blue Bed, Red Bed, White Bed, Yellow Bed.
 
 Additionally, the following entities may spawn during its generation: Cat, Item Frame, Villager.
+
 
 
 ## Per-Structure File Contents
@@ -400,9 +416,9 @@ Additionally, the following entities may spawn during its generation: Cat.
 
 ### Loot Tables
 
-| Loot Table |
-|:-----|
-| nice_mob_variants:structure/archaeological_site/feature |
+| Loot Table | Count |
+|:-----|:-----:|
+| nice_mob_variants:structure/archaeological_site/feature | 1 |
 
 
 </details>
@@ -437,9 +453,9 @@ Additionally, the following entities may spawn during its generation: Cat.
 
 ### Loot Tables
 
-| Loot Table |
-|:-----|
-| nice_mob_variants:structure/archaeological_site/feature |
+| Loot Table | Count |
+|:-----|:-----:|
+| nice_mob_variants:structure/archaeological_site/feature | 1 |
 
 
 </details>
@@ -474,9 +490,9 @@ Additionally, the following entities may spawn during its generation: Cat.
 
 ### Loot Tables
 
-| Loot Table |
-|:-----|
-| nice_mob_variants:structure/archaeological_site/feature |
+| Loot Table | Count |
+|:-----|:-----:|
+| nice_mob_variants:structure/archaeological_site/feature | 1 |
 
 
 </details>
@@ -511,9 +527,9 @@ Additionally, the following entities may spawn during its generation: Cat.
 
 ### Loot Tables
 
-| Loot Table |
-|:-----|
-| nice_mob_variants:structure/archaeological_site/feature |
+| Loot Table | Count |
+|:-----|:-----:|
+| nice_mob_variants:structure/archaeological_site/feature | 1 |
 
 
 </details>
@@ -548,9 +564,9 @@ Additionally, the following entities may spawn during its generation: Cat.
 
 ### Loot Tables
 
-| Loot Table |
-|:-----|
-| nice_mob_variants:structure/archaeological_site/feature |
+| Loot Table | Count |
+|:-----|:-----:|
+| nice_mob_variants:structure/archaeological_site/feature | 1 |
 
 
 </details>
@@ -761,31 +777,6 @@ The structure part is composed of the following blocks: Sandstone Wall.
 
 | Block | Count |
 |:-----|:-----:|
-| Sandstone Wall | 1 |
-
-
-### Entities
-
-*None*
-
-
-### Loot Tables
-
-*None*
-
-
-</details>
-
-<details>
-<summary><strong>Archaeological Site/Post 9</strong></summary>
-
-The structure part is composed of the following blocks: Birch Fence, Sandstone Wall.
-
-### Blocks
-
-| Block | Count |
-|:-----|:-----:|
-| Birch Fence | 2 |
 | Sandstone Wall | 1 |
 
 

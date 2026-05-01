@@ -5,6 +5,7 @@ The structure is composed of the following blocks: Bamboo, Grass Block, Stone, G
 Additionally, the following entities may spawn during its generation: Wolf.
 
 
+
 ## Per-Structure File Contents
 
 <details>

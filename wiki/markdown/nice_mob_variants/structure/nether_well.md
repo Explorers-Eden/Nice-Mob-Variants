@@ -5,6 +5,7 @@ The structure is composed of the following blocks: Nether Brick Slab, Polished B
 Additionally, the following entities may spawn during its generation: Frog.
 
 
+
 ## Per-Structure File Contents
 
 <details>

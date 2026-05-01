@@ -1,6 +1,29 @@
+# Generated Loot.
+
+There is one loot table used in this structure:
+
+<details>
+<summary><strong>nice_mob_variants:structure/graveyard</strong> (2 uses)</summary>
+
+| Item | Stack Size | Pool | Weight | Chance |
+|:-----|:----------:|:----:|:------:|:------:|
+| Bone | 1–3 | 1 | 1 | 10.0% |
+| Candle | 1–5 | 1 | 1 | 10.0% |
+| Dead Bush | 1–4 | 1 | 1 | 10.0% |
+| Flower Pot | 1–2 | 1 | 1 | 10.0% |
+| Leaf Litter | 1–6 | 1 | 1 | 10.0% |
+| Lily Of The Valley | 1–3 | 1 | 1 | 10.0% |
+| Red Tulip | 1–4 | 1 | 1 | 10.0% |
+| Redstone Torch | 1–3 | 1 | 1 | 10.0% |
+| Skeleton Skull | 1 | 1 | 1 | 10.0% |
+| Soul Lantern | 1–2 | 1 | 1 | 10.0% |
+
+</details>
+
 # Contents
 
 The structure is composed of the following blocks: Grass Block, Leaf Litter, Tuff, Stone Bricks, Fern, Cobweb, Iron Bars, Coarse Dirt, Large Fern, Polished Tuff Stairs, Spruce Fence, Bush, Stone Brick Wall, Spruce Slab, Composter, Polished Andesite Stairs, Polished Deepslate Stairs, Spruce Wall Sign, Chiseled Stone Bricks, Skeleton Skull, Spruce Trapdoor, Waxed Weathered Copper Bulb, White Candle, Potted Dead Bush, Potted Lily Of The Valley, Redstone Torch, Soul Lantern, Water Cauldron, Chest, Potted Red Tulip, Cauldron.
+
 
 
 ## Per-Structure File Contents
@@ -593,9 +616,9 @@ The structure part is composed of the following blocks: Large Fern, Spruce Fence
 
 ### Loot Tables
 
-| Loot Table |
-|:-----|
-| nice_mob_variants:structure/graveyard |
+| Loot Table | Count |
+|:-----|:-----:|
+| nice_mob_variants:structure/graveyard | 1 |
 
 
 </details>
@@ -686,9 +709,9 @@ The structure part is composed of the following blocks: Leaf Litter, Composter, 
 
 ### Loot Tables
 
-| Loot Table |
-|:-----|
-| nice_mob_variants:structure/graveyard |
+| Loot Table | Count |
+|:-----|:-----:|
+| nice_mob_variants:structure/graveyard | 1 |
 
 
 </details>

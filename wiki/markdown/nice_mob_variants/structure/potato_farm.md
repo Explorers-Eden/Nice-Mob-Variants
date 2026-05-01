@@ -1,11 +1,108 @@
+# Generated Loot.
+
+There is one loot table used in this structure:
+
+<details>
+<summary><strong>nice_mob_variants:structure/potato_farm</strong> (3 uses)</summary>
+
+| Item | Stack Size | Pool | Weight | Chance |
+|:-----|:----------:|:----:|:------:|:------:|
+| Baked Potato | 1–3 | 1 | 6 | 26.1% |
+| Potato | 1–3 | 1 | 6 | 26.1% |
+| Wheat | 1–3 | 1 | 6 | 26.1% |
+| Coal | 1–3 | 1 | 3 | 13.0% |
+| Emerald | 1 | 1 | 1 | 4.3% |
+| Poisonous Potato | 1–3 | 1 | 1 | 4.3% |
+
+</details>
+
 # Contents
 
 The structure is composed of the following blocks: Grass Block, Bamboo Block, Bamboo Fence, Farmland, Potatoes, Bamboo Mosaic Stairs, Mossy Cobblestone, Copper Torch, Bamboo Mosaic, Hay Block, Lime Stained Glass Pane, Mossy Stone Bricks, Copper Wall Torch, Bamboo Fence Gate, Mossy Cobblestone Wall, Composter, Waxed Weathered Copper Door, Chest, Dirt, Smoker.
 
-Additionally, the following entities may spawn during its generation: Villager.
+Additionally, the following entities may spawn during its generation: Villager, Chicken, Cow, Pig.
+
 
 
 ## Per-Structure File Contents
+
+<details>
+<summary><strong>Barn/Features/Chicken</strong></summary>
+
+The structure part does not contain any notable blocks.
+
+Additionally, the following entities may spawn during its generation: Chicken.
+
+### Blocks
+
+*None*
+
+
+### Entities
+
+| Entity | Count |
+|:-----|:-----:|
+| Chicken | 1 |
+
+
+### Loot Tables
+
+*None*
+
+
+</details>
+
+<details>
+<summary><strong>Barn/Features/Cow</strong></summary>
+
+The structure part does not contain any notable blocks.
+
+Additionally, the following entities may spawn during its generation: Cow.
+
+### Blocks
+
+*None*
+
+
+### Entities
+
+| Entity | Count |
+|:-----|:-----:|
+| Cow | 1 |
+
+
+### Loot Tables
+
+*None*
+
+
+</details>
+
+<details>
+<summary><strong>Barn/Features/Pig</strong></summary>
+
+The structure part does not contain any notable blocks.
+
+Additionally, the following entities may spawn during its generation: Pig.
+
+### Blocks
+
+*None*
+
+
+### Entities
+
+| Entity | Count |
+|:-----|:-----:|
+| Pig | 1 |
+
+
+### Loot Tables
+
+*None*
+
+
+</details>
 
 <details>
 <summary><strong>Potato Farm/Base</strong></summary>
@@ -43,9 +140,9 @@ Additionally, the following entities may spawn during its generation: Villager.
 
 ### Loot Tables
 
-| Loot Table |
-|:-----|
-| nice_mob_variants:structure/potato_farm |
+| Loot Table | Count |
+|:-----|:-----:|
+| nice_mob_variants:structure/potato_farm | 1 |
 
 
 </details>
@@ -189,9 +286,9 @@ The structure part is composed of the following blocks: Grass Block, Bamboo Fenc
 
 ### Loot Tables
 
-| Loot Table |
-|:-----|
-| nice_mob_variants:structure/potato_farm |
+| Loot Table | Count |
+|:-----|:-----:|
+| nice_mob_variants:structure/potato_farm | 1 |
 
 
 </details>
@@ -247,9 +344,9 @@ The structure part is composed of the following blocks: Grass Block, Bamboo Fenc
 
 ### Loot Tables
 
-| Loot Table |
-|:-----|
-| nice_mob_variants:structure/potato_farm |
+| Loot Table | Count |
+|:-----|:-----:|
+| nice_mob_variants:structure/potato_farm | 1 |
 
 
 </details>

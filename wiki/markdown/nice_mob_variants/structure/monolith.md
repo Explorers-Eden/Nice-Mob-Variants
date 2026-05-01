@@ -5,6 +5,7 @@ The structure is composed of the following blocks: Cracked Nether Bricks, Nether
 Additionally, the following entities may spawn during its generation: Cat.
 
 
+
 ## Per-Structure File Contents
 
 <details>

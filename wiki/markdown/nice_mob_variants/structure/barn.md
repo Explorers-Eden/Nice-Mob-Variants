@@ -1,8 +1,50 @@
+# Generated Loot.
+
+There are 3 loot tables used in this structure:
+
+<details>
+<summary><strong>minecraft:chests/village/village_shepherd</strong> (1 use)</summary>
+
+Could not find this loot table locally or in mcmeta 26.1.2.
+
+</details>
+
+<details>
+<summary><strong>nice_mob_variants:structure/barn/barrel</strong> (4 uses)</summary>
+
+| Item | Stack Size | Pool | Weight | Chance |
+|:-----|:----------:|:----:|:------:|:------:|
+| Wheat | 1–6 | 1 | 6 | 26.1% |
+| Wheat Seeds | 1–8 | 1 | 6 | 26.1% |
+| Beetroot Seeds | 1–3 | 1 | 3 | 13.0% |
+| Cocoa Beans | 1–3 | 1 | 2 | 8.7% |
+| Melon Seeds | 1–3 | 1 | 2 | 8.7% |
+| Pumpkin Seeds | 1–3 | 1 | 2 | 8.7% |
+| Emerald | 1 | 1 | 1 | 4.3% |
+| Iron Hoe | 1 | 1 | 1 | 4.3% |
+
+</details>
+
+<details>
+<summary><strong>nice_mob_variants:structure/barn/chest</strong> (4 uses)</summary>
+
+| Item | Stack Size | Pool | Weight | Chance |
+|:-----|:----------:|:----:|:------:|:------:|
+| Beetroot | 1–3 | 1 | 6 | 21.4% |
+| Carrot | 1–3 | 1 | 6 | 21.4% |
+| Potato | 1–3 | 1 | 6 | 21.4% |
+| Wheat | 1–3 | 1 | 6 | 21.4% |
+| Bone Meal | 1–3 | 1 | 3 | 10.7% |
+| Emerald | 1 | 1 | 1 | 3.6% |
+
+</details>
+
 # Contents
 
 The structure is composed of the following blocks: Weathered Cut Copper Slab, Spruce Fence, Coarse Dirt, Weathered Cut Copper Stairs, Hay Block, Mangrove Planks, Oak Planks, Spruce Planks, Spruce Slab, Spruce Trapdoor, Stripped Birch Log, Stripped Dark Oak Log, Stripped Spruce Log, Spruce Stairs, Birch Stairs, Dark Oak Stairs, Moss Carpet, Lantern, Moss Block, Birch Slab, Dark Oak Slab, Spruce Log, Birch Fence, Cobblestone, Dark Oak Fence, Cobbled Deepslate, Chain, Mossy Cobblestone, Spruce Fence Gate, Fern, Large Fern, Dark Oak Trapdoor, Waxed Exposed Copper Trapdoor, Cobweb, Oak Trapdoor, Polished Tuff Stairs, Spruce Wall Sign, Polished Andesite, Polished Deepslate, Polished Tuff, Decorated Pot, Chest, Composter, Hanging Roots, Melon, Barrel, Cauldron, Flower Pot, Pumpkin, Dark Oak Fence Gate, Grindstone, Oxidized Cut Copper Stairs, Mangrove Stairs, Oak Stairs, Spore Blossom, Brown Wool, Carved Pumpkin, Gray Wool, Light Gray Wool, Potted Azalea Bush, Potted Fern, Potted Flowering Azalea Bush, Potted Oak Sapling, Potted Spruce Sapling, Water Cauldron, White Wool.
 
 Additionally, the following entities may spawn during its generation: Villager, Chicken, Cow, Pig.
+
 
 
 ## Per-Structure File Contents
@@ -196,9 +238,9 @@ The structure part is composed of the following blocks: Barrel.
 
 ### Loot Tables
 
-| Loot Table |
-|:-----|
-| nice_mob_variants:structure/barn/barrel |
+| Loot Table | Count |
+|:-----|:-----:|
+| nice_mob_variants:structure/barn/barrel | 1 |
 
 
 </details>
@@ -222,9 +264,9 @@ The structure part is composed of the following blocks: Barrel.
 
 ### Loot Tables
 
-| Loot Table |
-|:-----|
-| nice_mob_variants:structure/barn/barrel |
+| Loot Table | Count |
+|:-----|:-----:|
+| nice_mob_variants:structure/barn/barrel | 1 |
 
 
 </details>
@@ -248,9 +290,9 @@ The structure part is composed of the following blocks: Barrel.
 
 ### Loot Tables
 
-| Loot Table |
-|:-----|
-| nice_mob_variants:structure/barn/barrel |
+| Loot Table | Count |
+|:-----|:-----:|
+| nice_mob_variants:structure/barn/barrel | 1 |
 
 
 </details>
@@ -274,9 +316,9 @@ The structure part is composed of the following blocks: Barrel.
 
 ### Loot Tables
 
-| Loot Table |
-|:-----|
-| nice_mob_variants:structure/barn/barrel |
+| Loot Table | Count |
+|:-----|:-----:|
+| nice_mob_variants:structure/barn/barrel | 1 |
 
 
 </details>
@@ -348,9 +390,9 @@ The structure part is composed of the following blocks: Chest.
 
 ### Loot Tables
 
-| Loot Table |
-|:-----|
-| nice_mob_variants:structure/barn/chest |
+| Loot Table | Count |
+|:-----|:-----:|
+| nice_mob_variants:structure/barn/chest | 1 |
 
 
 </details>
@@ -374,9 +416,9 @@ The structure part is composed of the following blocks: Chest.
 
 ### Loot Tables
 
-| Loot Table |
-|:-----|
-| nice_mob_variants:structure/barn/chest |
+| Loot Table | Count |
+|:-----|:-----:|
+| nice_mob_variants:structure/barn/chest | 1 |
 
 
 </details>
@@ -400,9 +442,9 @@ The structure part is composed of the following blocks: Chest.
 
 ### Loot Tables
 
-| Loot Table |
-|:-----|
-| nice_mob_variants:structure/barn/chest |
+| Loot Table | Count |
+|:-----|:-----:|
+| nice_mob_variants:structure/barn/chest | 1 |
 
 
 </details>
@@ -426,9 +468,9 @@ The structure part is composed of the following blocks: Chest.
 
 ### Loot Tables
 
-| Loot Table |
-|:-----|
-| nice_mob_variants:structure/barn/chest |
+| Loot Table | Count |
+|:-----|:-----:|
+| nice_mob_variants:structure/barn/chest | 1 |
 
 
 </details>
@@ -925,9 +967,9 @@ The structure part is composed of the following blocks: Spruce Trapdoor, Spruce 
 
 ### Loot Tables
 
-| Loot Table |
-|:-----|
-| minecraft:chests/village/village_shepherd |
+| Loot Table | Count |
+|:-----|:-----:|
+| minecraft:chests/village/village_shepherd | 1 |
 
 
 </details>

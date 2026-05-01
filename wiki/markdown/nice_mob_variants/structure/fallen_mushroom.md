@@ -5,6 +5,7 @@ The structure is composed of the following blocks: Red Mushroom Block, Brown Mus
 Additionally, the following entities may spawn during its generation: Chicken.
 
 
+
 ## Per-Structure File Contents
 
 <details>
