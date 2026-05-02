@@ -5,7 +5,16 @@ There are 3 loot tables used in this structure:
 <details>
 <summary><strong>minecraft:chests/village/village_shepherd</strong> (1 use)</summary>
 
-Could not find this loot table locally or in mcmeta 26.1.2.
+| Item | Stack Size | Pool | Weight | Chance |
+|:-----|:----------:|:----:|:------:|:------:|
+| Wheat | 1–6 | 1 | 6 | 26.1% |
+| White Wool | 1–8 | 1 | 6 | 26.1% |
+| Black Wool | 1–3 | 1 | 3 | 13.0% |
+| Brown Wool | 1–3 | 1 | 2 | 8.7% |
+| Gray Wool | 1–3 | 1 | 2 | 8.7% |
+| Light Gray Wool | 1–3 | 1 | 2 | 8.7% |
+| Emerald | 1 | 1 | 1 | 4.3% |
+| Shears | 1 | 1 | 1 | 4.3% |
 
 </details>
 

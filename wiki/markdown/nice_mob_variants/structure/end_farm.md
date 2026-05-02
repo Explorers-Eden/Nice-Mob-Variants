@@ -5,7 +5,7 @@ There are 2 loot tables used in this structure:
 <details>
 <summary><strong>fabled_roots:structure/endling/village</strong> (5 uses)</summary>
 
-Could not find this loot table locally or in mcmeta 26.1.2.
+Could not find this loot table locally or in mcmeta refs: 26.1.2-data, 26.1.2, 26.1.1-data, 26.1-data, 26.1.1, 26.1, data.
 
 </details>
 
