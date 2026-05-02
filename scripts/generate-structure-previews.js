@@ -3,7 +3,7 @@ const fs = require("fs");
 const path = require("path");
 const nbt = require("prismarine-nbt");
 const { PNG } = require("pngjs");
-const { GIFEncoder, quantize, applyPalette } = require("gifenc");
+const crypto = require("crypto");
 
 const inputRoot = process.env.STRUCTURE_INPUT_ROOT ?? "data";
 const outputRoot = process.env.STRUCTURE_PREVIEW_OUTPUT_ROOT ?? path.join("wiki", "images", "structures");
@@ -14,10 +14,17 @@ const tileWidth = Number(process.env.STRUCTURE_PREVIEW_TILE_WIDTH ?? 32);
 const tileHeight = Number(process.env.STRUCTURE_PREVIEW_TILE_HEIGHT ?? 18);
 const blockHeight = Number(process.env.STRUCTURE_PREVIEW_BLOCK_HEIGHT ?? 22);
 const padding = Number(process.env.STRUCTURE_PREVIEW_PADDING ?? 48);
-const maxImageSize = Number(process.env.STRUCTURE_PREVIEW_MAX_SIZE ?? 2800);
+const maxImageSize = Number(process.env.STRUCTURE_PREVIEW_MAX_SIZE ?? 900);
 const transparentBackground = String(process.env.STRUCTURE_PREVIEW_TRANSPARENT ?? "true") !== "false";
-const gifFrames = Math.max(1, Number(process.env.STRUCTURE_PREVIEW_GIF_FRAMES ?? 60));
-const gifDelay = Math.max(1, Number(process.env.STRUCTURE_PREVIEW_GIF_DELAY ?? 160));
+const pngCompressionLevel = Math.min(9, Math.max(0, Number(process.env.STRUCTURE_PREVIEW_PNG_COMPRESSION ?? 9)));
+const previewSeed = String(process.env.STRUCTURE_PREVIEW_SEED ?? crypto.randomBytes(8).toString("hex"));
+
+const previewRotations = [
+  { name: "north", degrees: 0 },
+  { name: "east", degrees: 90 },
+  { name: "south", degrees: 180 },
+  { name: "west", degrees: 270 }
+];
 
 const IGNORED_BLOCKS = new Set([
   "minecraft:air",
@@ -39,12 +46,14 @@ const resolvedModelCache = new Map();
 const textureCache = new Map();
 const bakedModelCache = new Map();
 const fallbackColorCache = new Map();
+const textureAverageCache = new Map();
 
 const stats = {
   mainImages: 0,
   structuresRead: 0,
   poolsRead: 0,
   jigsawPoolsFollowed: 0,
+  jigsawBlocksResolved: 0,
   textureHits: 0,
   textureMisses: 0,
   bakedQuads: 0,
@@ -227,8 +236,48 @@ function whenClauseMatches(when, properties = {}) {
   return true;
 }
 
-function normalizeVariant(variant) {
-  if (Array.isArray(variant)) return variant[0] ?? null;
+function hashString(text) {
+  let hash = 2166136261;
+  for (let i = 0; i < String(text).length; i++) {
+    hash ^= String(text).charCodeAt(i);
+    hash = Math.imul(hash, 16777619);
+  }
+  return hash >>> 0;
+}
+
+function seededRandom(seedText) {
+  // One deterministic sample in [0, 1) for a specific choice key. The base
+  // previewSeed is randomized once per run unless STRUCTURE_PREVIEW_SEED is set,
+  // so weighted jigsaw and blockstate choices vary between runs but remain
+  // reproducible when the logged seed is reused.
+  let state = hashString(seedText) || 1;
+  state = Math.imul(state ^ (state >>> 15), 0x2c1b3c6d);
+  state = Math.imul(state ^ (state >>> 12), 0x297a2d39);
+  state = (state ^ (state >>> 15)) >>> 0;
+  return state / 4294967296;
+}
+
+function chooseWeightedEntry(entries, seedText) {
+  if (!Array.isArray(entries) || entries.length === 0) return null;
+
+  let totalWeight = 0;
+  for (const entry of entries) {
+    totalWeight += Math.max(0, Number(entry?.weight ?? 1));
+  }
+
+  if (totalWeight <= 0) return entries[0] ?? null;
+
+  let roll = seededRandom(seedText) * totalWeight;
+  for (const entry of entries) {
+    roll -= Math.max(0, Number(entry?.weight ?? 1));
+    if (roll <= 0) return entry;
+  }
+
+  return entries[entries.length - 1] ?? null;
+}
+
+function normalizeVariant(variant, seedText = previewSeed) {
+  if (Array.isArray(variant)) return chooseWeightedEntry(variant, seedText);
   return variant ?? null;
 }
 
@@ -260,7 +309,7 @@ function getModelVariantsFromBlockState(blockName, properties = {}) {
 
     if (!variant) variant = blockState.variants[""] ?? Object.values(blockState.variants)[0];
 
-    variant = normalizeVariant(variant);
+    variant = normalizeVariant(variant, `${previewSeed}|blockstate|${blockName}|${stringifyProperties(properties)}`);
 
     if (variant?.model) {
       return [
@@ -268,6 +317,7 @@ function getModelVariantsFromBlockState(blockName, properties = {}) {
           model: variant.model,
           x: Number(variant.x ?? 0),
           y: Number(variant.y ?? 0),
+          z: Number(variant.z ?? 0),
           uvlock: Boolean(variant.uvlock)
         }
       ];
@@ -280,7 +330,7 @@ function getModelVariantsFromBlockState(blockName, properties = {}) {
     for (const part of blockState.multipart) {
       if (!whenClauseMatches(part.when, properties)) continue;
 
-      const applies = Array.isArray(part.apply) ? part.apply : [part.apply];
+      const applies = Array.isArray(part.apply) ? [normalizeVariant(part.apply, `${previewSeed}|multipart|${blockName}|${stringifyProperties(properties)}|${variants.length}`)] : [part.apply];
 
       for (const apply of applies) {
         if (apply?.model) {
@@ -288,6 +338,7 @@ function getModelVariantsFromBlockState(blockName, properties = {}) {
             model: apply.model,
             x: Number(apply.x ?? 0),
             y: Number(apply.y ?? 0),
+            z: Number(apply.z ?? 0),
             uvlock: Boolean(apply.uvlock)
           });
         }
@@ -302,6 +353,7 @@ function getModelVariantsFromBlockState(blockName, properties = {}) {
       model: `${namespace}:block/${blockPath}`,
       x: 0,
       y: 0,
+      z: 0,
       uvlock: false
     }
   ];
@@ -471,6 +523,53 @@ function sampleTexture(texture, u, v) {
   };
 }
 
+function averageOpaqueTextureColor(texture) {
+  if (!texture) return null;
+  if (textureAverageCache.has(texture)) return textureAverageCache.get(texture);
+
+  let r = 0;
+  let g = 0;
+  let b = 0;
+  let a = 0;
+  let count = 0;
+
+  for (let y = 0; y < texture.height; y++) {
+    for (let x = 0; x < texture.width; x++) {
+      const idx = (texture.width * y + x) << 2;
+      const alpha = texture.data[idx + 3];
+      if (alpha < 16) continue;
+      r += texture.data[idx];
+      g += texture.data[idx + 1];
+      b += texture.data[idx + 2];
+      a += alpha;
+      count++;
+    }
+  }
+
+  const color = count > 0
+    ? { r: Math.round(r / count), g: Math.round(g / count), b: Math.round(b / count), a: Math.round(a / count) }
+    : null;
+
+  textureAverageCache.set(texture, color);
+  return color;
+}
+
+function sampleTextureForQuad(quad, u, v) {
+  const sampled = sampleTexture(quad.texture, u, v);
+  if (sampled) return sampled;
+
+  // Chain uses a mostly-transparent texture on very thin geometry. In a tiny
+  // isometric preview, exact nearest-neighbor samples often land in transparent
+  // holes, making the whole chain disappear. Keep the vanilla model/texture,
+  // but use the texture's opaque average for transparent chain samples so the
+  // chain remains visible rather than being skipped.
+  if (quad.blockName === "minecraft:chain" && quad.texture) {
+    return averageOpaqueTextureColor(quad.texture);
+  }
+
+  return null;
+}
+
 function shadeColor(color, factor) {
   return {
     r: Math.max(0, Math.min(255, Math.round(color.r * factor))),
@@ -596,7 +695,7 @@ function drawTexturedQuad(png, quad) {
 
       const local = solve2d(p00, p10, p01, x + 0.5, y + 0.5);
       const uv = getFaceUv(quad, local.u, local.v);
-      const sampled = sampleTexture(texture, uv.u, uv.v);
+      const sampled = sampleTextureForQuad(quad, uv.u, uv.v);
 
       if (texture && !sampled) continue;
 
@@ -669,6 +768,7 @@ function applyBlockstateRotation(point, rotation) {
 
   if (rotation.x) rotated = rotatePointAroundOrigin(rotated, center, "x", rotation.x, false);
   if (rotation.y) rotated = rotatePointAroundOrigin(rotated, center, "y", rotation.y, false);
+  if (rotation.z) rotated = rotatePointAroundOrigin(rotated, center, "z", rotation.z, false);
 
   return rotated;
 }
@@ -822,7 +922,8 @@ function bakeElementQuads(blockName, modelTextures, element, variant) {
     const transformed = localPoints.map(point =>
       applyBlockstateRotation(applyElementRotation(point, element), {
         x: variant.x ?? 0,
-        y: variant.y ?? 0
+        y: variant.y ?? 0,
+        z: variant.z ?? 0
       })
     );
 
@@ -841,10 +942,245 @@ function bakeElementQuads(blockName, modelTextures, element, variant) {
   return quads;
 }
 
+
+function allFaces(texture = null) {
+  const face = texture ? { texture } : {};
+  return { up: face, down: face, north: face, south: face, west: face, east: face };
+}
+
+function bakeFallbackElements(blockName, elements, variant = { x: 0, y: 0, z: 0 }) {
+  const baked = [];
+  for (const element of elements) baked.push(...bakeElementQuads(blockName, {}, element, variant));
+  return baked;
+}
+
+function blockTextureForButton(short) {
+  if (short === "stone_button") return "minecraft:block/stone";
+  if (short === "polished_blackstone_button") return "minecraft:block/polished_blackstone";
+  if (short.endsWith("_button")) {
+    const wood = short.replace(/_button$/, "");
+    if (["oak", "spruce", "birch", "jungle", "acacia", "dark_oak", "mangrove", "cherry", "bamboo", "pale_oak"].includes(wood)) {
+      return `minecraft:block/${wood}_planks`;
+    }
+    if (wood === "crimson" || wood === "warped") return `minecraft:block/${wood}_planks`;
+  }
+  return "minecraft:block/stone";
+}
+
+function yRotationForFacing(facing, base = "north") {
+  const order = ["north", "east", "south", "west"];
+  const from = order.indexOf(base);
+  const to = order.indexOf(facing);
+  if (from === -1 || to === -1) return 0;
+  return ((to - from + 4) % 4) * 90;
+}
+
+function cuboid(from, to, texture) {
+  return { from, to, faces: allFaces(texture) };
+}
+
+function wallAttachmentCuboid(facing, depth, y0, y1, inset0, inset1, texture) {
+  // For wall-attached blocks, the blockstate `facing` is the direction the
+  // button/lever faces. The solid support is behind it, i.e. on the opposite
+  // side of this block's local cube. So a north-facing button is drawn on the
+  // south edge of the button block, not the north edge.
+  switch (facing) {
+    case "south":
+      return cuboid([inset0, y0, 0], [inset1, y1, depth], texture);
+    case "east":
+      return cuboid([0, y0, inset0], [depth, y1, inset1], texture);
+    case "west":
+      return cuboid([16 - depth, y0, inset0], [16, y1, inset1], texture);
+    case "north":
+    default:
+      return cuboid([inset0, y0, 16 - depth], [inset1, y1, 16], texture);
+  }
+}
+
+function wallLeverHandleCuboid(facing, powered, texture) {
+  // A compact cuboid handle that stays connected to the wall base plate. It is
+  // approximate but deliberately attached to the same opposite-side support as
+  // the base instead of being rotated onto the outside of the block.
+  if (facing === "south") {
+    return powered ? cuboid([7, 5, 2], [9, 7, 8], texture) : cuboid([7, 7, 2], [9, 13, 4], texture);
+  }
+  if (facing === "east") {
+    return powered ? cuboid([2, 5, 7], [8, 7, 9], texture) : cuboid([2, 7, 7], [4, 13, 9], texture);
+  }
+  if (facing === "west") {
+    return powered ? cuboid([8, 5, 7], [14, 7, 9], texture) : cuboid([12, 7, 7], [14, 13, 9], texture);
+  }
+  return powered ? cuboid([7, 5, 8], [9, 7, 14], texture) : cuboid([7, 7, 12], [9, 13, 14], texture);
+}
+
+function buttonElementsForState(properties, texture) {
+  const face = properties.face ?? "wall";
+  const facing = properties.facing ?? "north";
+  const powered = String(properties.powered ?? "false") === "true";
+  const depth = powered ? 1 : 2;
+
+  if (face === "floor") {
+    return {
+      elements: [cuboid([5, 0, 5], [11, depth, 11], texture)],
+      variant: { x: 0, y: yRotationForFacing(facing), z: 0 }
+    };
+  }
+
+  if (face === "ceiling") {
+    return {
+      elements: [cuboid([5, 16 - depth, 5], [11, 16, 11], texture)],
+      variant: { x: 0, y: yRotationForFacing(facing), z: 0 }
+    };
+  }
+
+  return {
+    elements: [wallAttachmentCuboid(facing, depth, 6, 10, 5, 11, texture)],
+    variant: { x: 0, y: 0, z: 0 }
+  };
+}
+
+function leverElementsForState(properties) {
+  const face = properties.face ?? "wall";
+  const facing = properties.facing ?? "north";
+  const powered = String(properties.powered ?? "false") === "true";
+  const baseTexture = "minecraft:block/cobblestone";
+  const handleTexture = "minecraft:block/lever";
+
+  if (face === "floor") {
+    return {
+      elements: [
+        cuboid([5, 0, 5], [11, 2, 11], baseTexture),
+        cuboid(powered ? [7, 2, 4] : [7, 2, 7], powered ? [9, 9, 6] : [9, 10, 9], handleTexture)
+      ],
+      variant: { x: 0, y: yRotationForFacing(facing), z: 0 }
+    };
+  }
+
+  if (face === "ceiling") {
+    return {
+      elements: [
+        cuboid([5, 14, 5], [11, 16, 11], baseTexture),
+        cuboid(powered ? [7, 7, 4] : [7, 6, 7], powered ? [9, 14, 6] : [9, 14, 9], handleTexture)
+      ],
+      variant: { x: 0, y: yRotationForFacing(facing), z: 0 }
+    };
+  }
+
+  const elements = [
+    wallAttachmentCuboid(facing, 2, 4, 12, 5, 11, baseTexture),
+    wallLeverHandleCuboid(facing, powered, handleTexture)
+  ];
+
+  return { elements, variant: { x: 0, y: 0, z: 0 } };
+}
+
+function chainElementsForState(properties) {
+  const texture = "minecraft:block/chain";
+  const axis = properties.axis ?? "y";
+
+  // Crossed, very thin cuboids using the actual vanilla chain texture. These
+  // are intentionally slim so lantern chains read as chains instead of as thick
+  // posts, and they still render even when the generic transparent model baker
+  // misses the vanilla chain model.
+  const elements = [
+    cuboid([6.75, 0, 7.25], [9.25, 16, 8.75], texture),
+    cuboid([7.25, 0, 6.75], [8.75, 16, 9.25], texture)
+  ];
+
+  if (axis === "x") return { elements, variant: { x: 0, y: 0, z: 90 } };
+  if (axis === "z") return { elements, variant: { x: 90, y: 0, z: 0 } };
+  return { elements, variant: { x: 0, y: 0, z: 0 } };
+}
+
+function specialBlockModel(blockName, properties = {}) {
+  const short = blockName.replace(/^minecraft:/, "");
+
+  // Keep true special fallbacks only for blocks that do not have useful vanilla
+  // model geometry in the asset baker. Directional/thin blocks such as chains,
+  // buttons, and levers intentionally go through vanilla blockstates/models so
+  // their rotations, UVs, and textures come from Minecraft's own data.
+  if (short === "chain") {
+    const chain = chainElementsForState(properties);
+    return bakeFallbackElements(blockName, chain.elements, chain.variant);
+  }
+
+  if (short.endsWith("_wall_sign") || short.endsWith("_wall_hanging_sign")) {
+    const y = { south: 0, west: 90, north: 180, east: 270 }[properties.facing ?? "north"] ?? 180;
+    return bakeFallbackElements(blockName, [
+      { from: [2, 4, 14], to: [14, 12, 15.5], faces: allFaces() }
+    ], { x: 0, y });
+  }
+
+  if (short.endsWith("_sign") || short.endsWith("_hanging_sign")) {
+    const rotation = Number(properties.rotation ?? 0);
+    const y = (rotation / 16) * 360;
+    return bakeFallbackElements(blockName, [
+      { from: [2, 5, 7.25], to: [14, 13, 8.75], faces: allFaces() },
+      { from: [7.25, 0, 7.25], to: [8.75, 5, 8.75], faces: allFaces() }
+    ], { x: 0, y });
+  }
+
+  return null;
+}
+
+function getAttachmentSnap(blockName, properties = {}) {
+  const short = blockName.replace(/^minecraft:/, "");
+  if (!(short === "lever" || short.endsWith("_button"))) return null;
+
+  const face = properties.face ?? "wall";
+  const facing = properties.facing ?? "north";
+
+  if (face === "floor") return { axis: "y", side: "min" };
+  if (face === "ceiling") return { axis: "y", side: "max" };
+
+  switch (facing) {
+    case "south": return { axis: "z", side: "min" };
+    case "east": return { axis: "x", side: "min" };
+    case "west": return { axis: "x", side: "max" };
+    case "north":
+    default: return { axis: "z", side: "max" };
+  }
+}
+
+function snapAttachedModelToSupport(blockName, properties, quads) {
+  const snap = getAttachmentSnap(blockName, properties);
+  if (!snap || quads.length === 0) return quads;
+
+  let min = Infinity;
+  let max = -Infinity;
+  for (const quad of quads) {
+    for (const point of quad.points) {
+      const value = point[snap.axis];
+      if (value < min) min = value;
+      if (value > max) max = value;
+    }
+  }
+
+  if (!Number.isFinite(min) || !Number.isFinite(max)) return quads;
+
+  const target = snap.side === "min" ? 0 : 1;
+  const current = snap.side === "min" ? min : max;
+  const delta = target - current;
+  if (Math.abs(delta) < 0.0001) return quads;
+
+  return quads.map(quad => ({
+    ...quad,
+    points: quad.points.map(point => ({ ...point, [snap.axis]: point[snap.axis] + delta })),
+    depthOffset: faceDepth(quad.points.map(point => ({ ...point, [snap.axis]: point[snap.axis] + delta })))
+  }));
+}
+
 function bakeBlockModel(blockName, properties = {}) {
   const cacheKey = `${blockName}|${stringifyProperties(properties)}`;
 
   if (bakedModelCache.has(cacheKey)) return bakedModelCache.get(cacheKey);
+
+  const special = specialBlockModel(blockName, properties);
+  if (special) {
+    bakedModelCache.set(cacheKey, special);
+    stats.bakedQuads += special.length;
+    return special;
+  }
 
   const variants = getModelVariantsFromBlockState(blockName, properties);
   const baked = [];
@@ -863,9 +1199,10 @@ function bakeBlockModel(blockName, properties = {}) {
     }
   }
 
-  stats.bakedQuads += baked.length;
-  bakedModelCache.set(cacheKey, baked);
-  return baked;
+  const attached = snapAttachedModelToSupport(blockName, properties, baked);
+  stats.bakedQuads += attached.length;
+  bakedModelCache.set(cacheKey, attached);
+  return attached;
 }
 
 function makeBlockQuads(block, offsetX, offsetY, scale, rotation = null) {
@@ -964,9 +1301,15 @@ function collectBlocksFromStructure(structure) {
 function normalizeBlocks(blocks) {
   if (blocks.length === 0) return blocks;
 
-  const minX = Math.min(...blocks.map(b => b.x));
-  const minY = Math.min(...blocks.map(b => b.y));
-  const minZ = Math.min(...blocks.map(b => b.z));
+  let minX = Infinity;
+  let minY = Infinity;
+  let minZ = Infinity;
+
+  for (const block of blocks) {
+    if (block.x < minX) minX = block.x;
+    if (block.y < minY) minY = block.y;
+    if (block.z < minZ) minZ = block.z;
+  }
 
   return blocks.map(block => ({
     ...block,
@@ -1018,10 +1361,17 @@ function fillBackground(png) {
 function getRotationCenter(blocks) {
   if (blocks.length === 0) return { x: 0, z: 0 };
 
-  const minX = Math.min(...blocks.map(block => block.x));
-  const maxX = Math.max(...blocks.map(block => block.x + 1));
-  const minZ = Math.min(...blocks.map(block => block.z));
-  const maxZ = Math.max(...blocks.map(block => block.z + 1));
+  let minX = Infinity;
+  let maxX = -Infinity;
+  let minZ = Infinity;
+  let maxZ = -Infinity;
+
+  for (const block of blocks) {
+    if (block.x < minX) minX = block.x;
+    if (block.x + 1 > maxX) maxX = block.x + 1;
+    if (block.z < minZ) minZ = block.z;
+    if (block.z + 1 > maxZ) maxZ = block.z + 1;
+  }
 
   return {
     x: (minX + maxX) / 2,
@@ -1029,32 +1379,16 @@ function getRotationCenter(blocks) {
   };
 }
 
-function getRotationDegrees(frame) {
-  if (gifFrames <= 1) return 0;
+function getScaledBounds(blocks, rotation) {
+  const baseBounds = computeBounds(blocks, 1, rotation);
+  const baseWidth = baseBounds.maxX - baseBounds.minX + padding * 2;
+  const baseHeight = baseBounds.maxY - baseBounds.minY + padding * 2;
+  const scale = Math.min(1, maxImageSize / Math.max(baseWidth, baseHeight));
 
-  return (frame / gifFrames) * 360;
-}
-
-function getAnimatedBounds(blocks, scale = 1, center = getRotationCenter(blocks)) {
-  let bounds = null;
-
-  for (let frame = 0; frame < gifFrames; frame++) {
-    const frameBounds = computeBounds(blocks, scale, {
-      degrees: getRotationDegrees(frame),
-      center
-    });
-
-    bounds = bounds
-      ? {
-          minX: Math.min(bounds.minX, frameBounds.minX),
-          maxX: Math.max(bounds.maxX, frameBounds.maxX),
-          minY: Math.min(bounds.minY, frameBounds.minY),
-          maxY: Math.max(bounds.maxY, frameBounds.maxY)
-        }
-      : frameBounds;
-  }
-
-  return bounds ?? { minX: 0, maxX: 1, minY: 0, maxY: 1 };
+  return {
+    scale,
+    bounds: computeBounds(blocks, scale, rotation)
+  };
 }
 
 function renderBlocksToPngFrame(blocks, options = {}) {
@@ -1086,69 +1420,35 @@ function renderBlocksToPngFrame(blocks, options = {}) {
   return png;
 }
 
-function encodeGifFrame(gif, png) {
-  const rgba = new Uint8Array(png.data);
-  const opaqueRgba = [];
-
-  for (let i = 0; i < rgba.length; i += 4) {
-    if (transparentBackground && rgba[i + 3] === 0) continue;
-    opaqueRgba.push(rgba[i], rgba[i + 1], rgba[i + 2], 255);
-  }
-
-  const opaquePalette = opaqueRgba.length > 0 ? quantize(new Uint8Array(opaqueRgba), 255) : [];
-  const palette = [[0, 0, 0], ...opaquePalette];
-  const index = new Uint8Array(png.width * png.height);
-
-  if (opaquePalette.length > 0) {
-    const opaqueIndexes = applyPalette(new Uint8Array(opaqueRgba), opaquePalette);
-    let opaqueCursor = 0;
-
-    for (let source = 0, target = 0; source < rgba.length; source += 4, target++) {
-      if (transparentBackground && rgba[source + 3] === 0) {
-        index[target] = 0;
-      } else {
-        index[target] = opaqueIndexes[opaqueCursor++] + 1;
-      }
-    }
-  }
-
-  gif.writeFrame(index, png.width, png.height, {
-    palette,
-    delay: gifDelay,
-    transparent: transparentBackground,
-    transparentIndex: 0
+function encodePng(png) {
+  return PNG.sync.write(png, {
+    colorType: 6,
+    inputColorType: 6,
+    deflateLevel: pngCompressionLevel,
+    filterType: 4
   });
 }
 
-function renderBlocksToGif(blocks) {
+function renderBlocksToPngViews(blocks) {
   blocks = normalizeBlocks(blocks);
 
   if (blocks.length === 0) {
-    const gif = GIFEncoder();
-    encodeGifFrame(gif, renderBlocksToPngFrame([], { bounds: { minX: 0, maxX: 1, minY: 0, maxY: 1 }, scale: 1 }));
-    gif.finish();
-    return Buffer.from(gif.bytesView());
+    const blank = renderBlocksToPngFrame([], { bounds: { minX: 0, maxX: 1, minY: 0, maxY: 1 }, scale: 1 });
+    return previewRotations.map(view => ({ ...view, buffer: encodePng(blank) }));
   }
 
   const center = getRotationCenter(blocks);
-  const baseBounds = getAnimatedBounds(blocks, 1, center);
-  const baseWidth = baseBounds.maxX - baseBounds.minX + padding * 2;
-  const baseHeight = baseBounds.maxY - baseBounds.minY + padding * 2;
-  const scale = Math.min(1, maxImageSize / Math.max(baseWidth, baseHeight));
-  const bounds = getAnimatedBounds(blocks, scale, center);
-  const gif = GIFEncoder();
 
-  for (let frame = 0; frame < gifFrames; frame++) {
-    const rotation = {
-      degrees: getRotationDegrees(frame),
-      center
+  return previewRotations.map(view => {
+    const rotation = { degrees: view.degrees, center };
+    const { bounds, scale } = getScaledBounds(blocks, rotation);
+    const png = renderBlocksToPngFrame(blocks, { bounds, scale, rotation });
+
+    return {
+      ...view,
+      buffer: encodePng(png)
     };
-
-    encodeGifFrame(gif, renderBlocksToPngFrame(blocks, { bounds, scale, rotation }));
-  }
-
-  gif.finish();
-  return Buffer.from(gif.bytesView());
+  });
 }
 
 function readJsonIfExists(file) {
@@ -1438,6 +1738,33 @@ function rotateYProperties(properties, quarterTurns) {
     const [front, top = "up"] = String(rotated.orientation).split("_");
     rotated.orientation = `${rotateYDirection(front, quarterTurns)}_${rotateYDirection(top, quarterTurns)}`;
   }
+  if (rotated.rotation !== undefined) {
+    const value = Number(rotated.rotation);
+    if (Number.isFinite(value)) rotated.rotation = String((value + quarterTurns * 4 + 1600) % 16);
+  }
+
+  if (rotated.axis === "x" || rotated.axis === "z") {
+    if (quarterTurns % 2 !== 0) rotated.axis = rotated.axis === "x" ? "z" : "x";
+  }
+
+  if (rotated.shape) {
+    const rotateShape = shape => {
+      const map = {
+        north_south: "east_west",
+        east_west: "north_south",
+        ascending_north: "ascending_east",
+        ascending_east: "ascending_south",
+        ascending_south: "ascending_west",
+        ascending_west: "ascending_north",
+        south_east: "south_west",
+        south_west: "north_west",
+        north_west: "north_east",
+        north_east: "south_east"
+      };
+      return map[shape] ?? shape;
+    };
+    for (let i = 0; i < ((quarterTurns % 4) + 4) % 4; i++) rotated.shape = rotateShape(rotated.shape);
+  }
 
   return rotated;
 }
@@ -1471,19 +1798,36 @@ function transformJigsaw(jigsaw, size, offset, quarterTurns = 0) {
   };
 }
 
-function chooseTemplatePoolLocations(poolJson) {
-  const locations = [];
+function getTemplatePoolChoices(poolJson) {
+  const choices = [];
 
+  // Minecraft chooses one top-level template_pool element by weight. Some
+  // elements contain nested data, but the weight belongs to the top-level
+  // pool entry, so do not flatten locations before rolling or large nested
+  // entries would be overrepresented.
   for (const element of poolJson?.elements ?? []) {
     const elementData = element.element ?? element;
-    const elementLocations = [...collectElementLocations(elementData)];
-    if (elementLocations.length > 0) locations.push(...elementLocations);
+    const weight = Math.max(0, Number(element.weight ?? elementData.weight ?? 1));
+    const locations = Array.from(collectElementLocations(elementData))
+      .filter(location => fs.existsSync(getStructureNbtFileFromLocation(location)));
+
+    choices.push({
+      locations,
+      location: locations[0] ?? null,
+      weight,
+      element: elementData
+    });
   }
 
-  return locations;
+  return choices;
 }
 
-async function chooseStructureFromTemplatePool(poolId, seenPools = new Set()) {
+function chooseTemplatePoolLocations(poolJson) {
+  return getTemplatePoolChoices(poolJson)
+    .flatMap(choice => choice.locations ?? (choice.location ? [choice.location] : []));
+}
+
+async function chooseStructureFromTemplatePool(poolId, seenPools = new Set(), seedText = previewSeed) {
   if (!poolId || poolId === "minecraft:empty" || seenPools.has(poolId)) return null;
   seenPools.add(poolId);
 
@@ -1491,13 +1835,26 @@ async function chooseStructureFromTemplatePool(poolId, seenPools = new Set()) {
   if (!poolJson) return null;
   stats.poolsRead++;
 
-  for (const location of chooseTemplatePoolLocations(poolJson)) {
-    const structureFile = getStructureNbtFileFromLocation(location);
-    if (fs.existsSync(structureFile)) return { location, structureFile };
+  const choices = getTemplatePoolChoices(poolJson);
+
+  if (choices.length > 0) {
+    const choice = chooseWeightedEntry(choices, `${seedText}|pool|${poolId}`) ?? choices[0];
+
+    // The chosen pool element may be minecraft:empty or another non-structure
+    // element. That means this jigsaw does not place a child here; do not
+    // silently try the next pool entry, because that would no longer be a
+    // weight-correct random choice.
+    if (!choice?.location) return null;
+
+    return {
+      location: choice.location,
+      structureFile: getStructureNbtFileFromLocation(choice.location),
+      weight: choice.weight
+    };
   }
 
   if (poolJson.fallback && poolJson.fallback !== "minecraft:empty") {
-    return chooseStructureFromTemplatePool(poolJson.fallback, seenPools);
+    return chooseStructureFromTemplatePool(poolJson.fallback, seenPools, `${seedText}|fallback`);
   }
 
   return null;
@@ -1518,24 +1875,34 @@ function makeBlockKey(block) {
 }
 
 async function assembleJigsawStructureFromPool(startPool, maxDepth = 7) {
-  const start = await chooseStructureFromTemplatePool(startPool);
-  if (!start) return [];
+  const start = await chooseStructureFromTemplatePool(startPool, new Set(), `${startPool}|start`);
+  if (!start) return { blocks: [], files: [], resolvedJigsaws: 0 };
 
   const blocks = [];
   const occupied = new Set();
-  const queue = [{ structureFile: start.structureFile, offset: { x: 0, y: 0, z: 0 }, quarterTurns: 0, depth: 0 }];
+  const queue = [{
+    structureFile: start.structureFile,
+    offset: { x: 0, y: 0, z: 0 },
+    quarterTurns: 0,
+    depth: 0,
+    consumedConnector: null
+  }];
   const placed = new Set();
+  const placedFiles = new Set();
+  let resolvedJigsaws = 0;
 
   while (queue.length > 0) {
     const item = queue.shift();
     const placedKey = `${item.structureFile}|${item.offset.x},${item.offset.y},${item.offset.z}|${item.quarterTurns}`;
     if (placed.has(placedKey)) continue;
     placed.add(placedKey);
+    placedFiles.add(item.structureFile);
 
     const structure = await readNbtFile(item.structureFile);
     const size = getStructureSize(structure);
+    const transformedBlocks = transformStructureBlocks(structure, item.offset, item.quarterTurns);
 
-    for (const block of transformStructureBlocks(structure, item.offset, item.quarterTurns)) {
+    for (const block of transformedBlocks) {
       const key = makeBlockKey(block);
       if (occupied.has(key)) continue;
       occupied.add(key);
@@ -1545,17 +1912,30 @@ async function assembleJigsawStructureFromPool(startPool, maxDepth = 7) {
     if (item.depth >= maxDepth) continue;
 
     for (const parent of getJigsawsFromStructure(structure)) {
+      // A jigsaw used as the incoming connector for this piece is already consumed.
+      // Expanding it again makes the preview grow backwards and quickly creates the
+      // "all pieces blob" that does not match jigsaw placement behavior.
+      if (
+        item.consumedConnector &&
+        parent.x === item.consumedConnector.x &&
+        parent.y === item.consumedConnector.y &&
+        parent.z === item.consumedConnector.z
+      ) {
+        continue;
+      }
+
+      // Only actual jigsaw blocks inside the currently placed structure can extend
+      // the assembly. Do not scan arbitrary worldgen JSON or all template-pool files.
       if (!parent.pool || parent.pool === "minecraft:empty") continue;
 
       const worldParent = transformJigsaw(parent, size, item.offset, item.quarterTurns);
-      const childChoice = await chooseStructureFromTemplatePool(parent.pool);
+      const childChoice = await chooseStructureFromTemplatePool(parent.pool, new Set(), `${item.structureFile}|${item.offset.x},${item.offset.y},${item.offset.z}|${item.quarterTurns}|${parent.x},${parent.y},${parent.z}|${parent.name}|${parent.target}|${parent.pool}`);
       if (!childChoice) continue;
 
-      stats.jigsawPoolsFollowed++;
       const childStructure = await readNbtFile(childChoice.structureFile);
       const childSize = getStructureSize(childStructure);
       const childJigsaws = getJigsawsFromStructure(childStructure);
-      const childConnector = childJigsaws.find(jigsaw => jigsaw.name === parent.target) ?? childJigsaws[0];
+      const childConnector = childJigsaws.find(jigsaw => jigsaw.name === parent.target) ?? null;
       if (!childConnector) continue;
 
       const parentFront = worldParent.frontVector ?? directionToVector(worldParent.front);
@@ -1573,16 +1953,47 @@ async function assembleJigsawStructureFromPool(startPool, maxDepth = 7) {
         z: attach.z - rotatedChildConnector.z
       };
 
+      const childBlocks = transformStructureBlocks(childStructure, childOffset, childTurns);
+      const overlapsExistingBlock = childBlocks.some(block => occupied.has(makeBlockKey(block)));
+      if (overlapsExistingBlock) continue;
+
+      resolvedJigsaws++;
+      stats.jigsawPoolsFollowed++;
+      stats.jigsawBlocksResolved++;
+
       queue.push({
         structureFile: childChoice.structureFile,
         offset: childOffset,
         quarterTurns: childTurns,
-        depth: item.depth + 1
+        depth: item.depth + 1,
+        consumedConnector: {
+          x: childConnector.x,
+          y: childConnector.y,
+          z: childConnector.z
+        }
       });
     }
   }
 
-  return blocks;
+  return { blocks, files: [...placedFiles].sort(), resolvedJigsaws };
+}
+
+function findFirstValueForKey(value, wantedKey) {
+  if (value === null || value === undefined) return null;
+  if (Array.isArray(value)) {
+    for (const item of value) {
+      const found = findFirstValueForKey(item, wantedKey);
+      if (found !== null && found !== undefined) return found;
+    }
+    return null;
+  }
+  if (typeof value !== "object") return null;
+  if (value[wantedKey] !== undefined) return value[wantedKey];
+  for (const nested of Object.values(value)) {
+    const found = findFirstValueForKey(nested, wantedKey);
+    if (found !== null && found !== undefined) return found;
+  }
+  return null;
 }
 
 async function collectStructureFilesForWorldgenStructure(worldgenFile) {
@@ -1590,27 +2001,26 @@ async function collectStructureFilesForWorldgenStructure(worldgenFile) {
   const json = readJsonIfExists(worldgenFile);
   if (!info || !json) return null;
 
-  const pools = collectTemplatePoolsFromObject(json);
-  const files = new Set();
-  let blocks = [];
+  const startPool = normalizeResourceLocationForCompare(
+    json.start_pool ?? json.startPool ?? findFirstValueForKey(json, "start_pool") ?? findFirstValueForKey(json, "startPool")
+  );
 
-  const startPool = normalizeResourceLocationForCompare(json.start_pool ?? json.startPool);
-  const maxDepth = Math.max(1, Number(json.size ?? json.max_distance_from_center ?? 7));
-
-  if (startPool) {
-    blocks = await assembleJigsawStructureFromPool(startPool, maxDepth);
+  if (!startPool) {
+    console.warn(`No start_pool found for worldgen structure ${worldgenFile}`);
+    return null;
   }
 
-  for (const poolId of pools) {
-    await collectStructureFilesFromTemplatePool(poolId, new Set(), files);
-  }
+  const maxDepth = Math.max(1, Number(json.size ?? json.max_distance_from_center ?? json.maxDistanceFromCenter ?? 7));
+  const assembled = await assembleJigsawStructureFromPool(startPool, maxDepth);
 
   return {
     namespace: info.namespace,
     relativePath: info.relativePath,
     id: info.id,
-    files: [...files].sort(),
-    blocks
+    files: assembled.files,
+    blocks: assembled.blocks,
+    resolvedJigsaws: assembled.resolvedJigsaws,
+    worldgen: true
   };
 }
 
@@ -1651,8 +2061,8 @@ async function getWorldgenStructureGroups() {
   for (const file of worldgenFiles) {
     const group = await collectStructureFilesForWorldgenStructure(file);
 
-    if (!group || group.files.length === 0) {
-      console.warn(`No template NBT files found for worldgen structure ${file}`);
+    if (!group || !Array.isArray(group.blocks) || group.blocks.length === 0) {
+      console.warn(`Could not assemble jigsaw preview for worldgen structure ${file}`);
       continue;
     }
 
@@ -1660,7 +2070,9 @@ async function getWorldgenStructureGroups() {
       namespace: group.namespace,
       outputName: group.relativePath,
       files: group.files,
-      blocks: group.blocks
+      blocks: group.blocks,
+      resolvedJigsaws: group.resolvedJigsaws,
+      worldgen: true
     });
   }
 
@@ -1681,7 +2093,7 @@ async function loadBlocksForFiles(files) {
 function removeStaleOutputFiles(validOutputFiles) {
   if (!fs.existsSync(outputRoot)) return;
 
-  for (const file of walk(outputRoot).filter(file => file.endsWith(".gif"))) {
+  for (const file of walk(outputRoot).filter(file => file.endsWith(".png") || file.endsWith(".gif"))) {
     const normalized = path.normalize(file);
 
     if (!validOutputFiles.has(normalized)) {
@@ -1692,6 +2104,7 @@ function removeStaleOutputFiles(validOutputFiles) {
 }
 
 async function main() {
+  console.log(`Using STRUCTURE_PREVIEW_SEED=${previewSeed}`);
   const groups = await getWorldgenStructureGroups();
 
   if (groups.size === 0) {
@@ -1708,24 +2121,34 @@ async function main() {
   for (const group of groups.values()) {
     group.files.sort();
 
-    const blocks = Array.isArray(group.blocks) && group.blocks.length > 0
+    const blocks = group.worldgen
       ? group.blocks
-      : await loadBlocksForFiles(group.files);
-    const outputPath = path.join(outputRoot, group.namespace, `${group.outputName}.gif`);
+      : (Array.isArray(group.blocks) && group.blocks.length > 0
+        ? group.blocks
+        : await loadBlocksForFiles(group.files));
+    const outputDir = path.join(outputRoot, group.namespace, group.outputName);
+    const views = renderBlocksToPngViews(blocks);
 
-    validOutputFiles.add(path.normalize(outputPath));
+    fs.mkdirSync(outputDir, { recursive: true });
 
-    fs.mkdirSync(path.dirname(outputPath), { recursive: true });
-    fs.writeFileSync(outputPath, renderBlocksToGif(blocks));
-    stats.mainImages++;
+    let totalSize = 0;
+    for (const view of views) {
+      const outputPath = path.join(outputDir, `${view.name}.png`);
+      validOutputFiles.add(path.normalize(outputPath));
+      fs.writeFileSync(outputPath, view.buffer);
+      totalSize += fs.statSync(outputPath).size;
+      stats.mainImages++;
+    }
 
-    const mainSize = fs.statSync(outputPath).size;
-    console.log(`Generated ${outputPath} from ${group.files.length} structure part(s), ${blocks.length} block(s), ${mainSize} bytes`);
+    const sourceDescription = group.worldgen
+      ? `${group.resolvedJigsaws ?? 0} resolved jigsaw block(s)`
+      : `${group.files.length} structure part(s)`;
+    console.log(`Generated ${views.length} PNG preview(s) in ${outputDir} from ${sourceDescription}, ${blocks.length} block(s), ${totalSize} total bytes`);
   }
 
   if (groups.size === 0) console.warn("No structure groups were found.");
 
-  console.log(`Generated ${stats.mainImages} animated preview GIF(s).`);
+  console.log(`Generated ${stats.mainImages} static preview PNG(s).`);
   console.log(`Baked ${stats.bakedQuads} model quad(s), skipped ${stats.skippedMissingModels} block model(s) with no renderable elements.`);
   console.log(`Texture files loaded: ${stats.textureHits}; missing/fallback lookups: ${stats.textureMisses}.`);
 
