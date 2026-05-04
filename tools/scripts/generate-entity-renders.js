@@ -4,14 +4,13 @@
  *   wiki/images/entity/<type>/<variant>/adult.png
  *   wiki/images/entity/<type>/<variant>/baby.png
  *
- * Important: entity geometry is NOT guessed here. This script asks the JVM
- * exporter in tools/entity-renderer to bake Mojang's actual client model layer
- * for the Minecraft version resolved from release_infos.yml, then renders the
- * exported quads with the variant textures from data/<namespace>/*_variant/*.json.
+ * Entity geometry is loaded from OBJ files checked into tools/entity_models.
+ * Expected path: tools/entity_models/<type>/<adult|baby>_<model>.obj.
+ * The model key 'default' maps to 'regular'. Missing model-specific OBJs fall
+ * back to regular, which is especially important for baby renders.
  */
 const fs = require('fs');
 const path = require('path');
-const cp = require('child_process');
 const yaml = require('js-yaml');
 const sharp = require('sharp');
 const { createCanvas, loadImage } = require('canvas');
@@ -29,8 +28,8 @@ const ENTITY_TYPES = [
 const HAS_BABY_MODEL = new Set(['cat', 'chicken', 'pig', 'cow', 'wolf']);
 
 const OUTPUT_ROOT = path.join('wiki', 'images', 'entity');
-const MODEL_CACHE_ROOT = path.join('.cache', 'entity-models');
-const MODEL_EXPORT_FAILURES = new Map();
+const MODEL_CACHE_ROOT = path.join('.cache', 'entity-obj-models');
+const ENTITY_MODEL_ROOT = path.join('tools', 'entity_models');
 const REPORT_PATH = path.join('wiki', 'images', 'entity', '_render-report.json');
 const DEBUG = process.env.ENTITY_RENDER_DEBUG !== '0';
 function debug(message) { if (DEBUG) console.log(`[entity-render-debug] ${message}`); }
@@ -190,11 +189,6 @@ function discoverVariants() {
   return variants;
 }
 
-function modelCacheFile(version, type, model, age, textureWidth = 64, textureHeight = 64) {
-  const safeModel = String(model || 'default').replace(/[^a-zA-Z0-9._-]+/g, '_');
-  return path.join(MODEL_CACHE_ROOT, version, type, `${safeModel}.${age}.${textureWidth}x${textureHeight}.json`);
-}
-
 async function textureDimensions(textureFile) {
   try {
     const meta = await sharp(textureFile).metadata();
@@ -205,46 +199,119 @@ async function textureDimensions(textureFile) {
 }
 
 
-function ensureExporterReady(version) {
-  console.log(`Checking Mojang model exporter for Minecraft ${version}...`);
-  try {
-    cp.execFileSync('gradle', [
-      '-p', path.join('tools', 'entity-renderer'),
-      `-Pminecraft_version=${version}`,
-      '--no-daemon', '--quiet', 'classes'
-    ], { stdio: 'inherit' });
-    console.log('Mojang model exporter compiled successfully.');
-  } catch (error) {
-    throw new Error(`Mojang model exporter could not be compiled for Minecraft ${version}. This is a Gradle/Fabric Loom setup failure, not a variant texture failure. For Minecraft 26.1+, this package uses Java 25, Gradle 9.4.0, net.fabricmc.fabric-loom 1.15-SNAPSHOT, and no mappings dependency. ${error.message || error}`);
+
+function objModelKey(model) {
+  const key = String(model || 'regular').replace(/^minecraft:/, '').split('/').pop();
+  return (!key || key === 'default') ? 'regular' : key;
+}
+
+function resolveObjModel(type, model, age) {
+  const dir = path.join(ENTITY_MODEL_ROOT, type);
+  const key = objModelKey(model);
+  const candidates = [
+    path.join(dir, `${age}_${key}.obj`),
+    path.join(dir, `${age}_regular.obj`)
+  ];
+  if (age === 'baby') {
+    // Last-resort fallback keeps baby-capable variants renderable even when only
+    // an adult OBJ exists. Prefer baby_regular when present, but do not fail
+    // just because a model-specific baby OBJ is absent.
+    candidates.push(path.join(dir, `adult_${key}.obj`));
+    candidates.push(path.join(dir, 'adult_regular.obj'));
   }
+  for (const candidate of [...new Set(candidates)]) {
+    if (exists(candidate)) return { file: candidate, requested: key, resolved: path.basename(candidate, '.obj') };
+  }
+  return { file: null, requested: key, resolved: null, candidates: [...new Set(candidates)] };
+}
+
+function ensureObjModelsReady() {
+  if (!exists(ENTITY_MODEL_ROOT)) {
+    throw new Error(`OBJ model folder not found: ${ENTITY_MODEL_ROOT}`);
+  }
+  for (const type of ENTITY_TYPES) {
+    const regular = path.join(ENTITY_MODEL_ROOT, type, 'adult_regular.obj');
+    if (!exists(regular)) throw new Error(`Missing required fallback OBJ model: ${regular}`);
+  }
+  console.log(`Using checked-in OBJ entity models from ${ENTITY_MODEL_ROOT}`);
+}
+
+function parseObjFile(objFile, textureWidth, textureHeight) {
+  const lines = fs.readFileSync(objFile, 'utf8').split(/\r?\n/);
+  const positions = [null];
+  const uvs = [null];
+  const quads = [];
+
+  function parseIndex(token, listLength) {
+    const n = Number(token);
+    if (!Number.isFinite(n) || n === 0) return null;
+    return n < 0 ? listLength + n : n;
+  }
+
+  for (const rawLine of lines) {
+    const line = rawLine.trim();
+    if (!line || line.startsWith('#')) continue;
+    const parts = line.split(/\s+/);
+    if (parts[0] === 'v' && parts.length >= 4) {
+      positions.push({ x: Number(parts[1]), y: Number(parts[2]), z: Number(parts[3]) });
+    } else if (parts[0] === 'vt' && parts.length >= 3) {
+      const u = Number(parts[1]);
+      const v = Number(parts[2]);
+      // OBJ V coordinates are bottom-origin; PNG/sharp sampling is top-origin.
+      uvs.push({ u, v: 1 - v });
+    } else if (parts[0] === 'f' && parts.length >= 4) {
+      const verts = parts.slice(1).map(tok => {
+        const [viRaw, vtiRaw] = tok.split('/');
+        const vi = parseIndex(viRaw, positions.length);
+        const vti = vtiRaw ? parseIndex(vtiRaw, uvs.length) : null;
+        const p = vi != null ? positions[vi] : null;
+        const uv = vti != null ? uvs[vti] : null;
+        if (!p) return null;
+        return { x: p.x, y: p.y, z: p.z, u: uv ? uv.u : 0, v: uv ? uv.v : 0 };
+      }).filter(Boolean);
+      if (verts.length < 3) continue;
+      for (let i = 1; i < verts.length - 1; i++) {
+        // Store triangles in the existing quad renderer format. The duplicated
+        // final vertex makes the second triangle degenerate and harmless.
+        quads.push({ vertices: [verts[0], verts[i], verts[i + 1], verts[i + 1]] });
+      }
+    }
+  }
+
+  if (!quads.length) throw new Error(`OBJ model has no renderable faces: ${objFile}`);
+  return { source: 'obj', objFile, textureWidth, textureHeight, quads };
+}
+
+function modelCacheFile(version, type, model, age, textureWidth = 64, textureHeight = 64, resolvedModel = null) {
+  const safeModel = String(resolvedModel || objModelKey(model)).replace(/[^a-zA-Z0-9._-]+/g, '_');
+  return path.join(MODEL_CACHE_ROOT, version, type, `${safeModel}.${age}.${textureWidth}x${textureHeight}.json`);
 }
 
 async function exportModel(version, type, model, age, textureFile) {
   const dims = await textureDimensions(textureFile);
-  const key = `${version}:${type}:${model || 'default'}:${age}:${dims.width}x${dims.height}`;
-  if (MODEL_EXPORT_FAILURES.has(key)) throw MODEL_EXPORT_FAILURES.get(key);
-  const out = modelCacheFile(version, type, model, age, dims.width, dims.height);
-  if (exists(out)) return out;
-  fs.mkdirSync(path.dirname(out), { recursive: true });
-  console.log(`Exporting Mojang model: ${version} ${type} model=${model || 'default'} age=${age} texture=${dims.width}x${dims.height}`);
-  const args = [
-    '-p', path.join('tools', 'entity-renderer'),
-    `-Pminecraft_version=${version}`,
-    '--no-daemon', '--quiet', 'run',
-    `--args=--minecraft-version ${version} --entity ${type} --model ${model || 'default'} --age ${age} --texture-width ${dims.width} --texture-height ${dims.height} --output ${path.resolve(out)}`
-  ];
-  try {
-    cp.execFileSync('gradle', args, { stdio: 'inherit' });
-  } catch (error) {
-    const wrapped = new Error(`Model export failed once for ${key}; suppressing repeat attempts for the same model/age. ${error.message || error}`);
-    MODEL_EXPORT_FAILURES.set(key, wrapped);
-    throw wrapped;
+  const resolved = resolveObjModel(type, model, age);
+  if (!resolved.file) {
+    throw new Error(`No OBJ model found for ${type} model=${model || 'default'} age=${age}; tried: ${(resolved.candidates || []).join(', ')}`);
   }
-  if (!exists(out)) {
-    const wrapped = new Error(`Exporter did not create ${out}`);
-    MODEL_EXPORT_FAILURES.set(key, wrapped);
-    throw wrapped;
+  const out = modelCacheFile(version, type, model, age, dims.width, dims.height, resolved.resolved);
+  const objStat = fs.statSync(resolved.file);
+  const textureStat = fs.statSync(textureFile);
+  if (exists(out)) {
+    try {
+      const cached = readJson(out);
+      if (cached.source === 'obj' && cached.objFile === resolved.file && cached.objMtimeMs === objStat.mtimeMs && cached.textureWidth === dims.width && cached.textureHeight === dims.height) {
+        return out;
+      }
+    } catch {}
   }
+  console.log(`Loading OBJ model: ${type} requested=${objModelKey(model)} resolved=${resolved.resolved} age=${age} texture=${dims.width}x${dims.height}`);
+  const parsed = parseObjFile(resolved.file, dims.width, dims.height);
+  parsed.objMtimeMs = objStat.mtimeMs;
+  parsed.textureMtimeMs = textureStat.mtimeMs;
+  parsed.requestedModel = objModelKey(model);
+  parsed.resolvedModel = resolved.resolved;
+  writeJson(out, parsed);
+  console.log(`Cached OBJ model ${parsed.quads.length} triangle(s) to ${out}`);
   return out;
 }
 
@@ -255,7 +322,8 @@ function rotateZ(p, a) { const c=Math.cos(a), s=Math.sin(a); return { x:p.x*c-p.
 
 async function renderModel(modelFile, textureFile, outputFile, type, age) {
   const model = readJson(modelFile);
-  const meta = ENTITY_RENDER[type] || ENTITY_RENDER.cow;
+  const baseMeta = ENTITY_RENDER[type] || ENTITY_RENDER.cow;
+  const meta = model.source === 'obj' ? { ...baseMeta, yOffset: 0 } : baseMeta;
   const textureMeta = await sharp(textureFile).ensureAlpha().raw().toBuffer({ resolveWithObject: true });
   const tex = textureMeta.data;
   const texW = textureMeta.info.width || model.textureWidth || 64;
@@ -537,7 +605,9 @@ async function main() {
       adultTexture: v.adultTexture || null,
       babyTexture: v.babyTexture || null,
       adultTextureCandidates: adultCandidates,
-      babyTextureCandidates: babyCandidates
+      babyTextureCandidates: babyCandidates,
+      adultObjModel: resolveObjModel(v.type, v.model, 'adult'),
+      babyObjModel: HAS_BABY_MODEL.has(v.type) ? resolveObjModel(v.type, v.model, 'baby') : null
     };
     report.discovered.push(discovered);
     console.log(`\n[variant] ${v.type}/${v.variant}`);
@@ -562,9 +632,9 @@ async function main() {
   }
 
   try {
-    ensureExporterReady(version);
+    ensureObjModelsReady();
   } catch (error) {
-    report.errors.push({ type: 'exporter', variant: 'preflight', age: 'all', message: String(error.stack || error.message || error) });
+    report.errors.push({ type: 'obj-models', variant: 'preflight', age: 'all', message: String(error.stack || error.message || error) });
     writeJson(REPORT_PATH, report);
     console.error(error.stack || error.message || error);
     process.exitCode = 1;

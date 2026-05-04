@@ -25,10 +25,10 @@ jobs:
         run: pip install pyyaml requests
 
       - name: Create temporary Crowdin config
-        run: bash scripts/create-crowdin-temp-config.sh
+        run: bash tools/scripts/create-crowdin-temp-config.sh
 
       - name: Backup English source lang
-        run: bash scripts/backup-english-source-lang.sh
+        run: bash tools/scripts/backup-english-source-lang.sh
 
       - name: Upload source to Crowdin
         uses: crowdin/github-action@v2
@@ -57,18 +57,18 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Cleanup Crowdin files and protect en_us
-        run: bash scripts/cleanup-crowdin-files.sh
+        run: bash tools/scripts/cleanup-crowdin-files.sh
 
       - name: Normalize lang filenames
-        run: bash scripts/normalize-lang-filenames.sh
+        run: bash tools/scripts/normalize-lang-filenames.sh
 
       - name: Commit Crowdin translation updates
-        run: bash scripts/commit-crowdin-translation-updates.sh
+        run: bash tools/scripts/commit-crowdin-translation-updates.sh
 
       - name: Read release metadata
         id: meta
         shell: bash
-        run: python scripts/read-release-metadata.py
+        run: python tools/scripts/read-release-metadata.py
 
       - name: Build datapack zip and universal mod jar
         env:
@@ -76,7 +76,7 @@ jobs:
           JAR_NAME: ${{ steps.meta.outputs.jar_name }}
           VERSION_NUMBER: ${{ steps.meta.outputs.version_number }}
           PROJECT_ID: ${{ steps.meta.outputs.project_id }}
-        run: python scripts/build-release-artifacts.py
+        run: python tools/scripts/build-release-artifacts.py
 
       - name: Create or update GitHub Release
         env:
@@ -87,7 +87,7 @@ jobs:
           ZIP_NAME: ${{ steps.meta.outputs.zip_name }}
           JAR_NAME: ${{ steps.meta.outputs.jar_name }}
           IS_PRERELEASE: ${{ steps.meta.outputs.is_prerelease }}
-        run: bash scripts/create-or-update-github-release.sh
+        run: bash tools/scripts/create-or-update-github-release.sh
 
       - name: Upload datapack version to Modrinth
         env:
@@ -102,7 +102,7 @@ jobs:
           LOADERS_JSON: '["datapack"]'
           FILE_MIME_TYPE: application/zip
           MODRINTH_UPLOAD_LABEL: datapack
-        run: python scripts/upload-version-to-modrinth.py
+        run: python tools/scripts/upload-version-to-modrinth.py
 
       - name: Upload universal mod version to Modrinth
         env:
@@ -117,4 +117,4 @@ jobs:
           LOADERS_JSON: '["fabric", "forge", "quilt", "neoforge"]'
           FILE_MIME_TYPE: application/java-archive
           MODRINTH_UPLOAD_LABEL: universal mod
-        run: python scripts/upload-version-to-modrinth.py
+        run: python tools/scripts/upload-version-to-modrinth.py
