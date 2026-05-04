@@ -1,6 +1,6 @@
 {
   "minecraftVersion": "26.1.2",
-  "renderer": "obj-software-v22-frog-uv-wrap",
+  "renderer": "obj-software-v23-frog-uv-canvas-fix",
   "generated": [
     {
       "type": "cat",
