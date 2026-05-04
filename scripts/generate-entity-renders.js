@@ -256,14 +256,10 @@ function rotateZ(p, a) { const c=Math.cos(a), s=Math.sin(a); return { x:p.x*c-p.
 async function renderModel(modelFile, textureFile, outputFile, type, age) {
   const model = readJson(modelFile);
   const meta = ENTITY_RENDER[type] || ENTITY_RENDER.cow;
-  const texture = await loadImage(textureFile);
-  const textureMeta = await sharp(textureFile).metadata();
-  const texW = textureMeta.width || model.textureWidth || 64;
-  const texH = textureMeta.height || model.textureHeight || 64;
-  const canvas = createCanvas(512, 512);
-  const ctx = canvas.getContext('2d');
-  ctx.clearRect(0, 0, 512, 512);
-  ctx.imageSmoothingEnabled = false;
+  const textureMeta = await sharp(textureFile).ensureAlpha().raw().toBuffer({ resolveWithObject: true });
+  const tex = textureMeta.data;
+  const texW = textureMeta.info.width || model.textureWidth || 64;
+  const texH = textureMeta.info.height || model.textureHeight || 64;
 
   let quads = model.quads || [];
   if (!quads.length) throw new Error(`Model ${modelFile} has no quads`);
@@ -294,31 +290,30 @@ async function renderModel(modelFile, textureFile, outputFile, type, age) {
     };
   }
 
+  const width = 512;
+  const height = 512;
+  const rgba = Buffer.alloc(width * height * 4, 0);
   for (const q of transformed) {
     const pts = q.vertices.map(project);
-    // Render both triangle windings. Minecraft quads may be emitted with either winding
-    // after reflective ModelPart export, and wiki thumbnails must not backface-cull.
-    drawTexturedTriangle(ctx, texture, pts[0], pts[1], pts[2]);
-    drawTexturedTriangle(ctx, texture, pts[2], pts[1], pts[0]);
-    drawTexturedTriangle(ctx, texture, pts[0], pts[2], pts[3]);
-    drawTexturedTriangle(ctx, texture, pts[3], pts[2], pts[0]);
+    rasterTexturedTriangle(rgba, width, height, tex, texW, texH, pts[0], pts[1], pts[2]);
+    rasterTexturedTriangle(rgba, width, height, tex, texW, texH, pts[0], pts[2], pts[3]);
   }
 
   fs.mkdirSync(path.dirname(outputFile), { recursive: true });
-  const png = canvas.toBuffer('image/png');
-  await sharp(png)
+  const png = await sharp(rgba, { raw: { width, height, channels: 4 } })
     .trim({ background: { r: 0, g: 0, b: 0, alpha: 0 }, threshold: 1 })
     .extend({ top: 24, bottom: 24, left: 24, right: 24, background: { r: 0, g: 0, b: 0, alpha: 0 } })
     .resize(512, 512, { fit: 'contain', background: { r: 0, g: 0, b: 0, alpha: 0 }, kernel: 'nearest' })
     .png()
-    .toFile(outputFile);
+    .toBuffer();
+  await sharp(png).toFile(outputFile);
   await assertPngNotBlank(outputFile, modelFile, textureFile);
 }
 
 function normalizeVertex(v, texW, texH) {
   let u = Number(v.u || 0);
   let vv = Number(v.v || 0);
-  // Some reflected runtimes expose normalized UVs; canvas needs texture pixels.
+  // Some reflected runtimes expose normalized UVs; the rasterizer needs texture pixels.
   if (u >= 0 && u <= 1 && vv >= 0 && vv <= 1) {
     u *= texW;
     vv *= texH;
@@ -349,31 +344,62 @@ async function assertPngNotBlank(outputPath, modelFile, textureFile) {
   }
 }
 
-function drawTexturedTriangle(ctx, img, p0, p1, p2) {
+function edge(ax, ay, bx, by, cx, cy) {
+  return (cx - ax) * (by - ay) - (cy - ay) * (bx - ax);
+}
+
+function rasterTexturedTriangle(dst, dw, dh, tex, tw, th, p0, p1, p2) {
   const vals = [p0.x, p0.y, p0.u, p0.v, p1.x, p1.y, p1.u, p1.v, p2.x, p2.y, p2.u, p2.v];
   if (!vals.every(Number.isFinite)) return;
+  const area = edge(p0.x, p0.y, p1.x, p1.y, p2.x, p2.y);
+  if (Math.abs(area) < 1e-6) return;
 
-  const den = p0.u * (p1.v - p2.v) + p1.u * (p2.v - p0.v) + p2.u * (p0.v - p1.v);
-  if (Math.abs(den) < 1e-6) return;
+  const minX = Math.max(0, Math.floor(Math.min(p0.x, p1.x, p2.x)) - 1);
+  const maxX = Math.min(dw - 1, Math.ceil(Math.max(p0.x, p1.x, p2.x)) + 1);
+  const minY = Math.max(0, Math.floor(Math.min(p0.y, p1.y, p2.y)) - 1);
+  const maxY = Math.min(dh - 1, Math.ceil(Math.max(p0.y, p1.y, p2.y)) + 1);
+  if (minX > maxX || minY > maxY) return;
 
-  const a = (p0.x * (p1.v - p2.v) + p1.x * (p2.v - p0.v) + p2.x * (p0.v - p1.v)) / den;
-  const b = (p0.x * (p2.u - p1.u) + p1.x * (p0.u - p2.u) + p2.x * (p1.u - p0.u)) / den;
-  const c = (p0.x * (p1.u * p2.v - p2.u * p1.v) + p1.x * (p2.u * p0.v - p0.u * p2.v) + p2.x * (p0.u * p1.v - p1.u * p0.v)) / den;
-  const d = (p0.y * (p1.v - p2.v) + p1.y * (p2.v - p0.v) + p2.y * (p0.v - p1.v)) / den;
-  const e = (p0.y * (p2.u - p1.u) + p1.y * (p0.u - p2.u) + p2.y * (p1.u - p0.u)) / den;
-  const f = (p0.y * (p1.u * p2.v - p2.u * p1.v) + p1.y * (p2.u * p0.v - p0.u * p2.v) + p2.y * (p0.u * p1.v - p1.u * p0.v)) / den;
+  for (let y = minY; y <= maxY; y++) {
+    for (let x = minX; x <= maxX; x++) {
+      const px = x + 0.5;
+      const py = y + 0.5;
+      const w0 = edge(p1.x, p1.y, p2.x, p2.y, px, py) / area;
+      const w1 = edge(p2.x, p2.y, p0.x, p0.y, px, py) / area;
+      const w2 = edge(p0.x, p0.y, p1.x, p1.y, px, py) / area;
+      if (w0 < -1e-4 || w1 < -1e-4 || w2 < -1e-4) continue;
 
-  ctx.save();
-  ctx.beginPath();
-  ctx.moveTo(p0.x, p0.y);
-  ctx.lineTo(p1.x, p1.y);
-  ctx.lineTo(p2.x, p2.y);
-  ctx.closePath();
-  ctx.clip();
-  ctx.transform(a, d, b, e, c, f);
-  ctx.imageSmoothingEnabled = false;
-  ctx.drawImage(img, 0, 0);
-  ctx.restore();
+      const u = w0 * p0.u + w1 * p1.u + w2 * p2.u;
+      const v = w0 * p0.v + w1 * p1.v + w2 * p2.v;
+      let sx = Math.max(0, Math.min(tw - 1, Math.round(u)));
+      let sy = Math.max(0, Math.min(th - 1, Math.round(v)));
+      let si = (sy * tw + sx) * 4;
+      let sr = tex[si], sg = tex[si + 1], sb = tex[si + 2], sa = tex[si + 3];
+
+      // If the exact UV lands on a transparent texel, search a tiny neighborhood.
+      // This avoids all-transparent thumbnails from edge UVs on sparse 26.x textures.
+      if (sa <= 8) {
+        let found = false;
+        for (let r = 1; r <= 2 && !found; r++) {
+          for (let oy = -r; oy <= r && !found; oy++) for (let ox = -r; ox <= r; ox++) {
+            const nx = Math.max(0, Math.min(tw - 1, sx + ox));
+            const ny = Math.max(0, Math.min(th - 1, sy + oy));
+            const ni = (ny * tw + nx) * 4;
+            if (tex[ni + 3] > 8) { sr = tex[ni]; sg = tex[ni + 1]; sb = tex[ni + 2]; sa = tex[ni + 3]; found = true; break; }
+          }
+        }
+      }
+      if (sa <= 8) continue;
+
+      const di = (y * dw + x) * 4;
+      const a = sa / 255;
+      const inv = 1 - a;
+      dst[di] = Math.round(sr * a + dst[di] * inv);
+      dst[di + 1] = Math.round(sg * a + dst[di + 1] * inv);
+      dst[di + 2] = Math.round(sb * a + dst[di + 2] * inv);
+      dst[di + 3] = Math.min(255, Math.round(sa + dst[di + 3] * inv));
+    }
+  }
 }
 
 async function main() {
