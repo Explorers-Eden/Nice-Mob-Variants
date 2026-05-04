@@ -240,6 +240,29 @@ function parseObjFile(objFile) {
   return tris;
 }
 
+
+function uvStatsOfTriangles(tris) {
+  const s = { minU: Infinity, maxU: -Infinity, minV: Infinity, maxV: -Infinity };
+  for (const tri of tris) for (const p of tri) {
+    s.minU = Math.min(s.minU, p.u); s.maxU = Math.max(s.maxU, p.u);
+    s.minV = Math.min(s.minV, p.v); s.maxV = Math.max(s.maxV, p.v);
+  }
+  return s;
+}
+
+function normalizeUvForTexture(u, v, options) {
+  if (options.flipU) u = 1 - u;
+  if (options.flipV) v = 1 - v;
+
+  // Blockbench/Minecraft OBJ exports may contain UVs slightly outside 0..1
+  // (frog does this on the right side of its texture sheet). Clamping those
+  // values smears the edge pixel across whole faces, which is the broken frog
+  // look. Repeat only true out-of-range values; keep exact 0/1 edges intact.
+  if (u < 0 || u > 1) u = ((u % 1) + 1) % 1;
+  if (v < 0 || v > 1) v = ((v % 1) + 1) % 1;
+  return { u: clamp(u, 0, 1), v: clamp(v, 0, 1) };
+}
+
 function boundsOfTriangles(tris) {
   const b = { minX: Infinity, minY: Infinity, minZ: Infinity, maxX: -Infinity, maxY: -Infinity, maxZ: -Infinity };
   for (const tri of tris) for (const p of tri) {
@@ -298,13 +321,9 @@ function transformTriangles(tris, type) {
 }
 
 function sampleTexture(tex, uNorm, vNorm, options) {
-  let u = uNorm;
-  let v = vNorm;
-  if (options.flipU) u = 1 - u;
-  // OBJ vt is bottom-origin. PNG rows are top-origin. Default flipV=true.
-  if (options.flipV) v = 1 - v;
-  const x = clamp(Math.floor(u * tex.width), 0, tex.width - 1);
-  const y = clamp(Math.floor(v * tex.height), 0, tex.height - 1);
+  const uv = normalizeUvForTexture(uNorm, vNorm, options);
+  const x = clamp(Math.floor(uv.u * tex.width), 0, tex.width - 1);
+  const y = clamp(Math.floor(uv.v * tex.height), 0, tex.height - 1);
   const i = (y * tex.width + x) * 4;
   return [tex.data[i], tex.data[i + 1], tex.data[i + 2], tex.data[i + 3]];
 }
@@ -436,11 +455,13 @@ async function renderObjEntity(objFile, textureFile, outputFile, type) {
   const texture = loadPng(textureFile);
   const tris = parseObjFile(objFile);
   const projected = transformTriangles(tris, type);
+  const uvStats = uvStatsOfTriangles(tris);
+  const preferredFlipV = type === 'frog' ? false : true;
   const modes = [
-    { flipU: false, flipV: true },
-    { flipU: false, flipV: false },
-    { flipU: true, flipV: true },
-    { flipU: true, flipV: false }
+    { flipU: false, flipV: preferredFlipV },
+    { flipU: false, flipV: !preferredFlipV },
+    { flipU: true, flipV: preferredFlipV },
+    { flipU: true, flipV: !preferredFlipV }
   ];
   let best = null;
   for (const mode of modes) {
@@ -450,8 +471,10 @@ async function renderObjEntity(objFile, textureFile, outputFile, type) {
     let painted = 0;
     for (const tri of projected) painted += rasterTriangle(color, depth, tri, texture, mode);
     const visible = visiblePixels(color);
-    logDebug(`${path.basename(objFile)} ${path.basename(textureFile)} uv=${JSON.stringify(mode)} painted=${painted} visible=${visible}`);
-    if (!best || visible > best.visible) best = { color, visible, mode };
+    // Prefer the first mode for ties. Visible-pixel counts are often identical
+    // for opaque mob skins, so this avoids random-looking UV flips.
+    logDebug(`${path.basename(objFile)} ${path.basename(textureFile)} uv=${JSON.stringify(mode)} uvStats=${JSON.stringify(uvStats)} painted=${painted} visible=${visible}`);
+    if (!best || visible > best.visible + 16) best = { color, visible, mode };
   }
   if (!best || best.visible < 20) throw new Error(`OBJ render produced ${best ? best.visible : 0} visible pixels: ${outputFile} model=${objFile} texture=${textureFile}`);
 
@@ -469,7 +492,7 @@ async function main() {
   fs.mkdirSync(OUTPUT_ROOT, { recursive: true });
   const version = resolveMinecraftVersion();
   const variants = discoverVariants();
-  const report = { minecraftVersion: version, renderer: 'obj-software-v21', generated: [], skipped: [], errors: [], discovered: [] };
+  const report = { minecraftVersion: version, renderer: 'obj-software-v22-frog-uv-wrap', generated: [], skipped: [], errors: [], discovered: [] };
   console.log(`Entity render output root: ${OUTPUT_ROOT}`);
   console.log(`Discovered ${variants.length} entity variant JSON file(s).`);
   if (!variants.length) { writeJson(REPORT_PATH, report); return; }
