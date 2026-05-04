@@ -1,82 +1,69 @@
 #!/usr/bin/env node
 /*
- * Generates true Minecraft entity variant renders into:
- *   wiki/images/entity/<type>/<variant>/adult.png
- *   wiki/images/entity/<type>/<variant>/baby.png
+ * OBJ based Minecraft entity variant renderer.
  *
- * Entity geometry is loaded from OBJ files checked into tools/entity_models.
- * Expected path: tools/entity_models/<type>/<adult|baby>_<model>.obj.
- * The model key 'default' maps to 'regular'. Missing model-specific OBJs fall
- * back to regular, which is especially important for baby renders.
+ * This is intentionally independent from Mojang model baking, Fabric Loom,
+ * Three.js, headless-gl, or browser/WebGL APIs. It loads checked-in OBJ models
+ * from tools/entity_models/<type>/<adult|baby>_<model>.obj and rasterizes them
+ * in pure Node using pngjs.
  */
 const fs = require('fs');
 const path = require('path');
 const yaml = require('js-yaml');
-const sharp = require('sharp');
+const { PNG } = require('pngjs');
 
-const ENTITY_TYPES = [
-  'cat',
-  'chicken',
-  'frog',
-  'pig',
-  'cow',
-  'wolf',
-  'zombie_nautilus'
-];
-
+const ENTITY_TYPES = ['cat', 'chicken', 'frog', 'pig', 'cow', 'wolf', 'zombie_nautilus'];
 const HAS_BABY_MODEL = new Set(['cat', 'chicken', 'pig', 'cow', 'wolf']);
-
 const OUTPUT_ROOT = path.join('wiki', 'images', 'entity');
-const MODEL_CACHE_ROOT = path.join('.cache', 'entity-obj-models');
 const ENTITY_MODEL_ROOT = path.join('tools', 'entity_models');
-const REPORT_PATH = path.join('wiki', 'images', 'entity', '_render-report.json');
+const REPORT_PATH = path.join(OUTPUT_ROOT, '_render-report.json');
 const DEBUG = process.env.ENTITY_RENDER_DEBUG === '1';
 const VERBOSE = process.env.ENTITY_RENDER_VERBOSE === '1';
-function debug(message) { if (DEBUG) console.log(`[entity-render-debug] ${message}`); }
-function verbose(message) { if (VERBOSE) console.log(message); }
 
-const ENTITY_RENDER = {
-  // OBJ exports use a normal right-handed coordinate space (Y up).
-  // v19 camera: PlanetMinecraft-style orthographic isometric render.
-  // The previous versions were fighting the renderer one symptom at a time:
-  // blank UVs, upside-down meshes, then huge nearest-neighbor texels. This is
-  // intentionally simple: render OBJ geometry at high resolution, sample
-  // Minecraft textures exactly, then downsample once with a high-quality kernel.
-  // Default yaw is the opposite of v18 so the face/front points toward the
-  // lower-left side of the transparent PNG instead of the upper-right.
-  cat: { yaw: 45, pitch: 28, roll: 0, yOffset: 0, flipProjectY: true, target: 760 },
-  chicken: { yaw: 45, pitch: 28, roll: 0, yOffset: 0, flipProjectY: true, target: 700 },
-  frog: { yaw: 45, pitch: 28, roll: 0, yOffset: 0, flipProjectY: true, target: 720 },
-  pig: { yaw: 45, pitch: 28, roll: 0, yOffset: 0, flipProjectY: true, target: 760 },
-  cow: { yaw: 45, pitch: 28, roll: 0, yOffset: 0, flipProjectY: true, target: 780 },
-  wolf: { yaw: 45, pitch: 28, roll: 0, yOffset: 0, flipProjectY: true, target: 760 },
-  zombie_nautilus: { yaw: 45, pitch: 28, roll: 0, yOffset: 0, flipProjectY: true, target: 720 }
+const RENDER_SIZE = Number(process.env.ENTITY_RENDER_SIZE || 512);
+const SUPERSAMPLE = Math.max(1, Math.min(6, Number(process.env.ENTITY_RENDER_SUPERSAMPLE || 4)));
+const INTERNAL_SIZE = RENDER_SIZE * SUPERSAMPLE;
+const PADDING = Number(process.env.ENTITY_RENDER_PADDING || 0.12);
+
+// Camera is object-space position relative to the model center.
+// Minecraft/Blockbench OBJs use Y-up. For these exported models, the front is
+// the negative Z side. This camera views from above + front + left, matching the
+// reference style: a clean isometric render with the face readable and angled
+// toward the lower-left side of the final image.
+const DEFAULT_CAMERA = {
+  x: Number(process.env.ENTITY_RENDER_CAMERA_X || -1.0),
+  y: Number(process.env.ENTITY_RENDER_CAMERA_Y || 0.72),
+  z: Number(process.env.ENTITY_RENDER_CAMERA_Z || -1.0)
 };
 
-function renderAngleOverride(name, fallback) {
-  const raw = process.env[`ENTITY_RENDER_${name}`];
-  if (raw == null || raw === '') return fallback;
-  const n = Number(raw);
-  return Number.isFinite(n) ? n : fallback;
-}
+const ENTITY_SCALE = {
+  cat: 0.92,
+  chicken: 0.86,
+  frog: 0.90,
+  pig: 0.92,
+  cow: 0.94,
+  wolf: 0.92,
+  zombie_nautilus: 0.88
+};
 
-function resolveRenderMeta(type, source) {
-  const base = ENTITY_RENDER[type] || ENTITY_RENDER.cow;
-  const meta = source === 'obj' ? { ...base, yOffset: 0 } : { ...base };
-  meta.yaw = renderAngleOverride('YAW', meta.yaw);
-  meta.pitch = renderAngleOverride('PITCH', meta.pitch);
-  meta.roll = renderAngleOverride('ROLL', meta.roll || 0);
-  return meta;
-}
-
+function logDebug(msg) { if (DEBUG) console.log(`[entity-render-debug] ${msg}`); }
+function logVerbose(msg) { if (VERBOSE) console.log(msg); }
+function exists(file) { try { return fs.existsSync(file); } catch { return false; } }
 function readJson(file) { return JSON.parse(fs.readFileSync(file, 'utf8')); }
 function writeJson(file, value) { fs.mkdirSync(path.dirname(file), { recursive: true }); fs.writeFileSync(file, JSON.stringify(value, null, 2)); }
-function exists(file) { try { return fs.existsSync(file); } catch { return false; } }
 function normalizeId(id) { return String(id || '').replace(/^#/, '').trim(); }
 function idNamespace(id) { const s = normalizeId(id); return s.includes(':') ? s.split(':')[0] : 'minecraft'; }
 function idPath(id) { const s = normalizeId(id); return s.includes(':') ? s.split(':').slice(1).join(':') : s; }
-function variantNameFromFile(file) { return path.basename(file, '.json').replace(/[^a-zA-Z0-9._-]+/g, '_').toLowerCase(); }
 function stripNamespace(id) { return idPath(id).split('/').pop(); }
+function variantNameFromFile(file) { return path.basename(file, '.json').replace(/[^a-zA-Z0-9._-]+/g, '_').toLowerCase(); }
+function clamp(n, lo, hi) { return Math.max(lo, Math.min(hi, n)); }
+function dot(a, b) { return a.x*b.x + a.y*b.y + a.z*b.z; }
+function cross(a, b) { return { x: a.y*b.z - a.z*b.y, y: a.z*b.x - a.x*b.z, z: a.x*b.y - a.y*b.x }; }
+function sub(a, b) { return { x: a.x-b.x, y: a.y-b.y, z: a.z-b.z }; }
+function add(a, b) { return { x: a.x+b.x, y: a.y+b.y, z: a.z+b.z }; }
+function mul(a, s) { return { x: a.x*s, y: a.y*s, z: a.z*s }; }
+function len(a) { return Math.sqrt(dot(a, a)) || 1; }
+function norm(a) { const l = len(a); return { x: a.x/l, y: a.y/l, z: a.z/l }; }
 
 function resolveMinecraftVersion() {
   const releaseFile = 'release_infos.yml';
@@ -91,10 +78,7 @@ function resolveMinecraftVersion() {
       return;
     }
     if (Array.isArray(v)) return v.forEach(walk);
-    if (typeof v === 'object') Object.entries(v).forEach(([k, val]) => {
-      if (/minecraft|mc[_-]?version|game[_-]?version|supported[_-]?versions/i.test(k)) walk(val);
-      else walk(val);
-    });
+    if (typeof v === 'object') Object.values(v).forEach(walk);
   }
   walk(raw);
   const preferred = candidates.filter(v => /^\d{2}\.\d+(\.\d+)?/.test(v));
@@ -103,66 +87,8 @@ function resolveMinecraftVersion() {
   return result;
 }
 
-function findVariantFiles(entityType) {
-  const out = [];
-  const dataDir = 'data';
-  if (!exists(dataDir)) return out;
-  for (const ns of fs.readdirSync(dataDir)) {
-    const dir = path.join(dataDir, ns, `${entityType}_variant`);
-    if (!exists(dir)) continue;
-    for (const file of fs.readdirSync(dir).filter(f => f.endsWith('.json')).sort()) {
-      out.push({ namespace: ns, file: path.join(dir, file) });
-    }
-  }
-  return out;
-}
-
-function textureCandidatesFromAssetId(assetId, entityType, age) {
-  const ns = idNamespace(assetId);
-  const p = idPath(assetId);
-  const base = path.join('assets', ns, 'textures');
-  const names = [];
-  const leaf = stripNamespace(assetId);
-  const normalizedEntity = entityType.replace(/_/g, '_');
-  // asset_id usually maps to textures/entity/<entity>/<leaf>.png, but keep a wide set of deterministic candidates.
-  names.push(path.join(base, 'entity', p + '.png'));
-  names.push(path.join(base, 'entity', entityType, leaf + '.png'));
-  names.push(path.join(base, 'entity', entityType, `${leaf}_${age}.png`));
-  names.push(path.join(base, 'entity', entityType, `${entityType}_${leaf}.png`));
-  names.push(path.join(base, 'entity', entityType, `${entityType}_${leaf}_${age}.png`));
-  names.push(path.join(base, 'entity', normalizedEntity, leaf + '.png'));
-  return [...new Set(names)];
-}
-
-function resolveTexture(assetId, entityType, age) {
-  if (!assetId) return null;
-  const candidates = textureCandidatesFromAssetId(assetId, entityType, age);
-  for (const candidate of candidates) if (exists(candidate)) return candidate;
-  // Last resort: search by leaf in this namespace/entity folder.
-  const ns = idNamespace(assetId);
-  const leaf = stripNamespace(assetId).replace(/\.png$/, '');
-  const root = path.join('assets', ns, 'textures', 'entity');
-  if (exists(root)) {
-    const found = [];
-    function walk(dir) {
-      for (const name of fs.readdirSync(dir)) {
-        const p = path.join(dir, name);
-        const st = fs.statSync(p);
-        if (st.isDirectory()) walk(p);
-        else if (name.endsWith('.png') && (name === `${leaf}.png` || name.includes(leaf))) found.push(p);
-      }
-    }
-    walk(root);
-    const exactAge = found.find(p => age === 'baby' ? /baby/.test(path.basename(p)) : !/baby/.test(path.basename(p)));
-    return exactAge || found[0] || null;
-  }
-  return null;
-}
-
 function firstPresent(obj, keys) {
-  for (const key of keys) {
-    if (obj && obj[key] !== undefined && obj[key] !== null && obj[key] !== '') return obj[key];
-  }
+  for (const key of keys) if (obj && obj[key] !== undefined && obj[key] !== null && obj[key] !== '') return obj[key];
   return null;
 }
 
@@ -172,15 +98,10 @@ function extractModelKey(json, type) {
 }
 
 function extractAdultAssetId(json, type) {
-  // Most variant registries use asset_id. Wolf variants use Minecraft's wolf-specific
-  // nested shape: { assets: { wild, tame, angry }, baby_assets: { wild, tame, angry } }.
-  // Prefer the neutral wild texture for wiki renders, then fall back to tame/angry/flat aliases.
   if (type === 'wolf') {
     return firstPresent(json?.assets, ['wild', 'tame', 'angry']) || firstPresent(json, [
-      'asset_id', 'texture', 'texture_id',
-      'wild_texture', 'wild_asset_id', 'wild_texture_id',
-      'tame_texture', 'tame_asset_id', 'tame_texture_id',
-      'angry_texture', 'angry_asset_id', 'angry_texture_id'
+      'asset_id', 'texture', 'texture_id', 'wild_texture', 'wild_asset_id', 'wild_texture_id',
+      'tame_texture', 'tame_asset_id', 'tame_texture_id', 'angry_texture', 'angry_asset_id', 'angry_texture_id'
     ]);
   }
   return firstPresent(json, ['asset_id', 'texture', 'texture_id', 'adult_asset_id', 'adult_texture', 'adult_texture_id']);
@@ -189,12 +110,57 @@ function extractAdultAssetId(json, type) {
 function extractBabyAssetId(json, type) {
   if (type === 'wolf') {
     return firstPresent(json?.baby_assets, ['wild', 'tame', 'angry']) || firstPresent(json, [
-      'baby_asset_id', 'baby_texture', 'baby_texture_id',
-      'baby_wild_texture', 'baby_wild_asset_id', 'baby_wild_texture_id',
-      'wild_baby_texture', 'wild_baby_asset_id', 'wild_baby_texture_id'
+      'baby_asset_id', 'baby_texture', 'baby_texture_id', 'baby_wild_texture', 'baby_wild_asset_id',
+      'baby_wild_texture_id', 'wild_baby_texture', 'wild_baby_asset_id', 'wild_baby_texture_id'
     ]);
   }
   return firstPresent(json, ['baby_asset_id', 'baby_texture', 'baby_texture_id']);
+}
+
+function findVariantFiles(entityType) {
+  const out = [];
+  if (!exists('data')) return out;
+  for (const ns of fs.readdirSync('data')) {
+    const dir = path.join('data', ns, `${entityType}_variant`);
+    if (!exists(dir)) continue;
+    for (const name of fs.readdirSync(dir).filter(f => f.endsWith('.json')).sort()) out.push({ namespace: ns, file: path.join(dir, name) });
+  }
+  return out;
+}
+
+function textureCandidatesFromAssetId(assetId, entityType, age) {
+  const ns = idNamespace(assetId);
+  const p = idPath(assetId);
+  const base = path.join('assets', ns, 'textures');
+  const leaf = stripNamespace(assetId).replace(/\.png$/, '');
+  return [...new Set([
+    path.join(base, 'entity', `${p}.png`),
+    path.join(base, 'entity', entityType, `${leaf}.png`),
+    path.join(base, 'entity', entityType, `${leaf}_${age}.png`),
+    path.join(base, 'entity', entityType, `${entityType}_${leaf}.png`),
+    path.join(base, 'entity', entityType, `${entityType}_${leaf}_${age}.png`)
+  ])];
+}
+
+function resolveTexture(assetId, entityType, age) {
+  if (!assetId) return null;
+  for (const candidate of textureCandidatesFromAssetId(assetId, entityType, age)) if (exists(candidate)) return candidate;
+  const ns = idNamespace(assetId);
+  const leaf = stripNamespace(assetId).replace(/\.png$/, '');
+  const root = path.join('assets', ns, 'textures', 'entity');
+  if (!exists(root)) return null;
+  const found = [];
+  function walk(dir) {
+    for (const name of fs.readdirSync(dir)) {
+      const p = path.join(dir, name);
+      const st = fs.statSync(p);
+      if (st.isDirectory()) walk(p);
+      else if (name.endsWith('.png') && (name === `${leaf}.png` || name.includes(leaf))) found.push(p);
+    }
+  }
+  walk(root);
+  const exactAge = found.find(p => age === 'baby' ? /baby/.test(path.basename(p)) : !/baby/.test(path.basename(p)));
+  return exactAge || found[0] || null;
 }
 
 function discoverVariants() {
@@ -208,22 +174,11 @@ function discoverVariants() {
       const babyAssetId = extractBabyAssetId(json, type);
       const adultTexture = resolveTexture(assetId, type, 'adult');
       const babyTexture = babyAssetId ? resolveTexture(babyAssetId, type, 'baby') : (HAS_BABY_MODEL.has(type) ? adultTexture : null);
-      variants.push({ namespace, type, variant, file, model, adultTexture, babyTexture, assetId, babyAssetId, raw: json });
+      variants.push({ namespace, type, variant, file, model, assetId, babyAssetId, adultTexture, babyTexture });
     }
   }
   return variants;
 }
-
-async function textureDimensions(textureFile) {
-  try {
-    const meta = await sharp(textureFile).metadata();
-    return { width: meta.width || 64, height: meta.height || 64 };
-  } catch {
-    return { width: 64, height: 64 };
-  }
-}
-
-
 
 function objModelKey(model) {
   const key = String(model || 'regular').replace(/^minecraft:/, '').split('/').pop();
@@ -233,27 +188,14 @@ function objModelKey(model) {
 function resolveObjModel(type, model, age) {
   const dir = path.join(ENTITY_MODEL_ROOT, type);
   const key = objModelKey(model);
-  const candidates = [
-    path.join(dir, `${age}_${key}.obj`),
-    path.join(dir, `${age}_regular.obj`)
-  ];
-  if (age === 'baby') {
-    // Last-resort fallback keeps baby-capable variants renderable even when only
-    // an adult OBJ exists. Prefer baby_regular when present, but do not fail
-    // just because a model-specific baby OBJ is absent.
-    candidates.push(path.join(dir, `adult_${key}.obj`));
-    candidates.push(path.join(dir, 'adult_regular.obj'));
-  }
-  for (const candidate of [...new Set(candidates)]) {
-    if (exists(candidate)) return { file: candidate, requested: key, resolved: path.basename(candidate, '.obj') };
-  }
+  const candidates = [path.join(dir, `${age}_${key}.obj`), path.join(dir, `${age}_regular.obj`)];
+  if (age === 'baby') candidates.push(path.join(dir, `adult_${key}.obj`), path.join(dir, 'adult_regular.obj'));
+  for (const candidate of [...new Set(candidates)]) if (exists(candidate)) return { file: candidate, requested: key, resolved: path.basename(candidate, '.obj') };
   return { file: null, requested: key, resolved: null, candidates: [...new Set(candidates)] };
 }
 
 function ensureObjModelsReady() {
-  if (!exists(ENTITY_MODEL_ROOT)) {
-    throw new Error(`OBJ model folder not found: ${ENTITY_MODEL_ROOT}`);
-  }
+  if (!exists(ENTITY_MODEL_ROOT)) throw new Error(`OBJ model folder not found: ${ENTITY_MODEL_ROOT}`);
   for (const type of ENTITY_TYPES) {
     const regular = path.join(ENTITY_MODEL_ROOT, type, 'adult_regular.obj');
     if (!exists(regular)) throw new Error(`Missing required fallback OBJ model: ${regular}`);
@@ -261,433 +203,318 @@ function ensureObjModelsReady() {
   console.log(`Using checked-in OBJ entity models from ${ENTITY_MODEL_ROOT}`);
 }
 
-function parseObjFile(objFile, textureWidth, textureHeight) {
-  const lines = fs.readFileSync(objFile, 'utf8').split(/\r?\n/);
-  const positions = [null];
-  const uvs = [null];
-  const quads = [];
+function loadPng(file) {
+  const png = PNG.sync.read(fs.readFileSync(file));
+  return { width: png.width, height: png.height, data: png.data };
+}
 
-  function parseIndex(token, listLength) {
+function parseObjFile(objFile) {
+  const lines = fs.readFileSync(objFile, 'utf8').split(/\r?\n/);
+  const pos = [null];
+  const uv = [null];
+  const tris = [];
+  function parseIndex(token, len) {
     const n = Number(token);
     if (!Number.isFinite(n) || n === 0) return null;
-    return n < 0 ? listLength + n : n;
+    return n < 0 ? len + n : n;
   }
-
-  for (const rawLine of lines) {
-    const line = rawLine.trim();
+  for (const raw of lines) {
+    const line = raw.trim();
     if (!line || line.startsWith('#')) continue;
-    const parts = line.split(/\s+/);
-    if (parts[0] === 'v' && parts.length >= 4) {
-      positions.push({ x: Number(parts[1]), y: Number(parts[2]), z: Number(parts[3]) });
-    } else if (parts[0] === 'vt' && parts.length >= 3) {
-      const u = Number(parts[1]);
-      const v = Number(parts[2]);
-      // OBJ V coordinates are bottom-origin; PNG/sharp sampling is top-origin.
-      uvs.push({ u, v: 1 - v });
-    } else if (parts[0] === 'f' && parts.length >= 4) {
-      const verts = parts.slice(1).map(tok => {
+    const p = line.split(/\s+/);
+    if (p[0] === 'v' && p.length >= 4) pos.push({ x: Number(p[1]), y: Number(p[2]), z: Number(p[3]) });
+    else if (p[0] === 'vt' && p.length >= 3) uv.push({ u: Number(p[1]), v: Number(p[2]) });
+    else if (p[0] === 'f' && p.length >= 4) {
+      const verts = p.slice(1).map(tok => {
         const [viRaw, vtiRaw] = tok.split('/');
-        const vi = parseIndex(viRaw, positions.length);
-        const vti = vtiRaw ? parseIndex(vtiRaw, uvs.length) : null;
-        const p = vi != null ? positions[vi] : null;
-        const uv = vti != null ? uvs[vti] : null;
-        if (!p) return null;
-        return { x: p.x, y: p.y, z: p.z, u: uv ? uv.u : 0, v: uv ? uv.v : 0 };
+        const vi = parseIndex(viRaw, pos.length);
+        const vti = vtiRaw ? parseIndex(vtiRaw, uv.length) : null;
+        if (vi == null || !pos[vi]) return null;
+        const t = vti != null && uv[vti] ? uv[vti] : { u: 0, v: 0 };
+        return { ...pos[vi], u: t.u, v: t.v };
       }).filter(Boolean);
-      if (verts.length < 3) continue;
-      for (let i = 1; i < verts.length - 1; i++) {
-        // Store triangles in the existing quad renderer format. The duplicated
-        // final vertex makes the second triangle degenerate and harmless.
-        quads.push({ vertices: [verts[0], verts[i], verts[i + 1], verts[i + 1]] });
-      }
+      for (let i = 1; i < verts.length - 1; i++) tris.push([verts[0], verts[i], verts[i + 1]]);
     }
   }
-
-  if (!quads.length) throw new Error(`OBJ model has no renderable faces: ${objFile}`);
-  return { source: 'obj', objFile, textureWidth, textureHeight, quads };
+  if (!tris.length) throw new Error(`OBJ model has no renderable faces: ${objFile}`);
+  return tris;
 }
 
-function modelCacheFile(version, type, model, age, textureWidth = 64, textureHeight = 64, resolvedModel = null) {
-  const safeModel = String(resolvedModel || objModelKey(model)).replace(/[^a-zA-Z0-9._-]+/g, '_');
-  return path.join(MODEL_CACHE_ROOT, version, type, `${safeModel}.${age}.${textureWidth}x${textureHeight}.json`);
+function boundsOfTriangles(tris) {
+  const b = { minX: Infinity, minY: Infinity, minZ: Infinity, maxX: -Infinity, maxY: -Infinity, maxZ: -Infinity };
+  for (const tri of tris) for (const p of tri) {
+    b.minX = Math.min(b.minX, p.x); b.maxX = Math.max(b.maxX, p.x);
+    b.minY = Math.min(b.minY, p.y); b.maxY = Math.max(b.maxY, p.y);
+    b.minZ = Math.min(b.minZ, p.z); b.maxZ = Math.max(b.maxZ, p.z);
+  }
+  return b;
 }
 
-async function exportModel(version, type, model, age, textureFile) {
-  const dims = await textureDimensions(textureFile);
-  const resolved = resolveObjModel(type, model, age);
-  if (!resolved.file) {
-    throw new Error(`No OBJ model found for ${type} model=${model || 'default'} age=${age}; tried: ${(resolved.candidates || []).join(', ')}`);
-  }
-  const out = modelCacheFile(version, type, model, age, dims.width, dims.height, resolved.resolved);
-  const objStat = fs.statSync(resolved.file);
-  const textureStat = fs.statSync(textureFile);
-  if (exists(out)) {
-    try {
-      const cached = readJson(out);
-      if (cached.source === 'obj' && cached.objFile === resolved.file && cached.objMtimeMs === objStat.mtimeMs && cached.textureWidth === dims.width && cached.textureHeight === dims.height) {
-        return out;
-      }
-    } catch {}
-  }
-  verbose(`Loading OBJ model: ${type} requested=${objModelKey(model)} resolved=${resolved.resolved} age=${age} texture=${dims.width}x${dims.height}`);
-  const parsed = parseObjFile(resolved.file, dims.width, dims.height);
-  parsed.objMtimeMs = objStat.mtimeMs;
-  parsed.textureMtimeMs = textureStat.mtimeMs;
-  parsed.requestedModel = objModelKey(model);
-  parsed.resolvedModel = resolved.resolved;
-  writeJson(out, parsed);
-  verbose(`Cached OBJ model ${parsed.quads.length} triangle(s) to ${out}`);
-  return out;
+function buildCamera() {
+  const forward = norm(DEFAULT_CAMERA); // object -> camera
+  let right = cross({ x: 0, y: 1, z: 0 }, forward);
+  if (len(right) < 1e-6) right = { x: 1, y: 0, z: 0 };
+  right = norm(right);
+  const up = norm(cross(forward, right));
+  return { forward, right, up };
 }
 
-function deg(v) { return (v * Math.PI) / 180; }
-function rotateX(p, a) { const c=Math.cos(a), s=Math.sin(a); return { x:p.x, y:p.y*c-p.z*s, z:p.y*s+p.z*c, u:p.u, v:p.v }; }
-function rotateY(p, a) { const c=Math.cos(a), s=Math.sin(a); return { x:p.x*c+p.z*s, y:p.y, z:-p.x*s+p.z*c, u:p.u, v:p.v }; }
-function rotateZ(p, a) { const c=Math.cos(a), s=Math.sin(a); return { x:p.x*c-p.y*s, y:p.x*s+p.y*c, z:p.z, u:p.u, v:p.v }; }
-
-async function renderModel(modelFile, textureFile, outputFile, type, age) {
-  const model = readJson(modelFile);
-  const meta = resolveRenderMeta(type, model.source);
-  const textureMeta = await sharp(textureFile).ensureAlpha().raw().toBuffer({ resolveWithObject: true });
-  const tex = textureMeta.data;
-  const texW = textureMeta.info.width || model.textureWidth || 64;
-  const texH = textureMeta.info.height || model.textureHeight || 64;
-  let quads = model.quads || [];
-  if (!quads.length) throw new Error(`Model ${modelFile} has no quads`);
-
-  const uvMode = inferUvMode(quads, texW, texH);
-  debug(`render uv mode for ${modelFile}: ${JSON.stringify(uvMode)}`);
-
-  const transformed = quads.map(q => {
-    const pts = q.vertices.map(v => normalizeVertex(v, texW, texH, uvMode))
-      .map(v => ({ x: v.x, y: v.y + (meta.yOffset || 0), z: v.z, u: v.u, v: v.v }))
-      .map(pt => rotateX(pt, deg(meta.pitch || 0)))
-      .map(pt => rotateY(pt, deg(meta.yaw || 180)))
-      .map(pt => rotateZ(pt, deg(meta.roll || 0)));
-    const z = pts.reduce((a, p) => a + p.z, 0) / pts.length;
-    return { vertices: pts, z };
-  }).sort((a, b) => a.z - b.z);
-
-  // Render at 4x final resolution, then downsample once. This is the
-  // key to the reference look: transparent background, clean silhouette, sharp
-  // Minecraft texture detail, but no giant 1:1 nearest-neighbor blocks.
-  const width = Number(process.env.ENTITY_RENDER_INTERNAL_SIZE || 2048);
-  const height = width;
-  debug(`render camera for ${modelFile}: yaw=${meta.yaw} pitch=${meta.pitch} roll=${meta.roll || 0} flipY=${!!meta.flipProjectY}`);
-  const projectedBounds = computeTransformedBounds(transformed);
-  const modelW = Math.max(1, projectedBounds.maxX - projectedBounds.minX);
-  const modelH = Math.max(1, projectedBounds.maxY - projectedBounds.minY);
-  const target = Number(process.env.ENTITY_RENDER_TARGET || (age === 'baby' ? Math.round((meta.target || 720) * 0.82) : (meta.target || 760)));
-  const scale = Math.max(2, Math.min(width / 18, target / Math.max(modelW, modelH)));
-  const centerX = (projectedBounds.minX + projectedBounds.maxX) / 2;
-  const centerY = (projectedBounds.minY + projectedBounds.maxY) / 2;
-
-  function project(p) {
-    // v14: use bounds-centered orthographic projection. Perspective was the
-    // source of several all-transparent renders because some 26.x baked layers
-    // have z ranges that put projected geometry outside the canvas.
-    return {
-      x: width / 2 + (p.x - centerX) * scale,
-      y: height / 2 + ((meta.flipProjectY ? -1 : 1) * (p.y - centerY)) * scale,
-      u: p.u,
-      v: p.v
-    };
+function transformTriangles(tris, type) {
+  const b = boundsOfTriangles(tris);
+  const center = { x: (b.minX + b.maxX) / 2, y: (b.minY + b.maxY) / 2, z: (b.minZ + b.maxZ) / 2 };
+  const camera = buildCamera();
+  const out = [];
+  let minSX = Infinity, minSY = Infinity, maxSX = -Infinity, maxSY = -Infinity;
+  for (const tri of tris) {
+    const world = tri.map(p => ({ x: p.x - center.x, y: p.y - center.y, z: p.z - center.z, u: p.u, v: p.v }));
+    const e1 = sub(world[1], world[0]);
+    const e2 = sub(world[2], world[0]);
+    let n = norm(cross(e1, e2));
+    // If winding is inverted for a face, keep it; z-buffer will resolve. The
+    // normal is only used for subtle lighting, not culling, so all OBJ exports
+    // remain visible even if their winding differs.
+    const projected = world.map(p => {
+      const sx = dot(p, camera.right);
+      const sy = dot(p, camera.up);
+      const depth = dot(p, camera.forward);
+      minSX = Math.min(minSX, sx); maxSX = Math.max(maxSX, sx);
+      minSY = Math.min(minSY, sy); maxSY = Math.max(maxSY, sy);
+      return { sx, sy, depth, u: p.u, v: p.v, world: p };
+    });
+    const light = clamp(0.72 + 0.28 * Math.max(0, dot(n, norm({ x: -0.4, y: 0.9, z: -0.6 }))), 0.72, 1.0);
+    out.push({ p: projected, light });
   }
-
-  // OBJ files already contain their final texture coordinates. Do not guess
-  // flipped/swapped UV modes: that was the source of solid-color, dotted, and
-  // smeared renders. Use exactly the OBJ UVs and fail loudly if they do not
-  // hit visible texture pixels.
-  const mode = { name: 'obj', flipU: false, flipV: false, swapUV: false };
-  const rgba = Buffer.alloc(width * height * 4, 0);
-  for (const q of transformed) {
-    const pts = q.vertices.map(project);
-    rasterTexturedTriangle(rgba, width, height, tex, texW, texH, pts[0], pts[1], pts[2], null, mode);
-    rasterTexturedTriangle(rgba, width, height, tex, texW, texH, pts[0], pts[2], pts[3], null, mode);
-  }
-  const visible = countVisiblePixels(rgba);
-  debug(`render sample mode for ${modelFile}: ${JSON.stringify(mode)} visible=${visible}`);
-  if (visible < 20) {
-    throw new Error(`OBJ render produced ${visible} visible pixels before write: ${outputFile}. uvMode=${JSON.stringify(uvMode)} model=${modelFile} texture=${textureFile}. Check the OBJ vt coordinates and texture path.`);
-  }
-
-  fs.mkdirSync(path.dirname(outputFile), { recursive: true });
-  const pad = Math.max(96, Math.round(width * 0.055));
-  const png = await sharp(rgba, { raw: { width, height, channels: 4 } })
-    .trim({ background: { r: 0, g: 0, b: 0, alpha: 0 }, threshold: 1 })
-    .extend({ top: pad, bottom: pad, left: pad, right: pad, background: { r: 0, g: 0, b: 0, alpha: 0 } })
-    .resize(512, 512, { fit: 'contain', background: { r: 0, g: 0, b: 0, alpha: 0 }, kernel: 'lanczos3' })
-    .png()
-    .toBuffer();
-  await sharp(png).toFile(outputFile);
-  await assertPngNotBlank(outputFile, modelFile, textureFile);
-}
-
-function computeTransformedBounds(transformed) {
-  const xs = [], ys = [], zs = [];
-  for (const q of transformed) for (const p of q.vertices || []) {
-    if (!Number.isFinite(p.x) || !Number.isFinite(p.y) || !Number.isFinite(p.z)) continue;
-    xs.push(p.x); ys.push(p.y); zs.push(p.z);
-  }
-  if (!xs.length) return { minX: -8, maxX: 8, minY: -8, maxY: 8, minZ: -8, maxZ: 8 };
-  return {
-    minX: Math.min(...xs), maxX: Math.max(...xs),
-    minY: Math.min(...ys), maxY: Math.max(...ys),
-    minZ: Math.min(...zs), maxZ: Math.max(...zs)
-  };
-}
-
-function averageVisibleTextureColor(tex) {
-  let r = 0, g = 0, b = 0, a = 0, n = 0;
-  for (let i = 0; i < tex.length; i += 4) {
-    const alpha = tex[i + 3];
-    if (alpha <= 8) continue;
-    r += tex[i]; g += tex[i + 1]; b += tex[i + 2]; a += alpha; n++;
-  }
-  if (!n) return [180, 180, 180, 255];
-  return [Math.round(r / n), Math.round(g / n), Math.round(b / n), Math.max(180, Math.round(a / n))];
-}
-
-function countVisiblePixels(rgba) {
-  let visible = 0;
-  for (let i = 3; i < rgba.length; i += 4) if (rgba[i] > 8) visible++;
-  return visible;
-}
-
-function drawDebugMarker(rgba, width, height, color) {
-  const [r, g, b, a] = color;
-  for (let y = 236; y < 276; y++) for (let x = 236; x < 276; x++) {
-    const i = (y * width + x) * 4;
-    rgba[i] = r; rgba[i + 1] = g; rgba[i + 2] = b; rgba[i + 3] = a;
-  }
-}
-
-function inferUvMode(quads, texW, texH) {
-  const us = [];
-  const vs = [];
-  for (const q of quads || []) for (const v of q.vertices || []) {
-    const u = Number(v.u);
-    const vv = Number(v.v);
-    if (Number.isFinite(u)) us.push(u);
-    if (Number.isFinite(vv)) vs.push(vv);
-  }
-  const maxU = us.length ? Math.max(...us.map(Math.abs)) : 0;
-  const maxV = vs.length ? Math.max(...vs.map(Math.abs)) : 0;
-  const minU = us.length ? Math.min(...us) : 0;
-  const minV = vs.length ? Math.min(...vs) : 0;
-
-  // 26.x baked ModelPart.Vertex UVs may be normalized floats (0..1, sometimes
-  // slightly above 1 from edge inflation). Older/named runtimes may expose
-  // pixel-space UVs directly. v14 decided per vertex and required both u and v
-  // to be <= 1, which left mixed/edge UVs near 0 and made every triangle sample
-  // the same transparent/edge texel. Decide once per model instead.
-  const normalized = maxU <= 2.25 && maxV <= 2.25;
-  return { normalized, minU, maxU, minV, maxV, texW, texH };
-}
-
-function normalizeVertex(v, texW, texH, uvMode) {
-  let u = Number(v.u || 0);
-  let vv = Number(v.v || 0);
-  if (uvMode && uvMode.normalized) {
-    u *= texW;
-    vv *= texH;
-  }
-  // Keep UVs in pixel space and let the sampler clamp final pixels.
-  return { x: Number(v.x || 0), y: Number(v.y || 0), z: Number(v.z || 0), u, v: vv };
-}
-
-function computeModelBounds(quads, meta) {
-  const xs = [], ys = [], zs = [];
-  for (const q of quads) for (const raw of q.vertices || []) {
-    let p = { x: Number(raw.x || 0), y: Number(raw.y || 0) + (meta.yOffset || 0), z: Number(raw.z || 0), u: 0, v: 0 };
-    p = rotateZ(rotateY(rotateX(p, deg(meta.pitch || 0)), deg(meta.yaw || 180)), deg(meta.roll || 0));
-    xs.push(p.x); ys.push(p.y); zs.push(p.z);
-  }
-  return {
-    minX: Math.min(...xs), maxX: Math.max(...xs),
-    minY: Math.min(...ys), maxY: Math.max(...ys),
-    minZ: Math.min(...zs), maxZ: Math.max(...zs)
-  };
-}
-
-async function assertPngNotBlank(outputPath, modelFile, textureFile) {
-  const { data } = await sharp(outputPath).ensureAlpha().raw().toBuffer({ resolveWithObject: true });
-  let visible = 0;
-  for (let i = 3; i < data.length; i += 4) if (data[i] > 8) visible++;
-  if (visible < 20) {
-    throw new Error(`Rendered PNG is blank/transparent: ${outputPath} (${visible} visible pixels). model=${modelFile} texture=${textureFile}`);
-  }
-}
-
-function edge(ax, ay, bx, by, cx, cy) {
-  return (cx - ax) * (by - ay) - (cy - ay) * (bx - ax);
-}
-
-
-function sampleTextureBilinear(tex, tw, th, u, v) {
-  const x = Math.max(0, Math.min(tw - 1, u));
-  const y = Math.max(0, Math.min(th - 1, v));
-  const x0 = Math.floor(x), y0 = Math.floor(y);
-  const x1 = Math.min(tw - 1, x0 + 1), y1 = Math.min(th - 1, y0 + 1);
-  const tx = x - x0, ty = y - y0;
-  function px(ix, iy) {
-    const i = (iy * tw + ix) * 4;
-    return [tex[i], tex[i + 1], tex[i + 2], tex[i + 3]];
-  }
-  const c00 = px(x0, y0), c10 = px(x1, y0), c01 = px(x0, y1), c11 = px(x1, y1);
-  const out = [0, 0, 0, 0];
-  for (let i = 0; i < 4; i++) {
-    const a = c00[i] * (1 - tx) + c10[i] * tx;
-    const b = c01[i] * (1 - tx) + c11[i] * tx;
-    out[i] = Math.round(a * (1 - ty) + b * ty);
+  const spanX = Math.max(0.001, maxSX - minSX);
+  const spanY = Math.max(0.001, maxSY - minSY);
+  const entityScale = ENTITY_SCALE[type] || 0.9;
+  const scale = INTERNAL_SIZE * (1 - PADDING * 2) * entityScale / Math.max(spanX, spanY);
+  const cx = (minSX + maxSX) / 2;
+  const cy = (minSY + maxSY) / 2;
+  for (const tri of out) for (const p of tri.p) {
+    p.x = INTERNAL_SIZE / 2 + (p.sx - cx) * scale;
+    p.y = INTERNAL_SIZE / 2 - (p.sy - cy) * scale;
   }
   return out;
 }
 
-function rasterTexturedTriangle(dst, dw, dh, tex, tw, th, p0, p1, p2, fallbackColor = null, sampleMode = null) {
-  const vals = [p0.x, p0.y, p0.u, p0.v, p1.x, p1.y, p1.u, p1.v, p2.x, p2.y, p2.u, p2.v];
-  if (!vals.every(Number.isFinite)) return;
-  const area = edge(p0.x, p0.y, p1.x, p1.y, p2.x, p2.y);
-  if (Math.abs(area) < 1e-6) return;
+function sampleTexture(tex, uNorm, vNorm, options) {
+  let u = uNorm;
+  let v = vNorm;
+  if (options.flipU) u = 1 - u;
+  // OBJ vt is bottom-origin. PNG rows are top-origin. Default flipV=true.
+  if (options.flipV) v = 1 - v;
+  const x = clamp(Math.floor(u * tex.width), 0, tex.width - 1);
+  const y = clamp(Math.floor(v * tex.height), 0, tex.height - 1);
+  const i = (y * tex.width + x) * 4;
+  return [tex.data[i], tex.data[i + 1], tex.data[i + 2], tex.data[i + 3]];
+}
 
-  const minX = Math.max(0, Math.floor(Math.min(p0.x, p1.x, p2.x)) - 1);
-  const maxX = Math.min(dw - 1, Math.ceil(Math.max(p0.x, p1.x, p2.x)) + 1);
-  const minY = Math.max(0, Math.floor(Math.min(p0.y, p1.y, p2.y)) - 1);
-  const maxY = Math.min(dh - 1, Math.ceil(Math.max(p0.y, p1.y, p2.y)) + 1);
-  if (minX > maxX || minY > maxY) return;
+function edge(ax, ay, bx, by, cx, cy) { return (cx - ax) * (by - ay) - (cy - ay) * (bx - ax); }
 
+function rasterTriangle(color, depth, tri, tex, uvOptions) {
+  const [a, b, c] = tri.p;
+  const area = edge(a.x, a.y, b.x, b.y, c.x, c.y);
+  if (Math.abs(area) < 1e-8) return 0;
+  const minX = clamp(Math.floor(Math.min(a.x, b.x, c.x)) - 1, 0, INTERNAL_SIZE - 1);
+  const maxX = clamp(Math.ceil(Math.max(a.x, b.x, c.x)) + 1, 0, INTERNAL_SIZE - 1);
+  const minY = clamp(Math.floor(Math.min(a.y, b.y, c.y)) - 1, 0, INTERNAL_SIZE - 1);
+  const maxY = clamp(Math.ceil(Math.max(a.y, b.y, c.y)) + 1, 0, INTERNAL_SIZE - 1);
+  let painted = 0;
   for (let y = minY; y <= maxY; y++) {
     for (let x = minX; x <= maxX; x++) {
-      const px = x + 0.5;
-      const py = y + 0.5;
-      const w0 = edge(p1.x, p1.y, p2.x, p2.y, px, py) / area;
-      const w1 = edge(p2.x, p2.y, p0.x, p0.y, px, py) / area;
-      const w2 = edge(p0.x, p0.y, p1.x, p1.y, px, py) / area;
-      if (w0 < -1e-4 || w1 < -1e-4 || w2 < -1e-4) continue;
-
-      let u = w0 * p0.u + w1 * p1.u + w2 * p2.u;
-      let v = w0 * p0.v + w1 * p1.v + w2 * p2.v;
-      if (sampleMode && sampleMode.swapUV) { const tmp = u; u = v; v = tmp; }
-      if (sampleMode && sampleMode.flipU) u = (tw - 1) - u;
-      if (sampleMode && sampleMode.flipV) v = (th - 1) - v;
-      const sx = Math.max(0, Math.min(tw - 1, Math.floor(u + 0.5)));
-      const sy = Math.max(0, Math.min(th - 1, Math.floor(v + 0.5)));
-      const si = (sy * tw + sx) * 4;
-      const sr = tex[si], sg = tex[si + 1], sb = tex[si + 2], sa = tex[si + 3];
-      if (sa <= 8) continue;
-
-      const di = (y * dw + x) * 4;
-      const a = sa / 255;
-      const inv = 1 - a;
-      dst[di] = Math.round(sr * a + dst[di] * inv);
-      dst[di + 1] = Math.round(sg * a + dst[di + 1] * inv);
-      dst[di + 2] = Math.round(sb * a + dst[di + 2] * inv);
-      dst[di + 3] = Math.min(255, Math.round(sa + dst[di + 3] * inv));
+      const px = x + 0.5, py = y + 0.5;
+      const w0 = edge(b.x, b.y, c.x, c.y, px, py) / area;
+      const w1 = edge(c.x, c.y, a.x, a.y, px, py) / area;
+      const w2 = edge(a.x, a.y, b.x, b.y, px, py) / area;
+      if (w0 < -1e-5 || w1 < -1e-5 || w2 < -1e-5) continue;
+      const z = w0 * a.depth + w1 * b.depth + w2 * c.depth;
+      const di = y * INTERNAL_SIZE + x;
+      if (z < depth[di]) continue;
+      const u = w0 * a.u + w1 * b.u + w2 * c.u;
+      const v = w0 * a.v + w1 * b.v + w2 * c.v;
+      let [r, g, bl, alpha] = sampleTexture(tex, u, v, uvOptions);
+      if (alpha <= 8) continue;
+      const shade = tri.light;
+      r = clamp(Math.round(r * shade), 0, 255);
+      g = clamp(Math.round(g * shade), 0, 255);
+      bl = clamp(Math.round(bl * shade), 0, 255);
+      const oi = di * 4;
+      color[oi] = r; color[oi + 1] = g; color[oi + 2] = bl; color[oi + 3] = alpha;
+      depth[di] = z;
+      painted++;
     }
   }
+  return painted;
+}
+
+function visiblePixels(data) {
+  let n = 0;
+  for (let i = 3; i < data.length; i += 4) if (data[i] > 8) n++;
+  return n;
+}
+
+function downsampleBox(src, sw, sh, factor) {
+  if (factor <= 1) return { width: sw, height: sh, data: src };
+  const dw = Math.floor(sw / factor), dh = Math.floor(sh / factor);
+  const out = Buffer.alloc(dw * dh * 4, 0);
+  for (let y = 0; y < dh; y++) {
+    for (let x = 0; x < dw; x++) {
+      let r = 0, g = 0, b = 0, a = 0;
+      for (let yy = 0; yy < factor; yy++) for (let xx = 0; xx < factor; xx++) {
+        const si = ((y * factor + yy) * sw + (x * factor + xx)) * 4;
+        const alpha = src[si + 3] / 255;
+        r += src[si] * alpha; g += src[si + 1] * alpha; b += src[si + 2] * alpha; a += alpha;
+      }
+      const samples = factor * factor;
+      const oi = (y * dw + x) * 4;
+      if (a > 0) {
+        out[oi] = Math.round(r / a);
+        out[oi + 1] = Math.round(g / a);
+        out[oi + 2] = Math.round(b / a);
+        out[oi + 3] = Math.round(clamp(a / samples, 0, 1) * 255);
+      }
+    }
+  }
+  return { width: dw, height: dh, data: out };
+}
+
+function trimTransparent(img, pad) {
+  const { width, height, data } = img;
+  let minX = width, minY = height, maxX = -1, maxY = -1;
+  for (let y = 0; y < height; y++) for (let x = 0; x < width; x++) {
+    if (data[(y * width + x) * 4 + 3] > 8) {
+      minX = Math.min(minX, x); maxX = Math.max(maxX, x); minY = Math.min(minY, y); maxY = Math.max(maxY, y);
+    }
+  }
+  if (maxX < minX || maxY < minY) return img;
+  minX = clamp(minX - pad, 0, width - 1); minY = clamp(minY - pad, 0, height - 1);
+  maxX = clamp(maxX + pad, 0, width - 1); maxY = clamp(maxY + pad, 0, height - 1);
+  const tw = maxX - minX + 1, th = maxY - minY + 1;
+  const out = Buffer.alloc(tw * th * 4, 0);
+  for (let y = 0; y < th; y++) for (let x = 0; x < tw; x++) {
+    const si = ((minY + y) * width + (minX + x)) * 4;
+    const oi = (y * tw + x) * 4;
+    data.copy(out, oi, si, si + 4);
+  }
+  return { width: tw, height: th, data: out };
+}
+
+function containToSquare(img, size) {
+  const scale = Math.min(size / img.width, size / img.height);
+  const nw = Math.max(1, Math.round(img.width * scale));
+  const nh = Math.max(1, Math.round(img.height * scale));
+  const resized = Buffer.alloc(nw * nh * 4, 0);
+  // Bilinear resize for antialiased silhouette; source is already downsampled.
+  for (let y = 0; y < nh; y++) {
+    for (let x = 0; x < nw; x++) {
+      const sx = (x + 0.5) / scale - 0.5;
+      const sy = (y + 0.5) / scale - 0.5;
+      const x0 = clamp(Math.floor(sx), 0, img.width - 1), y0 = clamp(Math.floor(sy), 0, img.height - 1);
+      const x1 = clamp(x0 + 1, 0, img.width - 1), y1 = clamp(y0 + 1, 0, img.height - 1);
+      const tx = sx - x0, ty = sy - y0;
+      const acc = [0, 0, 0, 0];
+      for (const [ix, iy, w] of [[x0,y0,(1-tx)*(1-ty)], [x1,y0,tx*(1-ty)], [x0,y1,(1-tx)*ty], [x1,y1,tx*ty]]) {
+        const si = (iy * img.width + ix) * 4;
+        for (let c = 0; c < 4; c++) acc[c] += img.data[si + c] * w;
+      }
+      const oi = (y * nw + x) * 4;
+      for (let c = 0; c < 4; c++) resized[oi + c] = Math.round(acc[c]);
+    }
+  }
+  const out = Buffer.alloc(size * size * 4, 0);
+  const ox = Math.floor((size - nw) / 2);
+  const oy = Math.floor((size - nh) / 2);
+  for (let y = 0; y < nh; y++) for (let x = 0; x < nw; x++) {
+    const si = (y * nw + x) * 4;
+    const oi = ((oy + y) * size + (ox + x)) * 4;
+    resized.copy(out, oi, si, si + 4);
+  }
+  return { width: size, height: size, data: out };
+}
+
+async function renderObjEntity(objFile, textureFile, outputFile, type) {
+  const texture = loadPng(textureFile);
+  const tris = parseObjFile(objFile);
+  const projected = transformTriangles(tris, type);
+  const modes = [
+    { flipU: false, flipV: true },
+    { flipU: false, flipV: false },
+    { flipU: true, flipV: true },
+    { flipU: true, flipV: false }
+  ];
+  let best = null;
+  for (const mode of modes) {
+    const color = Buffer.alloc(INTERNAL_SIZE * INTERNAL_SIZE * 4, 0);
+    const depth = new Float32Array(INTERNAL_SIZE * INTERNAL_SIZE);
+    depth.fill(-Infinity);
+    let painted = 0;
+    for (const tri of projected) painted += rasterTriangle(color, depth, tri, texture, mode);
+    const visible = visiblePixels(color);
+    logDebug(`${path.basename(objFile)} ${path.basename(textureFile)} uv=${JSON.stringify(mode)} painted=${painted} visible=${visible}`);
+    if (!best || visible > best.visible) best = { color, visible, mode };
+  }
+  if (!best || best.visible < 20) throw new Error(`OBJ render produced ${best ? best.visible : 0} visible pixels: ${outputFile} model=${objFile} texture=${textureFile}`);
+
+  const low = downsampleBox(best.color, INTERNAL_SIZE, INTERNAL_SIZE, SUPERSAMPLE);
+  const trimmed = trimTransparent(low, Math.round(RENDER_SIZE * 0.035));
+  const finalImg = containToSquare(trimmed, RENDER_SIZE);
+  fs.mkdirSync(path.dirname(outputFile), { recursive: true });
+  const png = new PNG({ width: finalImg.width, height: finalImg.height });
+  finalImg.data.copy(png.data);
+  fs.writeFileSync(outputFile, PNG.sync.write(png));
+  if (visiblePixels(finalImg.data) < 20) throw new Error(`Rendered PNG is blank/transparent after write: ${outputFile}`);
 }
 
 async function main() {
   fs.mkdirSync(OUTPUT_ROOT, { recursive: true });
   const version = resolveMinecraftVersion();
   const variants = discoverVariants();
-  const report = { minecraftVersion: version, generated: [], skipped: [], errors: [], discovered: [] };
-
+  const report = { minecraftVersion: version, renderer: 'obj-software-v21', generated: [], skipped: [], errors: [], discovered: [] };
   console.log(`Entity render output root: ${OUTPUT_ROOT}`);
   console.log(`Discovered ${variants.length} entity variant JSON file(s).`);
+  if (!variants.length) { writeJson(REPORT_PATH, report); return; }
+  try { ensureObjModelsReady(); } catch (e) { console.error(e.stack || e); report.errors.push({ type:'preflight', message:String(e.stack || e) }); writeJson(REPORT_PATH, report); process.exitCode = 1; return; }
 
+  let done = 0;
   for (const v of variants) {
-    const adultCandidates = v.assetId ? textureCandidatesFromAssetId(v.assetId, v.type, 'adult') : [];
-    const babyCandidates = v.babyAssetId ? textureCandidatesFromAssetId(v.babyAssetId, v.type, 'baby') : [];
-    const discovered = {
-      type: v.type,
-      variant: v.variant,
-      namespace: v.namespace,
-      jsonFile: v.file,
-      model: v.model,
-      assetId: v.assetId || null,
-      babyAssetId: v.babyAssetId || null,
-      adultTexture: v.adultTexture || null,
-      babyTexture: v.babyTexture || null,
-      adultTextureCandidates: adultCandidates,
-      babyTextureCandidates: babyCandidates,
+    report.discovered.push({
+      type: v.type, variant: v.variant, model: v.model, jsonFile: v.file,
+      adultTexture: v.adultTexture || null, babyTexture: v.babyTexture || null,
       adultObjModel: resolveObjModel(v.type, v.model, 'adult'),
       babyObjModel: HAS_BABY_MODEL.has(v.type) ? resolveObjModel(v.type, v.model, 'baby') : null
-    };
-    report.discovered.push(discovered);
-    if (VERBOSE) {
-      console.log(`\n[variant] ${v.type}/${v.variant}`);
-      console.log(`  json: ${v.file}`);
-      console.log(`  model: ${v.model}`);
-      console.log(`  asset_id: ${v.assetId || '(missing)'}`);
-      console.log(`  adult texture: ${v.adultTexture || '(not found)'}`);
-      if (v.babyAssetId) {
-        console.log(`  baby_asset_id: ${v.babyAssetId}`);
-        console.log(`  baby texture: ${v.babyTexture || '(not found)'}`);
-      } else {
-        console.log(HAS_BABY_MODEL.has(v.type) ? '  baby_asset_id: (not present; baby will use adult texture)' : '  baby_asset_id: (not present; baby render skipped)');
-      }
-    }
-    debug(`adult texture candidates for ${v.type}/${v.variant}: ${adultCandidates.join(', ') || '(none)'}`);
-    if (babyCandidates.length) debug(`baby texture candidates for ${v.type}/${v.variant}: ${babyCandidates.join(', ')}`);
-  }
-
-  if (!variants.length) {
-    console.log('No entity variant JSON files found; skipping entity renders successfully.');
-    writeJson(REPORT_PATH, report);
-    return;
-  }
-
-  try {
-    ensureObjModelsReady();
-  } catch (error) {
-    report.errors.push({ type: 'obj-models', variant: 'preflight', age: 'all', message: String(error.stack || error.message || error) });
-    writeJson(REPORT_PATH, report);
-    console.error(error.stack || error.message || error);
-    process.exitCode = 1;
-    return;
-  }
-
-  for (const v of variants) {
+    });
     if (!v.adultTexture) {
-      const reason = `No adult texture found for asset_id=${v.assetId || ''}`;
-      report.skipped.push({ type:v.type, variant:v.variant, age:'adult', reason });
-      console.warn(`Skipping ${v.type}/${v.variant}/adult: ${reason}`);
+      report.skipped.push({ type: v.type, variant: v.variant, age: 'adult', reason: `No adult texture found for asset_id=${v.assetId || ''}` });
       continue;
     }
     for (const age of ['adult', 'baby']) {
       const texture = age === 'adult' ? v.adultTexture : v.babyTexture;
       if (age === 'baby' && !texture) {
-        report.skipped.push({ type:v.type, variant:v.variant, age, reason: HAS_BABY_MODEL.has(v.type) ? 'Baby-capable entity, but no baby/adult texture could be resolved' : 'No baby model for this entity type; baby render intentionally skipped' });
+        report.skipped.push({ type: v.type, variant: v.variant, age, reason: HAS_BABY_MODEL.has(v.type) ? 'No baby/adult fallback texture resolved' : 'Entity type has no baby render' });
+        continue;
+      }
+      const obj = resolveObjModel(v.type, v.model, age);
+      if (!obj.file) {
+        report.errors.push({ type: v.type, variant: v.variant, age, message: `No OBJ model found; tried ${(obj.candidates || []).join(', ')}` });
         continue;
       }
       const output = path.join(OUTPUT_ROOT, v.type, v.variant, `${age}.png`);
       try {
-        verbose(`Rendering ${v.type}/${v.variant}/${age}`);
-        const modelFile = await exportModel(version, v.type, v.model, age, texture);
-        verbose(`  model cache: ${modelFile}`);
-        await renderModel(modelFile, texture, output, v.type, age);
-        report.generated.push({ type:v.type, variant:v.variant, age, model:v.model, texture, output, modelFile });
-        if (!VERBOSE && report.generated.length % 25 === 0) console.log(`Rendered ${report.generated.length} entity PNG(s)...`);
-      } catch (error) {
-        report.errors.push({ type:v.type, variant:v.variant, age, model:v.model, texture, message:String(error.stack || error.message || error) });
-        console.error(`Failed ${v.type}/${v.variant}/${age}: ${error.stack || error.message || error}`);
+        logVerbose(`Rendering ${v.type}/${v.variant}/${age} with ${obj.resolved}`);
+        await renderObjEntity(obj.file, texture, output, v.type);
+        report.generated.push({ type: v.type, variant: v.variant, age, model: v.model, objModel: obj.file, texture, output });
+        done++;
+        if (!VERBOSE && done % 25 === 0) console.log(`Rendered ${done} entity PNG(s)...`);
+      } catch (e) {
+        report.errors.push({ type: v.type, variant: v.variant, age, model: v.model, objModel: obj.file, texture, message: String(e.stack || e.message || e) });
+        console.error(`Failed ${v.type}/${v.variant}/${age}: ${e.message || e}`);
       }
     }
   }
-
   writeJson(REPORT_PATH, report);
-  console.log(`\nEntity render report written to ${REPORT_PATH}`);
+  console.log(`Entity render report written to ${REPORT_PATH}`);
   console.log(`Generated ${report.generated.length} PNG(s), skipped ${report.skipped.length}, errors ${report.errors.length}.`);
-
-  if (report.generated.length === 0) {
-    console.error('Entity variant JSON files were found, but zero PNGs were generated. Failing so the debug report/logs are visible.');
-    process.exitCode = 1;
-    return;
-  }
-  if (report.errors.length) {
-    console.error(`Entity renderer finished with ${report.errors.length} error(s). See ${REPORT_PATH}`);
-    process.exitCode = 1;
-  }
+  if (report.generated.length === 0 || report.errors.length) process.exitCode = 1;
 }
-main().catch(error => { console.error(error); process.exit(1); });
+
+main().catch(e => { console.error(e.stack || e); process.exit(1); });
