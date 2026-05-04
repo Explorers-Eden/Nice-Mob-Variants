@@ -257,55 +257,120 @@ async function renderModel(modelFile, textureFile, outputFile, type, age) {
   const model = readJson(modelFile);
   const meta = ENTITY_RENDER[type] || ENTITY_RENDER.cow;
   const texture = await loadImage(textureFile);
+  const textureMeta = await sharp(textureFile).metadata();
+  const texW = textureMeta.width || model.textureWidth || 64;
+  const texH = textureMeta.height || model.textureHeight || 64;
   const canvas = createCanvas(512, 512);
   const ctx = canvas.getContext('2d');
-  ctx.clearRect(0,0,512,512);
+  ctx.clearRect(0, 0, 512, 512);
+  ctx.imageSmoothingEnabled = false;
 
   let quads = model.quads || [];
   if (!quads.length) throw new Error(`Model ${modelFile} has no quads`);
+
+  const bounds = computeModelBounds(quads, meta);
+  const target = age === 'baby' ? 250 : 330;
+  const extent = Math.max(bounds.maxX - bounds.minX, bounds.maxY - bounds.minY, bounds.maxZ - bounds.minZ, 1);
+  const scale = Math.max(2.0, Math.min(14.0, target / extent));
+
   const transformed = quads.map(q => {
-    const pts = q.vertices.map(v => ({ x: v.x, y: v.y + (meta.yOffset || 0), z: v.z, u: v.u, v: v.v }))
-      .map(p => rotateX(p, deg(meta.pitch || 0)))
-      .map(p => rotateY(p, deg(meta.yaw || 180)))
-      .map(p => rotateZ(p, deg(meta.roll || 0)));
-    const z = pts.reduce((a,p)=>a+p.z,0)/pts.length;
+    const pts = q.vertices.map(v => normalizeVertex(v, texW, texH))
+      .map(v => ({ x: v.x, y: v.y + (meta.yOffset || 0), z: v.z, u: v.u, v: v.v }))
+      .map(pt => rotateX(pt, deg(meta.pitch || 0)))
+      .map(pt => rotateY(pt, deg(meta.yaw || 180)))
+      .map(pt => rotateZ(pt, deg(meta.roll || 0)));
+    const z = pts.reduce((a, p) => a + p.z, 0) / pts.length;
     return { vertices: pts, z };
-  }).sort((a,b) => a.z - b.z);
+  }).sort((a, b) => a.z - b.z);
 
   const cam = meta.camera || 62;
-  const scale = age === 'baby' ? 7.0 : 5.5;
   function project(p) {
-    const perspective = cam / (cam - p.z);
-    return { x: 256 + p.x * scale * perspective, y: 275 + p.y * scale * perspective, u: p.u, v: p.v };
+    const perspective = cam / Math.max(1, cam - p.z);
+    return {
+      x: 256 + p.x * scale * perspective,
+      y: 270 + p.y * scale * perspective,
+      u: p.u,
+      v: p.v
+    };
   }
 
   for (const q of transformed) {
     const pts = q.vertices.map(project);
-    // Use an affine approximation per triangle. Minecraft quads are planar and small, so this is visually stable.
+    // Render both triangle windings. Minecraft quads may be emitted with either winding
+    // after reflective ModelPart export, and wiki thumbnails must not backface-cull.
     drawTexturedTriangle(ctx, texture, pts[0], pts[1], pts[2]);
+    drawTexturedTriangle(ctx, texture, pts[2], pts[1], pts[0]);
     drawTexturedTriangle(ctx, texture, pts[0], pts[2], pts[3]);
+    drawTexturedTriangle(ctx, texture, pts[3], pts[2], pts[0]);
   }
+
   fs.mkdirSync(path.dirname(outputFile), { recursive: true });
   const png = canvas.toBuffer('image/png');
-  await sharp(png).trim({ background: { r:0, g:0, b:0, alpha:0 }, threshold: 1 }).extend({ top: 24, bottom:24, left:24, right:24, background: {r:0,g:0,b:0,alpha:0}}).resize(512,512,{ fit:'contain', background:{r:0,g:0,b:0,alpha:0}}).png().toFile(outputFile);
+  await sharp(png)
+    .trim({ background: { r: 0, g: 0, b: 0, alpha: 0 }, threshold: 1 })
+    .extend({ top: 24, bottom: 24, left: 24, right: 24, background: { r: 0, g: 0, b: 0, alpha: 0 } })
+    .resize(512, 512, { fit: 'contain', background: { r: 0, g: 0, b: 0, alpha: 0 }, kernel: 'nearest' })
+    .png()
+    .toFile(outputFile);
+  await assertPngNotBlank(outputFile, modelFile, textureFile);
+}
+
+function normalizeVertex(v, texW, texH) {
+  let u = Number(v.u || 0);
+  let vv = Number(v.v || 0);
+  // Some reflected runtimes expose normalized UVs; canvas needs texture pixels.
+  if (u >= 0 && u <= 1 && vv >= 0 && vv <= 1) {
+    u *= texW;
+    vv *= texH;
+  }
+  return { x: Number(v.x || 0), y: Number(v.y || 0), z: Number(v.z || 0), u, v: vv };
+}
+
+function computeModelBounds(quads, meta) {
+  const xs = [], ys = [], zs = [];
+  for (const q of quads) for (const raw of q.vertices || []) {
+    let p = { x: Number(raw.x || 0), y: Number(raw.y || 0) + (meta.yOffset || 0), z: Number(raw.z || 0), u: 0, v: 0 };
+    p = rotateZ(rotateY(rotateX(p, deg(meta.pitch || 0)), deg(meta.yaw || 180)), deg(meta.roll || 0));
+    xs.push(p.x); ys.push(p.y); zs.push(p.z);
+  }
+  return {
+    minX: Math.min(...xs), maxX: Math.max(...xs),
+    minY: Math.min(...ys), maxY: Math.max(...ys),
+    minZ: Math.min(...zs), maxZ: Math.max(...zs)
+  };
+}
+
+async function assertPngNotBlank(outputPath, modelFile, textureFile) {
+  const { data } = await sharp(outputPath).ensureAlpha().raw().toBuffer({ resolveWithObject: true });
+  let visible = 0;
+  for (let i = 3; i < data.length; i += 4) if (data[i] > 8) visible++;
+  if (visible < 20) {
+    throw new Error(`Rendered PNG is blank/transparent: ${outputPath} (${visible} visible pixels). model=${modelFile} texture=${textureFile}`);
+  }
 }
 
 function drawTexturedTriangle(ctx, img, p0, p1, p2) {
+  const vals = [p0.x, p0.y, p0.u, p0.v, p1.x, p1.y, p1.u, p1.v, p2.x, p2.y, p2.u, p2.v];
+  if (!vals.every(Number.isFinite)) return;
+
+  const den = p0.u * (p1.v - p2.v) + p1.u * (p2.v - p0.v) + p2.u * (p0.v - p1.v);
+  if (Math.abs(den) < 1e-6) return;
+
+  const a = (p0.x * (p1.v - p2.v) + p1.x * (p2.v - p0.v) + p2.x * (p0.v - p1.v)) / den;
+  const b = (p0.x * (p2.u - p1.u) + p1.x * (p0.u - p2.u) + p2.x * (p1.u - p0.u)) / den;
+  const c = (p0.x * (p1.u * p2.v - p2.u * p1.v) + p1.x * (p2.u * p0.v - p0.u * p2.v) + p2.x * (p0.u * p1.v - p1.u * p0.v)) / den;
+  const d = (p0.y * (p1.v - p2.v) + p1.y * (p2.v - p0.v) + p2.y * (p0.v - p1.v)) / den;
+  const e = (p0.y * (p2.u - p1.u) + p1.y * (p0.u - p2.u) + p2.y * (p1.u - p0.u)) / den;
+  const f = (p0.y * (p1.u * p2.v - p2.u * p1.v) + p1.y * (p2.u * p0.v - p0.u * p2.v) + p2.y * (p0.u * p1.v - p1.u * p0.v)) / den;
+
   ctx.save();
   ctx.beginPath();
-  ctx.moveTo(p0.x, p0.y); ctx.lineTo(p1.x, p1.y); ctx.lineTo(p2.x, p2.y); ctx.closePath();
+  ctx.moveTo(p0.x, p0.y);
+  ctx.lineTo(p1.x, p1.y);
+  ctx.lineTo(p2.x, p2.y);
+  ctx.closePath();
   ctx.clip();
-  const x0=p0.x,y0=p0.y,x1=p1.x,y1=p1.y,x2=p2.x,y2=p2.y;
-  const u0=p0.u,v0=p0.v,u1=p1.u,v1=p1.v,u2=p2.u,v2=p2.v;
-  const den = u0*(v1-v2)+u1*(v2-v0)+u2*(v0-v1);
-  if (Math.abs(den) < 1e-6) { ctx.restore(); return; }
-  const a = (x0*(v1-v2)+x1*(v2-v0)+x2*(v0-v1))/den;
-  const b = (x0*(u2-u1)+x1*(u0-u2)+x2*(u1-u0))/den;
-  const c = (x0*(u1*v2-u2*v1)+x1*(u2*v0-u0*v2)+x2*(u0*v1-u1*v0))/den;
-  const d = (y0*(v1-v2)+y1*(v2-v0)+y2*(v0-v1))/den;
-  const e = (y0*(u2-u1)+y1*(u0-u2)+y2*(u1-u0))/den;
-  const f = (y0*(u1*v2-u2*v1)+y1*(u2*v0-u0*v2)+y2*(u0*v1-u1*v0))/den;
-  ctx.transform(a,d,b,e,c,f);
+  ctx.transform(a, d, b, e, c, f);
   ctx.imageSmoothingEnabled = false;
   ctx.drawImage(img, 0, 0);
   ctx.restore();

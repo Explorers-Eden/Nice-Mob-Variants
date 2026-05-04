@@ -42,7 +42,7 @@ public final class EntityModelExporter {
 
     private static final Map<String, List<String>> PREFERRED_SIMPLE_NAMES = Map.of(
             "cat", List.of("CatModel", "FelineModel", "OcelotModel"),
-            "wolf", List.of("WolfModel"),
+            "wolf", List.of("AdultWolfModel", "BabyWolfModel", "WolfModel"),
             "chicken", List.of("ChickenModel"),
             "frog", List.of("FrogModel"),
             "pig", List.of("PigModel", "AbstractPigModel", "QuadrupedModel"),
@@ -84,7 +84,7 @@ public final class EntityModelExporter {
     private static LayerDefinition createLayer(String entity, String model, String age, int texW, int texH) throws Exception {
         boolean baby = age.equalsIgnoreCase("baby");
         String normalizedModel = normalizeModel(model);
-        List<String> classes = candidateModelClasses(entity);
+        List<String> classes = candidateModelClasses(entity, baby);
         if (classes.isEmpty()) throw new IllegalStateException("No model classes found for entity=" + entity + " on classpath=" + System.getProperty("java.class.path"));
 
         List<String> methodNames = candidateFactoryMethods(normalizedModel, baby);
@@ -225,7 +225,7 @@ public final class EntityModelExporter {
         return sb.append(")").toString();
     }
 
-    private static List<String> candidateModelClasses(String entity) throws Exception {
+    private static List<String> candidateModelClasses(String entity, boolean baby) throws Exception {
         List<String> preferred = PREFERRED_SIMPLE_NAMES.getOrDefault(entity, List.of());
         List<String> keywords = ENTITY_KEYWORDS.getOrDefault(entity, List.of(entity));
         LinkedHashSet<String> out = new LinkedHashSet<>();
@@ -239,7 +239,23 @@ public final class EntityModelExporter {
         }
 
         scanRuntimeClasspathForModelClasses(preferred, keywords, out);
-        return new ArrayList<>(out);
+        List<String> result = new ArrayList<>(out);
+        result.sort((a, b) -> Integer.compare(ageClassScore(a, baby), ageClassScore(b, baby)));
+        return result;
+    }
+
+    private static int ageClassScore(String className, boolean baby) {
+        String lower = className.toLowerCase(Locale.ROOT);
+        boolean isBaby = lower.contains("baby");
+        boolean isAdult = lower.contains("adult");
+        if (baby) {
+            if (isBaby) return 0;
+            if (isAdult) return 20;
+            return 10;
+        }
+        if (isAdult) return 0;
+        if (isBaby) return 20;
+        return 10;
     }
 
     private static void scanRuntimeClasspathForModelClasses(List<String> preferredSimpleNames, List<String> keywords, LinkedHashSet<String> out) throws Exception {
@@ -328,8 +344,9 @@ public final class EntityModelExporter {
                 float x = readFloat(pos, "x");
                 float y = readFloat(pos, "y");
                 float z = readFloat(pos, "z");
-                float u = readFloat(vtx, "u");
-                float v = readFloat(vtx, "v");
+                float[] uv = readVertexUv(vtx);
+                float u = uv[0];
+                float v = uv[1];
                 Vec3 vv = t.apply(new Vec3(x, y, z));
                 Map<String, Float> out = new LinkedHashMap<>();
                 out.put("x", vv.x); out.put("y", -vv.y); out.put("z", vv.z); out.put("u", u); out.put("v", v);
@@ -337,6 +354,45 @@ public final class EntityModelExporter {
             }
             if (verts.size() == 4) quads.add(Map.of("vertices", verts));
         }
+    }
+
+
+    private static float[] readVertexUv(Object vertex) throws Exception {
+        Float namedU = readNamedFloat(vertex, "u", "texU", "textureU", "xTex", "u0");
+        Float namedV = readNamedFloat(vertex, "v", "texV", "textureV", "yTex", "v0");
+        if (namedU != null && namedV != null) return new float[]{namedU, namedV};
+
+        List<Float> nums = new ArrayList<>();
+        for (Field f : allFields(vertex.getClass())) {
+            if (Modifier.isStatic(f.getModifiers())) continue;
+            Class<?> t = f.getType();
+            if (!(t == float.class || t == Float.class || t == double.class || t == Double.class || t == int.class || t == Integer.class)) continue;
+            f.setAccessible(true);
+            Object val = f.get(vertex);
+            if (val instanceof Number n) nums.add(n.floatValue());
+        }
+        // Mojang ModelPart.Vertex stores exactly two scalar texture coordinates alongside the Vector3f position.
+        if (nums.size() >= 2) return new float[]{nums.get(0), nums.get(1)};
+        return new float[]{0f, 0f};
+    }
+
+    private static Float readNamedFloat(Object obj, String... names) throws Exception {
+        if (obj == null) return null;
+        Set<String> want = new HashSet<>(Arrays.asList(names));
+        for (Field f : allFields(obj.getClass())) {
+            if (!want.contains(f.getName())) continue;
+            f.setAccessible(true);
+            Object val = f.get(obj);
+            if (val instanceof Number n) return n.floatValue();
+        }
+        for (String name : names) {
+            try {
+                Method m = obj.getClass().getMethod(name);
+                Object val = m.invoke(obj);
+                if (val instanceof Number n) return n.floatValue();
+            } catch (NoSuchMethodException ignored) {}
+        }
+        return null;
     }
 
     private static Object readFieldByType(Object obj, Class<?> type, String preferred) throws Exception {
