@@ -34,16 +34,18 @@ const DEBUG = process.env.ENTITY_RENDER_DEBUG !== '0';
 function debug(message) { if (DEBUG) console.log(`[entity-render-debug] ${message}`); }
 
 const ENTITY_RENDER = {
-  // OBJ exports use a normal right-handed coordinate space (Y up). Render them
-  // like Minecraft wiki-style icons: isometric, viewed from above, with the
-  // face/front turned toward the lower-left of the final PNG. v17 rotates the OBJ camera 180 degrees from v16 so the muzzle/face is not pointed at the upper-right corner.
-  cat: { yaw: 45, pitch: 25, roll: 0, camera: 62, yOffset: -9, flipProjectY: true },
-  chicken: { yaw: 45, pitch: 25, roll: 0, camera: 58, yOffset: -7, flipProjectY: true },
-  frog: { yaw: 45, pitch: 25, roll: 0, camera: 48, yOffset: -5, flipProjectY: true },
-  pig: { yaw: 45, pitch: 25, roll: 0, camera: 58, yOffset: -8, flipProjectY: true },
-  cow: { yaw: 45, pitch: 25, roll: 0, camera: 68, yOffset: -9, flipProjectY: true },
-  wolf: { yaw: 45, pitch: 25, roll: 0, camera: 62, yOffset: -8, flipProjectY: true },
-  zombie_nautilus: { yaw: 45, pitch: 25, roll: 0, camera: 46, yOffset: -4, flipProjectY: true }
+  // OBJ exports use a normal right-handed coordinate space (Y up).
+  // v18 uses a fixed orthographic isometric camera, no blur/downsample
+  // filtering, and no UV auto-flip guessing for OBJ files. The yaw is aimed
+  // so the entity face/front points toward the lower-left of the transparent
+  // PNG, matching common Minecraft wiki / PlanetMinecraft-style previews.
+  cat: { yaw: 225, pitch: 25, roll: 0, yOffset: 0, flipProjectY: true },
+  chicken: { yaw: 225, pitch: 25, roll: 0, yOffset: 0, flipProjectY: true },
+  frog: { yaw: 225, pitch: 25, roll: 0, yOffset: 0, flipProjectY: true },
+  pig: { yaw: 225, pitch: 25, roll: 0, yOffset: 0, flipProjectY: true },
+  cow: { yaw: 225, pitch: 25, roll: 0, yOffset: 0, flipProjectY: true },
+  wolf: { yaw: 225, pitch: 25, roll: 0, yOffset: 0, flipProjectY: true },
+  zombie_nautilus: { yaw: 225, pitch: 25, roll: 0, yOffset: 0, flipProjectY: true }
 };
 
 function renderAngleOverride(name, fallback) {
@@ -387,58 +389,28 @@ async function renderModel(modelFile, textureFile, outputFile, type, age) {
     };
   }
 
-  const sampleModes = [
-    { name: 'normal', flipU: false, flipV: false, swapUV: false },
-    { name: 'flipV', flipU: false, flipV: true, swapUV: false },
-    { name: 'flipU', flipU: true, flipV: false, swapUV: false },
-    { name: 'flipUV', flipU: true, flipV: true, swapUV: false },
-    { name: 'swapUV', flipU: false, flipV: false, swapUV: true },
-    { name: 'swapUV+flipV', flipU: false, flipV: true, swapUV: true },
-    { name: 'swapUV+flipU', flipU: true, flipV: false, swapUV: true },
-    { name: 'swapUV+flipUV', flipU: true, flipV: true, swapUV: true }
-  ];
-
-  let best = { rgba: null, visible: -1, mode: null };
-  for (const mode of sampleModes) {
-    const attempt = Buffer.alloc(width * height * 4, 0);
-    for (const q of transformed) {
-      const pts = q.vertices.map(project);
-      rasterTexturedTriangle(attempt, width, height, tex, texW, texH, pts[0], pts[1], pts[2], null, mode);
-      rasterTexturedTriangle(attempt, width, height, tex, texW, texH, pts[0], pts[2], pts[3], null, mode);
-    }
-    const visible = countVisiblePixels(attempt);
-    if (visible > best.visible) best = { rgba: attempt, visible, mode };
-    if (visible >= 20) break;
+  // OBJ files already contain their final texture coordinates. Do not guess
+  // flipped/swapped UV modes: that was the source of solid-color, dotted, and
+  // smeared renders. Use exactly the OBJ UVs and fail loudly if they do not
+  // hit visible texture pixels.
+  const mode = { name: 'obj', flipU: false, flipV: false, swapUV: false };
+  const rgba = Buffer.alloc(width * height * 4, 0);
+  for (const q of transformed) {
+    const pts = q.vertices.map(project);
+    rasterTexturedTriangle(rgba, width, height, tex, texW, texH, pts[0], pts[1], pts[2], null, mode);
+    rasterTexturedTriangle(rgba, width, height, tex, texW, texH, pts[0], pts[2], pts[3], null, mode);
   }
-
-  let rgba = best.rgba || Buffer.alloc(width * height * 4, 0);
-  debug(`render sample mode for ${modelFile}: ${JSON.stringify(best.mode)} visible=${best.visible}`);
-
-  if (best.visible < 20) {
-    // Some custom variant textures are mostly/entirely transparent in the exact
-    // vanilla UV islands used by Mojang's 26.x model factories. Do not emit a
-    // blank PNG or fail the whole wiki job; emit a real model silhouette tinted
-    // from the non-transparent texture pixels so the bad asset is visible in
-    // the render report instead of becoming invisible.
-    const fallbackColor = averageVisibleTextureColor(tex);
-    rgba = Buffer.alloc(width * height * 4, 0);
-    for (const q of transformed) {
-      const pts = q.vertices.map(project);
-      rasterTexturedTriangle(rgba, width, height, tex, texW, texH, pts[0], pts[1], pts[2], fallbackColor, best.mode || sampleModes[0]);
-      rasterTexturedTriangle(rgba, width, height, tex, texW, texH, pts[0], pts[2], pts[3], fallbackColor, best.mode || sampleModes[0]);
-    }
-    const fallbackVisible = countVisiblePixels(rgba);
-    debug(`fallback tinted silhouette for ${outputFile}: visible=${fallbackVisible} color=${JSON.stringify(fallbackColor)}`);
-    if (fallbackVisible < 20) {
-      throw new Error(`Textured render produced ${best.visible} visible pixels and fallback produced ${fallbackVisible}: ${outputFile}. uvMode=${JSON.stringify(uvMode)} model=${modelFile} texture=${textureFile}`);
-    }
+  const visible = countVisiblePixels(rgba);
+  debug(`render sample mode for ${modelFile}: ${JSON.stringify(mode)} visible=${visible}`);
+  if (visible < 20) {
+    throw new Error(`OBJ render produced ${visible} visible pixels before write: ${outputFile}. uvMode=${JSON.stringify(uvMode)} model=${modelFile} texture=${textureFile}. Check the OBJ vt coordinates and texture path.`);
   }
 
   fs.mkdirSync(path.dirname(outputFile), { recursive: true });
   const png = await sharp(rgba, { raw: { width, height, channels: 4 } })
     .trim({ background: { r: 0, g: 0, b: 0, alpha: 0 }, threshold: 1 })
-    .extend({ top: 24, bottom: 24, left: 24, right: 24, background: { r: 0, g: 0, b: 0, alpha: 0 } })
-    .resize(512, 512, { fit: 'contain', background: { r: 0, g: 0, b: 0, alpha: 0 }, kernel: 'lanczos3' })
+    .extend({ top: 56, bottom: 56, left: 56, right: 56, background: { r: 0, g: 0, b: 0, alpha: 0 } })
+    .resize(512, 512, { fit: 'contain', background: { r: 0, g: 0, b: 0, alpha: 0 }, kernel: 'nearest' })
     .png()
     .toBuffer();
   await sharp(png).toFile(outputFile);
@@ -592,25 +564,10 @@ function rasterTexturedTriangle(dst, dw, dh, tex, tw, th, p0, p1, p2, fallbackCo
       if (sampleMode && sampleMode.swapUV) { const tmp = u; u = v; v = tmp; }
       if (sampleMode && sampleMode.flipU) u = (tw - 1) - u;
       if (sampleMode && sampleMode.flipV) v = (th - 1) - v;
-      const sampled = sampleTextureBilinear(tex, tw, th, u, v);
-      let sx = Math.max(0, Math.min(tw - 1, Math.floor(u)));
-      let sy = Math.max(0, Math.min(th - 1, Math.floor(v)));
-      let sr = sampled[0], sg = sampled[1], sb = sampled[2], sa = sampled[3];
-
-      // If the exact UV lands on a transparent texel, search a tiny neighborhood.
-      // This avoids all-transparent thumbnails from edge UVs on sparse 26.x textures.
-      if (sa <= 8) {
-        let found = false;
-        for (let r = 1; r <= Math.max(2, Math.ceil(Math.min(tw, th) / 8)) && !found; r++) {
-          for (let oy = -r; oy <= r && !found; oy++) for (let ox = -r; ox <= r; ox++) {
-            const nx = Math.max(0, Math.min(tw - 1, sx + ox));
-            const ny = Math.max(0, Math.min(th - 1, sy + oy));
-            const ni = (ny * tw + nx) * 4;
-            if (tex[ni + 3] > 8) { sr = tex[ni]; sg = tex[ni + 1]; sb = tex[ni + 2]; sa = tex[ni + 3]; found = true; break; }
-          }
-        }
-      }
-      if (sa <= 8 && fallbackColor) { sr = fallbackColor[0]; sg = fallbackColor[1]; sb = fallbackColor[2]; sa = fallbackColor[3]; }
+      const sx = Math.max(0, Math.min(tw - 1, Math.floor(u + 0.5)));
+      const sy = Math.max(0, Math.min(th - 1, Math.floor(v + 0.5)));
+      const si = (sy * tw + sx) * 4;
+      const sr = tex[si], sg = tex[si + 1], sb = tex[si + 2], sa = tex[si + 3];
       if (sa <= 8) continue;
 
       const di = (y * dw + x) * 4;
