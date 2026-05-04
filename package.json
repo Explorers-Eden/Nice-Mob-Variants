@@ -1,0 +1,9 @@
+{
+  "type": "module",
+  "dependencies": {
+    "three": "^0.160.0",
+    "three-stdlib": "^2.30.0",
+    "canvas": "^2.11.2",
+    "gl": "^5.0.0"
+  }
+}
