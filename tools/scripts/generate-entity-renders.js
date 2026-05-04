@@ -13,7 +13,6 @@ const fs = require('fs');
 const path = require('path');
 const yaml = require('js-yaml');
 const sharp = require('sharp');
-const { createCanvas, loadImage } = require('canvas');
 
 const ENTITY_TYPES = [
   'cat',
