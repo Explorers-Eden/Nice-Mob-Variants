@@ -161,7 +161,7 @@ async function resolveMinecraftVersion() {
 }
 
 function extractVanillaAssets(jarPath, versionId) {
-  const marker = path.join(assetRoot, versionId, ".extracted-v5-full-block-model-baker");
+  const marker = path.join(assetRoot, versionId, ".extracted-v6-block-and-entity-assets");
 
   if (
     fs.existsSync(marker) &&
@@ -173,7 +173,8 @@ function extractVanillaAssets(jarPath, versionId) {
     fs.existsSync(path.join(extractedRoot, "minecraft", "textures", "block", "chain.png")) &&
     fs.existsSync(path.join(extractedRoot, "minecraft", "textures", "block", "lever.png")) &&
     fs.existsSync(path.join(extractedRoot, "minecraft", "textures", "block", "stone.png")) &&
-    fs.existsSync(path.join(extractedRoot, "minecraft", "textures", "block", "oak_planks.png"))
+    fs.existsSync(path.join(extractedRoot, "minecraft", "textures", "block", "oak_planks.png")) &&
+    fs.existsSync(path.join(extractedRoot, "minecraft", "textures", "entity"))
   ) {
     console.log(`Vanilla block assets for ${versionId} already extracted.`);
     return;
@@ -182,7 +183,7 @@ function extractVanillaAssets(jarPath, versionId) {
   fs.rmSync(extractedRoot, { recursive: true, force: true });
   fs.mkdirSync(assetRoot, { recursive: true });
 
-  console.log("Extracting vanilla blockstates, block models, and block textures...");
+  console.log("Extracting vanilla blockstates, block models, block textures, and entity textures...");
 
   execFileSync(
     "unzip",
@@ -193,6 +194,8 @@ function extractVanillaAssets(jarPath, versionId) {
       "assets/minecraft/blockstates/*",
       "assets/minecraft/models/block/*",
       "assets/minecraft/textures/block/*",
+      "assets/minecraft/textures/entity/*",
+      "assets/minecraft/textures/entity/**",
       "-d",
       assetRoot
     ],
