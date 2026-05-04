@@ -26,6 +26,8 @@ const ENTITY_TYPES = [
   'zombie_nautilus'
 ];
 
+const HAS_BABY_MODEL = new Set(['cat', 'chicken', 'pig', 'cow', 'wolf']);
+
 const OUTPUT_ROOT = path.join('wiki', 'images', 'entity');
 const MODEL_CACHE_ROOT = path.join('.cache', 'entity-models');
 const REPORT_PATH = path.join('wiki', 'images', 'entity', '_render-report.json');
@@ -132,17 +134,55 @@ function resolveTexture(assetId, entityType, age) {
   return null;
 }
 
+function firstPresent(obj, keys) {
+  for (const key of keys) {
+    if (obj && obj[key] !== undefined && obj[key] !== null && obj[key] !== '') return obj[key];
+  }
+  return null;
+}
+
+function extractModelKey(json, type) {
+  const value = firstPresent(json, ['model', 'model_id', 'variant_model']) || 'default';
+  return String(value).replace(/^minecraft:/, '').replace(`${type}/`, '') || 'default';
+}
+
+function extractAdultAssetId(json, type) {
+  // Most variant registries use asset_id. Wolf variants use Minecraft's wolf-specific
+  // fields (wild_texture/tame_texture/angry_texture), so prefer the neutral wild texture
+  // for the wiki render. Keep several aliases for cross-repo compatibility.
+  if (type === 'wolf') {
+    return firstPresent(json, [
+      'asset_id', 'texture', 'texture_id',
+      'wild_texture', 'wild_asset_id', 'wild_texture_id',
+      'tame_texture', 'tame_asset_id', 'tame_texture_id',
+      'angry_texture', 'angry_asset_id', 'angry_texture_id'
+    ]);
+  }
+  return firstPresent(json, ['asset_id', 'texture', 'texture_id', 'adult_asset_id', 'adult_texture', 'adult_texture_id']);
+}
+
+function extractBabyAssetId(json, type) {
+  if (type === 'wolf') {
+    return firstPresent(json, [
+      'baby_asset_id', 'baby_texture', 'baby_texture_id',
+      'baby_wild_texture', 'baby_wild_asset_id', 'baby_wild_texture_id',
+      'wild_baby_texture', 'wild_baby_asset_id', 'wild_baby_texture_id'
+    ]);
+  }
+  return firstPresent(json, ['baby_asset_id', 'baby_texture', 'baby_texture_id']);
+}
+
 function discoverVariants() {
   const variants = [];
   for (const type of ENTITY_TYPES) {
     for (const { namespace, file } of findVariantFiles(type)) {
       const json = readJson(file);
       const variant = variantNameFromFile(file);
-      const model = String(json.model || json.model_id || json.variant_model || 'default').replace(/^minecraft:/, '').replace(`${type}/`, '') || 'default';
-      const assetId = json.asset_id || json.texture || json.texture_id;
-      const babyAssetId = json.baby_asset_id || json.baby_texture || json.baby_texture_id;
+      const model = extractModelKey(json, type);
+      const assetId = extractAdultAssetId(json, type);
+      const babyAssetId = extractBabyAssetId(json, type);
       const adultTexture = resolveTexture(assetId, type, 'adult');
-      const babyTexture = babyAssetId ? resolveTexture(babyAssetId, type, 'baby') : null;
+      const babyTexture = babyAssetId ? resolveTexture(babyAssetId, type, 'baby') : (HAS_BABY_MODEL.has(type) ? adultTexture : null);
       variants.push({ namespace, type, variant, file, model, adultTexture, babyTexture, assetId, babyAssetId, raw: json });
     }
   }
@@ -154,6 +194,21 @@ function modelCacheFile(version, type, model, age) {
   return path.join(MODEL_CACHE_ROOT, version, type, `${safeModel}.${age}.json`);
 }
 
+
+function ensureExporterReady(version) {
+  console.log(`Checking Mojang model exporter for Minecraft ${version}...`);
+  try {
+    cp.execFileSync('gradle', [
+      '-p', path.join('tools', 'entity-renderer'),
+      `-Pminecraft_version=${version}`,
+      '--no-daemon', '--quiet', 'classes'
+    ], { stdio: 'inherit' });
+    console.log('Mojang model exporter compiled successfully.');
+  } catch (error) {
+    throw new Error(`Mojang model exporter could not be compiled for Minecraft ${version}. This is a Gradle/Fabric Loom setup failure, not a variant texture failure. ${error.message || error}`);
+  }
+}
+
 function exportModel(version, type, model, age) {
   const out = modelCacheFile(version, type, model, age);
   if (exists(out)) return out;
@@ -161,6 +216,7 @@ function exportModel(version, type, model, age) {
   console.log(`Exporting Mojang model: ${version} ${type} model=${model || 'default'} age=${age}`);
   const args = [
     '-p', path.join('tools', 'entity-renderer'),
+    `-Pminecraft_version=${version}`,
     '--no-daemon', '--quiet', 'run',
     `--args=--minecraft-version ${version} --entity ${type} --model ${model || 'default'} --age ${age} --output ${path.resolve(out)}`
   ];
@@ -267,7 +323,7 @@ async function main() {
       console.log(`  baby_asset_id: ${v.babyAssetId}`);
       console.log(`  baby texture: ${v.babyTexture || '(not found)'}`);
     } else {
-      console.log('  baby_asset_id: (not present; baby render skipped)');
+      console.log(HAS_BABY_MODEL.has(v.type) ? '  baby_asset_id: (not present; baby will use adult texture)' : '  baby_asset_id: (not present; baby render skipped)');
     }
     debug(`adult texture candidates for ${v.type}/${v.variant}: ${adultCandidates.join(', ') || '(none)'}`);
     if (babyCandidates.length) debug(`baby texture candidates for ${v.type}/${v.variant}: ${babyCandidates.join(', ')}`);
@@ -276,6 +332,16 @@ async function main() {
   if (!variants.length) {
     console.log('No entity variant JSON files found; skipping entity renders successfully.');
     writeJson(REPORT_PATH, report);
+    return;
+  }
+
+  try {
+    ensureExporterReady(version);
+  } catch (error) {
+    report.errors.push({ type: 'exporter', variant: 'preflight', age: 'all', message: String(error.stack || error.message || error) });
+    writeJson(REPORT_PATH, report);
+    console.error(error.stack || error.message || error);
+    process.exitCode = 1;
     return;
   }
 
@@ -289,7 +355,7 @@ async function main() {
     for (const age of ['adult', 'baby']) {
       const texture = age === 'adult' ? v.adultTexture : v.babyTexture;
       if (age === 'baby' && !texture) {
-        report.skipped.push({ type:v.type, variant:v.variant, age, reason:'No baby_asset_id/baby texture; baby render intentionally skipped' });
+        report.skipped.push({ type:v.type, variant:v.variant, age, reason: HAS_BABY_MODEL.has(v.type) ? 'Baby-capable entity, but no baby/adult texture could be resolved' : 'No baby model for this entity type; baby render intentionally skipped' });
         continue;
       }
       const output = path.join(OUTPUT_ROOT, v.type, v.variant, `${age}.png`);

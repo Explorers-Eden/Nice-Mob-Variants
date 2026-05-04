@@ -8,6 +8,11 @@ def mcVersion = project.findProperty('minecraft_version') ?: System.getenv('MINE
 group = 'dev.explorerseden'
 version = '1.0.0'
 
+repositories {
+    maven { url = 'https://maven.fabricmc.net/' }
+    mavenCentral()
+}
+
 base { archivesName = 'entity-renderer' }
 
 java {
