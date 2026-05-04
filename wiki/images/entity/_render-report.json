@@ -1,6 +1,6 @@
 {
   "minecraftVersion": "26.1.2",
-  "renderer": "obj-software-v25-frog-feet-fix",
+  "renderer": "obj-software-v27-revert-to-v24-frog-renderer",
   "generated": [
     {
       "type": "cat",
