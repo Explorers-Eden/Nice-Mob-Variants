@@ -35,17 +35,20 @@ function debug(message) { if (DEBUG) console.log(`[entity-render-debug] ${messag
 
 const ENTITY_RENDER = {
   // OBJ exports use a normal right-handed coordinate space (Y up).
-  // v18 uses a fixed orthographic isometric camera, no blur/downsample
-  // filtering, and no UV auto-flip guessing for OBJ files. The yaw is aimed
-  // so the entity face/front points toward the lower-left of the transparent
-  // PNG, matching common Minecraft wiki / PlanetMinecraft-style previews.
-  cat: { yaw: 225, pitch: 25, roll: 0, yOffset: 0, flipProjectY: true },
-  chicken: { yaw: 225, pitch: 25, roll: 0, yOffset: 0, flipProjectY: true },
-  frog: { yaw: 225, pitch: 25, roll: 0, yOffset: 0, flipProjectY: true },
-  pig: { yaw: 225, pitch: 25, roll: 0, yOffset: 0, flipProjectY: true },
-  cow: { yaw: 225, pitch: 25, roll: 0, yOffset: 0, flipProjectY: true },
-  wolf: { yaw: 225, pitch: 25, roll: 0, yOffset: 0, flipProjectY: true },
-  zombie_nautilus: { yaw: 225, pitch: 25, roll: 0, yOffset: 0, flipProjectY: true }
+  // v19 camera: PlanetMinecraft-style orthographic isometric render.
+  // The previous versions were fighting the renderer one symptom at a time:
+  // blank UVs, upside-down meshes, then huge nearest-neighbor texels. This is
+  // intentionally simple: render OBJ geometry at high resolution, sample
+  // Minecraft textures exactly, then downsample once with a high-quality kernel.
+  // Default yaw is the opposite of v18 so the face/front points toward the
+  // lower-left side of the transparent PNG instead of the upper-right.
+  cat: { yaw: 45, pitch: 28, roll: 0, yOffset: 0, flipProjectY: true, target: 760 },
+  chicken: { yaw: 45, pitch: 28, roll: 0, yOffset: 0, flipProjectY: true, target: 700 },
+  frog: { yaw: 45, pitch: 28, roll: 0, yOffset: 0, flipProjectY: true, target: 720 },
+  pig: { yaw: 45, pitch: 28, roll: 0, yOffset: 0, flipProjectY: true, target: 760 },
+  cow: { yaw: 45, pitch: 28, roll: 0, yOffset: 0, flipProjectY: true, target: 780 },
+  wolf: { yaw: 45, pitch: 28, roll: 0, yOffset: 0, flipProjectY: true, target: 760 },
+  zombie_nautilus: { yaw: 45, pitch: 28, roll: 0, yOffset: 0, flipProjectY: true, target: 720 }
 };
 
 function renderAngleOverride(name, fallback) {
@@ -363,17 +366,17 @@ async function renderModel(modelFile, textureFile, outputFile, type, age) {
     return { vertices: pts, z };
   }).sort((a, b) => a.z - b.z);
 
-  // Render at 2x resolution, then downsample. This keeps the Minecraft
-  // texture style readable without turning the final wiki image into huge
-  // nearest-neighbor blocks.
-  const width = 1024;
-  const height = 1024;
+  // Render at 4x final resolution, then downsample once. This is the
+  // key to the reference look: transparent background, clean silhouette, sharp
+  // Minecraft texture detail, but no giant 1:1 nearest-neighbor blocks.
+  const width = Number(process.env.ENTITY_RENDER_INTERNAL_SIZE || 2048);
+  const height = width;
   debug(`render camera for ${modelFile}: yaw=${meta.yaw} pitch=${meta.pitch} roll=${meta.roll || 0} flipY=${!!meta.flipProjectY}`);
   const projectedBounds = computeTransformedBounds(transformed);
   const modelW = Math.max(1, projectedBounds.maxX - projectedBounds.minX);
   const modelH = Math.max(1, projectedBounds.maxY - projectedBounds.minY);
-  const target = age === 'baby' ? 570 : 720;
-  const scale = Math.max(2, Math.min(22, target / Math.max(modelW, modelH)));
+  const target = Number(process.env.ENTITY_RENDER_TARGET || (age === 'baby' ? Math.round((meta.target || 720) * 0.82) : (meta.target || 760)));
+  const scale = Math.max(2, Math.min(width / 18, target / Math.max(modelW, modelH)));
   const centerX = (projectedBounds.minX + projectedBounds.maxX) / 2;
   const centerY = (projectedBounds.minY + projectedBounds.maxY) / 2;
 
@@ -407,10 +410,11 @@ async function renderModel(modelFile, textureFile, outputFile, type, age) {
   }
 
   fs.mkdirSync(path.dirname(outputFile), { recursive: true });
+  const pad = Math.max(96, Math.round(width * 0.055));
   const png = await sharp(rgba, { raw: { width, height, channels: 4 } })
     .trim({ background: { r: 0, g: 0, b: 0, alpha: 0 }, threshold: 1 })
-    .extend({ top: 56, bottom: 56, left: 56, right: 56, background: { r: 0, g: 0, b: 0, alpha: 0 } })
-    .resize(512, 512, { fit: 'contain', background: { r: 0, g: 0, b: 0, alpha: 0 }, kernel: 'nearest' })
+    .extend({ top: pad, bottom: pad, left: pad, right: pad, background: { r: 0, g: 0, b: 0, alpha: 0 } })
+    .resize(512, 512, { fit: 'contain', background: { r: 0, g: 0, b: 0, alpha: 0 }, kernel: 'lanczos3' })
     .png()
     .toBuffer();
   await sharp(png).toFile(outputFile);
