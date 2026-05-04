@@ -232,14 +232,11 @@ function parseObjFile(objFile, entityType) {
     const b = objectBounds.get(obj);
     if (!b || b.verts < 3) return false;
     const sx = b.maxX - b.minX, sy = b.maxY - b.minY, sz = b.maxZ - b.minZ;
-    if (Math.min(sx, sy, sz) >= 1e-5) return false;
-
-    // Frog OBJs include a few flat helper/overlay sheets for body/head/tongue
-    // UV layout. Those produced the orange/green square mats seen in v23/v24.
-    // Do NOT drop all zero-thickness frog objects, though: the arm/leg flat
-    // planes are the actual webbed feet. Keep those so the frog feet render.
-    const name = String(obj).replace(/^\d+:/, '').toLowerCase();
-    return /^(body|head|tongue|croaking_body)$/.test(name);
+    // The supplied frog OBJ contains duplicate zero-thickness UV sheet/helper
+    // objects after the real cube objects. Rendering those sheets is what made
+    // the orange/green flat texture mats under and over the frog. Keep the
+    // actual cuboids and drop only object groups with one collapsed axis.
+    return Math.min(sx, sy, sz) < 1e-5;
   }
   function parseIndex(token, len) {
     const n = Number(token);
@@ -543,7 +540,7 @@ async function main() {
   fs.mkdirSync(OUTPUT_ROOT, { recursive: true });
   const version = resolveMinecraftVersion();
   const variants = discoverVariants();
-  const report = { minecraftVersion: version, renderer: 'obj-software-v25-frog-feet-fix', generated: [], skipped: [], errors: [], discovered: [] };
+  const report = { minecraftVersion: version, renderer: 'obj-software-v27-revert-to-v24-frog-renderer', generated: [], skipped: [], errors: [], discovered: [] };
   console.log(`Entity render output root: ${OUTPUT_ROOT}`);
   console.log(`Discovered ${variants.length} entity variant JSON file(s).`);
   if (!variants.length) { writeJson(REPORT_PATH, report); return; }
