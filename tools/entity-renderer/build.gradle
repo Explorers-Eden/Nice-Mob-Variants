@@ -1,5 +1,5 @@
 plugins {
-    id 'fabric-loom' version '1.11-SNAPSHOT'
+    id 'net.fabricmc.fabric-loom' version '1.15-SNAPSHOT'
     id 'application'
 }
 
@@ -19,13 +19,10 @@ java {
     toolchain { languageVersion = JavaLanguageVersion.of(25) }
 }
 
-loom {
-    splitEnvironmentSourceSets()
-}
-
 dependencies {
     minecraft "com.mojang:minecraft:${mcVersion}"
-    mappings loom.officialMojangMappings()
+    // Minecraft 26.1+ jars are non-obfuscated. Do not add officialMojangMappings();
+    // Loom's non-obfuscated plugin resolves the classes directly.
 }
 
 application { mainClass = 'dev.explorerseden.wiki.EntityModelExporter' }

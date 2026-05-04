@@ -148,10 +148,10 @@ function extractModelKey(json, type) {
 
 function extractAdultAssetId(json, type) {
   // Most variant registries use asset_id. Wolf variants use Minecraft's wolf-specific
-  // fields (wild_texture/tame_texture/angry_texture), so prefer the neutral wild texture
-  // for the wiki render. Keep several aliases for cross-repo compatibility.
+  // nested shape: { assets: { wild, tame, angry }, baby_assets: { wild, tame, angry } }.
+  // Prefer the neutral wild texture for wiki renders, then fall back to tame/angry/flat aliases.
   if (type === 'wolf') {
-    return firstPresent(json, [
+    return firstPresent(json?.assets, ['wild', 'tame', 'angry']) || firstPresent(json, [
       'asset_id', 'texture', 'texture_id',
       'wild_texture', 'wild_asset_id', 'wild_texture_id',
       'tame_texture', 'tame_asset_id', 'tame_texture_id',
@@ -163,7 +163,7 @@ function extractAdultAssetId(json, type) {
 
 function extractBabyAssetId(json, type) {
   if (type === 'wolf') {
-    return firstPresent(json, [
+    return firstPresent(json?.baby_assets, ['wild', 'tame', 'angry']) || firstPresent(json, [
       'baby_asset_id', 'baby_texture', 'baby_texture_id',
       'baby_wild_texture', 'baby_wild_asset_id', 'baby_wild_texture_id',
       'wild_baby_texture', 'wild_baby_asset_id', 'wild_baby_texture_id'
@@ -205,7 +205,7 @@ function ensureExporterReady(version) {
     ], { stdio: 'inherit' });
     console.log('Mojang model exporter compiled successfully.');
   } catch (error) {
-    throw new Error(`Mojang model exporter could not be compiled for Minecraft ${version}. This is a Gradle/Fabric Loom setup failure, not a variant texture failure. ${error.message || error}`);
+    throw new Error(`Mojang model exporter could not be compiled for Minecraft ${version}. This is a Gradle/Fabric Loom setup failure, not a variant texture failure. For Minecraft 26.1+, this package uses Java 25, Gradle 9.4.0, net.fabricmc.fabric-loom 1.15-SNAPSHOT, and no mappings dependency. ${error.message || error}`);
   }
 }
 

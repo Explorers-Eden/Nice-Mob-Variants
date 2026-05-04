@@ -28,6 +28,11 @@ jobs:
           java-version: 25
           cache: gradle
 
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: 9.4.0
+
       - name: Install dependencies
         run: npm install --no-save prismarine-nbt pngjs sharp canvas js-yaml
 

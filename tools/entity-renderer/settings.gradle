@@ -6,7 +6,5 @@ pluginManagement {
     }
 }
 
-// Do not use dependencyResolutionManagement with FAIL_ON_PROJECT_REPOS/PREFER_SETTINGS here.
-// Fabric Loom adds its own project repositories (for remapped mods/classes) while applying
-// the plugin; forcing settings-only repositories makes Gradle fail before the exporter runs.
+// Keep project repositories allowed. Fabric Loom adds internal project repositories while applying.
 rootProject.name = 'entity-renderer'
