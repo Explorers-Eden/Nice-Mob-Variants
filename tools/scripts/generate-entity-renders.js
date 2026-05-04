@@ -227,16 +227,30 @@ function parseObjFile(objFile, entityType) {
     b.minZ = Math.min(b.minZ, v.z); b.maxZ = Math.max(b.maxZ, v.z);
     b.verts++;
   }
-  function isFrogSheetObject(obj) {
+  function frogObjectBaseName(obj) {
+    return String(obj || '').replace(/^\d+:/, '');
+  }
+
+  function shouldSkipFrogObject(obj) {
     if (entityType !== 'frog') return false;
+    const baseName = frogObjectBaseName(obj);
+
+    // These are animation/helper parts in the Blockbench export, not the
+    // default standing frog body. Rendering them makes the frog look broken.
+    if (baseName === 'croaking_body' || baseName === 'tongue') return true;
+
     const b = objectBounds.get(obj);
     if (!b || b.verts < 3) return false;
     const sx = b.maxX - b.minX, sy = b.maxY - b.minY, sz = b.maxZ - b.minZ;
-    // The supplied frog OBJ contains duplicate zero-thickness UV sheet/helper
-    // objects after the real cube objects. Rendering those sheets is what made
-    // the orange/green flat texture mats under and over the frog. Keep the
-    // actual cuboids and drop only object groups with one collapsed axis.
-    return Math.min(sx, sy, sz) < 1e-5;
+    const isFlat = Math.min(sx, sy, sz) < 1e-5;
+    if (!isFlat) return false;
+
+    // Important: frog feet are intentionally flat planes in this OBJ
+    // (the second left/right_arm and left/right_leg groups). The old filter
+    // removed every zero-thickness frog group, which deleted the feet. Keep
+    // the flat limb pads, but still remove duplicate body/head UV sheets.
+    if (['left_arm', 'right_arm', 'left_leg', 'right_leg'].includes(baseName)) return false;
+    return true;
   }
   function parseIndex(token, len) {
     const n = Number(token);
@@ -269,7 +283,7 @@ function parseObjFile(objFile, entityType) {
       for (let i = 1; i < verts.length - 1; i++) {
         const tri = [verts[0], verts[i], verts[i + 1]];
         const obj = tri[0].object;
-        if (obj && tri.every(v => v.object === obj) && isFrogSheetObject(obj)) continue;
+        if (obj && tri.every(v => v.object === obj) && shouldSkipFrogObject(obj)) continue;
         tri.object = obj || currentObject;
         tris.push(tri);
       }
@@ -567,7 +581,7 @@ async function main() {
   fs.mkdirSync(OUTPUT_ROOT, { recursive: true });
   const version = resolveMinecraftVersion();
   const variants = discoverVariants();
-  const report = { minecraftVersion: version, renderer: 'obj-software-v29-frog-border-foot-sampling', generated: [], skipped: [], errors: [], discovered: [] };
+  const report = { minecraftVersion: version, renderer: 'obj-software-v30-frog-flat-feet-filter', generated: [], skipped: [], errors: [], discovered: [] };
   console.log(`Entity render output root: ${OUTPUT_ROOT}`);
   console.log(`Discovered ${variants.length} entity variant JSON file(s).`);
   if (!variants.length) { writeJson(REPORT_PATH, report); return; }
