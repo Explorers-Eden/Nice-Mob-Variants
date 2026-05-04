@@ -1,0 +1,28 @@
+plugins {
+    id 'fabric-loom' version '1.11-SNAPSHOT'
+    id 'application'
+}
+
+def mcVersion = project.findProperty('minecraft_version') ?: System.getenv('MINECRAFT_VERSION') ?: '26.1.2'
+
+group = 'dev.explorerseden'
+version = '1.0.0'
+
+base { archivesName = 'entity-renderer' }
+
+java {
+    toolchain { languageVersion = JavaLanguageVersion.of(25) }
+}
+
+loom {
+    splitEnvironmentSourceSets()
+}
+
+dependencies {
+    minecraft "com.mojang:minecraft:${mcVersion}"
+    mappings loom.officialMojangMappings()
+}
+
+application { mainClass = 'dev.explorerseden.wiki.EntityModelExporter' }
+
+tasks.withType(JavaCompile).configureEach { options.encoding = 'UTF-8' }

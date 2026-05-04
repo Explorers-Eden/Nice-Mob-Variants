@@ -21,8 +21,15 @@ jobs:
         with:
           node-version: 22
 
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 25
+          cache: gradle
+
       - name: Install dependencies
-        run: npm install --no-save prismarine-nbt pngjs canvas
+        run: npm install --no-save prismarine-nbt pngjs sharp canvas js-yaml
 
       - name: Cache vanilla assets
         uses: actions/cache@v4
@@ -63,11 +70,12 @@ jobs:
             echo "No structure files found; skipping structure preview PNG generation."
           fi
 
+
       - name: Generate entity variant render images
         shell: bash
         run: |
           set -euo pipefail
-          if find data -type f \( -path '*/cat_variant/*.json' -o -path '*/chicken_variant/*.json' -o -path '*/cow_variant/*.json' -o -path '*/frog_variant/*.json' -o -path '*/pig_variant/*.json' -o -path '*/wolf_variant/*.json' -o -path '*/zombie_nautilus_variant/*.json' \) -print -quit 2>/dev/null | grep -q .; then
+          if find data -type f \( -path '*/cat_variant/*.json' -o -path '*/chicken_variant/*.json' -o -path '*/frog_variant/*.json' -o -path '*/pig_variant/*.json' -o -path '*/cow_variant/*.json' -o -path '*/wolf_variant/*.json' -o -path '*/zombie_nautilus_variant/*.json' \) -print -quit 2>/dev/null | grep -q .; then
             node scripts/generate-entity-renders.js
           else
             echo "No entity variant JSON files found; skipping entity render PNG generation."
@@ -107,6 +115,7 @@ jobs:
           name: generated-structure-preview-images
           path: wiki/images/structures/**/*.png
           if-no-files-found: warn
+
 
       - name: Upload generated entity render images as artifact
         uses: actions/upload-artifact@v4
