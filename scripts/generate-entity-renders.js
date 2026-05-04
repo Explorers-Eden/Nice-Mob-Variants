@@ -190,9 +190,18 @@ function discoverVariants() {
   return variants;
 }
 
-function modelCacheFile(version, type, model, age) {
+function modelCacheFile(version, type, model, age, textureWidth = 64, textureHeight = 64) {
   const safeModel = String(model || 'default').replace(/[^a-zA-Z0-9._-]+/g, '_');
-  return path.join(MODEL_CACHE_ROOT, version, type, `${safeModel}.${age}.json`);
+  return path.join(MODEL_CACHE_ROOT, version, type, `${safeModel}.${age}.${textureWidth}x${textureHeight}.json`);
+}
+
+async function textureDimensions(textureFile) {
+  try {
+    const meta = await sharp(textureFile).metadata();
+    return { width: meta.width || 64, height: meta.height || 64 };
+  } catch {
+    return { width: 64, height: 64 };
+  }
 }
 
 
@@ -210,18 +219,19 @@ function ensureExporterReady(version) {
   }
 }
 
-function exportModel(version, type, model, age) {
-  const key = `${version}:${type}:${model || 'default'}:${age}`;
+async function exportModel(version, type, model, age, textureFile) {
+  const dims = await textureDimensions(textureFile);
+  const key = `${version}:${type}:${model || 'default'}:${age}:${dims.width}x${dims.height}`;
   if (MODEL_EXPORT_FAILURES.has(key)) throw MODEL_EXPORT_FAILURES.get(key);
-  const out = modelCacheFile(version, type, model, age);
+  const out = modelCacheFile(version, type, model, age, dims.width, dims.height);
   if (exists(out)) return out;
   fs.mkdirSync(path.dirname(out), { recursive: true });
-  console.log(`Exporting Mojang model: ${version} ${type} model=${model || 'default'} age=${age}`);
+  console.log(`Exporting Mojang model: ${version} ${type} model=${model || 'default'} age=${age} texture=${dims.width}x${dims.height}`);
   const args = [
     '-p', path.join('tools', 'entity-renderer'),
     `-Pminecraft_version=${version}`,
     '--no-daemon', '--quiet', 'run',
-    `--args=--minecraft-version ${version} --entity ${type} --model ${model || 'default'} --age ${age} --output ${path.resolve(out)}`
+    `--args=--minecraft-version ${version} --entity ${type} --model ${model || 'default'} --age ${age} --texture-width ${dims.width} --texture-height ${dims.height} --output ${path.resolve(out)}`
   ];
   try {
     cp.execFileSync('gradle', args, { stdio: 'inherit' });
@@ -377,7 +387,7 @@ async function main() {
         console.log(`  model key: ${v.model || 'default'}`);
         console.log(`  texture: ${texture}`);
         console.log(`  output: ${output}`);
-        const modelFile = exportModel(version, v.type, v.model, age);
+        const modelFile = await exportModel(version, v.type, v.model, age, texture);
         console.log(`  exported model cache: ${modelFile}`);
         await renderModel(modelFile, texture, output, v.type, age);
         report.generated.push({ type:v.type, variant:v.variant, age, model:v.model, texture, output, modelFile });
