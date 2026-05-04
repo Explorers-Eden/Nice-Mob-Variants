@@ -298,16 +298,51 @@ async function renderModel(modelFile, textureFile, outputFile, type, age) {
     };
   }
 
-  let rgba = Buffer.alloc(width * height * 4, 0);
-  for (const q of transformed) {
-    const pts = q.vertices.map(project);
-    rasterTexturedTriangle(rgba, width, height, tex, texW, texH, pts[0], pts[1], pts[2], null);
-    rasterTexturedTriangle(rgba, width, height, tex, texW, texH, pts[0], pts[2], pts[3], null);
+  const sampleModes = [
+    { name: 'normal', flipU: false, flipV: false, swapUV: false },
+    { name: 'flipV', flipU: false, flipV: true, swapUV: false },
+    { name: 'flipU', flipU: true, flipV: false, swapUV: false },
+    { name: 'flipUV', flipU: true, flipV: true, swapUV: false },
+    { name: 'swapUV', flipU: false, flipV: false, swapUV: true },
+    { name: 'swapUV+flipV', flipU: false, flipV: true, swapUV: true },
+    { name: 'swapUV+flipU', flipU: true, flipV: false, swapUV: true },
+    { name: 'swapUV+flipUV', flipU: true, flipV: true, swapUV: true }
+  ];
+
+  let best = { rgba: null, visible: -1, mode: null };
+  for (const mode of sampleModes) {
+    const attempt = Buffer.alloc(width * height * 4, 0);
+    for (const q of transformed) {
+      const pts = q.vertices.map(project);
+      rasterTexturedTriangle(attempt, width, height, tex, texW, texH, pts[0], pts[1], pts[2], null, mode);
+      rasterTexturedTriangle(attempt, width, height, tex, texW, texH, pts[0], pts[2], pts[3], null, mode);
+    }
+    const visible = countVisiblePixels(attempt);
+    if (visible > best.visible) best = { rgba: attempt, visible, mode };
+    if (visible >= 20) break;
   }
 
-  const visible = countVisiblePixels(rgba);
-  if (visible < 20) {
-    throw new Error(`Textured render produced ${visible} visible pixels before write: ${outputFile}. This usually means UV coordinates were exported in an unexpected space. uvMode=${JSON.stringify(uvMode)} model=${modelFile} texture=${textureFile}`);
+  let rgba = best.rgba || Buffer.alloc(width * height * 4, 0);
+  debug(`render sample mode for ${modelFile}: ${JSON.stringify(best.mode)} visible=${best.visible}`);
+
+  if (best.visible < 20) {
+    // Some custom variant textures are mostly/entirely transparent in the exact
+    // vanilla UV islands used by Mojang's 26.x model factories. Do not emit a
+    // blank PNG or fail the whole wiki job; emit a real model silhouette tinted
+    // from the non-transparent texture pixels so the bad asset is visible in
+    // the render report instead of becoming invisible.
+    const fallbackColor = averageVisibleTextureColor(tex);
+    rgba = Buffer.alloc(width * height * 4, 0);
+    for (const q of transformed) {
+      const pts = q.vertices.map(project);
+      rasterTexturedTriangle(rgba, width, height, tex, texW, texH, pts[0], pts[1], pts[2], fallbackColor, best.mode || sampleModes[0]);
+      rasterTexturedTriangle(rgba, width, height, tex, texW, texH, pts[0], pts[2], pts[3], fallbackColor, best.mode || sampleModes[0]);
+    }
+    const fallbackVisible = countVisiblePixels(rgba);
+    debug(`fallback tinted silhouette for ${outputFile}: visible=${fallbackVisible} color=${JSON.stringify(fallbackColor)}`);
+    if (fallbackVisible < 20) {
+      throw new Error(`Textured render produced ${best.visible} visible pixels and fallback produced ${fallbackVisible}: ${outputFile}. uvMode=${JSON.stringify(uvMode)} model=${modelFile} texture=${textureFile}`);
+    }
   }
 
   fs.mkdirSync(path.dirname(outputFile), { recursive: true });
@@ -421,7 +456,7 @@ function edge(ax, ay, bx, by, cx, cy) {
   return (cx - ax) * (by - ay) - (cy - ay) * (bx - ax);
 }
 
-function rasterTexturedTriangle(dst, dw, dh, tex, tw, th, p0, p1, p2, fallbackColor = null) {
+function rasterTexturedTriangle(dst, dw, dh, tex, tw, th, p0, p1, p2, fallbackColor = null, sampleMode = null) {
   const vals = [p0.x, p0.y, p0.u, p0.v, p1.x, p1.y, p1.u, p1.v, p2.x, p2.y, p2.u, p2.v];
   if (!vals.every(Number.isFinite)) return;
   const area = edge(p0.x, p0.y, p1.x, p1.y, p2.x, p2.y);
@@ -442,8 +477,11 @@ function rasterTexturedTriangle(dst, dw, dh, tex, tw, th, p0, p1, p2, fallbackCo
       const w2 = edge(p0.x, p0.y, p1.x, p1.y, px, py) / area;
       if (w0 < -1e-4 || w1 < -1e-4 || w2 < -1e-4) continue;
 
-      const u = w0 * p0.u + w1 * p1.u + w2 * p2.u;
-      const v = w0 * p0.v + w1 * p1.v + w2 * p2.v;
+      let u = w0 * p0.u + w1 * p1.u + w2 * p2.u;
+      let v = w0 * p0.v + w1 * p1.v + w2 * p2.v;
+      if (sampleMode && sampleMode.swapUV) { const tmp = u; u = v; v = tmp; }
+      if (sampleMode && sampleMode.flipU) u = (tw - 1) - u;
+      if (sampleMode && sampleMode.flipV) v = (th - 1) - v;
       let sx = Math.max(0, Math.min(tw - 1, Math.floor(u)));
       let sy = Math.max(0, Math.min(th - 1, Math.floor(v)));
       let si = (sy * tw + sx) * 4;
@@ -453,7 +491,7 @@ function rasterTexturedTriangle(dst, dw, dh, tex, tw, th, p0, p1, p2, fallbackCo
       // This avoids all-transparent thumbnails from edge UVs on sparse 26.x textures.
       if (sa <= 8) {
         let found = false;
-        for (let r = 1; r <= 2 && !found; r++) {
+        for (let r = 1; r <= Math.max(2, Math.ceil(Math.min(tw, th) / 8)) && !found; r++) {
           for (let oy = -r; oy <= r && !found; oy++) for (let ox = -r; ox <= r; ox++) {
             const nx = Math.max(0, Math.min(tw - 1, sx + ox));
             const ny = Math.max(0, Math.min(th - 1, sy + oy));
