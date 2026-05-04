@@ -73,8 +73,15 @@ jobs:
 
       - name: Generate entity variant render images
         shell: bash
+        env:
+          ENTITY_RENDER_DEBUG: "1"
         run: |
           set -euo pipefail
+          mkdir -p wiki/images/entity
+          if [ ! -d data ]; then
+            echo "No data directory found; skipping entity render PNG generation."
+            exit 0
+          fi
           if find data -type f \( -path '*/cat_variant/*.json' -o -path '*/chicken_variant/*.json' -o -path '*/frog_variant/*.json' -o -path '*/pig_variant/*.json' -o -path '*/cow_variant/*.json' -o -path '*/wolf_variant/*.json' -o -path '*/zombie_nautilus_variant/*.json' \) -print -quit 2>/dev/null | grep -q .; then
             node scripts/generate-entity-renders.js
           else
@@ -106,6 +113,13 @@ jobs:
             echo "No wiki/images/entity directory found."
           fi
           echo ""
+          echo "Entity render report:"
+          if [ -f wiki/images/entity/_render-report.json ]; then
+            cat wiki/images/entity/_render-report.json
+          else
+            echo "No entity render report found."
+          fi
+          echo ""
           echo "Git status:"
           git status --short
 
@@ -117,11 +131,11 @@ jobs:
           if-no-files-found: warn
 
 
-      - name: Upload generated entity render images as artifact
+      - name: Upload generated entity render output as artifact
         uses: actions/upload-artifact@v4
         with:
-          name: generated-entity-render-images
-          path: wiki/images/entity/**/*.png
+          name: generated-entity-render-output
+          path: wiki/images/entity
           if-no-files-found: warn
 
       - name: Commit generated wiki files

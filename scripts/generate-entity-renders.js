@@ -1,248 +1,327 @@
 #!/usr/bin/env node
-// scripts/generate-entity-renders.js
-// Generates wiki/images/entity/<type>/<variant>/adult.png and baby.png.
-// Source of truth: data/<namespace>/<type>_variant/*.json.
-// Model source: scripts/entity-models/<minecraft-version>/<type>/<model>.json, falling back to common/.
-
+/*
+ * Generates true Minecraft entity variant renders into:
+ *   wiki/images/entity/<type>/<variant>/adult.png
+ *   wiki/images/entity/<type>/<variant>/baby.png
+ *
+ * Important: entity geometry is NOT guessed here. This script asks the JVM
+ * exporter in tools/entity-renderer to bake Mojang's actual client model layer
+ * for the Minecraft version resolved from release_infos.yml, then renders the
+ * exported quads with the variant textures from data/<namespace>/*_variant/*.json.
+ */
 const fs = require('fs');
 const path = require('path');
+const cp = require('child_process');
+const yaml = require('js-yaml');
+const sharp = require('sharp');
 const { createCanvas, loadImage } = require('canvas');
 
-const OUTPUT_ROOT = path.join('wiki', 'images', 'entity');
-const MODEL_ROOT = path.join('scripts', 'entity-models');
-const IMAGE_SIZE = 768;
-const SUPPORTED_VARIANT_DIRS = [
-  'cat_variant', 'chicken_variant', 'cow_variant', 'frog_variant',
-  'pig_variant', 'wolf_variant', 'zombie_nautilus_variant'
+const ENTITY_TYPES = [
+  'cat',
+  'chicken',
+  'frog',
+  'pig',
+  'cow',
+  'wolf',
+  'zombie_nautilus'
 ];
-const TYPE_BY_DIR = Object.fromEntries(SUPPORTED_VARIANT_DIRS.map(d => [d, d.replace(/_variant$/, '')]));
-const BABY_CAPABLE = new Set(['cat', 'chicken', 'cow', 'pig', 'wolf']);
 
-function readVanillaVersion() {
-  const file = path.join('.cache', 'vanilla-assets', 'version.txt');
-  return fs.existsSync(file) ? fs.readFileSync(file, 'utf8').trim() : 'common';
+const OUTPUT_ROOT = path.join('wiki', 'images', 'entity');
+const MODEL_CACHE_ROOT = path.join('.cache', 'entity-models');
+const REPORT_PATH = path.join('wiki', 'images', 'entity', '_render-report.json');
+const DEBUG = process.env.ENTITY_RENDER_DEBUG !== '0';
+function debug(message) { if (DEBUG) console.log(`[entity-render-debug] ${message}`); }
+
+const ENTITY_RENDER = {
+  cat: { yaw: 180, pitch: 18, roll: 0, camera: 62, yOffset: -9 },
+  chicken: { yaw: 180, pitch: 16, roll: 0, camera: 58, yOffset: -7 },
+  frog: { yaw: 180, pitch: 18, roll: 0, camera: 48, yOffset: -5 },
+  pig: { yaw: 180, pitch: 17, roll: 0, camera: 58, yOffset: -8 },
+  cow: { yaw: 180, pitch: 17, roll: 0, camera: 68, yOffset: -9 },
+  wolf: { yaw: 180, pitch: 16, roll: 0, camera: 62, yOffset: -8 },
+  zombie_nautilus: { yaw: 180, pitch: 18, roll: 0, camera: 46, yOffset: -4 }
+};
+
+function readJson(file) { return JSON.parse(fs.readFileSync(file, 'utf8')); }
+function writeJson(file, value) { fs.mkdirSync(path.dirname(file), { recursive: true }); fs.writeFileSync(file, JSON.stringify(value, null, 2)); }
+function exists(file) { try { return fs.existsSync(file); } catch { return false; } }
+function normalizeId(id) { return String(id || '').replace(/^#/, '').trim(); }
+function idNamespace(id) { const s = normalizeId(id); return s.includes(':') ? s.split(':')[0] : 'minecraft'; }
+function idPath(id) { const s = normalizeId(id); return s.includes(':') ? s.split(':').slice(1).join(':') : s; }
+function variantNameFromFile(file) { return path.basename(file, '.json').replace(/[^a-zA-Z0-9._-]+/g, '_').toLowerCase(); }
+function stripNamespace(id) { return idPath(id).split('/').pop(); }
+
+function resolveMinecraftVersion() {
+  const releaseFile = 'release_infos.yml';
+  if (!exists(releaseFile)) return process.env.MINECRAFT_VERSION || '26.1.2';
+  const raw = yaml.load(fs.readFileSync(releaseFile, 'utf8'));
+  const candidates = [];
+  function walk(v) {
+    if (v == null) return;
+    if (typeof v === 'string' || typeof v === 'number') {
+      const s = String(v);
+      if (/^\d+\.\d+(\.\d+)?([-.]pre\d+|[-.]rc\d+)?$/.test(s)) candidates.push(s);
+      return;
+    }
+    if (Array.isArray(v)) return v.forEach(walk);
+    if (typeof v === 'object') Object.entries(v).forEach(([k, val]) => {
+      if (/minecraft|mc[_-]?version|game[_-]?version|supported[_-]?versions/i.test(k)) walk(val);
+      else walk(val);
+    });
+  }
+  walk(raw);
+  const preferred = candidates.filter(v => /^\d{2}\.\d+(\.\d+)?/.test(v));
+  const result = process.env.MINECRAFT_VERSION || preferred.at(-1) || candidates.at(-1) || '26.1.2';
+  console.log(`Using Minecraft ${result} from release_infos.yml`);
+  return result;
 }
-function walk(root) {
-  if (!fs.existsSync(root)) return [];
+
+function findVariantFiles(entityType) {
   const out = [];
-  for (const e of fs.readdirSync(root, { withFileTypes: true })) {
-    const p = path.join(root, e.name);
-    if (e.isDirectory()) out.push(...walk(p));
-    else out.push(p);
+  const dataDir = 'data';
+  if (!exists(dataDir)) return out;
+  for (const ns of fs.readdirSync(dataDir)) {
+    const dir = path.join(dataDir, ns, `${entityType}_variant`);
+    if (!exists(dir)) continue;
+    for (const file of fs.readdirSync(dir).filter(f => f.endsWith('.json')).sort()) {
+      out.push({ namespace: ns, file: path.join(dir, file) });
+    }
   }
   return out;
 }
-function readJson(file) { return JSON.parse(fs.readFileSync(file, 'utf8')); }
-function clean(v) { return String(v || 'default').replace(/\.json$/i, '').replace(/[^a-zA-Z0-9._-]+/g, '_').replace(/^_+|_+$/g, '') || 'default'; }
-function idParts(id, fallbackNs = 'minecraft') {
-  if (!id || typeof id !== 'string') return null;
-  const i = id.indexOf(':');
-  return i >= 0 ? [id.slice(0, i), id.slice(i + 1)] : [fallbackNs, id];
+
+function textureCandidatesFromAssetId(assetId, entityType, age) {
+  const ns = idNamespace(assetId);
+  const p = idPath(assetId);
+  const base = path.join('assets', ns, 'textures');
+  const names = [];
+  const leaf = stripNamespace(assetId);
+  const normalizedEntity = entityType.replace(/_/g, '_');
+  // asset_id usually maps to textures/entity/<entity>/<leaf>.png, but keep a wide set of deterministic candidates.
+  names.push(path.join(base, 'entity', p + '.png'));
+  names.push(path.join(base, 'entity', entityType, leaf + '.png'));
+  names.push(path.join(base, 'entity', entityType, `${leaf}_${age}.png`));
+  names.push(path.join(base, 'entity', entityType, `${entityType}_${leaf}.png`));
+  names.push(path.join(base, 'entity', entityType, `${entityType}_${leaf}_${age}.png`));
+  names.push(path.join(base, 'entity', normalizedEntity, leaf + '.png'));
+  return [...new Set(names)];
 }
-function basenameId(id) { const p = idParts(id); return p ? clean(path.basename(p[1])) : 'default'; }
-function nestedGet(obj, paths) {
-  for (const p of paths) {
-    let cur = obj;
-    let ok = true;
-    for (const k of p.split('.')) {
-      if (cur && Object.prototype.hasOwnProperty.call(cur, k)) cur = cur[k]; else { ok = false; break; }
+
+function resolveTexture(assetId, entityType, age) {
+  if (!assetId) return null;
+  const candidates = textureCandidatesFromAssetId(assetId, entityType, age);
+  for (const candidate of candidates) if (exists(candidate)) return candidate;
+  // Last resort: search by leaf in this namespace/entity folder.
+  const ns = idNamespace(assetId);
+  const leaf = stripNamespace(assetId).replace(/\.png$/, '');
+  const root = path.join('assets', ns, 'textures', 'entity');
+  if (exists(root)) {
+    const found = [];
+    function walk(dir) {
+      for (const name of fs.readdirSync(dir)) {
+        const p = path.join(dir, name);
+        const st = fs.statSync(p);
+        if (st.isDirectory()) walk(p);
+        else if (name.endsWith('.png') && (name === `${leaf}.png` || name.includes(leaf))) found.push(p);
+      }
     }
-    if (ok && cur !== undefined && cur !== null) return cur;
+    walk(root);
+    const exactAge = found.find(p => age === 'baby' ? /baby/.test(path.basename(p)) : !/baby/.test(path.basename(p)));
+    return exactAge || found[0] || null;
   }
-  return undefined;
+  return null;
 }
+
 function discoverVariants() {
-  const files = walk('data').filter(f => f.endsWith('.json'));
   const variants = [];
-  for (const file of files) {
-    const parts = file.split(path.sep);
-    const dir = parts[parts.length - 2];
-    if (!TYPE_BY_DIR[dir]) continue;
-    const type = TYPE_BY_DIR[dir];
-    const variant = clean(path.basename(file, '.json'));
-    const json = readJson(file);
-    const adultAsset = nestedGet(json, ['asset_id', 'texture', 'texture_asset_id', 'assets.adult.asset_id', 'assets.adult.texture']);
-    const babyAsset = nestedGet(json, ['baby_asset_id', 'baby_texture', 'baby_texture_asset_id', 'assets.baby.asset_id', 'assets.baby.texture']);
-    const adultModel = nestedGet(json, ['model', 'model_id', 'model_asset_id', 'assets.adult.model', 'adult_model']);
-    const babyModel = nestedGet(json, ['baby_model', 'baby_model_id', 'baby_model_asset_id', 'assets.baby.model']);
-    if (!adultAsset) {
-      console.warn(`Skipping ${file}: no asset_id/texture field found.`);
-      continue;
+  for (const type of ENTITY_TYPES) {
+    for (const { namespace, file } of findVariantFiles(type)) {
+      const json = readJson(file);
+      const variant = variantNameFromFile(file);
+      const model = String(json.model || json.model_id || json.variant_model || 'default').replace(/^minecraft:/, '').replace(`${type}/`, '') || 'default';
+      const assetId = json.asset_id || json.texture || json.texture_id;
+      const babyAssetId = json.baby_asset_id || json.baby_texture || json.baby_texture_id;
+      const adultTexture = resolveTexture(assetId, type, 'adult');
+      const babyTexture = babyAssetId ? resolveTexture(babyAssetId, type, 'baby') : null;
+      variants.push({ namespace, type, variant, file, model, adultTexture, babyTexture, assetId, babyAssetId, raw: json });
     }
-    variants.push({ file, type, variant, adultAsset, babyAsset, adultModel, babyModel });
   }
-  variants.sort((a, b) => `${a.type}/${a.variant}`.localeCompare(`${b.type}/${b.variant}`));
   return variants;
 }
-function textureCandidates(assetId, type, variant) {
-  const p = idParts(assetId);
-  if (!p) return [];
-  const [ns, raw] = p;
-  const noTex = raw.replace(/^textures\//, '').replace(/\.png$/i, '');
-  const base = path.basename(noTex);
-  return [
-    path.join('assets', ns, 'textures', `${noTex}.png`),
-    path.join('assets', ns, 'textures', 'entity', `${noTex}.png`),
-    path.join('assets', ns, 'textures', 'entity', type, `${base}.png`),
-    path.join('assets', ns, 'textures', 'entity', type, `${variant}.png`),
-    path.join('.cache', 'vanilla-assets', 'assets', ns, 'textures', `${noTex}.png`),
-    path.join('.cache', 'vanilla-assets', 'assets', ns, 'textures', 'entity', `${noTex}.png`),
+
+function modelCacheFile(version, type, model, age) {
+  const safeModel = String(model || 'default').replace(/[^a-zA-Z0-9._-]+/g, '_');
+  return path.join(MODEL_CACHE_ROOT, version, type, `${safeModel}.${age}.json`);
+}
+
+function exportModel(version, type, model, age) {
+  const out = modelCacheFile(version, type, model, age);
+  if (exists(out)) return out;
+  fs.mkdirSync(path.dirname(out), { recursive: true });
+  console.log(`Exporting Mojang model: ${version} ${type} model=${model || 'default'} age=${age}`);
+  const args = [
+    '-p', path.join('tools', 'entity-renderer'),
+    '--no-daemon', '--quiet', 'run',
+    `--args=--minecraft-version ${version} --entity ${type} --model ${model || 'default'} --age ${age} --output ${path.resolve(out)}`
   ];
-}
-function resolveTexture(assetId, type, variant) {
-  const hit = textureCandidates(assetId, type, variant).find(f => fs.existsSync(f));
-  if (!hit) throw new Error(`texture not found for ${assetId}. Checked ${textureCandidates(assetId, type, variant).slice(0, 4).join(', ')}`);
-  return hit;
-}
-function normalizeModelKey(value, type, age, assetId) {
-  let key = value ? basenameId(value) : 'default';
-  const hay = `${value || ''} ${assetId || ''}`.toLowerCase();
-  if (!value) {
-    if (type === 'chicken' && /cold|penguin/.test(hay)) key = 'cold';
-    else if (type === 'chicken' && /warm|ostrich|flamingo|duck|goose/.test(hay)) key = 'warm';
-    else if (type === 'cow' && /cold/.test(hay)) key = 'cold';
-    else if (type === 'cow' && /warm/.test(hay)) key = 'warm';
-    else if (type === 'zombie_nautilus' && /coral|warm/.test(hay)) key = 'coral';
-  }
-  if (age === 'baby' && key === 'default') key = 'baby';
-  return key;
-}
-function modelCandidates(version, type, key, age) {
-  const versionBases = [version, '26.1.2', 'common'];
-  const keys = [...new Set([key, age === 'baby' ? 'baby' : 'default', 'default'])];
-  const out = [];
-  for (const v of versionBases) for (const k of keys) out.push(path.join(MODEL_ROOT, v, type, `${k}.json`));
+  cp.execFileSync('gradle', args, { stdio: 'inherit' });
+  if (!exists(out)) throw new Error(`Exporter did not create ${out}`);
   return out;
 }
-function resolveModel(version, type, key, age) {
-  const hit = modelCandidates(version, type, key, age).find(f => fs.existsSync(f));
-  if (!hit) throw new Error(`model not found for ${type}/${key}/${age}`);
-  return { file: hit, model: readJson(hit) };
-}
-function deg(v) { return (v || 0) * Math.PI / 180; }
-function vec(a, d = [0,0,0]) { return { x: a?.[0] ?? d[0], y: a?.[1] ?? d[1], z: a?.[2] ?? d[2] }; }
-function add(a,b){ return {x:a.x+b.x,y:a.y+b.y,z:a.z+b.z}; }
-function sub(a,b){ return {x:a.x-b.x,y:a.y-b.y,z:a.z-b.z}; }
-function rot(p, r) {
-  let {x,y,z} = p;
-  const cx=Math.cos(r.x), sx=Math.sin(r.x); let y1=y*cx-z*sx, z1=y*sx+z*cx; y=y1; z=z1;
-  const cy=Math.cos(r.y), sy=Math.sin(r.y); let x1=x*cy+z*sy, z2=-x*sy+z*cy; x=x1; z=z2;
-  const cz=Math.cos(r.z), sz=Math.sin(r.z); let x2=x*cz-y*sz, y2=x*sz+y*cz; x=x2; y=y2;
-  return {x,y,z};
-}
-function transformPoint(p, part) {
-  const pivot = vec(part.pivot);
-  const rotation = { x: deg(part.rotation?.[0]), y: deg(part.rotation?.[1]), z: deg(part.rotation?.[2]) };
-  return add(pivot, rot(sub(p, pivot), rotation));
-}
-function boxCorners(origin, size, inflate=0) {
-  const x0=origin[0]-inflate, y0=origin[1]-inflate, z0=origin[2]-inflate;
-  const x1=origin[0]+size[0]+inflate, y1=origin[1]+size[1]+inflate, z1=origin[2]+size[2]+inflate;
-  return {x0,y0,z0,x1,y1,z1};
-}
-function facesForBox(c) { return {
-  north:[{x:c.x1,y:c.y0,z:c.z0},{x:c.x0,y:c.y0,z:c.z0},{x:c.x0,y:c.y1,z:c.z0},{x:c.x1,y:c.y1,z:c.z0}],
-  south:[{x:c.x0,y:c.y0,z:c.z1},{x:c.x1,y:c.y0,z:c.z1},{x:c.x1,y:c.y1,z:c.z1},{x:c.x0,y:c.y1,z:c.z1}],
-  west:[{x:c.x0,y:c.y0,z:c.z0},{x:c.x0,y:c.y0,z:c.z1},{x:c.x0,y:c.y1,z:c.z1},{x:c.x0,y:c.y1,z:c.z0}],
-  east:[{x:c.x1,y:c.y0,z:c.z1},{x:c.x1,y:c.y0,z:c.z0},{x:c.x1,y:c.y1,z:c.z0},{x:c.x1,y:c.y1,z:c.z1}],
-  up:[{x:c.x0,y:c.y1,z:c.z1},{x:c.x1,y:c.y1,z:c.z1},{x:c.x1,y:c.y1,z:c.z0},{x:c.x0,y:c.y1,z:c.z0}],
-  down:[{x:c.x0,y:c.y0,z:c.z0},{x:c.x1,y:c.y0,z:c.z0},{x:c.x1,y:c.y0,z:c.z1},{x:c.x0,y:c.y0,z:c.z1}],
-}; }
-function uvFromBox(uv, size) {
-  const [u,v] = uv; const [w,h,d] = size;
-  return {
-    west:{u:u, v:v+d, w:d, h:h}, north:{u:u+d, v:v+d, w:w, h:h}, east:{u:u+d+w, v:v+d, w:d, h:h}, south:{u:u+d+w+d, v:v+d, w:w, h:h},
-    up:{u:u+d, v:v, w:w, h:d}, down:{u:u+d+w, v:v, w:w, h:d}
-  };
-}
-function view(p, camera) {
-  const yaw = deg(camera.yaw ?? 225); // 225 = front-right, face visible for -Z-facing mobs
-  const pitch = deg(camera.pitch ?? 0);
-  let x = p.x * Math.cos(yaw) - p.z * Math.sin(yaw);
-  let z = p.x * Math.sin(yaw) + p.z * Math.cos(yaw);
-  let y = p.y;
-  const y2 = y * Math.cos(pitch) - z * Math.sin(pitch);
-  const z2 = y * Math.sin(pitch) + z * Math.cos(pitch);
-  return {x, y:y2, z:z2};
-}
-function project(p, camera, scale, center) {
-  const q = view(p, camera);
-  return { x: center.x + q.x * scale, y: center.y - (q.y - q.z * 0.26) * scale, z: q.z };
-}
-function area(pts){let s=0;for(let i=0;i<pts.length;i++){const a=pts[i],b=pts[(i+1)%pts.length];s+=(b.x-a.x)*(b.y+a.y)}return s;}
-function crop(texture, uv) {
-  const u=Math.max(0,Math.min(texture.width-1,Math.round(uv.u)));
-  const v=Math.max(0,Math.min(texture.height-1,Math.round(uv.v)));
-  const w=Math.max(1,Math.min(texture.width-u,Math.round(uv.w)));
-  const h=Math.max(1,Math.min(texture.height-v,Math.round(uv.h)));
-  const c=createCanvas(w,h), ctx=c.getContext('2d'); ctx.imageSmoothingEnabled=false; ctx.drawImage(texture,u,v,w,h,0,0,w,h); return c;
-}
-function shade(img, amount) { const c=createCanvas(img.width,img.height), ctx=c.getContext('2d'); ctx.drawImage(img,0,0); if(amount){ctx.globalCompositeOperation='source-atop'; ctx.fillStyle=amount>0?`rgba(255,255,255,${amount})`:`rgba(0,0,0,${-amount})`; ctx.fillRect(0,0,c.width,c.height);} return c; }
-function drawQuad(ctx,img,p0,p1,p2,p3){ctx.save();ctx.beginPath();ctx.moveTo(p0.x,p0.y);ctx.lineTo(p1.x,p1.y);ctx.lineTo(p2.x,p2.y);ctx.lineTo(p3.x,p3.y);ctx.closePath();ctx.clip();ctx.setTransform((p1.x-p0.x)/img.width,(p1.y-p0.y)/img.width,(p3.x-p0.x)/img.height,(p3.y-p0.y)/img.height,p0.x,p0.y);ctx.imageSmoothingEnabled=false;ctx.drawImage(img,0,0);ctx.restore();}
-const SHADE = { north:0.02, east:-0.06, up:0.12, west:-0.18, south:-0.25, down:-0.35 };
-function flattenParts(model) {
-  const out = [];
-  function visit(part, parentRot=[0,0,0]) {
-    const own = {...part, rotation: [(part.rotation?.[0]||0)+parentRot[0], (part.rotation?.[1]||0)+parentRot[1], (part.rotation?.[2]||0)+parentRot[2]]};
-    if (part.boxes) for (const b of part.boxes) out.push({part: own, box: b});
-    if (part.children) for (const c of part.children) visit(c, own.rotation);
-  }
-  for (const p of model.parts || []) visit(p);
-  return out;
-}
-function render(model, texture, output) {
-  fs.mkdirSync(path.dirname(output), { recursive: true });
-  const canvas=createCanvas(IMAGE_SIZE,IMAGE_SIZE), ctx=canvas.getContext('2d'); ctx.clearRect(0,0,IMAGE_SIZE,IMAGE_SIZE); ctx.imageSmoothingEnabled=false;
-  const camera = model.camera || {};
-  const scale = model.render?.scale || 16;
-  const center = { x: model.render?.center?.[0] ?? IMAGE_SIZE/2, y: model.render?.center?.[1] ?? IMAGE_SIZE*0.66 };
-  const draw=[];
-  for (const {part, box} of flattenParts(model)) {
-    const c = boxCorners(box.origin, box.size, box.inflate || 0);
-    const f3 = facesForBox(c);
-    const uvs = uvFromBox(box.uv || [0,0], box.uv_size || box.size);
-    for (const key of Object.keys(f3)) {
-      const pts3 = f3[key].map(p => transformPoint(p, part));
-      const pts2 = pts3.map(p => project(p,camera,scale,center));
-      if (area(pts2) >= 0) continue;
-      draw.push({key, pts2, uv: uvs[key], depth: pts3.reduce((s,p)=>s+view(p,camera).z,0)/4});
-    }
-  }
-  draw.sort((a,b)=>b.depth-a.depth);
-  for (const f of draw) drawQuad(ctx, shade(crop(texture,f.uv), SHADE[f.key]||0), ...f.pts2);
-  fs.writeFileSync(output, canvas.toBuffer('image/png'));
-}
-function outputPath(type, variant, age) { return path.join(OUTPUT_ROOT, type, variant, `${age}.png`); }
-async function renderVariant(version, v, age) {
-  const assetId = age === 'baby' ? (v.babyAsset || v.adultAsset) : v.adultAsset;
-  const modelField = age === 'baby' ? (v.babyModel || v.adultModel) : v.adultModel;
-  const key = normalizeModelKey(modelField, v.type, age, assetId);
-  const textureFile = resolveTexture(assetId, v.type, v.variant);
-  const {file: modelFile, model} = resolveModel(version, v.type, key, age);
+
+function deg(v) { return (v * Math.PI) / 180; }
+function rotateX(p, a) { const c=Math.cos(a), s=Math.sin(a); return { x:p.x, y:p.y*c-p.z*s, z:p.y*s+p.z*c, u:p.u, v:p.v }; }
+function rotateY(p, a) { const c=Math.cos(a), s=Math.sin(a); return { x:p.x*c+p.z*s, y:p.y, z:-p.x*s+p.z*c, u:p.u, v:p.v }; }
+function rotateZ(p, a) { const c=Math.cos(a), s=Math.sin(a); return { x:p.x*c-p.y*s, y:p.x*s+p.y*c, z:p.z, u:p.u, v:p.v }; }
+
+async function renderModel(modelFile, textureFile, outputFile, type, age) {
+  const model = readJson(modelFile);
+  const meta = ENTITY_RENDER[type] || ENTITY_RENDER.cow;
   const texture = await loadImage(textureFile);
-  const out = outputPath(v.type, v.variant, age);
-  render(model, texture, out);
-  return { out, textureFile, modelFile };
+  const canvas = createCanvas(512, 512);
+  const ctx = canvas.getContext('2d');
+  ctx.clearRect(0,0,512,512);
+
+  let quads = model.quads || [];
+  if (!quads.length) throw new Error(`Model ${modelFile} has no quads`);
+  const transformed = quads.map(q => {
+    const pts = q.vertices.map(v => ({ x: v.x, y: v.y + (meta.yOffset || 0), z: v.z, u: v.u, v: v.v }))
+      .map(p => rotateX(p, deg(meta.pitch || 0)))
+      .map(p => rotateY(p, deg(meta.yaw || 180)))
+      .map(p => rotateZ(p, deg(meta.roll || 0)));
+    const z = pts.reduce((a,p)=>a+p.z,0)/pts.length;
+    return { vertices: pts, z };
+  }).sort((a,b) => a.z - b.z);
+
+  const cam = meta.camera || 62;
+  const scale = age === 'baby' ? 7.0 : 5.5;
+  function project(p) {
+    const perspective = cam / (cam - p.z);
+    return { x: 256 + p.x * scale * perspective, y: 275 + p.y * scale * perspective, u: p.u, v: p.v };
+  }
+
+  for (const q of transformed) {
+    const pts = q.vertices.map(project);
+    // Use an affine approximation per triangle. Minecraft quads are planar and small, so this is visually stable.
+    drawTexturedTriangle(ctx, texture, pts[0], pts[1], pts[2]);
+    drawTexturedTriangle(ctx, texture, pts[0], pts[2], pts[3]);
+  }
+  fs.mkdirSync(path.dirname(outputFile), { recursive: true });
+  const png = canvas.toBuffer('image/png');
+  await sharp(png).trim({ background: { r:0, g:0, b:0, alpha:0 }, threshold: 1 }).extend({ top: 24, bottom:24, left:24, right:24, background: {r:0,g:0,b:0,alpha:0}}).resize(512,512,{ fit:'contain', background:{r:0,g:0,b:0,alpha:0}}).png().toFile(outputFile);
 }
+
+function drawTexturedTriangle(ctx, img, p0, p1, p2) {
+  ctx.save();
+  ctx.beginPath();
+  ctx.moveTo(p0.x, p0.y); ctx.lineTo(p1.x, p1.y); ctx.lineTo(p2.x, p2.y); ctx.closePath();
+  ctx.clip();
+  const x0=p0.x,y0=p0.y,x1=p1.x,y1=p1.y,x2=p2.x,y2=p2.y;
+  const u0=p0.u,v0=p0.v,u1=p1.u,v1=p1.v,u2=p2.u,v2=p2.v;
+  const den = u0*(v1-v2)+u1*(v2-v0)+u2*(v0-v1);
+  if (Math.abs(den) < 1e-6) { ctx.restore(); return; }
+  const a = (x0*(v1-v2)+x1*(v2-v0)+x2*(v0-v1))/den;
+  const b = (x0*(u2-u1)+x1*(u0-u2)+x2*(u1-u0))/den;
+  const c = (x0*(u1*v2-u2*v1)+x1*(u2*v0-u0*v2)+x2*(u0*v1-u1*v0))/den;
+  const d = (y0*(v1-v2)+y1*(v2-v0)+y2*(v0-v1))/den;
+  const e = (y0*(u2-u1)+y1*(u0-u2)+y2*(u1-u0))/den;
+  const f = (y0*(u1*v2-u2*v1)+y1*(u2*v0-u0*v2)+y2*(u0*v1-u1*v0))/den;
+  ctx.transform(a,d,b,e,c,f);
+  ctx.imageSmoothingEnabled = false;
+  ctx.drawImage(img, 0, 0);
+  ctx.restore();
+}
+
 async function main() {
-  const version = readVanillaVersion();
-  console.log(`Generating entity renders for Minecraft ${version}.`);
-  console.log('Using variant JSON asset_id/baby_asset_id/model fields and local exported model JSON files.');
+  fs.mkdirSync(OUTPUT_ROOT, { recursive: true });
+  const version = resolveMinecraftVersion();
   const variants = discoverVariants();
-  if (!variants.length) return console.log('No supported entity variant JSONs found.');
-  let count = 0;
+  const report = { minecraftVersion: version, generated: [], skipped: [], errors: [], discovered: [] };
+
+  console.log(`Entity render output root: ${OUTPUT_ROOT}`);
+  console.log(`Discovered ${variants.length} entity variant JSON file(s).`);
+
   for (const v of variants) {
-    try {
-      const adult = await renderVariant(version, v, 'adult'); count++;
-      console.log(`Rendered ${v.type}/${v.variant}/adult using ${v.adultAsset} + ${path.relative('.', adult.modelFile)}`);
-      if (v.babyAsset || v.babyModel || BABY_CAPABLE.has(v.type)) {
-        const baby = await renderVariant(version, v, 'baby'); count++;
-        console.log(`Rendered ${v.type}/${v.variant}/baby using ${(v.babyAsset || v.adultAsset)} + ${path.relative('.', baby.modelFile)}`);
+    const adultCandidates = v.assetId ? textureCandidatesFromAssetId(v.assetId, v.type, 'adult') : [];
+    const babyCandidates = v.babyAssetId ? textureCandidatesFromAssetId(v.babyAssetId, v.type, 'baby') : [];
+    const discovered = {
+      type: v.type,
+      variant: v.variant,
+      namespace: v.namespace,
+      jsonFile: v.file,
+      model: v.model,
+      assetId: v.assetId || null,
+      babyAssetId: v.babyAssetId || null,
+      adultTexture: v.adultTexture || null,
+      babyTexture: v.babyTexture || null,
+      adultTextureCandidates: adultCandidates,
+      babyTextureCandidates: babyCandidates
+    };
+    report.discovered.push(discovered);
+    console.log(`\n[variant] ${v.type}/${v.variant}`);
+    console.log(`  json: ${v.file}`);
+    console.log(`  model: ${v.model}`);
+    console.log(`  asset_id: ${v.assetId || '(missing)'}`);
+    console.log(`  adult texture: ${v.adultTexture || '(not found)'}`);
+    if (v.babyAssetId) {
+      console.log(`  baby_asset_id: ${v.babyAssetId}`);
+      console.log(`  baby texture: ${v.babyTexture || '(not found)'}`);
+    } else {
+      console.log('  baby_asset_id: (not present; baby render skipped)');
+    }
+    debug(`adult texture candidates for ${v.type}/${v.variant}: ${adultCandidates.join(', ') || '(none)'}`);
+    if (babyCandidates.length) debug(`baby texture candidates for ${v.type}/${v.variant}: ${babyCandidates.join(', ')}`);
+  }
+
+  if (!variants.length) {
+    console.log('No entity variant JSON files found; skipping entity renders successfully.');
+    writeJson(REPORT_PATH, report);
+    return;
+  }
+
+  for (const v of variants) {
+    if (!v.adultTexture) {
+      const reason = `No adult texture found for asset_id=${v.assetId || ''}`;
+      report.skipped.push({ type:v.type, variant:v.variant, age:'adult', reason });
+      console.warn(`Skipping ${v.type}/${v.variant}/adult: ${reason}`);
+      continue;
+    }
+    for (const age of ['adult', 'baby']) {
+      const texture = age === 'adult' ? v.adultTexture : v.babyTexture;
+      if (age === 'baby' && !texture) {
+        report.skipped.push({ type:v.type, variant:v.variant, age, reason:'No baby_asset_id/baby texture; baby render intentionally skipped' });
+        continue;
       }
-    } catch (err) {
-      console.warn(`Skipped ${v.type}/${v.variant}: ${err.message}`);
+      const output = path.join(OUTPUT_ROOT, v.type, v.variant, `${age}.png`);
+      try {
+        console.log(`\n[render] ${v.type}/${v.variant}/${age}`);
+        console.log(`  model key: ${v.model || 'default'}`);
+        console.log(`  texture: ${texture}`);
+        console.log(`  output: ${output}`);
+        const modelFile = exportModel(version, v.type, v.model, age);
+        console.log(`  exported model cache: ${modelFile}`);
+        await renderModel(modelFile, texture, output, v.type, age);
+        report.generated.push({ type:v.type, variant:v.variant, age, model:v.model, texture, output, modelFile });
+        console.log(`Generated ${output}`);
+      } catch (error) {
+        report.errors.push({ type:v.type, variant:v.variant, age, model:v.model, texture, message:String(error.stack || error.message || error) });
+        console.error(`Failed ${v.type}/${v.variant}/${age}: ${error.stack || error.message || error}`);
+      }
     }
   }
-  console.log(`Generated ${count} entity render image(s) under ${OUTPUT_ROOT}.`);
+
+  writeJson(REPORT_PATH, report);
+  console.log(`\nEntity render report written to ${REPORT_PATH}`);
+  console.log(`Generated ${report.generated.length} PNG(s), skipped ${report.skipped.length}, errors ${report.errors.length}.`);
+
+  if (report.generated.length === 0) {
+    console.error('Entity variant JSON files were found, but zero PNGs were generated. Failing so the debug report/logs are visible.');
+    process.exitCode = 1;
+    return;
+  }
+  if (report.errors.length) {
+    console.error(`Entity renderer finished with ${report.errors.length} error(s). See ${REPORT_PATH}`);
+    process.exitCode = 1;
+  }
 }
-main().catch(err => { console.error(err); process.exit(1); });
+main().catch(error => { console.error(error); process.exit(1); });
