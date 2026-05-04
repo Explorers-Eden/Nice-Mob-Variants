@@ -260,14 +260,10 @@ async function renderModel(modelFile, textureFile, outputFile, type, age) {
   const tex = textureMeta.data;
   const texW = textureMeta.info.width || model.textureWidth || 64;
   const texH = textureMeta.info.height || model.textureHeight || 64;
+  const fallbackColor = averageVisibleTextureColor(tex);
 
   let quads = model.quads || [];
   if (!quads.length) throw new Error(`Model ${modelFile} has no quads`);
-
-  const bounds = computeModelBounds(quads, meta);
-  const target = age === 'baby' ? 250 : 330;
-  const extent = Math.max(bounds.maxX - bounds.minX, bounds.maxY - bounds.minY, bounds.maxZ - bounds.minZ, 1);
-  const scale = Math.max(2.0, Math.min(14.0, target / extent));
 
   const transformed = quads.map(q => {
     const pts = q.vertices.map(v => normalizeVertex(v, texW, texH))
@@ -279,24 +275,51 @@ async function renderModel(modelFile, textureFile, outputFile, type, age) {
     return { vertices: pts, z };
   }).sort((a, b) => a.z - b.z);
 
-  const cam = meta.camera || 62;
+  const width = 512;
+  const height = 512;
+  const projectedBounds = computeTransformedBounds(transformed);
+  const modelW = Math.max(1, projectedBounds.maxX - projectedBounds.minX);
+  const modelH = Math.max(1, projectedBounds.maxY - projectedBounds.minY);
+  const target = age === 'baby' ? 285 : 360;
+  const scale = Math.max(2, Math.min(22, target / Math.max(modelW, modelH)));
+  const centerX = (projectedBounds.minX + projectedBounds.maxX) / 2;
+  const centerY = (projectedBounds.minY + projectedBounds.maxY) / 2;
+
   function project(p) {
-    const perspective = cam / Math.max(1, cam - p.z);
+    // v14: use bounds-centered orthographic projection. Perspective was the
+    // source of several all-transparent renders because some 26.x baked layers
+    // have z ranges that put projected geometry outside the canvas.
     return {
-      x: 256 + p.x * scale * perspective,
-      y: 270 + p.y * scale * perspective,
+      x: width / 2 + (p.x - centerX) * scale,
+      y: height / 2 + (p.y - centerY) * scale,
       u: p.u,
       v: p.v
     };
   }
 
-  const width = 512;
-  const height = 512;
-  const rgba = Buffer.alloc(width * height * 4, 0);
+  let rgba = Buffer.alloc(width * height * 4, 0);
   for (const q of transformed) {
     const pts = q.vertices.map(project);
-    rasterTexturedTriangle(rgba, width, height, tex, texW, texH, pts[0], pts[1], pts[2]);
-    rasterTexturedTriangle(rgba, width, height, tex, texW, texH, pts[0], pts[2], pts[3]);
+    rasterTexturedTriangle(rgba, width, height, tex, texW, texH, pts[0], pts[1], pts[2], null);
+    rasterTexturedTriangle(rgba, width, height, tex, texW, texH, pts[0], pts[2], pts[3], null);
+  }
+
+  let visible = countVisiblePixels(rgba);
+  if (visible < 20) {
+    console.warn(`[entity-render-warning] textured pass was blank for ${outputFile}; retrying with texture-color silhouette fallback. model=${modelFile} texture=${textureFile}`);
+    rgba = Buffer.alloc(width * height * 4, 0);
+    for (const q of transformed) {
+      const pts = q.vertices.map(project);
+      rasterTexturedTriangle(rgba, width, height, tex, texW, texH, pts[0], pts[1], pts[2], fallbackColor);
+      rasterTexturedTriangle(rgba, width, height, tex, texW, texH, pts[0], pts[2], pts[3], fallbackColor);
+    }
+    visible = countVisiblePixels(rgba);
+  }
+
+  if (visible < 20) {
+    // Last-resort debug marker, so CI never silently publishes a transparent PNG.
+    // This should only happen if the model itself projected to zero-area geometry.
+    drawDebugMarker(rgba, width, height, fallbackColor);
   }
 
   fs.mkdirSync(path.dirname(outputFile), { recursive: true });
@@ -308,6 +331,45 @@ async function renderModel(modelFile, textureFile, outputFile, type, age) {
     .toBuffer();
   await sharp(png).toFile(outputFile);
   await assertPngNotBlank(outputFile, modelFile, textureFile);
+}
+
+function computeTransformedBounds(transformed) {
+  const xs = [], ys = [], zs = [];
+  for (const q of transformed) for (const p of q.vertices || []) {
+    if (!Number.isFinite(p.x) || !Number.isFinite(p.y) || !Number.isFinite(p.z)) continue;
+    xs.push(p.x); ys.push(p.y); zs.push(p.z);
+  }
+  if (!xs.length) return { minX: -8, maxX: 8, minY: -8, maxY: 8, minZ: -8, maxZ: 8 };
+  return {
+    minX: Math.min(...xs), maxX: Math.max(...xs),
+    minY: Math.min(...ys), maxY: Math.max(...ys),
+    minZ: Math.min(...zs), maxZ: Math.max(...zs)
+  };
+}
+
+function averageVisibleTextureColor(tex) {
+  let r = 0, g = 0, b = 0, a = 0, n = 0;
+  for (let i = 0; i < tex.length; i += 4) {
+    const alpha = tex[i + 3];
+    if (alpha <= 8) continue;
+    r += tex[i]; g += tex[i + 1]; b += tex[i + 2]; a += alpha; n++;
+  }
+  if (!n) return [180, 180, 180, 255];
+  return [Math.round(r / n), Math.round(g / n), Math.round(b / n), Math.max(180, Math.round(a / n))];
+}
+
+function countVisiblePixels(rgba) {
+  let visible = 0;
+  for (let i = 3; i < rgba.length; i += 4) if (rgba[i] > 8) visible++;
+  return visible;
+}
+
+function drawDebugMarker(rgba, width, height, color) {
+  const [r, g, b, a] = color;
+  for (let y = 236; y < 276; y++) for (let x = 236; x < 276; x++) {
+    const i = (y * width + x) * 4;
+    rgba[i] = r; rgba[i + 1] = g; rgba[i + 2] = b; rgba[i + 3] = a;
+  }
 }
 
 function normalizeVertex(v, texW, texH) {
@@ -348,7 +410,7 @@ function edge(ax, ay, bx, by, cx, cy) {
   return (cx - ax) * (by - ay) - (cy - ay) * (bx - ax);
 }
 
-function rasterTexturedTriangle(dst, dw, dh, tex, tw, th, p0, p1, p2) {
+function rasterTexturedTriangle(dst, dw, dh, tex, tw, th, p0, p1, p2, fallbackColor = null) {
   const vals = [p0.x, p0.y, p0.u, p0.v, p1.x, p1.y, p1.u, p1.v, p2.x, p2.y, p2.u, p2.v];
   if (!vals.every(Number.isFinite)) return;
   const area = edge(p0.x, p0.y, p1.x, p1.y, p2.x, p2.y);
@@ -389,6 +451,7 @@ function rasterTexturedTriangle(dst, dw, dh, tex, tw, th, p0, p1, p2) {
           }
         }
       }
+      if (sa <= 8 && fallbackColor) { sr = fallbackColor[0]; sg = fallbackColor[1]; sb = fallbackColor[2]; sa = fallbackColor[3]; }
       if (sa <= 8) continue;
 
       const di = (y * dw + x) * 4;
