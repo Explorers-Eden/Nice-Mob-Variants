@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 // scripts/generate-entity-renders.js
 // Generates wiki/images/entity/<type>/<variant>/adult.png and baby.png where supported.
-// This is a version-aware, profile-based Java mob renderer. Minecraft Java does not ship
-// most entity models as JSON, so supported entities are implemented as reusable cuboid profiles.
+// Variant discovery is driven by data/<namespace>/<type>_variant/*.json so asset_id,
+// baby_asset_id, and model/model-like fields are respected instead of guessed from filenames.
 
 const fs = require("fs");
 const path = require("path");
@@ -10,7 +10,17 @@ const { createCanvas, loadImage } = require("canvas");
 
 const OUTPUT_ROOT = path.join("wiki", "images", "entity");
 const IMAGE_SIZE = 512;
-const KNOWN_TYPES = new Set(["cat", "chicken", "cow", "frog", "pig", "wolf"]);
+const VARIANT_DIRS = new Set([
+  "cat_variant",
+  "chicken_variant",
+  "cow_variant",
+  "frog_variant",
+  "pig_variant",
+  "wolf_variant",
+  "zombie_nautilus_variant"
+]);
+
+const TYPE_BY_VARIANT_DIR = Object.fromEntries([...VARIANT_DIRS].map(name => [name, name.replace(/_variant$/, "")]));
 
 function readVanillaVersion() {
   const file = path.join(".cache", "vanilla-assets", "version.txt");
@@ -30,53 +40,91 @@ function walkFiles(root) {
 
 function sanitizeName(value) {
   return String(value || "unknown")
+    .replace(/\.json$/i, "")
     .replace(/\.png$/i, "")
     .replace(/[^a-zA-Z0-9._-]+/g, "_")
     .replace(/^_+|_+$/g, "") || "unknown";
 }
 
-function getEntitySegments(file) {
-  const normalized = file.split(path.sep).join("/");
-  const marker = "textures/entity/";
-  const index = normalized.indexOf(marker);
-  if (index === -1) return [];
-  return normalized.slice(index + marker.length).split("/");
+function parseJson(file) {
+  try {
+    return JSON.parse(fs.readFileSync(file, "utf8"));
+  } catch (error) {
+    throw new Error(`Could not parse ${file}: ${error.message}`);
+  }
 }
 
-function discoverVariantTextures() {
-  const roots = walkFiles("assets")
-    .filter(file => file.endsWith(".png"))
-    .filter(file => file.split(path.sep).includes("textures") && file.split(path.sep).includes("entity"))
-    .filter(file => !file.split(path.sep).includes("minecraft"));
+function assetIdToTexture(assetId) {
+  if (!assetId || typeof assetId !== "string") return null;
+  const [namespace, assetPath] = assetId.includes(":") ? assetId.split(/:(.*)/s).filter(Boolean) : ["minecraft", assetId];
+  const candidates = [
+    path.join("assets", namespace, "textures", `${assetPath}.png`),
+    path.join("assets", namespace, "textures", "entity", `${assetPath}.png`),
+    path.join(".cache", "vanilla-assets", "assets", namespace, "textures", `${assetPath}.png`)
+  ];
+  return candidates.find(file => fs.existsSync(file)) || candidates[0];
+}
 
+function collectModelHints(value, hints = []) {
+  if (typeof value === "string") {
+    hints.push(value);
+  } else if (Array.isArray(value)) {
+    for (const item of value) collectModelHints(item, hints);
+  } else if (value && typeof value === "object") {
+    for (const [key, child] of Object.entries(value)) {
+      if (/model|asset_id/i.test(key)) collectModelHints(child, hints);
+      else if (typeof child === "object") collectModelHints(child, hints);
+    }
+  }
+  return hints;
+}
+
+function pickModelHint(json, age) {
+  const explicitKeys = age === "baby"
+    ? ["baby_model", "baby_model_id", "baby_model_asset_id", "baby_model_type"]
+    : ["model", "model_id", "model_asset_id", "model_type"];
+  for (const key of explicitKeys) {
+    if (typeof json[key] === "string") return json[key];
+  }
+  const hints = collectModelHints(json).join(" ").toLowerCase();
+  if (hints.includes("cold")) return "cold";
+  if (hints.includes("warm")) return "warm";
+  if (hints.includes("temperate")) return "temperate";
+  return "default";
+}
+
+function discoverVariantDefinitions() {
+  const files = walkFiles("data").filter(file => file.endsWith(".json"));
   const variants = [];
 
-  for (const file of roots) {
-    const segments = getEntitySegments(file);
-    if (segments.length === 0) continue;
+  for (const file of files) {
+    const segments = file.split(path.sep);
+    const dir = segments[segments.length - 2];
+    if (!VARIANT_DIRS.has(dir)) continue;
 
-    const basename = path.basename(file, ".png");
-    const lowerSegments = segments.map(segment => segment.toLowerCase().replace(/\.png$/i, ""));
+    const type = TYPE_BY_VARIANT_DIR[dir];
+    const variant = sanitizeName(path.basename(file, ".json"));
+    const json = parseJson(file);
+    const adultAssetId = json.asset_id || json.texture || json.texture_asset_id;
+    const babyAssetId = json.baby_asset_id || json.baby_texture || json.baby_texture_asset_id;
+    const adultTexture = assetIdToTexture(adultAssetId);
+    const babyTexture = babyAssetId ? assetIdToTexture(babyAssetId) : null;
 
-    let type = lowerSegments.find(segment => KNOWN_TYPES.has(segment));
-    if (!type) {
-      const byPrefix = [...KNOWN_TYPES].find(candidate => basename.toLowerCase() === candidate || basename.toLowerCase().startsWith(`${candidate}_`));
-      type = byPrefix || lowerSegments[0];
-    }
-
-    if (!KNOWN_TYPES.has(type)) continue;
-
-    let variant = basename;
-    if (variant.toLowerCase() === type && segments.length >= 2) {
-      variant = segments[segments.length - 2];
-    } else if (variant.toLowerCase().startsWith(`${type}_`)) {
-      variant = variant.slice(type.length + 1);
+    if (!adultAssetId) {
+      console.warn(`No asset_id in ${file}; skipped.`);
+      continue;
     }
 
     variants.push({
+      file,
       type,
-      variant: sanitizeName(variant),
-      texture: file
+      variant,
+      adultAssetId,
+      babyAssetId,
+      adultTexture,
+      babyTexture,
+      adultModelHint: pickModelHint(json, "adult"),
+      babyModelHint: pickModelHint(json, "baby")
     });
   }
 
@@ -84,14 +132,19 @@ function discoverVariantTextures() {
   return variants;
 }
 
-function vec(x, y, z) {
-  return { x, y, z };
+function vec(x, y, z) { return { x, y, z }; }
+
+// Render from the opposite side compared with the previous script. The prior output showed
+// the back of many mobs; this 180-degree yaw makes negative-Z faces visible to the viewer.
+function rotateForCamera(point) {
+  return { x: -point.x, y: point.y, z: -point.z };
 }
 
 function project(point, scale, center) {
+  const p = rotateForCamera(point);
   const angle = Math.PI / 6;
-  const sx = (point.x - point.z) * Math.cos(angle) * scale + center.x;
-  const sy = (-point.y + (point.x + point.z) * Math.sin(angle)) * scale + center.y;
+  const sx = (p.x - p.z) * Math.cos(angle) * scale + center.x;
+  const sy = (-p.y + (p.x + p.z) * Math.sin(angle)) * scale + center.y;
   return { x: sx, y: sy };
 }
 
@@ -100,7 +153,7 @@ function shadeCanvas(source, amount) {
   const canvas = createCanvas(source.width, source.height);
   const ctx = canvas.getContext("2d");
   ctx.drawImage(source, 0, 0);
-  ctx.globalCompositeOperation = amount > 0 ? "source-atop" : "multiply";
+  ctx.globalCompositeOperation = "source-atop";
   ctx.fillStyle = amount > 0 ? `rgba(255,255,255,${amount})` : `rgba(0,0,0,${Math.abs(amount)})`;
   ctx.fillRect(0, 0, canvas.width, canvas.height);
   ctx.globalCompositeOperation = "source-over";
@@ -108,10 +161,14 @@ function shadeCanvas(source, amount) {
 }
 
 function cropFace(texture, uv) {
-  const canvas = createCanvas(Math.max(1, uv.w), Math.max(1, uv.h));
+  const u = Math.max(0, Math.min(texture.width - 1, Math.round(uv.u)));
+  const v = Math.max(0, Math.min(texture.height - 1, Math.round(uv.v)));
+  const w = Math.max(1, Math.min(texture.width - u, Math.round(uv.w)));
+  const h = Math.max(1, Math.min(texture.height - v, Math.round(uv.h)));
+  const canvas = createCanvas(w, h);
   const ctx = canvas.getContext("2d");
   ctx.imageSmoothingEnabled = false;
-  ctx.drawImage(texture, uv.u, uv.v, uv.w, uv.h, 0, 0, uv.w, uv.h);
+  ctx.drawImage(texture, u, v, w, h, 0, 0, w, h);
   return canvas;
 }
 
@@ -124,7 +181,6 @@ function drawImageToParallelogram(ctx, image, p0, p1, p2, p3) {
   ctx.lineTo(p3.x, p3.y);
   ctx.closePath();
   ctx.clip();
-
   const a = (p1.x - p0.x) / image.width;
   const b = (p1.y - p0.y) / image.width;
   const c = (p3.x - p0.x) / image.height;
@@ -137,41 +193,42 @@ function drawImageToParallelogram(ctx, image, p0, p1, p2, p3) {
 
 function cuboidUvs(u, v, w, h, d) {
   return {
-    west:  { u,             v: v + d, w: d, h },
-    north: { u: u + d,     v: v + d, w,    h },
-    east:  { u: u + d + w, v: v + d, w: d, h },
-    south: { u: u + d + w + d, v: v + d, w, h },
-    up:    { u: u + d,     v,       w,    h: d },
-    down:  { u: u + d + w, v,       w,    h: d }
+    east:  { u,                 v: v + d, w: d, h },
+    north: { u: u + d,         v: v + d, w,    h },
+    west:  { u: u + d + w,     v: v + d, w: d, h },
+    south: { u: u + d + w + d, v: v + d, w,    h },
+    up:    { u: u + d,         v,       w,    h: d },
+    down:  { u: u + d + w,     v,       w,    h: d }
   };
 }
 
 function addBox(parts, name, x, y, z, w, h, d, u, v, opts = {}) {
-  parts.push({ name, x, y, z, w, h, d, u, v, inflate: opts.inflate || 0, mirror: !!opts.mirror });
+  parts.push({ name, x, y, z, w, h, d, u, v, inflate: opts.inflate || 0 });
 }
 
 function boxCorners(box) {
   const i = box.inflate || 0;
-  const x0 = box.x - i;
-  const y0 = box.y - i;
-  const z0 = box.z - i;
-  const x1 = box.x + box.w + i;
-  const y1 = box.y + box.h + i;
-  const z1 = box.z + box.d + i;
-  return { x0, y0, z0, x1, y1, z1 };
+  return {
+    x0: box.x - i,
+    y0: box.y - i,
+    z0: box.z - i,
+    x1: box.x + box.w + i,
+    y1: box.y + box.h + i,
+    z1: box.z + box.d + i
+  };
 }
 
 function drawBox(ctx, texture, box, renderScale, center) {
   const { x0, y0, z0, x1, y1, z1 } = boxCorners(box);
   const p = point => project(point, renderScale, center);
   const uvs = cuboidUvs(box.u, box.v, box.w, box.h, box.d);
-
+  // Visible after the 180-degree yaw: south + west + top. This is the actual front-facing view
+  // for the coordinate convention used by the profiles below.
   const faces = [
-    { key: "north", shade: -0.16, pts: [vec(x0,y0,z0), vec(x1,y0,z0), vec(x1,y1,z0), vec(x0,y1,z0)] },
-    { key: "east",  shade: -0.26, pts: [vec(x1,y0,z0), vec(x1,y0,z1), vec(x1,y1,z1), vec(x1,y1,z0)] },
-    { key: "up",    shade:  0.08, pts: [vec(x0,y1,z0), vec(x1,y1,z0), vec(x1,y1,z1), vec(x0,y1,z1)] }
+    { key: "south", shade: -0.05, pts: [vec(x1,y0,z1), vec(x0,y0,z1), vec(x0,y1,z1), vec(x1,y1,z1)] },
+    { key: "west",  shade: -0.24, pts: [vec(x0,y0,z1), vec(x0,y0,z0), vec(x0,y1,z0), vec(x0,y1,z1)] },
+    { key: "up",    shade:  0.10, pts: [vec(x0,y1,z0), vec(x1,y1,z0), vec(x1,y1,z1), vec(x0,y1,z1)] }
   ];
-
   for (const face of faces) {
     const img = shadeCanvas(cropFace(texture, uvs[face.key]), face.shade);
     const [p0, p1, p2, p3] = face.pts.map(p);
@@ -179,33 +236,26 @@ function drawBox(ctx, texture, box, renderScale, center) {
   }
 }
 
-function renderParts({ texture, parts, output, age }) {
+function renderParts({ texture, parts, output, age, profile }) {
   fs.mkdirSync(path.dirname(output), { recursive: true });
-
   const canvas = createCanvas(IMAGE_SIZE, IMAGE_SIZE);
   const ctx = canvas.getContext("2d");
   ctx.clearRect(0, 0, IMAGE_SIZE, IMAGE_SIZE);
   ctx.imageSmoothingEnabled = false;
-
-  const scale = age === "baby" ? 8.8 : 7.3;
-  const center = age === "baby" ? { x: 256, y: 292 } : { x: 256, y: 302 };
-
-  // Painter order: lower/farther parts first, then torso/head.
-  const ordered = [...parts].sort((a, b) => (a.z + a.x + a.y * 0.05) - (b.z + b.x + b.y * 0.05));
+  const scale = (profile && profile.scale) || (age === "baby" ? 9.6 : 7.8);
+  const center = (profile && profile.center) || (age === "baby" ? { x: 256, y: 300 } : { x: 256, y: 312 });
+  const ordered = [...parts].sort((a, b) => ((b.z - b.x) + b.y * 0.05) - ((a.z - a.x) + a.y * 0.05));
   for (const box of ordered) drawBox(ctx, texture, box, scale, center);
-
   fs.writeFileSync(output, canvas.toBuffer("image/png"));
 }
 
 function scalePartsForBaby(parts, profile) {
-  const baby = [];
   const bodyScale = profile.babyBodyScale || 0.55;
-  const headScale = profile.babyHeadScale || 0.82;
-
-  for (const part of parts) {
-    const isHead = /head|beak|snout|ear|horn/i.test(part.name);
+  const headScale = profile.babyHeadScale || 0.85;
+  return parts.map(part => {
+    const isHead = /head|beak|snout|ear|horn|shell|eye/i.test(part.name);
     const s = isHead ? headScale : bodyScale;
-    baby.push({
+    return {
       ...part,
       x: part.x * s,
       y: part.y * s + (isHead ? 3 : 0),
@@ -214,9 +264,8 @@ function scalePartsForBaby(parts, profile) {
       h: Math.max(1, Math.round(part.h * s)),
       d: Math.max(1, Math.round(part.d * s)),
       inflate: (part.inflate || 0) * s
-    });
-  }
-  return baby;
+    };
+  });
 }
 
 function cowParts() {
@@ -244,13 +293,21 @@ function pigParts() {
   return p;
 }
 
-function chickenParts() {
+function chickenParts(modelHint = "default") {
   const p = [];
-  addBox(p, "body", -3, 5, -3, 6, 8, 6, 0, 9);
-  addBox(p, "head", -2, 13, -5, 4, 6, 3, 0, 0);
-  addBox(p, "beak", -2, 13, -7, 4, 2, 2, 14, 0);
-  addBox(p, "wing_l", -5, 6, -2, 2, 6, 4, 24, 13);
-  addBox(p, "wing_r", 3, 6, -2, 2, 6, 4, 24, 13);
+  if (/cold|penguin/i.test(modelHint)) {
+    addBox(p, "body", -4, 4, -4, 8, 10, 7, 0, 9);
+    addBox(p, "head", -3, 14, -5, 6, 5, 4, 0, 0);
+    addBox(p, "beak", -2, 13, -7, 4, 2, 2, 14, 0);
+    addBox(p, "wing_l", -6, 6, -3, 2, 7, 5, 24, 13);
+    addBox(p, "wing_r", 4, 6, -3, 2, 7, 5, 24, 13);
+  } else {
+    addBox(p, "body", -3, 5, -3, 6, 8, 6, 0, 9);
+    addBox(p, "head", -2, 13, -5, 4, 6, 3, 0, 0);
+    addBox(p, "beak", -2, 13, -7, 4, 2, 2, 14, 0);
+    addBox(p, "wing_l", -5, 6, -2, 2, 6, 4, 24, 13);
+    addBox(p, "wing_r", 3, 6, -2, 2, 6, 4, 24, 13);
+  }
   addBox(p, "leg_l", -2, 0, -1, 1, 5, 1, 26, 0);
   addBox(p, "leg_r", 1, 0, -1, 1, 5, 1, 26, 0);
   return p;
@@ -298,31 +355,54 @@ function frogParts() {
   return p;
 }
 
+function zombieNautilusParts() {
+  const p = [];
+  // Approximation of the Drowned/Zombie Nautilus style: humanoid rider/body plus a shell.
+  addBox(p, "torso", -4, 9, -2, 8, 12, 4, 16, 16);
+  addBox(p, "head", -4, 21, -4, 8, 8, 8, 0, 0);
+  addBox(p, "right_arm", -8, 9, -2, 4, 12, 4, 40, 16);
+  addBox(p, "left_arm", 4, 9, -2, 4, 12, 4, 40, 16);
+  addBox(p, "right_leg", -4, 0, -2, 4, 9, 4, 0, 16);
+  addBox(p, "left_leg", 0, 0, -2, 4, 9, 4, 0, 16);
+  addBox(p, "shell", -7, 5, 3, 14, 14, 6, 32, 0, { inflate: 0.25 });
+  return p;
+}
+
 const ENTITY_RENDERERS = {
-  cow: { hasBaby: true, babyBodyScale: 0.55, babyHeadScale: 0.85, parts: cowParts },
-  pig: { hasBaby: true, babyBodyScale: 0.55, babyHeadScale: 0.85, parts: pigParts },
-  chicken: { hasBaby: true, babyBodyScale: 0.55, babyHeadScale: 0.85, parts: chickenParts },
-  wolf: { hasBaby: true, babyBodyScale: 0.55, babyHeadScale: 0.85, parts: wolfParts },
-  cat: { hasBaby: true, babyBodyScale: 0.55, babyHeadScale: 0.85, parts: catParts },
-  frog: { hasBaby: false, parts: frogParts }
+  cow: { hasBaby: true, babyBodyScale: 0.55, babyHeadScale: 0.85, parts: () => cowParts() },
+  pig: { hasBaby: true, babyBodyScale: 0.55, babyHeadScale: 0.85, parts: () => pigParts() },
+  chicken: { hasBaby: true, babyBodyScale: 0.55, babyHeadScale: 0.85, parts: hint => chickenParts(hint) },
+  wolf: { hasBaby: true, babyBodyScale: 0.55, babyHeadScale: 0.85, parts: () => wolfParts() },
+  cat: { hasBaby: true, babyBodyScale: 0.55, babyHeadScale: 0.85, parts: () => catParts() },
+  frog: { hasBaby: false, parts: () => frogParts(), scale: 11, center: { x: 256, y: 300 } },
+  zombie_nautilus: { hasBaby: false, parts: () => zombieNautilusParts(), scale: 7.2, center: { x: 256, y: 320 } }
 };
 
 function outputPath(type, variant, age) {
   return path.join(OUTPUT_ROOT, type, variant, `${age}.png`);
 }
 
-async function loadTexture(file) {
+async function loadTexture(file, label) {
+  if (!file || !fs.existsSync(file)) {
+    throw new Error(`Missing texture for ${label}: ${file || "<none>"}`);
+  }
   return loadImage(file);
+}
+
+async function renderOne({ type, variant, textureFile, modelHint, age, profile }) {
+  const texture = await loadTexture(textureFile, `${type}/${variant}/${age}`);
+  const parts = profile.parts(modelHint);
+  renderParts({ texture, parts, output: outputPath(type, variant, age), age, profile });
 }
 
 async function main() {
   const version = readVanillaVersion();
   console.log(`Generating entity renders using renderer profiles for Minecraft ${version}.`);
-  console.log("Note: Java Edition entity models are client-code models, not vanilla asset JSON files; this generator uses version-aware renderer profiles and mod textures.");
+  console.log("Variant JSONs are the source of truth: data/<namespace>/<type>_variant/*.json.");
 
-  const variants = discoverVariantTextures();
+  const variants = discoverVariantDefinitions();
   if (variants.length === 0) {
-    console.log("No supported entity variant textures found.");
+    console.log("No supported entity variant JSON files found.");
     return;
   }
 
@@ -330,22 +410,37 @@ async function main() {
   for (const variant of variants) {
     const profile = ENTITY_RENDERERS[variant.type];
     if (!profile) {
-      console.warn(`No renderer profile for entity type "${variant.type}"; skipped ${variant.texture}.`);
+      console.warn(`No renderer profile for entity type "${variant.type}"; skipped ${variant.file}.`);
       continue;
     }
 
-    const texture = await loadTexture(variant.texture);
-    const adultParts = profile.parts();
-    renderParts({ texture, parts: adultParts, output: outputPath(variant.type, variant.variant, "adult"), age: "adult" });
-    generated++;
-
-    if (profile.hasBaby) {
-      const babyParts = scalePartsForBaby(adultParts, profile);
-      renderParts({ texture, parts: babyParts, output: outputPath(variant.type, variant.variant, "baby"), age: "baby" });
+    try {
+      await renderOne({
+        type: variant.type,
+        variant: variant.variant,
+        textureFile: variant.adultTexture,
+        modelHint: variant.adultModelHint,
+        age: "adult",
+        profile
+      });
       generated++;
-    }
 
-    console.log(`Rendered ${variant.type}/${variant.variant}`);
+      if (variant.babyAssetId || profile.hasBaby) {
+        await renderOne({
+          type: variant.type,
+          variant: variant.variant,
+          textureFile: variant.babyTexture || variant.adultTexture,
+          modelHint: variant.babyModelHint || variant.adultModelHint,
+          age: "baby",
+          profile: { ...profile, parts: hint => scalePartsForBaby(profile.parts(hint), profile) }
+        });
+        generated++;
+      }
+
+      console.log(`Rendered ${variant.type}/${variant.variant} (${variant.adultAssetId}${variant.babyAssetId ? `, baby ${variant.babyAssetId}` : ""})`);
+    } catch (error) {
+      console.warn(`Skipped ${variant.type}/${variant.variant}: ${error.message}`);
+    }
   }
 
   console.log(`Generated ${generated} entity render image(s) in ${OUTPUT_ROOT}.`);

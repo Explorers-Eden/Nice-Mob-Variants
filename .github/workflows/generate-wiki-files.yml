@@ -67,10 +67,10 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          if find assets -type f -path '*/textures/entity/*' -name '*.png' -print -quit 2>/dev/null | grep -q .; then
+          if find data -type f \( -path '*/cat_variant/*.json' -o -path '*/chicken_variant/*.json' -o -path '*/cow_variant/*.json' -o -path '*/frog_variant/*.json' -o -path '*/pig_variant/*.json' -o -path '*/wolf_variant/*.json' -o -path '*/zombie_nautilus_variant/*.json' \) -print -quit 2>/dev/null | grep -q .; then
             node scripts/generate-entity-renders.js
           else
-            echo "No entity texture files found; skipping entity render PNG generation."
+            echo "No entity variant JSON files found; skipping entity render PNG generation."
           fi
 
       - name: Show generated wiki files
