@@ -232,11 +232,17 @@ function parseObjFile(objFile, entityType) {
     const b = objectBounds.get(obj);
     if (!b || b.verts < 3) return false;
     const sx = b.maxX - b.minX, sy = b.maxY - b.minY, sz = b.maxZ - b.minZ;
-    // The supplied frog OBJ contains duplicate zero-thickness UV sheet/helper
-    // objects after the real cube objects. Rendering those sheets is what made
-    // the orange/green flat texture mats under and over the frog. Keep the
-    // actual cuboids and drop only object groups with one collapsed axis.
-    return Math.min(sx, sy, sz) < 1e-5;
+    const thin = Math.min(sx, sy, sz) < 1e-5;
+    if (!thin) return false;
+
+    // Frog OBJs include a few zero-thickness helper/UV-sheet planes. Those are
+    // not real geometry and create the flat orange/green sheets seen in older
+    // renders. The flat arm/leg pads are real Minecraft frog geometry though,
+    // so keep them even though they are zero-thickness. This fixes the missing
+    // feet without returning to the broken texture-sheet render.
+    const name = String(obj).replace(/^\d+:/, '');
+    if (/^(left_arm|right_arm|left_leg|right_leg)$/i.test(name)) return false;
+    return true;
   }
   function parseIndex(token, len) {
     const n = Number(token);
@@ -540,7 +546,7 @@ async function main() {
   fs.mkdirSync(OUTPUT_ROOT, { recursive: true });
   const version = resolveMinecraftVersion();
   const variants = discoverVariants();
-  const report = { minecraftVersion: version, renderer: 'obj-software-v27-revert-to-v24-frog-renderer', generated: [], skipped: [], errors: [], discovered: [] };
+  const report = { minecraftVersion: version, renderer: 'obj-software-v28-frog-flat-feet-fix', generated: [], skipped: [], errors: [], discovered: [] };
   console.log(`Entity render output root: ${OUTPUT_ROOT}`);
   console.log(`Discovered ${variants.length} entity variant JSON file(s).`);
   if (!variants.length) { writeJson(REPORT_PATH, report); return; }
