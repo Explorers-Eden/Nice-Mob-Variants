@@ -36,14 +36,14 @@ function debug(message) { if (DEBUG) console.log(`[entity-render-debug] ${messag
 const ENTITY_RENDER = {
   // OBJ exports use a normal right-handed coordinate space (Y up). Render them
   // like Minecraft wiki-style icons: isometric, viewed from above, with the
-  // face/front turned toward the lower-left of the final PNG.
-  cat: { yaw: 225, pitch: 25, roll: 0, camera: 62, yOffset: -9, flipProjectY: true },
-  chicken: { yaw: 225, pitch: 25, roll: 0, camera: 58, yOffset: -7, flipProjectY: true },
-  frog: { yaw: 225, pitch: 25, roll: 0, camera: 48, yOffset: -5, flipProjectY: true },
-  pig: { yaw: 225, pitch: 25, roll: 0, camera: 58, yOffset: -8, flipProjectY: true },
-  cow: { yaw: 225, pitch: 25, roll: 0, camera: 68, yOffset: -9, flipProjectY: true },
-  wolf: { yaw: 225, pitch: 25, roll: 0, camera: 62, yOffset: -8, flipProjectY: true },
-  zombie_nautilus: { yaw: 225, pitch: 25, roll: 0, camera: 46, yOffset: -4, flipProjectY: true }
+  // face/front turned toward the lower-left of the final PNG. v17 rotates the OBJ camera 180 degrees from v16 so the muzzle/face is not pointed at the upper-right corner.
+  cat: { yaw: 45, pitch: 25, roll: 0, camera: 62, yOffset: -9, flipProjectY: true },
+  chicken: { yaw: 45, pitch: 25, roll: 0, camera: 58, yOffset: -7, flipProjectY: true },
+  frog: { yaw: 45, pitch: 25, roll: 0, camera: 48, yOffset: -5, flipProjectY: true },
+  pig: { yaw: 45, pitch: 25, roll: 0, camera: 58, yOffset: -8, flipProjectY: true },
+  cow: { yaw: 45, pitch: 25, roll: 0, camera: 68, yOffset: -9, flipProjectY: true },
+  wolf: { yaw: 45, pitch: 25, roll: 0, camera: 62, yOffset: -8, flipProjectY: true },
+  zombie_nautilus: { yaw: 45, pitch: 25, roll: 0, camera: 46, yOffset: -4, flipProjectY: true }
 };
 
 function renderAngleOverride(name, fallback) {
@@ -361,13 +361,16 @@ async function renderModel(modelFile, textureFile, outputFile, type, age) {
     return { vertices: pts, z };
   }).sort((a, b) => a.z - b.z);
 
-  const width = 512;
-  const height = 512;
+  // Render at 2x resolution, then downsample. This keeps the Minecraft
+  // texture style readable without turning the final wiki image into huge
+  // nearest-neighbor blocks.
+  const width = 1024;
+  const height = 1024;
   debug(`render camera for ${modelFile}: yaw=${meta.yaw} pitch=${meta.pitch} roll=${meta.roll || 0} flipY=${!!meta.flipProjectY}`);
   const projectedBounds = computeTransformedBounds(transformed);
   const modelW = Math.max(1, projectedBounds.maxX - projectedBounds.minX);
   const modelH = Math.max(1, projectedBounds.maxY - projectedBounds.minY);
-  const target = age === 'baby' ? 285 : 360;
+  const target = age === 'baby' ? 570 : 720;
   const scale = Math.max(2, Math.min(22, target / Math.max(modelW, modelH)));
   const centerX = (projectedBounds.minX + projectedBounds.maxX) / 2;
   const centerY = (projectedBounds.minY + projectedBounds.maxY) / 2;
@@ -435,7 +438,7 @@ async function renderModel(modelFile, textureFile, outputFile, type, age) {
   const png = await sharp(rgba, { raw: { width, height, channels: 4 } })
     .trim({ background: { r: 0, g: 0, b: 0, alpha: 0 }, threshold: 1 })
     .extend({ top: 24, bottom: 24, left: 24, right: 24, background: { r: 0, g: 0, b: 0, alpha: 0 } })
-    .resize(512, 512, { fit: 'contain', background: { r: 0, g: 0, b: 0, alpha: 0 }, kernel: 'nearest' })
+    .resize(512, 512, { fit: 'contain', background: { r: 0, g: 0, b: 0, alpha: 0 }, kernel: 'lanczos3' })
     .png()
     .toBuffer();
   await sharp(png).toFile(outputFile);
@@ -542,6 +545,27 @@ function edge(ax, ay, bx, by, cx, cy) {
   return (cx - ax) * (by - ay) - (cy - ay) * (bx - ax);
 }
 
+
+function sampleTextureBilinear(tex, tw, th, u, v) {
+  const x = Math.max(0, Math.min(tw - 1, u));
+  const y = Math.max(0, Math.min(th - 1, v));
+  const x0 = Math.floor(x), y0 = Math.floor(y);
+  const x1 = Math.min(tw - 1, x0 + 1), y1 = Math.min(th - 1, y0 + 1);
+  const tx = x - x0, ty = y - y0;
+  function px(ix, iy) {
+    const i = (iy * tw + ix) * 4;
+    return [tex[i], tex[i + 1], tex[i + 2], tex[i + 3]];
+  }
+  const c00 = px(x0, y0), c10 = px(x1, y0), c01 = px(x0, y1), c11 = px(x1, y1);
+  const out = [0, 0, 0, 0];
+  for (let i = 0; i < 4; i++) {
+    const a = c00[i] * (1 - tx) + c10[i] * tx;
+    const b = c01[i] * (1 - tx) + c11[i] * tx;
+    out[i] = Math.round(a * (1 - ty) + b * ty);
+  }
+  return out;
+}
+
 function rasterTexturedTriangle(dst, dw, dh, tex, tw, th, p0, p1, p2, fallbackColor = null, sampleMode = null) {
   const vals = [p0.x, p0.y, p0.u, p0.v, p1.x, p1.y, p1.u, p1.v, p2.x, p2.y, p2.u, p2.v];
   if (!vals.every(Number.isFinite)) return;
@@ -568,10 +592,10 @@ function rasterTexturedTriangle(dst, dw, dh, tex, tw, th, p0, p1, p2, fallbackCo
       if (sampleMode && sampleMode.swapUV) { const tmp = u; u = v; v = tmp; }
       if (sampleMode && sampleMode.flipU) u = (tw - 1) - u;
       if (sampleMode && sampleMode.flipV) v = (th - 1) - v;
+      const sampled = sampleTextureBilinear(tex, tw, th, u, v);
       let sx = Math.max(0, Math.min(tw - 1, Math.floor(u)));
       let sy = Math.max(0, Math.min(th - 1, Math.floor(v)));
-      let si = (sy * tw + sx) * 4;
-      let sr = tex[si], sg = tex[si + 1], sb = tex[si + 2], sa = tex[si + 3];
+      let sr = sampled[0], sg = sampled[1], sb = sampled[2], sa = sampled[3];
 
       // If the exact UV lands on a transparent texel, search a tiny neighborhood.
       // This avoids all-transparent thumbnails from edge UVs on sparse 26.x textures.
