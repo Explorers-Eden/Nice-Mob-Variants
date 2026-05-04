@@ -34,14 +34,33 @@ const DEBUG = process.env.ENTITY_RENDER_DEBUG !== '0';
 function debug(message) { if (DEBUG) console.log(`[entity-render-debug] ${message}`); }
 
 const ENTITY_RENDER = {
-  cat: { yaw: 180, pitch: 18, roll: 0, camera: 62, yOffset: -9 },
-  chicken: { yaw: 180, pitch: 16, roll: 0, camera: 58, yOffset: -7 },
-  frog: { yaw: 180, pitch: 18, roll: 0, camera: 48, yOffset: -5 },
-  pig: { yaw: 180, pitch: 17, roll: 0, camera: 58, yOffset: -8 },
-  cow: { yaw: 180, pitch: 17, roll: 0, camera: 68, yOffset: -9 },
-  wolf: { yaw: 180, pitch: 16, roll: 0, camera: 62, yOffset: -8 },
-  zombie_nautilus: { yaw: 180, pitch: 18, roll: 0, camera: 46, yOffset: -4 }
+  // OBJ exports use a normal right-handed coordinate space (Y up). Render them
+  // like Minecraft wiki-style icons: isometric, viewed from above, with the
+  // face/front turned toward the lower-left of the final PNG.
+  cat: { yaw: 225, pitch: 25, roll: 0, camera: 62, yOffset: -9, flipProjectY: true },
+  chicken: { yaw: 225, pitch: 25, roll: 0, camera: 58, yOffset: -7, flipProjectY: true },
+  frog: { yaw: 225, pitch: 25, roll: 0, camera: 48, yOffset: -5, flipProjectY: true },
+  pig: { yaw: 225, pitch: 25, roll: 0, camera: 58, yOffset: -8, flipProjectY: true },
+  cow: { yaw: 225, pitch: 25, roll: 0, camera: 68, yOffset: -9, flipProjectY: true },
+  wolf: { yaw: 225, pitch: 25, roll: 0, camera: 62, yOffset: -8, flipProjectY: true },
+  zombie_nautilus: { yaw: 225, pitch: 25, roll: 0, camera: 46, yOffset: -4, flipProjectY: true }
 };
+
+function renderAngleOverride(name, fallback) {
+  const raw = process.env[`ENTITY_RENDER_${name}`];
+  if (raw == null || raw === '') return fallback;
+  const n = Number(raw);
+  return Number.isFinite(n) ? n : fallback;
+}
+
+function resolveRenderMeta(type, source) {
+  const base = ENTITY_RENDER[type] || ENTITY_RENDER.cow;
+  const meta = source === 'obj' ? { ...base, yOffset: 0 } : { ...base };
+  meta.yaw = renderAngleOverride('YAW', meta.yaw);
+  meta.pitch = renderAngleOverride('PITCH', meta.pitch);
+  meta.roll = renderAngleOverride('ROLL', meta.roll || 0);
+  return meta;
+}
 
 function readJson(file) { return JSON.parse(fs.readFileSync(file, 'utf8')); }
 function writeJson(file, value) { fs.mkdirSync(path.dirname(file), { recursive: true }); fs.writeFileSync(file, JSON.stringify(value, null, 2)); }
@@ -321,8 +340,7 @@ function rotateZ(p, a) { const c=Math.cos(a), s=Math.sin(a); return { x:p.x*c-p.
 
 async function renderModel(modelFile, textureFile, outputFile, type, age) {
   const model = readJson(modelFile);
-  const baseMeta = ENTITY_RENDER[type] || ENTITY_RENDER.cow;
-  const meta = model.source === 'obj' ? { ...baseMeta, yOffset: 0 } : baseMeta;
+  const meta = resolveRenderMeta(type, model.source);
   const textureMeta = await sharp(textureFile).ensureAlpha().raw().toBuffer({ resolveWithObject: true });
   const tex = textureMeta.data;
   const texW = textureMeta.info.width || model.textureWidth || 64;
@@ -345,6 +363,7 @@ async function renderModel(modelFile, textureFile, outputFile, type, age) {
 
   const width = 512;
   const height = 512;
+  debug(`render camera for ${modelFile}: yaw=${meta.yaw} pitch=${meta.pitch} roll=${meta.roll || 0} flipY=${!!meta.flipProjectY}`);
   const projectedBounds = computeTransformedBounds(transformed);
   const modelW = Math.max(1, projectedBounds.maxX - projectedBounds.minX);
   const modelH = Math.max(1, projectedBounds.maxY - projectedBounds.minY);
@@ -359,7 +378,7 @@ async function renderModel(modelFile, textureFile, outputFile, type, age) {
     // have z ranges that put projected geometry outside the canvas.
     return {
       x: width / 2 + (p.x - centerX) * scale,
-      y: height / 2 + (p.y - centerY) * scale,
+      y: height / 2 + ((meta.flipProjectY ? -1 : 1) * (p.y - centerY)) * scale,
       u: p.u,
       v: p.v
     };
