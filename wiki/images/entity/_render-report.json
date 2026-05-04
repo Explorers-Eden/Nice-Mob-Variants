@@ -8,7 +8,7 @@
       "model": "default",
       "texture": "assets/nice_mob_variants/textures/entity/cat/all_black_green_eyes.png",
       "output": "wiki/images/entity/cat/all_black_green_eyes/adult.png",
-      "modelFile": ".cache/entity-models/26.1.2/cat/default.adult.64x32.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/cat/adult_regular.adult.64x32.json"
     },
     {
       "type": "cat",
@@ -17,7 +17,7 @@
       "model": "default",
       "texture": "assets/nice_mob_variants/textures/entity/cat/all_black_green_eyes_baby.png",
       "output": "wiki/images/entity/cat/all_black_green_eyes/baby.png",
-      "modelFile": ".cache/entity-models/26.1.2/cat/default.baby.32x32.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/cat/baby_regular.baby.32x32.json"
     },
     {
       "type": "cat",
@@ -26,7 +26,7 @@
       "model": "default",
       "texture": "assets/nice_mob_variants/textures/entity/cat/creeper.png",
       "output": "wiki/images/entity/cat/creeper/adult.png",
-      "modelFile": ".cache/entity-models/26.1.2/cat/default.adult.64x32.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/cat/adult_regular.adult.64x32.json"
     },
     {
       "type": "cat",
@@ -35,7 +35,7 @@
       "model": "default",
       "texture": "assets/nice_mob_variants/textures/entity/cat/creeper_baby.png",
       "output": "wiki/images/entity/cat/creeper/baby.png",
-      "modelFile": ".cache/entity-models/26.1.2/cat/default.baby.32x32.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/cat/baby_regular.baby.32x32.json"
     },
     {
       "type": "cat",
@@ -44,7 +44,7 @@
       "model": "default",
       "texture": "assets/nice_mob_variants/textures/entity/cat/embroidery.png",
       "output": "wiki/images/entity/cat/embroidery/adult.png",
-      "modelFile": ".cache/entity-models/26.1.2/cat/default.adult.64x32.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/cat/adult_regular.adult.64x32.json"
     },
     {
       "type": "cat",
@@ -53,7 +53,7 @@
       "model": "default",
       "texture": "assets/nice_mob_variants/textures/entity/cat/embroidery_baby.png",
       "output": "wiki/images/entity/cat/embroidery/baby.png",
-      "modelFile": ".cache/entity-models/26.1.2/cat/default.baby.32x32.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/cat/baby_regular.baby.32x32.json"
     },
     {
       "type": "cat",
@@ -62,7 +62,7 @@
       "model": "default",
       "texture": "assets/nice_mob_variants/textures/entity/cat/simba.png",
       "output": "wiki/images/entity/cat/simba/adult.png",
-      "modelFile": ".cache/entity-models/26.1.2/cat/default.adult.64x32.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/cat/adult_regular.adult.64x32.json"
     },
     {
       "type": "cat",
@@ -71,7 +71,7 @@
       "model": "default",
       "texture": "assets/nice_mob_variants/textures/entity/cat/simba_baby.png",
       "output": "wiki/images/entity/cat/simba/baby.png",
-      "modelFile": ".cache/entity-models/26.1.2/cat/default.baby.32x32.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/cat/baby_regular.baby.32x32.json"
     },
     {
       "type": "cat",
@@ -80,7 +80,7 @@
       "model": "default",
       "texture": "assets/nice_mob_variants/textures/entity/cat/skeleton.png",
       "output": "wiki/images/entity/cat/skeleton/adult.png",
-      "modelFile": ".cache/entity-models/26.1.2/cat/default.adult.64x32.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/cat/adult_regular.adult.64x32.json"
     },
     {
       "type": "cat",
@@ -89,7 +89,7 @@
       "model": "default",
       "texture": "assets/nice_mob_variants/textures/entity/cat/skeleton_baby.png",
       "output": "wiki/images/entity/cat/skeleton/baby.png",
-      "modelFile": ".cache/entity-models/26.1.2/cat/default.baby.32x32.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/cat/baby_regular.baby.32x32.json"
     },
     {
       "type": "cat",
@@ -98,7 +98,7 @@
       "model": "default",
       "texture": "assets/nice_mob_variants/textures/entity/cat/soul.png",
       "output": "wiki/images/entity/cat/soul/adult.png",
-      "modelFile": ".cache/entity-models/26.1.2/cat/default.adult.64x32.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/cat/adult_regular.adult.64x32.json"
     },
     {
       "type": "cat",
@@ -107,7 +107,7 @@
       "model": "default",
       "texture": "assets/nice_mob_variants/textures/entity/cat/soul_baby.png",
       "output": "wiki/images/entity/cat/soul/baby.png",
-      "modelFile": ".cache/entity-models/26.1.2/cat/default.baby.32x32.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/cat/baby_regular.baby.32x32.json"
     },
     {
       "type": "cat",
@@ -116,7 +116,7 @@
       "model": "default",
       "texture": "assets/nice_mob_variants/textures/entity/cat/tiger.png",
       "output": "wiki/images/entity/cat/tiger/adult.png",
-      "modelFile": ".cache/entity-models/26.1.2/cat/default.adult.64x32.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/cat/adult_regular.adult.64x32.json"
     },
     {
       "type": "cat",
@@ -125,7 +125,7 @@
       "model": "default",
       "texture": "assets/nice_mob_variants/textures/entity/cat/tiger_baby.png",
       "output": "wiki/images/entity/cat/tiger/baby.png",
-      "modelFile": ".cache/entity-models/26.1.2/cat/default.baby.32x32.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/cat/baby_regular.baby.32x32.json"
     },
     {
       "type": "chicken",
@@ -134,7 +134,7 @@
       "model": "default",
       "texture": "assets/nice_mob_variants/textures/entity/chicken/cluckshroom.png",
       "output": "wiki/images/entity/chicken/cluckshroom/adult.png",
-      "modelFile": ".cache/entity-models/26.1.2/chicken/default.adult.64x32.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/chicken/adult_regular.adult.64x32.json"
     },
     {
       "type": "chicken",
@@ -143,7 +143,7 @@
       "model": "default",
       "texture": "assets/nice_mob_variants/textures/entity/chicken/cluckshroom_baby.png",
       "output": "wiki/images/entity/chicken/cluckshroom/baby.png",
-      "modelFile": ".cache/entity-models/26.1.2/chicken/default.baby.16x16.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/chicken/baby_regular.baby.16x16.json"
     },
     {
       "type": "chicken",
@@ -152,7 +152,7 @@
       "model": "default",
       "texture": "assets/nice_mob_variants/textures/entity/chicken/creamy.png",
       "output": "wiki/images/entity/chicken/creamy/adult.png",
-      "modelFile": ".cache/entity-models/26.1.2/chicken/default.adult.64x32.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/chicken/adult_regular.adult.64x32.json"
     },
     {
       "type": "chicken",
@@ -161,7 +161,7 @@
       "model": "default",
       "texture": "assets/nice_mob_variants/textures/entity/chicken/creamy_baby.png",
       "output": "wiki/images/entity/chicken/creamy/baby.png",
-      "modelFile": ".cache/entity-models/26.1.2/chicken/default.baby.16x16.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/chicken/baby_regular.baby.16x16.json"
     },
     {
       "type": "chicken",
@@ -170,7 +170,7 @@
       "model": "default",
       "texture": "assets/nice_mob_variants/textures/entity/chicken/dark_brown.png",
       "output": "wiki/images/entity/chicken/dark_brown/adult.png",
-      "modelFile": ".cache/entity-models/26.1.2/chicken/default.adult.64x32.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/chicken/adult_regular.adult.64x32.json"
     },
     {
       "type": "chicken",
@@ -179,7 +179,7 @@
       "model": "default",
       "texture": "assets/nice_mob_variants/textures/entity/chicken/dark_brown_baby.png",
       "output": "wiki/images/entity/chicken/dark_brown/baby.png",
-      "modelFile": ".cache/entity-models/26.1.2/chicken/default.baby.16x16.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/chicken/baby_regular.baby.16x16.json"
     },
     {
       "type": "chicken",
@@ -188,7 +188,7 @@
       "model": "default",
       "texture": "assets/nice_mob_variants/textures/entity/chicken/duck.png",
       "output": "wiki/images/entity/chicken/duck/adult.png",
-      "modelFile": ".cache/entity-models/26.1.2/chicken/default.adult.64x32.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/chicken/adult_regular.adult.64x32.json"
     },
     {
       "type": "chicken",
@@ -197,7 +197,7 @@
       "model": "default",
       "texture": "assets/nice_mob_variants/textures/entity/chicken/duck_baby.png",
       "output": "wiki/images/entity/chicken/duck/baby.png",
-      "modelFile": ".cache/entity-models/26.1.2/chicken/default.baby.16x16.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/chicken/baby_regular.baby.16x16.json"
     },
     {
       "type": "chicken",
@@ -206,7 +206,7 @@
       "model": "default",
       "texture": "assets/nice_mob_variants/textures/entity/chicken/ender.png",
       "output": "wiki/images/entity/chicken/ender/adult.png",
-      "modelFile": ".cache/entity-models/26.1.2/chicken/default.adult.64x32.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/chicken/adult_regular.adult.64x32.json"
     },
     {
       "type": "chicken",
@@ -215,7 +215,7 @@
       "model": "default",
       "texture": "assets/nice_mob_variants/textures/entity/chicken/ender_baby.png",
       "output": "wiki/images/entity/chicken/ender/baby.png",
-      "modelFile": ".cache/entity-models/26.1.2/chicken/default.baby.16x16.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/chicken/baby_regular.baby.16x16.json"
     },
     {
       "type": "chicken",
@@ -224,7 +224,7 @@
       "model": "default",
       "texture": "assets/nice_mob_variants/textures/entity/chicken/flamingo.png",
       "output": "wiki/images/entity/chicken/flamingo/adult.png",
-      "modelFile": ".cache/entity-models/26.1.2/chicken/default.adult.64x32.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/chicken/adult_regular.adult.64x32.json"
     },
     {
       "type": "chicken",
@@ -233,7 +233,7 @@
       "model": "default",
       "texture": "assets/nice_mob_variants/textures/entity/chicken/flamingo_baby.png",
       "output": "wiki/images/entity/chicken/flamingo/baby.png",
-      "modelFile": ".cache/entity-models/26.1.2/chicken/default.baby.16x16.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/chicken/baby_regular.baby.16x16.json"
     },
     {
       "type": "chicken",
@@ -242,7 +242,7 @@
       "model": "default",
       "texture": "assets/nice_mob_variants/textures/entity/chicken/golden.png",
       "output": "wiki/images/entity/chicken/golden/adult.png",
-      "modelFile": ".cache/entity-models/26.1.2/chicken/default.adult.64x32.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/chicken/adult_regular.adult.64x32.json"
     },
     {
       "type": "chicken",
@@ -251,7 +251,7 @@
       "model": "default",
       "texture": "assets/nice_mob_variants/textures/entity/chicken/golden_baby.png",
       "output": "wiki/images/entity/chicken/golden/baby.png",
-      "modelFile": ".cache/entity-models/26.1.2/chicken/default.baby.16x16.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/chicken/baby_regular.baby.16x16.json"
     },
     {
       "type": "chicken",
@@ -260,7 +260,7 @@
       "model": "default",
       "texture": "assets/nice_mob_variants/textures/entity/chicken/goose.png",
       "output": "wiki/images/entity/chicken/goose/adult.png",
-      "modelFile": ".cache/entity-models/26.1.2/chicken/default.adult.64x32.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/chicken/adult_regular.adult.64x32.json"
     },
     {
       "type": "chicken",
@@ -269,7 +269,7 @@
       "model": "default",
       "texture": "assets/nice_mob_variants/textures/entity/chicken/goose_baby.png",
       "output": "wiki/images/entity/chicken/goose/baby.png",
-      "modelFile": ".cache/entity-models/26.1.2/chicken/default.baby.16x16.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/chicken/baby_regular.baby.16x16.json"
     },
     {
       "type": "chicken",
@@ -278,7 +278,7 @@
       "model": "default",
       "texture": "assets/nice_mob_variants/textures/entity/chicken/ostrich.png",
       "output": "wiki/images/entity/chicken/ostrich/adult.png",
-      "modelFile": ".cache/entity-models/26.1.2/chicken/default.adult.64x32.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/chicken/adult_regular.adult.64x32.json"
     },
     {
       "type": "chicken",
@@ -287,7 +287,7 @@
       "model": "default",
       "texture": "assets/nice_mob_variants/textures/entity/chicken/ostrich_baby.png",
       "output": "wiki/images/entity/chicken/ostrich/baby.png",
-      "modelFile": ".cache/entity-models/26.1.2/chicken/default.baby.16x16.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/chicken/baby_regular.baby.16x16.json"
     },
     {
       "type": "chicken",
@@ -296,7 +296,7 @@
       "model": "default",
       "texture": "assets/nice_mob_variants/textures/entity/chicken/penguin.png",
       "output": "wiki/images/entity/chicken/penguin/adult.png",
-      "modelFile": ".cache/entity-models/26.1.2/chicken/default.adult.64x32.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/chicken/adult_regular.adult.64x32.json"
     },
     {
       "type": "chicken",
@@ -305,7 +305,7 @@
       "model": "default",
       "texture": "assets/nice_mob_variants/textures/entity/chicken/penguin_baby.png",
       "output": "wiki/images/entity/chicken/penguin/baby.png",
-      "modelFile": ".cache/entity-models/26.1.2/chicken/default.baby.16x16.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/chicken/baby_regular.baby.16x16.json"
     },
     {
       "type": "chicken",
@@ -314,7 +314,7 @@
       "model": "cold",
       "texture": "assets/nice_mob_variants/textures/entity/chicken/pigeon.png",
       "output": "wiki/images/entity/chicken/pigeon/adult.png",
-      "modelFile": ".cache/entity-models/26.1.2/chicken/cold.adult.64x32.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/chicken/adult_cold.adult.64x32.json"
     },
     {
       "type": "chicken",
@@ -323,7 +323,7 @@
       "model": "cold",
       "texture": "assets/nice_mob_variants/textures/entity/chicken/pigeon_baby.png",
       "output": "wiki/images/entity/chicken/pigeon/baby.png",
-      "modelFile": ".cache/entity-models/26.1.2/chicken/cold.baby.16x16.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/chicken/baby_regular.baby.16x16.json"
     },
     {
       "type": "chicken",
@@ -332,7 +332,7 @@
       "model": "default",
       "texture": "assets/nice_mob_variants/textures/entity/chicken/potato.png",
       "output": "wiki/images/entity/chicken/potato/adult.png",
-      "modelFile": ".cache/entity-models/26.1.2/chicken/default.adult.64x32.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/chicken/adult_regular.adult.64x32.json"
     },
     {
       "type": "chicken",
@@ -341,7 +341,7 @@
       "model": "default",
       "texture": "assets/nice_mob_variants/textures/entity/chicken/potato_baby.png",
       "output": "wiki/images/entity/chicken/potato/baby.png",
-      "modelFile": ".cache/entity-models/26.1.2/chicken/default.baby.16x16.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/chicken/baby_regular.baby.16x16.json"
     },
     {
       "type": "chicken",
@@ -350,7 +350,7 @@
       "model": "cold",
       "texture": "assets/nice_mob_variants/textures/entity/chicken/rooster.png",
       "output": "wiki/images/entity/chicken/rooster/adult.png",
-      "modelFile": ".cache/entity-models/26.1.2/chicken/cold.adult.64x32.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/chicken/adult_cold.adult.64x32.json"
     },
     {
       "type": "chicken",
@@ -359,7 +359,7 @@
       "model": "cold",
       "texture": "assets/nice_mob_variants/textures/entity/chicken/rooster_baby.png",
       "output": "wiki/images/entity/chicken/rooster/baby.png",
-      "modelFile": ".cache/entity-models/26.1.2/chicken/cold.baby.16x16.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/chicken/baby_regular.baby.16x16.json"
     },
     {
       "type": "chicken",
@@ -368,7 +368,7 @@
       "model": "default",
       "texture": "assets/nice_mob_variants/textures/entity/chicken/skeleton.png",
       "output": "wiki/images/entity/chicken/skeleton/adult.png",
-      "modelFile": ".cache/entity-models/26.1.2/chicken/default.adult.64x32.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/chicken/adult_regular.adult.64x32.json"
     },
     {
       "type": "chicken",
@@ -377,7 +377,7 @@
       "model": "default",
       "texture": "assets/nice_mob_variants/textures/entity/chicken/skeleton_baby.png",
       "output": "wiki/images/entity/chicken/skeleton/baby.png",
-      "modelFile": ".cache/entity-models/26.1.2/chicken/default.baby.16x16.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/chicken/baby_regular.baby.16x16.json"
     },
     {
       "type": "chicken",
@@ -386,7 +386,7 @@
       "model": "default",
       "texture": "assets/nice_mob_variants/textures/entity/chicken/strider.png",
       "output": "wiki/images/entity/chicken/strider/adult.png",
-      "modelFile": ".cache/entity-models/26.1.2/chicken/default.adult.64x32.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/chicken/adult_regular.adult.64x32.json"
     },
     {
       "type": "chicken",
@@ -395,7 +395,7 @@
       "model": "default",
       "texture": "assets/nice_mob_variants/textures/entity/chicken/strider_baby.png",
       "output": "wiki/images/entity/chicken/strider/baby.png",
-      "modelFile": ".cache/entity-models/26.1.2/chicken/default.baby.16x16.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/chicken/baby_regular.baby.16x16.json"
     },
     {
       "type": "chicken",
@@ -404,7 +404,7 @@
       "model": "default",
       "texture": "assets/nice_mob_variants/textures/entity/chicken/zombie.png",
       "output": "wiki/images/entity/chicken/zombie/adult.png",
-      "modelFile": ".cache/entity-models/26.1.2/chicken/default.adult.64x32.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/chicken/adult_regular.adult.64x32.json"
     },
     {
       "type": "chicken",
@@ -413,7 +413,7 @@
       "model": "default",
       "texture": "assets/nice_mob_variants/textures/entity/chicken/zombie_baby.png",
       "output": "wiki/images/entity/chicken/zombie/baby.png",
-      "modelFile": ".cache/entity-models/26.1.2/chicken/default.baby.16x16.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/chicken/baby_regular.baby.16x16.json"
     },
     {
       "type": "frog",
@@ -422,7 +422,7 @@
       "model": "default",
       "texture": "assets/nice_mob_variants/textures/entity/frog/creaking.png",
       "output": "wiki/images/entity/frog/creaking/adult.png",
-      "modelFile": ".cache/entity-models/26.1.2/frog/default.adult.48x48.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/frog/adult_regular.adult.48x48.json"
     },
     {
       "type": "frog",
@@ -431,7 +431,7 @@
       "model": "default",
       "texture": "assets/nice_mob_variants/textures/entity/frog/dry.png",
       "output": "wiki/images/entity/frog/dry/adult.png",
-      "modelFile": ".cache/entity-models/26.1.2/frog/default.adult.48x48.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/frog/adult_regular.adult.48x48.json"
     },
     {
       "type": "frog",
@@ -440,7 +440,7 @@
       "model": "default",
       "texture": "assets/nice_mob_variants/textures/entity/frog/ender.png",
       "output": "wiki/images/entity/frog/ender/adult.png",
-      "modelFile": ".cache/entity-models/26.1.2/frog/default.adult.48x48.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/frog/adult_regular.adult.48x48.json"
     },
     {
       "type": "frog",
@@ -449,7 +449,7 @@
       "model": "default",
       "texture": "assets/nice_mob_variants/textures/entity/frog/frozen.png",
       "output": "wiki/images/entity/frog/frozen/adult.png",
-      "modelFile": ".cache/entity-models/26.1.2/frog/default.adult.48x48.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/frog/adult_regular.adult.48x48.json"
     },
     {
       "type": "frog",
@@ -458,7 +458,7 @@
       "model": "default",
       "texture": "assets/nice_mob_variants/textures/entity/frog/golden.png",
       "output": "wiki/images/entity/frog/golden/adult.png",
-      "modelFile": ".cache/entity-models/26.1.2/frog/default.adult.48x48.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/frog/adult_regular.adult.48x48.json"
     },
     {
       "type": "frog",
@@ -467,7 +467,7 @@
       "model": "default",
       "texture": "assets/nice_mob_variants/textures/entity/frog/guardian.png",
       "output": "wiki/images/entity/frog/guardian/adult.png",
-      "modelFile": ".cache/entity-models/26.1.2/frog/default.adult.48x48.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/frog/adult_regular.adult.48x48.json"
     },
     {
       "type": "frog",
@@ -476,7 +476,7 @@
       "model": "default",
       "texture": "assets/nice_mob_variants/textures/entity/frog/muddy.png",
       "output": "wiki/images/entity/frog/muddy/adult.png",
-      "modelFile": ".cache/entity-models/26.1.2/frog/default.adult.48x48.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/frog/adult_regular.adult.48x48.json"
     },
     {
       "type": "frog",
@@ -485,7 +485,7 @@
       "model": "default",
       "texture": "assets/nice_mob_variants/textures/entity/frog/nether.png",
       "output": "wiki/images/entity/frog/nether/adult.png",
-      "modelFile": ".cache/entity-models/26.1.2/frog/default.adult.48x48.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/frog/adult_regular.adult.48x48.json"
     },
     {
       "type": "frog",
@@ -494,7 +494,7 @@
       "model": "default",
       "texture": "assets/nice_mob_variants/textures/entity/frog/sculk.png",
       "output": "wiki/images/entity/frog/sculk/adult.png",
-      "modelFile": ".cache/entity-models/26.1.2/frog/default.adult.48x48.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/frog/adult_regular.adult.48x48.json"
     },
     {
       "type": "pig",
@@ -503,7 +503,7 @@
       "model": "default",
       "texture": "assets/nice_mob_variants/textures/entity/pig/creamy.png",
       "output": "wiki/images/entity/pig/creamy/adult.png",
-      "modelFile": ".cache/entity-models/26.1.2/pig/default.adult.64x64.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/pig/adult_regular.adult.64x64.json"
     },
     {
       "type": "pig",
@@ -512,7 +512,7 @@
       "model": "default",
       "texture": "assets/nice_mob_variants/textures/entity/pig/creamy_baby.png",
       "output": "wiki/images/entity/pig/creamy/baby.png",
-      "modelFile": ".cache/entity-models/26.1.2/pig/default.baby.32x32.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/pig/baby_regular.baby.32x32.json"
     },
     {
       "type": "pig",
@@ -521,7 +521,7 @@
       "model": "default",
       "texture": "assets/nice_mob_variants/textures/entity/pig/dark.png",
       "output": "wiki/images/entity/pig/dark/adult.png",
-      "modelFile": ".cache/entity-models/26.1.2/pig/default.adult.64x64.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/pig/adult_regular.adult.64x64.json"
     },
     {
       "type": "pig",
@@ -530,7 +530,7 @@
       "model": "default",
       "texture": "assets/nice_mob_variants/textures/entity/pig/dark_baby.png",
       "output": "wiki/images/entity/pig/dark/baby.png",
-      "modelFile": ".cache/entity-models/26.1.2/pig/default.baby.32x32.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/pig/baby_regular.baby.32x32.json"
     },
     {
       "type": "pig",
@@ -539,7 +539,7 @@
       "model": "default",
       "texture": "assets/nice_mob_variants/textures/entity/pig/ender.png",
       "output": "wiki/images/entity/pig/ender/adult.png",
-      "modelFile": ".cache/entity-models/26.1.2/pig/default.adult.64x64.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/pig/adult_regular.adult.64x64.json"
     },
     {
       "type": "pig",
@@ -548,7 +548,7 @@
       "model": "default",
       "texture": "assets/nice_mob_variants/textures/entity/pig/ender_baby.png",
       "output": "wiki/images/entity/pig/ender/baby.png",
-      "modelFile": ".cache/entity-models/26.1.2/pig/default.baby.32x32.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/pig/baby_regular.baby.32x32.json"
     },
     {
       "type": "pig",
@@ -557,7 +557,7 @@
       "model": "cold",
       "texture": "assets/nice_mob_variants/textures/entity/pig/muddy_cold.png",
       "output": "wiki/images/entity/pig/muddy_cold/adult.png",
-      "modelFile": ".cache/entity-models/26.1.2/pig/cold.adult.64x64.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/pig/adult_regular.adult.64x64.json"
     },
     {
       "type": "pig",
@@ -566,7 +566,7 @@
       "model": "cold",
       "texture": "assets/nice_mob_variants/textures/entity/pig/muddy_cold_baby.png",
       "output": "wiki/images/entity/pig/muddy_cold/baby.png",
-      "modelFile": ".cache/entity-models/26.1.2/pig/cold.baby.32x32.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/pig/baby_regular.baby.32x32.json"
     },
     {
       "type": "pig",
@@ -575,7 +575,7 @@
       "model": "default",
       "texture": "assets/nice_mob_variants/textures/entity/pig/muddy_creamy.png",
       "output": "wiki/images/entity/pig/muddy_creamy/adult.png",
-      "modelFile": ".cache/entity-models/26.1.2/pig/default.adult.64x64.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/pig/adult_regular.adult.64x64.json"
     },
     {
       "type": "pig",
@@ -584,7 +584,7 @@
       "model": "default",
       "texture": "assets/nice_mob_variants/textures/entity/pig/muddy_creamy_baby.png",
       "output": "wiki/images/entity/pig/muddy_creamy/baby.png",
-      "modelFile": ".cache/entity-models/26.1.2/pig/default.baby.32x32.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/pig/baby_regular.baby.32x32.json"
     },
     {
       "type": "pig",
@@ -593,7 +593,7 @@
       "model": "default",
       "texture": "assets/nice_mob_variants/textures/entity/pig/muddy_dark.png",
       "output": "wiki/images/entity/pig/muddy_dark/adult.png",
-      "modelFile": ".cache/entity-models/26.1.2/pig/default.adult.64x64.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/pig/adult_regular.adult.64x64.json"
     },
     {
       "type": "pig",
@@ -602,7 +602,7 @@
       "model": "default",
       "texture": "assets/nice_mob_variants/textures/entity/pig/muddy_dark_baby.png",
       "output": "wiki/images/entity/pig/muddy_dark/baby.png",
-      "modelFile": ".cache/entity-models/26.1.2/pig/default.baby.32x32.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/pig/baby_regular.baby.32x32.json"
     },
     {
       "type": "pig",
@@ -611,7 +611,7 @@
       "model": "default",
       "texture": "assets/nice_mob_variants/textures/entity/pig/muddy_pale.png",
       "output": "wiki/images/entity/pig/muddy_pale/adult.png",
-      "modelFile": ".cache/entity-models/26.1.2/pig/default.adult.64x64.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/pig/adult_regular.adult.64x64.json"
     },
     {
       "type": "pig",
@@ -620,7 +620,7 @@
       "model": "default",
       "texture": "assets/nice_mob_variants/textures/entity/pig/muddy_pale_baby.png",
       "output": "wiki/images/entity/pig/muddy_pale/baby.png",
-      "modelFile": ".cache/entity-models/26.1.2/pig/default.baby.32x32.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/pig/baby_regular.baby.32x32.json"
     },
     {
       "type": "pig",
@@ -629,7 +629,7 @@
       "model": "default",
       "texture": "assets/nice_mob_variants/textures/entity/pig/muddy_temperate.png",
       "output": "wiki/images/entity/pig/muddy_temperate/adult.png",
-      "modelFile": ".cache/entity-models/26.1.2/pig/default.adult.64x64.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/pig/adult_regular.adult.64x64.json"
     },
     {
       "type": "pig",
@@ -638,7 +638,7 @@
       "model": "default",
       "texture": "assets/nice_mob_variants/textures/entity/pig/muddy_temperate_baby.png",
       "output": "wiki/images/entity/pig/muddy_temperate/baby.png",
-      "modelFile": ".cache/entity-models/26.1.2/pig/default.baby.32x32.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/pig/baby_regular.baby.32x32.json"
     },
     {
       "type": "pig",
@@ -647,7 +647,7 @@
       "model": "default",
       "texture": "assets/nice_mob_variants/textures/entity/pig/muddy_warm.png",
       "output": "wiki/images/entity/pig/muddy_warm/adult.png",
-      "modelFile": ".cache/entity-models/26.1.2/pig/default.adult.64x64.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/pig/adult_regular.adult.64x64.json"
     },
     {
       "type": "pig",
@@ -656,7 +656,7 @@
       "model": "default",
       "texture": "assets/nice_mob_variants/textures/entity/pig/muddy_warm_baby.png",
       "output": "wiki/images/entity/pig/muddy_warm/baby.png",
-      "modelFile": ".cache/entity-models/26.1.2/pig/default.baby.32x32.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/pig/baby_regular.baby.32x32.json"
     },
     {
       "type": "pig",
@@ -665,7 +665,7 @@
       "model": "default",
       "texture": "assets/nice_mob_variants/textures/entity/pig/muddy_wild.png",
       "output": "wiki/images/entity/pig/muddy_wild/adult.png",
-      "modelFile": ".cache/entity-models/26.1.2/pig/default.adult.64x64.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/pig/adult_regular.adult.64x64.json"
     },
     {
       "type": "pig",
@@ -674,7 +674,7 @@
       "model": "default",
       "texture": "assets/nice_mob_variants/textures/entity/pig/pale.png",
       "output": "wiki/images/entity/pig/pale/adult.png",
-      "modelFile": ".cache/entity-models/26.1.2/pig/default.adult.64x64.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/pig/adult_regular.adult.64x64.json"
     },
     {
       "type": "pig",
@@ -683,7 +683,7 @@
       "model": "default",
       "texture": "assets/nice_mob_variants/textures/entity/pig/pale_baby.png",
       "output": "wiki/images/entity/pig/pale/baby.png",
-      "modelFile": ".cache/entity-models/26.1.2/pig/default.baby.32x32.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/pig/baby_regular.baby.32x32.json"
     },
     {
       "type": "pig",
@@ -692,7 +692,7 @@
       "model": "default",
       "texture": "assets/nice_mob_variants/textures/entity/pig/potato.png",
       "output": "wiki/images/entity/pig/potato/adult.png",
-      "modelFile": ".cache/entity-models/26.1.2/pig/default.adult.64x64.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/pig/adult_regular.adult.64x64.json"
     },
     {
       "type": "pig",
@@ -701,7 +701,7 @@
       "model": "default",
       "texture": "assets/nice_mob_variants/textures/entity/pig/potato_baby.png",
       "output": "wiki/images/entity/pig/potato/baby.png",
-      "modelFile": ".cache/entity-models/26.1.2/pig/default.baby.32x32.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/pig/baby_regular.baby.32x32.json"
     },
     {
       "type": "pig",
@@ -710,7 +710,7 @@
       "model": "default",
       "texture": "assets/nice_mob_variants/textures/entity/pig/skeleton.png",
       "output": "wiki/images/entity/pig/skeleton/adult.png",
-      "modelFile": ".cache/entity-models/26.1.2/pig/default.adult.64x64.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/pig/adult_regular.adult.64x64.json"
     },
     {
       "type": "pig",
@@ -719,7 +719,7 @@
       "model": "default",
       "texture": "assets/nice_mob_variants/textures/entity/pig/skeleton_baby.png",
       "output": "wiki/images/entity/pig/skeleton/baby.png",
-      "modelFile": ".cache/entity-models/26.1.2/pig/default.baby.32x32.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/pig/baby_regular.baby.32x32.json"
     },
     {
       "type": "pig",
@@ -728,7 +728,7 @@
       "model": "default",
       "texture": "assets/nice_mob_variants/textures/entity/pig/spotted_creamy.png",
       "output": "wiki/images/entity/pig/spotted_creamy/adult.png",
-      "modelFile": ".cache/entity-models/26.1.2/pig/default.adult.64x64.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/pig/adult_regular.adult.64x64.json"
     },
     {
       "type": "pig",
@@ -737,7 +737,7 @@
       "model": "default",
       "texture": "assets/nice_mob_variants/textures/entity/pig/spotted_creamy_baby.png",
       "output": "wiki/images/entity/pig/spotted_creamy/baby.png",
-      "modelFile": ".cache/entity-models/26.1.2/pig/default.baby.32x32.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/pig/baby_regular.baby.32x32.json"
     },
     {
       "type": "pig",
@@ -746,7 +746,7 @@
       "model": "default",
       "texture": "assets/nice_mob_variants/textures/entity/pig/spotted_dark.png",
       "output": "wiki/images/entity/pig/spotted_dark/adult.png",
-      "modelFile": ".cache/entity-models/26.1.2/pig/default.adult.64x64.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/pig/adult_regular.adult.64x64.json"
     },
     {
       "type": "pig",
@@ -755,7 +755,7 @@
       "model": "default",
       "texture": "assets/nice_mob_variants/textures/entity/pig/spotted_dark_baby.png",
       "output": "wiki/images/entity/pig/spotted_dark/baby.png",
-      "modelFile": ".cache/entity-models/26.1.2/pig/default.baby.32x32.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/pig/baby_regular.baby.32x32.json"
     },
     {
       "type": "pig",
@@ -764,7 +764,7 @@
       "model": "default",
       "texture": "assets/nice_mob_variants/textures/entity/pig/spotted_pale.png",
       "output": "wiki/images/entity/pig/spotted_pale/adult.png",
-      "modelFile": ".cache/entity-models/26.1.2/pig/default.adult.64x64.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/pig/adult_regular.adult.64x64.json"
     },
     {
       "type": "pig",
@@ -773,7 +773,7 @@
       "model": "default",
       "texture": "assets/nice_mob_variants/textures/entity/pig/spotted_pale_baby.png",
       "output": "wiki/images/entity/pig/spotted_pale/baby.png",
-      "modelFile": ".cache/entity-models/26.1.2/pig/default.baby.32x32.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/pig/baby_regular.baby.32x32.json"
     },
     {
       "type": "pig",
@@ -782,7 +782,7 @@
       "model": "default",
       "texture": "assets/nice_mob_variants/textures/entity/pig/spotted_temperate.png",
       "output": "wiki/images/entity/pig/spotted_temperate/adult.png",
-      "modelFile": ".cache/entity-models/26.1.2/pig/default.adult.64x64.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/pig/adult_regular.adult.64x64.json"
     },
     {
       "type": "pig",
@@ -791,7 +791,7 @@
       "model": "default",
       "texture": "assets/nice_mob_variants/textures/entity/pig/spotted_temperate_baby.png",
       "output": "wiki/images/entity/pig/spotted_temperate/baby.png",
-      "modelFile": ".cache/entity-models/26.1.2/pig/default.baby.32x32.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/pig/baby_regular.baby.32x32.json"
     },
     {
       "type": "pig",
@@ -800,7 +800,7 @@
       "model": "default",
       "texture": "assets/nice_mob_variants/textures/entity/pig/spotted_warm.png",
       "output": "wiki/images/entity/pig/spotted_warm/adult.png",
-      "modelFile": ".cache/entity-models/26.1.2/pig/default.adult.64x64.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/pig/adult_regular.adult.64x64.json"
     },
     {
       "type": "pig",
@@ -809,7 +809,7 @@
       "model": "default",
       "texture": "assets/nice_mob_variants/textures/entity/pig/spotted_warm_baby.png",
       "output": "wiki/images/entity/pig/spotted_warm/baby.png",
-      "modelFile": ".cache/entity-models/26.1.2/pig/default.baby.32x32.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/pig/baby_regular.baby.32x32.json"
     },
     {
       "type": "pig",
@@ -818,7 +818,7 @@
       "model": "default",
       "texture": "assets/nice_mob_variants/textures/entity/pig/wandering.png",
       "output": "wiki/images/entity/pig/wandering/adult.png",
-      "modelFile": ".cache/entity-models/26.1.2/pig/default.adult.64x64.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/pig/adult_regular.adult.64x64.json"
     },
     {
       "type": "pig",
@@ -827,7 +827,7 @@
       "model": "default",
       "texture": "assets/nice_mob_variants/textures/entity/pig/wandering_baby.png",
       "output": "wiki/images/entity/pig/wandering/baby.png",
-      "modelFile": ".cache/entity-models/26.1.2/pig/default.baby.32x32.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/pig/baby_regular.baby.32x32.json"
     },
     {
       "type": "pig",
@@ -836,7 +836,7 @@
       "model": "default",
       "texture": "assets/nice_mob_variants/textures/entity/pig/wild.png",
       "output": "wiki/images/entity/pig/wild/adult.png",
-      "modelFile": ".cache/entity-models/26.1.2/pig/default.adult.64x64.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/pig/adult_regular.adult.64x64.json"
     },
     {
       "type": "pig",
@@ -845,7 +845,7 @@
       "model": "default",
       "texture": "assets/nice_mob_variants/textures/entity/pig/wild_baby.png",
       "output": "wiki/images/entity/pig/wild/baby.png",
-      "modelFile": ".cache/entity-models/26.1.2/pig/default.baby.32x32.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/pig/baby_regular.baby.32x32.json"
     },
     {
       "type": "cow",
@@ -854,7 +854,7 @@
       "model": "cold",
       "texture": "assets/nice_mob_variants/textures/entity/cow/cold_dark.png",
       "output": "wiki/images/entity/cow/cold_dark/adult.png",
-      "modelFile": ".cache/entity-models/26.1.2/cow/cold.adult.64x64.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/cow/adult_cold.adult.64x64.json"
     },
     {
       "type": "cow",
@@ -863,7 +863,7 @@
       "model": "cold",
       "texture": "assets/nice_mob_variants/textures/entity/cow/cold_dark_baby.png",
       "output": "wiki/images/entity/cow/cold_dark/baby.png",
-      "modelFile": ".cache/entity-models/26.1.2/cow/cold.baby.64x64.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/cow/baby_cold.baby.64x64.json"
     },
     {
       "type": "cow",
@@ -872,7 +872,7 @@
       "model": "cold",
       "texture": "assets/nice_mob_variants/textures/entity/cow/cold_white.png",
       "output": "wiki/images/entity/cow/cold_white/adult.png",
-      "modelFile": ".cache/entity-models/26.1.2/cow/cold.adult.64x64.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/cow/adult_cold.adult.64x64.json"
     },
     {
       "type": "cow",
@@ -881,7 +881,7 @@
       "model": "cold",
       "texture": "assets/nice_mob_variants/textures/entity/cow/cold_white_baby.png",
       "output": "wiki/images/entity/cow/cold_white/baby.png",
-      "modelFile": ".cache/entity-models/26.1.2/cow/cold.baby.64x64.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/cow/baby_cold.baby.64x64.json"
     },
     {
       "type": "cow",
@@ -890,7 +890,7 @@
       "model": "cold",
       "texture": "assets/nice_mob_variants/textures/entity/cow/cold_yellow.png",
       "output": "wiki/images/entity/cow/cold_yellow/adult.png",
-      "modelFile": ".cache/entity-models/26.1.2/cow/cold.adult.64x64.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/cow/adult_cold.adult.64x64.json"
     },
     {
       "type": "cow",
@@ -899,7 +899,7 @@
       "model": "cold",
       "texture": "assets/nice_mob_variants/textures/entity/cow/cold_yellow_baby.png",
       "output": "wiki/images/entity/cow/cold_yellow/baby.png",
-      "modelFile": ".cache/entity-models/26.1.2/cow/cold.baby.64x64.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/cow/baby_cold.baby.64x64.json"
     },
     {
       "type": "cow",
@@ -908,7 +908,7 @@
       "model": "default",
       "texture": "assets/nice_mob_variants/textures/entity/cow/creamy.png",
       "output": "wiki/images/entity/cow/creamy/adult.png",
-      "modelFile": ".cache/entity-models/26.1.2/cow/default.adult.64x64.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/cow/adult_regular.adult.64x64.json"
     },
     {
       "type": "cow",
@@ -917,7 +917,7 @@
       "model": "default",
       "texture": "assets/nice_mob_variants/textures/entity/cow/creamy_baby.png",
       "output": "wiki/images/entity/cow/creamy/baby.png",
-      "modelFile": ".cache/entity-models/26.1.2/cow/default.baby.64x64.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/cow/baby_regular.baby.64x64.json"
     },
     {
       "type": "cow",
@@ -926,7 +926,7 @@
       "model": "default",
       "texture": "assets/nice_mob_variants/textures/entity/cow/dark.png",
       "output": "wiki/images/entity/cow/dark/adult.png",
-      "modelFile": ".cache/entity-models/26.1.2/cow/default.adult.64x64.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/cow/adult_regular.adult.64x64.json"
     },
     {
       "type": "cow",
@@ -935,7 +935,7 @@
       "model": "default",
       "texture": "assets/nice_mob_variants/textures/entity/cow/dark_baby.png",
       "output": "wiki/images/entity/cow/dark/baby.png",
-      "modelFile": ".cache/entity-models/26.1.2/cow/default.baby.64x64.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/cow/baby_regular.baby.64x64.json"
     },
     {
       "type": "cow",
@@ -944,7 +944,7 @@
       "model": "default",
       "texture": "assets/nice_mob_variants/textures/entity/cow/ender.png",
       "output": "wiki/images/entity/cow/ender/adult.png",
-      "modelFile": ".cache/entity-models/26.1.2/cow/default.adult.64x64.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/cow/adult_regular.adult.64x64.json"
     },
     {
       "type": "cow",
@@ -953,7 +953,7 @@
       "model": "default",
       "texture": "assets/nice_mob_variants/textures/entity/cow/ender_baby.png",
       "output": "wiki/images/entity/cow/ender/baby.png",
-      "modelFile": ".cache/entity-models/26.1.2/cow/default.baby.64x64.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/cow/baby_regular.baby.64x64.json"
     },
     {
       "type": "cow",
@@ -962,7 +962,7 @@
       "model": "default",
       "texture": "assets/nice_mob_variants/textures/entity/cow/gray.png",
       "output": "wiki/images/entity/cow/gray/adult.png",
-      "modelFile": ".cache/entity-models/26.1.2/cow/default.adult.64x64.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/cow/adult_regular.adult.64x64.json"
     },
     {
       "type": "cow",
@@ -971,7 +971,7 @@
       "model": "default",
       "texture": "assets/nice_mob_variants/textures/entity/cow/gray_baby.png",
       "output": "wiki/images/entity/cow/gray/baby.png",
-      "modelFile": ".cache/entity-models/26.1.2/cow/default.baby.64x64.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/cow/baby_regular.baby.64x64.json"
     },
     {
       "type": "cow",
@@ -980,7 +980,7 @@
       "model": "default",
       "texture": "assets/nice_mob_variants/textures/entity/cow/pink_moobloom.png",
       "output": "wiki/images/entity/cow/pink_moobloom/adult.png",
-      "modelFile": ".cache/entity-models/26.1.2/cow/default.adult.64x64.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/cow/adult_regular.adult.64x64.json"
     },
     {
       "type": "cow",
@@ -989,7 +989,7 @@
       "model": "default",
       "texture": "assets/nice_mob_variants/textures/entity/cow/pink_moobloom_baby.png",
       "output": "wiki/images/entity/cow/pink_moobloom/baby.png",
-      "modelFile": ".cache/entity-models/26.1.2/cow/default.baby.64x64.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/cow/baby_regular.baby.64x64.json"
     },
     {
       "type": "cow",
@@ -998,7 +998,7 @@
       "model": "default",
       "texture": "assets/nice_mob_variants/textures/entity/cow/potato.png",
       "output": "wiki/images/entity/cow/potato/adult.png",
-      "modelFile": ".cache/entity-models/26.1.2/cow/default.adult.64x64.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/cow/adult_regular.adult.64x64.json"
     },
     {
       "type": "cow",
@@ -1007,7 +1007,7 @@
       "model": "default",
       "texture": "assets/nice_mob_variants/textures/entity/cow/potato_baby.png",
       "output": "wiki/images/entity/cow/potato/baby.png",
-      "modelFile": ".cache/entity-models/26.1.2/cow/default.baby.64x64.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/cow/baby_regular.baby.64x64.json"
     },
     {
       "type": "cow",
@@ -1016,7 +1016,7 @@
       "model": "warm",
       "texture": "assets/nice_mob_variants/textures/entity/cow/skeleton.png",
       "output": "wiki/images/entity/cow/skeleton/adult.png",
-      "modelFile": ".cache/entity-models/26.1.2/cow/warm.adult.64x64.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/cow/adult_warm.adult.64x64.json"
     },
     {
       "type": "cow",
@@ -1025,7 +1025,7 @@
       "model": "warm",
       "texture": "assets/nice_mob_variants/textures/entity/cow/skeleton_baby.png",
       "output": "wiki/images/entity/cow/skeleton/baby.png",
-      "modelFile": ".cache/entity-models/26.1.2/cow/warm.baby.64x64.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/cow/baby_warm.baby.64x64.json"
     },
     {
       "type": "cow",
@@ -1034,7 +1034,7 @@
       "model": "cold",
       "texture": "assets/nice_mob_variants/textures/entity/cow/sniffer.png",
       "output": "wiki/images/entity/cow/sniffer/adult.png",
-      "modelFile": ".cache/entity-models/26.1.2/cow/cold.adult.64x64.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/cow/adult_cold.adult.64x64.json"
     },
     {
       "type": "cow",
@@ -1043,7 +1043,7 @@
       "model": "cold",
       "texture": "assets/nice_mob_variants/textures/entity/cow/sniffer_baby.png",
       "output": "wiki/images/entity/cow/sniffer/baby.png",
-      "modelFile": ".cache/entity-models/26.1.2/cow/cold.baby.64x64.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/cow/baby_cold.baby.64x64.json"
     },
     {
       "type": "cow",
@@ -1052,7 +1052,7 @@
       "model": "default",
       "texture": "assets/nice_mob_variants/textures/entity/cow/wandering.png",
       "output": "wiki/images/entity/cow/wandering/adult.png",
-      "modelFile": ".cache/entity-models/26.1.2/cow/default.adult.64x64.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/cow/adult_regular.adult.64x64.json"
     },
     {
       "type": "cow",
@@ -1061,7 +1061,7 @@
       "model": "default",
       "texture": "assets/nice_mob_variants/textures/entity/cow/wandering_baby.png",
       "output": "wiki/images/entity/cow/wandering/baby.png",
-      "modelFile": ".cache/entity-models/26.1.2/cow/default.baby.64x64.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/cow/baby_regular.baby.64x64.json"
     },
     {
       "type": "cow",
@@ -1070,7 +1070,7 @@
       "model": "warm",
       "texture": "assets/nice_mob_variants/textures/entity/cow/warm_brown.png",
       "output": "wiki/images/entity/cow/warm_brown/adult.png",
-      "modelFile": ".cache/entity-models/26.1.2/cow/warm.adult.64x64.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/cow/adult_warm.adult.64x64.json"
     },
     {
       "type": "cow",
@@ -1079,7 +1079,7 @@
       "model": "warm",
       "texture": "assets/nice_mob_variants/textures/entity/cow/warm_brown_baby.png",
       "output": "wiki/images/entity/cow/warm_brown/baby.png",
-      "modelFile": ".cache/entity-models/26.1.2/cow/warm.baby.64x64.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/cow/baby_warm.baby.64x64.json"
     },
     {
       "type": "cow",
@@ -1088,7 +1088,7 @@
       "model": "warm",
       "texture": "assets/nice_mob_variants/textures/entity/cow/warm_gray.png",
       "output": "wiki/images/entity/cow/warm_gray/adult.png",
-      "modelFile": ".cache/entity-models/26.1.2/cow/warm.adult.64x64.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/cow/adult_warm.adult.64x64.json"
     },
     {
       "type": "cow",
@@ -1097,7 +1097,7 @@
       "model": "warm",
       "texture": "assets/nice_mob_variants/textures/entity/cow/warm_gray_baby.png",
       "output": "wiki/images/entity/cow/warm_gray/baby.png",
-      "modelFile": ".cache/entity-models/26.1.2/cow/warm.baby.64x64.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/cow/baby_warm.baby.64x64.json"
     },
     {
       "type": "cow",
@@ -1106,7 +1106,7 @@
       "model": "default",
       "texture": "assets/nice_mob_variants/textures/entity/cow/yellow_moobloom.png",
       "output": "wiki/images/entity/cow/yellow_moobloom/adult.png",
-      "modelFile": ".cache/entity-models/26.1.2/cow/default.adult.64x64.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/cow/adult_regular.adult.64x64.json"
     },
     {
       "type": "cow",
@@ -1115,7 +1115,7 @@
       "model": "default",
       "texture": "assets/nice_mob_variants/textures/entity/cow/yellow_moobloom_baby.png",
       "output": "wiki/images/entity/cow/yellow_moobloom/baby.png",
-      "modelFile": ".cache/entity-models/26.1.2/cow/default.baby.64x64.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/cow/baby_regular.baby.64x64.json"
     },
     {
       "type": "wolf",
@@ -1124,7 +1124,7 @@
       "model": "default",
       "texture": "assets/nice_mob_variants/textures/entity/wolf/black.png",
       "output": "wiki/images/entity/wolf/black/adult.png",
-      "modelFile": ".cache/entity-models/26.1.2/wolf/default.adult.64x32.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/wolf/adult_regular.adult.64x32.json"
     },
     {
       "type": "wolf",
@@ -1133,7 +1133,7 @@
       "model": "default",
       "texture": "assets/nice_mob_variants/textures/entity/wolf/black_baby.png",
       "output": "wiki/images/entity/wolf/black/baby.png",
-      "modelFile": ".cache/entity-models/26.1.2/wolf/default.baby.32x32.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/wolf/baby_regular.baby.32x32.json"
     },
     {
       "type": "wolf",
@@ -1142,7 +1142,7 @@
       "model": "default",
       "texture": "assets/nice_mob_variants/textures/entity/wolf/creaking.png",
       "output": "wiki/images/entity/wolf/creaking/adult.png",
-      "modelFile": ".cache/entity-models/26.1.2/wolf/default.adult.64x32.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/wolf/adult_regular.adult.64x32.json"
     },
     {
       "type": "wolf",
@@ -1151,7 +1151,7 @@
       "model": "default",
       "texture": "assets/nice_mob_variants/textures/entity/wolf/creaking_baby.png",
       "output": "wiki/images/entity/wolf/creaking/baby.png",
-      "modelFile": ".cache/entity-models/26.1.2/wolf/default.baby.32x32.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/wolf/baby_regular.baby.32x32.json"
     },
     {
       "type": "wolf",
@@ -1160,7 +1160,7 @@
       "model": "default",
       "texture": "assets/nice_mob_variants/textures/entity/wolf/dark.png",
       "output": "wiki/images/entity/wolf/dark/adult.png",
-      "modelFile": ".cache/entity-models/26.1.2/wolf/default.adult.64x32.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/wolf/adult_regular.adult.64x32.json"
     },
     {
       "type": "wolf",
@@ -1169,7 +1169,7 @@
       "model": "default",
       "texture": "assets/nice_mob_variants/textures/entity/wolf/dark_baby.png",
       "output": "wiki/images/entity/wolf/dark/baby.png",
-      "modelFile": ".cache/entity-models/26.1.2/wolf/default.baby.32x32.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/wolf/baby_regular.baby.32x32.json"
     },
     {
       "type": "wolf",
@@ -1178,7 +1178,7 @@
       "model": "default",
       "texture": "assets/nice_mob_variants/textures/entity/wolf/shiba.png",
       "output": "wiki/images/entity/wolf/shiba/adult.png",
-      "modelFile": ".cache/entity-models/26.1.2/wolf/default.adult.64x32.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/wolf/adult_regular.adult.64x32.json"
     },
     {
       "type": "wolf",
@@ -1187,7 +1187,7 @@
       "model": "default",
       "texture": "assets/nice_mob_variants/textures/entity/wolf/shiba_baby.png",
       "output": "wiki/images/entity/wolf/shiba/baby.png",
-      "modelFile": ".cache/entity-models/26.1.2/wolf/default.baby.32x32.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/wolf/baby_regular.baby.32x32.json"
     },
     {
       "type": "wolf",
@@ -1196,7 +1196,7 @@
       "model": "default",
       "texture": "assets/nice_mob_variants/textures/entity/wolf/skeleton.png",
       "output": "wiki/images/entity/wolf/skeleton/adult.png",
-      "modelFile": ".cache/entity-models/26.1.2/wolf/default.adult.64x32.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/wolf/adult_regular.adult.64x32.json"
     },
     {
       "type": "wolf",
@@ -1205,7 +1205,7 @@
       "model": "default",
       "texture": "assets/nice_mob_variants/textures/entity/wolf/skeleton_baby.png",
       "output": "wiki/images/entity/wolf/skeleton/baby.png",
-      "modelFile": ".cache/entity-models/26.1.2/wolf/default.baby.32x32.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/wolf/baby_regular.baby.32x32.json"
     },
     {
       "type": "wolf",
@@ -1214,7 +1214,7 @@
       "model": "default",
       "texture": "assets/nice_mob_variants/textures/entity/wolf/timber.png",
       "output": "wiki/images/entity/wolf/timber/adult.png",
-      "modelFile": ".cache/entity-models/26.1.2/wolf/default.adult.64x32.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/wolf/adult_regular.adult.64x32.json"
     },
     {
       "type": "wolf",
@@ -1223,7 +1223,7 @@
       "model": "default",
       "texture": "assets/nice_mob_variants/textures/entity/wolf/timber_baby.png",
       "output": "wiki/images/entity/wolf/timber/baby.png",
-      "modelFile": ".cache/entity-models/26.1.2/wolf/default.baby.32x32.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/wolf/baby_regular.baby.32x32.json"
     },
     {
       "type": "wolf",
@@ -1232,7 +1232,7 @@
       "model": "default",
       "texture": "assets/nice_mob_variants/textures/entity/wolf/white_black.png",
       "output": "wiki/images/entity/wolf/white_black/adult.png",
-      "modelFile": ".cache/entity-models/26.1.2/wolf/default.adult.64x32.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/wolf/adult_regular.adult.64x32.json"
     },
     {
       "type": "wolf",
@@ -1241,7 +1241,7 @@
       "model": "default",
       "texture": "assets/nice_mob_variants/textures/entity/wolf/white_black_baby.png",
       "output": "wiki/images/entity/wolf/white_black/baby.png",
-      "modelFile": ".cache/entity-models/26.1.2/wolf/default.baby.32x32.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/wolf/baby_regular.baby.32x32.json"
     },
     {
       "type": "zombie_nautilus",
@@ -1250,7 +1250,7 @@
       "model": "default",
       "texture": "assets/nice_mob_variants/textures/entity/zombie_nautilus/cold.png",
       "output": "wiki/images/entity/zombie_nautilus/cold/adult.png",
-      "modelFile": ".cache/entity-models/26.1.2/zombie_nautilus/default.adult.128x128.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/zombie_nautilus/adult_regular.adult.128x128.json"
     },
     {
       "type": "zombie_nautilus",
@@ -1259,7 +1259,7 @@
       "model": "default",
       "texture": "assets/nice_mob_variants/textures/entity/zombie_nautilus/guardian.png",
       "output": "wiki/images/entity/zombie_nautilus/guardian/adult.png",
-      "modelFile": ".cache/entity-models/26.1.2/zombie_nautilus/default.adult.128x128.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/zombie_nautilus/adult_regular.adult.128x128.json"
     },
     {
       "type": "zombie_nautilus",
@@ -1268,7 +1268,7 @@
       "model": "default",
       "texture": "assets/nice_mob_variants/textures/entity/zombie_nautilus/husk.png",
       "output": "wiki/images/entity/zombie_nautilus/husk/adult.png",
-      "modelFile": ".cache/entity-models/26.1.2/zombie_nautilus/default.adult.128x128.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/zombie_nautilus/adult_regular.adult.128x128.json"
     },
     {
       "type": "zombie_nautilus",
@@ -1277,7 +1277,7 @@
       "model": "default",
       "texture": "assets/nice_mob_variants/textures/entity/zombie_nautilus/swamp.png",
       "output": "wiki/images/entity/zombie_nautilus/swamp/adult.png",
-      "modelFile": ".cache/entity-models/26.1.2/zombie_nautilus/default.adult.128x128.json"
+      "modelFile": ".cache/entity-obj-models/26.1.2/zombie_nautilus/adult_regular.adult.128x128.json"
     }
   ],
   "skipped": [
@@ -1391,7 +1391,17 @@
         "assets/nice_mob_variants/textures/entity/cat/all_black_green_eyes_baby_baby.png",
         "assets/nice_mob_variants/textures/entity/cat/cat_all_black_green_eyes_baby.png",
         "assets/nice_mob_variants/textures/entity/cat/cat_all_black_green_eyes_baby_baby.png"
-      ]
+      ],
+      "adultObjModel": {
+        "file": "tools/entity_models/cat/adult_regular.obj",
+        "requested": "regular",
+        "resolved": "adult_regular"
+      },
+      "babyObjModel": {
+        "file": "tools/entity_models/cat/baby_regular.obj",
+        "requested": "regular",
+        "resolved": "baby_regular"
+      }
     },
     {
       "type": "cat",
@@ -1416,7 +1426,17 @@
         "assets/nice_mob_variants/textures/entity/cat/creeper_baby_baby.png",
         "assets/nice_mob_variants/textures/entity/cat/cat_creeper_baby.png",
         "assets/nice_mob_variants/textures/entity/cat/cat_creeper_baby_baby.png"
-      ]
+      ],
+      "adultObjModel": {
+        "file": "tools/entity_models/cat/adult_regular.obj",
+        "requested": "regular",
+        "resolved": "adult_regular"
+      },
+      "babyObjModel": {
+        "file": "tools/entity_models/cat/baby_regular.obj",
+        "requested": "regular",
+        "resolved": "baby_regular"
+      }
     },
     {
       "type": "cat",
@@ -1441,7 +1461,17 @@
         "assets/nice_mob_variants/textures/entity/cat/embroidery_baby_baby.png",
         "assets/nice_mob_variants/textures/entity/cat/cat_embroidery_baby.png",
         "assets/nice_mob_variants/textures/entity/cat/cat_embroidery_baby_baby.png"
-      ]
+      ],
+      "adultObjModel": {
+        "file": "tools/entity_models/cat/adult_regular.obj",
+        "requested": "regular",
+        "resolved": "adult_regular"
+      },
+      "babyObjModel": {
+        "file": "tools/entity_models/cat/baby_regular.obj",
+        "requested": "regular",
+        "resolved": "baby_regular"
+      }
     },
     {
       "type": "cat",
@@ -1466,7 +1496,17 @@
         "assets/nice_mob_variants/textures/entity/cat/simba_baby_baby.png",
         "assets/nice_mob_variants/textures/entity/cat/cat_simba_baby.png",
         "assets/nice_mob_variants/textures/entity/cat/cat_simba_baby_baby.png"
-      ]
+      ],
+      "adultObjModel": {
+        "file": "tools/entity_models/cat/adult_regular.obj",
+        "requested": "regular",
+        "resolved": "adult_regular"
+      },
+      "babyObjModel": {
+        "file": "tools/entity_models/cat/baby_regular.obj",
+        "requested": "regular",
+        "resolved": "baby_regular"
+      }
     },
     {
       "type": "cat",
@@ -1491,7 +1531,17 @@
         "assets/nice_mob_variants/textures/entity/cat/skeleton_baby_baby.png",
         "assets/nice_mob_variants/textures/entity/cat/cat_skeleton_baby.png",
         "assets/nice_mob_variants/textures/entity/cat/cat_skeleton_baby_baby.png"
-      ]
+      ],
+      "adultObjModel": {
+        "file": "tools/entity_models/cat/adult_regular.obj",
+        "requested": "regular",
+        "resolved": "adult_regular"
+      },
+      "babyObjModel": {
+        "file": "tools/entity_models/cat/baby_regular.obj",
+        "requested": "regular",
+        "resolved": "baby_regular"
+      }
     },
     {
       "type": "cat",
@@ -1516,7 +1566,17 @@
         "assets/nice_mob_variants/textures/entity/cat/soul_baby_baby.png",
         "assets/nice_mob_variants/textures/entity/cat/cat_soul_baby.png",
         "assets/nice_mob_variants/textures/entity/cat/cat_soul_baby_baby.png"
-      ]
+      ],
+      "adultObjModel": {
+        "file": "tools/entity_models/cat/adult_regular.obj",
+        "requested": "regular",
+        "resolved": "adult_regular"
+      },
+      "babyObjModel": {
+        "file": "tools/entity_models/cat/baby_regular.obj",
+        "requested": "regular",
+        "resolved": "baby_regular"
+      }
     },
     {
       "type": "cat",
@@ -1541,7 +1601,17 @@
         "assets/nice_mob_variants/textures/entity/cat/tiger_baby_baby.png",
         "assets/nice_mob_variants/textures/entity/cat/cat_tiger_baby.png",
         "assets/nice_mob_variants/textures/entity/cat/cat_tiger_baby_baby.png"
-      ]
+      ],
+      "adultObjModel": {
+        "file": "tools/entity_models/cat/adult_regular.obj",
+        "requested": "regular",
+        "resolved": "adult_regular"
+      },
+      "babyObjModel": {
+        "file": "tools/entity_models/cat/baby_regular.obj",
+        "requested": "regular",
+        "resolved": "baby_regular"
+      }
     },
     {
       "type": "chicken",
@@ -1566,7 +1636,17 @@
         "assets/nice_mob_variants/textures/entity/chicken/cluckshroom_baby_baby.png",
         "assets/nice_mob_variants/textures/entity/chicken/chicken_cluckshroom_baby.png",
         "assets/nice_mob_variants/textures/entity/chicken/chicken_cluckshroom_baby_baby.png"
-      ]
+      ],
+      "adultObjModel": {
+        "file": "tools/entity_models/chicken/adult_regular.obj",
+        "requested": "regular",
+        "resolved": "adult_regular"
+      },
+      "babyObjModel": {
+        "file": "tools/entity_models/chicken/baby_regular.obj",
+        "requested": "regular",
+        "resolved": "baby_regular"
+      }
     },
     {
       "type": "chicken",
@@ -1591,7 +1671,17 @@
         "assets/nice_mob_variants/textures/entity/chicken/creamy_baby_baby.png",
         "assets/nice_mob_variants/textures/entity/chicken/chicken_creamy_baby.png",
         "assets/nice_mob_variants/textures/entity/chicken/chicken_creamy_baby_baby.png"
-      ]
+      ],
+      "adultObjModel": {
+        "file": "tools/entity_models/chicken/adult_regular.obj",
+        "requested": "regular",
+        "resolved": "adult_regular"
+      },
+      "babyObjModel": {
+        "file": "tools/entity_models/chicken/baby_regular.obj",
+        "requested": "regular",
+        "resolved": "baby_regular"
+      }
     },
     {
       "type": "chicken",
@@ -1616,7 +1706,17 @@
         "assets/nice_mob_variants/textures/entity/chicken/dark_brown_baby_baby.png",
         "assets/nice_mob_variants/textures/entity/chicken/chicken_dark_brown_baby.png",
         "assets/nice_mob_variants/textures/entity/chicken/chicken_dark_brown_baby_baby.png"
-      ]
+      ],
+      "adultObjModel": {
+        "file": "tools/entity_models/chicken/adult_regular.obj",
+        "requested": "regular",
+        "resolved": "adult_regular"
+      },
+      "babyObjModel": {
+        "file": "tools/entity_models/chicken/baby_regular.obj",
+        "requested": "regular",
+        "resolved": "baby_regular"
+      }
     },
     {
       "type": "chicken",
@@ -1641,7 +1741,17 @@
         "assets/nice_mob_variants/textures/entity/chicken/duck_baby_baby.png",
         "assets/nice_mob_variants/textures/entity/chicken/chicken_duck_baby.png",
         "assets/nice_mob_variants/textures/entity/chicken/chicken_duck_baby_baby.png"
-      ]
+      ],
+      "adultObjModel": {
+        "file": "tools/entity_models/chicken/adult_regular.obj",
+        "requested": "regular",
+        "resolved": "adult_regular"
+      },
+      "babyObjModel": {
+        "file": "tools/entity_models/chicken/baby_regular.obj",
+        "requested": "regular",
+        "resolved": "baby_regular"
+      }
     },
     {
       "type": "chicken",
@@ -1666,7 +1776,17 @@
         "assets/nice_mob_variants/textures/entity/chicken/ender_baby_baby.png",
         "assets/nice_mob_variants/textures/entity/chicken/chicken_ender_baby.png",
         "assets/nice_mob_variants/textures/entity/chicken/chicken_ender_baby_baby.png"
-      ]
+      ],
+      "adultObjModel": {
+        "file": "tools/entity_models/chicken/adult_regular.obj",
+        "requested": "regular",
+        "resolved": "adult_regular"
+      },
+      "babyObjModel": {
+        "file": "tools/entity_models/chicken/baby_regular.obj",
+        "requested": "regular",
+        "resolved": "baby_regular"
+      }
     },
     {
       "type": "chicken",
@@ -1691,7 +1811,17 @@
         "assets/nice_mob_variants/textures/entity/chicken/flamingo_baby_baby.png",
         "assets/nice_mob_variants/textures/entity/chicken/chicken_flamingo_baby.png",
         "assets/nice_mob_variants/textures/entity/chicken/chicken_flamingo_baby_baby.png"
-      ]
+      ],
+      "adultObjModel": {
+        "file": "tools/entity_models/chicken/adult_regular.obj",
+        "requested": "regular",
+        "resolved": "adult_regular"
+      },
+      "babyObjModel": {
+        "file": "tools/entity_models/chicken/baby_regular.obj",
+        "requested": "regular",
+        "resolved": "baby_regular"
+      }
     },
     {
       "type": "chicken",
@@ -1716,7 +1846,17 @@
         "assets/nice_mob_variants/textures/entity/chicken/golden_baby_baby.png",
         "assets/nice_mob_variants/textures/entity/chicken/chicken_golden_baby.png",
         "assets/nice_mob_variants/textures/entity/chicken/chicken_golden_baby_baby.png"
-      ]
+      ],
+      "adultObjModel": {
+        "file": "tools/entity_models/chicken/adult_regular.obj",
+        "requested": "regular",
+        "resolved": "adult_regular"
+      },
+      "babyObjModel": {
+        "file": "tools/entity_models/chicken/baby_regular.obj",
+        "requested": "regular",
+        "resolved": "baby_regular"
+      }
     },
     {
       "type": "chicken",
@@ -1741,7 +1881,17 @@
         "assets/nice_mob_variants/textures/entity/chicken/goose_baby_baby.png",
         "assets/nice_mob_variants/textures/entity/chicken/chicken_goose_baby.png",
         "assets/nice_mob_variants/textures/entity/chicken/chicken_goose_baby_baby.png"
-      ]
+      ],
+      "adultObjModel": {
+        "file": "tools/entity_models/chicken/adult_regular.obj",
+        "requested": "regular",
+        "resolved": "adult_regular"
+      },
+      "babyObjModel": {
+        "file": "tools/entity_models/chicken/baby_regular.obj",
+        "requested": "regular",
+        "resolved": "baby_regular"
+      }
     },
     {
       "type": "chicken",
@@ -1766,7 +1916,17 @@
         "assets/nice_mob_variants/textures/entity/chicken/ostrich_baby_baby.png",
         "assets/nice_mob_variants/textures/entity/chicken/chicken_ostrich_baby.png",
         "assets/nice_mob_variants/textures/entity/chicken/chicken_ostrich_baby_baby.png"
-      ]
+      ],
+      "adultObjModel": {
+        "file": "tools/entity_models/chicken/adult_regular.obj",
+        "requested": "regular",
+        "resolved": "adult_regular"
+      },
+      "babyObjModel": {
+        "file": "tools/entity_models/chicken/baby_regular.obj",
+        "requested": "regular",
+        "resolved": "baby_regular"
+      }
     },
     {
       "type": "chicken",
@@ -1791,7 +1951,17 @@
         "assets/nice_mob_variants/textures/entity/chicken/penguin_baby_baby.png",
         "assets/nice_mob_variants/textures/entity/chicken/chicken_penguin_baby.png",
         "assets/nice_mob_variants/textures/entity/chicken/chicken_penguin_baby_baby.png"
-      ]
+      ],
+      "adultObjModel": {
+        "file": "tools/entity_models/chicken/adult_regular.obj",
+        "requested": "regular",
+        "resolved": "adult_regular"
+      },
+      "babyObjModel": {
+        "file": "tools/entity_models/chicken/baby_regular.obj",
+        "requested": "regular",
+        "resolved": "baby_regular"
+      }
     },
     {
       "type": "chicken",
@@ -1816,7 +1986,17 @@
         "assets/nice_mob_variants/textures/entity/chicken/pigeon_baby_baby.png",
         "assets/nice_mob_variants/textures/entity/chicken/chicken_pigeon_baby.png",
         "assets/nice_mob_variants/textures/entity/chicken/chicken_pigeon_baby_baby.png"
-      ]
+      ],
+      "adultObjModel": {
+        "file": "tools/entity_models/chicken/adult_cold.obj",
+        "requested": "cold",
+        "resolved": "adult_cold"
+      },
+      "babyObjModel": {
+        "file": "tools/entity_models/chicken/baby_regular.obj",
+        "requested": "cold",
+        "resolved": "baby_regular"
+      }
     },
     {
       "type": "chicken",
@@ -1841,7 +2021,17 @@
         "assets/nice_mob_variants/textures/entity/chicken/potato_baby_baby.png",
         "assets/nice_mob_variants/textures/entity/chicken/chicken_potato_baby.png",
         "assets/nice_mob_variants/textures/entity/chicken/chicken_potato_baby_baby.png"
-      ]
+      ],
+      "adultObjModel": {
+        "file": "tools/entity_models/chicken/adult_regular.obj",
+        "requested": "regular",
+        "resolved": "adult_regular"
+      },
+      "babyObjModel": {
+        "file": "tools/entity_models/chicken/baby_regular.obj",
+        "requested": "regular",
+        "resolved": "baby_regular"
+      }
     },
     {
       "type": "chicken",
@@ -1866,7 +2056,17 @@
         "assets/nice_mob_variants/textures/entity/chicken/rooster_baby_baby.png",
         "assets/nice_mob_variants/textures/entity/chicken/chicken_rooster_baby.png",
         "assets/nice_mob_variants/textures/entity/chicken/chicken_rooster_baby_baby.png"
-      ]
+      ],
+      "adultObjModel": {
+        "file": "tools/entity_models/chicken/adult_cold.obj",
+        "requested": "cold",
+        "resolved": "adult_cold"
+      },
+      "babyObjModel": {
+        "file": "tools/entity_models/chicken/baby_regular.obj",
+        "requested": "cold",
+        "resolved": "baby_regular"
+      }
     },
     {
       "type": "chicken",
@@ -1891,7 +2091,17 @@
         "assets/nice_mob_variants/textures/entity/chicken/skeleton_baby_baby.png",
         "assets/nice_mob_variants/textures/entity/chicken/chicken_skeleton_baby.png",
         "assets/nice_mob_variants/textures/entity/chicken/chicken_skeleton_baby_baby.png"
-      ]
+      ],
+      "adultObjModel": {
+        "file": "tools/entity_models/chicken/adult_regular.obj",
+        "requested": "regular",
+        "resolved": "adult_regular"
+      },
+      "babyObjModel": {
+        "file": "tools/entity_models/chicken/baby_regular.obj",
+        "requested": "regular",
+        "resolved": "baby_regular"
+      }
     },
     {
       "type": "chicken",
@@ -1916,7 +2126,17 @@
         "assets/nice_mob_variants/textures/entity/chicken/strider_baby_baby.png",
         "assets/nice_mob_variants/textures/entity/chicken/chicken_strider_baby.png",
         "assets/nice_mob_variants/textures/entity/chicken/chicken_strider_baby_baby.png"
-      ]
+      ],
+      "adultObjModel": {
+        "file": "tools/entity_models/chicken/adult_regular.obj",
+        "requested": "regular",
+        "resolved": "adult_regular"
+      },
+      "babyObjModel": {
+        "file": "tools/entity_models/chicken/baby_regular.obj",
+        "requested": "regular",
+        "resolved": "baby_regular"
+      }
     },
     {
       "type": "chicken",
@@ -1941,7 +2161,17 @@
         "assets/nice_mob_variants/textures/entity/chicken/zombie_baby_baby.png",
         "assets/nice_mob_variants/textures/entity/chicken/chicken_zombie_baby.png",
         "assets/nice_mob_variants/textures/entity/chicken/chicken_zombie_baby_baby.png"
-      ]
+      ],
+      "adultObjModel": {
+        "file": "tools/entity_models/chicken/adult_regular.obj",
+        "requested": "regular",
+        "resolved": "adult_regular"
+      },
+      "babyObjModel": {
+        "file": "tools/entity_models/chicken/baby_regular.obj",
+        "requested": "regular",
+        "resolved": "baby_regular"
+      }
     },
     {
       "type": "frog",
@@ -1960,7 +2190,13 @@
         "assets/nice_mob_variants/textures/entity/frog/frog_creaking.png",
         "assets/nice_mob_variants/textures/entity/frog/frog_creaking_adult.png"
       ],
-      "babyTextureCandidates": []
+      "babyTextureCandidates": [],
+      "adultObjModel": {
+        "file": "tools/entity_models/frog/adult_regular.obj",
+        "requested": "regular",
+        "resolved": "adult_regular"
+      },
+      "babyObjModel": null
     },
     {
       "type": "frog",
@@ -1979,7 +2215,13 @@
         "assets/nice_mob_variants/textures/entity/frog/frog_dry.png",
         "assets/nice_mob_variants/textures/entity/frog/frog_dry_adult.png"
       ],
-      "babyTextureCandidates": []
+      "babyTextureCandidates": [],
+      "adultObjModel": {
+        "file": "tools/entity_models/frog/adult_regular.obj",
+        "requested": "regular",
+        "resolved": "adult_regular"
+      },
+      "babyObjModel": null
     },
     {
       "type": "frog",
@@ -1998,7 +2240,13 @@
         "assets/nice_mob_variants/textures/entity/frog/frog_ender.png",
         "assets/nice_mob_variants/textures/entity/frog/frog_ender_adult.png"
       ],
-      "babyTextureCandidates": []
+      "babyTextureCandidates": [],
+      "adultObjModel": {
+        "file": "tools/entity_models/frog/adult_regular.obj",
+        "requested": "regular",
+        "resolved": "adult_regular"
+      },
+      "babyObjModel": null
     },
     {
       "type": "frog",
@@ -2017,7 +2265,13 @@
         "assets/nice_mob_variants/textures/entity/frog/frog_frozen.png",
         "assets/nice_mob_variants/textures/entity/frog/frog_frozen_adult.png"
       ],
-      "babyTextureCandidates": []
+      "babyTextureCandidates": [],
+      "adultObjModel": {
+        "file": "tools/entity_models/frog/adult_regular.obj",
+        "requested": "regular",
+        "resolved": "adult_regular"
+      },
+      "babyObjModel": null
     },
     {
       "type": "frog",
@@ -2036,7 +2290,13 @@
         "assets/nice_mob_variants/textures/entity/frog/frog_golden.png",
         "assets/nice_mob_variants/textures/entity/frog/frog_golden_adult.png"
       ],
-      "babyTextureCandidates": []
+      "babyTextureCandidates": [],
+      "adultObjModel": {
+        "file": "tools/entity_models/frog/adult_regular.obj",
+        "requested": "regular",
+        "resolved": "adult_regular"
+      },
+      "babyObjModel": null
     },
     {
       "type": "frog",
@@ -2055,7 +2315,13 @@
         "assets/nice_mob_variants/textures/entity/frog/frog_guardian.png",
         "assets/nice_mob_variants/textures/entity/frog/frog_guardian_adult.png"
       ],
-      "babyTextureCandidates": []
+      "babyTextureCandidates": [],
+      "adultObjModel": {
+        "file": "tools/entity_models/frog/adult_regular.obj",
+        "requested": "regular",
+        "resolved": "adult_regular"
+      },
+      "babyObjModel": null
     },
     {
       "type": "frog",
@@ -2074,7 +2340,13 @@
         "assets/nice_mob_variants/textures/entity/frog/frog_muddy.png",
         "assets/nice_mob_variants/textures/entity/frog/frog_muddy_adult.png"
       ],
-      "babyTextureCandidates": []
+      "babyTextureCandidates": [],
+      "adultObjModel": {
+        "file": "tools/entity_models/frog/adult_regular.obj",
+        "requested": "regular",
+        "resolved": "adult_regular"
+      },
+      "babyObjModel": null
     },
     {
       "type": "frog",
@@ -2093,7 +2365,13 @@
         "assets/nice_mob_variants/textures/entity/frog/frog_nether.png",
         "assets/nice_mob_variants/textures/entity/frog/frog_nether_adult.png"
       ],
-      "babyTextureCandidates": []
+      "babyTextureCandidates": [],
+      "adultObjModel": {
+        "file": "tools/entity_models/frog/adult_regular.obj",
+        "requested": "regular",
+        "resolved": "adult_regular"
+      },
+      "babyObjModel": null
     },
     {
       "type": "frog",
@@ -2112,7 +2390,13 @@
         "assets/nice_mob_variants/textures/entity/frog/frog_sculk.png",
         "assets/nice_mob_variants/textures/entity/frog/frog_sculk_adult.png"
       ],
-      "babyTextureCandidates": []
+      "babyTextureCandidates": [],
+      "adultObjModel": {
+        "file": "tools/entity_models/frog/adult_regular.obj",
+        "requested": "regular",
+        "resolved": "adult_regular"
+      },
+      "babyObjModel": null
     },
     {
       "type": "pig",
@@ -2137,7 +2421,17 @@
         "assets/nice_mob_variants/textures/entity/pig/creamy_baby_baby.png",
         "assets/nice_mob_variants/textures/entity/pig/pig_creamy_baby.png",
         "assets/nice_mob_variants/textures/entity/pig/pig_creamy_baby_baby.png"
-      ]
+      ],
+      "adultObjModel": {
+        "file": "tools/entity_models/pig/adult_regular.obj",
+        "requested": "regular",
+        "resolved": "adult_regular"
+      },
+      "babyObjModel": {
+        "file": "tools/entity_models/pig/baby_regular.obj",
+        "requested": "regular",
+        "resolved": "baby_regular"
+      }
     },
     {
       "type": "pig",
@@ -2162,7 +2456,17 @@
         "assets/nice_mob_variants/textures/entity/pig/dark_baby_baby.png",
         "assets/nice_mob_variants/textures/entity/pig/pig_dark_baby.png",
         "assets/nice_mob_variants/textures/entity/pig/pig_dark_baby_baby.png"
-      ]
+      ],
+      "adultObjModel": {
+        "file": "tools/entity_models/pig/adult_regular.obj",
+        "requested": "regular",
+        "resolved": "adult_regular"
+      },
+      "babyObjModel": {
+        "file": "tools/entity_models/pig/baby_regular.obj",
+        "requested": "regular",
+        "resolved": "baby_regular"
+      }
     },
     {
       "type": "pig",
@@ -2187,7 +2491,17 @@
         "assets/nice_mob_variants/textures/entity/pig/ender_baby_baby.png",
         "assets/nice_mob_variants/textures/entity/pig/pig_ender_baby.png",
         "assets/nice_mob_variants/textures/entity/pig/pig_ender_baby_baby.png"
-      ]
+      ],
+      "adultObjModel": {
+        "file": "tools/entity_models/pig/adult_regular.obj",
+        "requested": "regular",
+        "resolved": "adult_regular"
+      },
+      "babyObjModel": {
+        "file": "tools/entity_models/pig/baby_regular.obj",
+        "requested": "regular",
+        "resolved": "baby_regular"
+      }
     },
     {
       "type": "pig",
@@ -2212,7 +2526,17 @@
         "assets/nice_mob_variants/textures/entity/pig/muddy_cold_baby_baby.png",
         "assets/nice_mob_variants/textures/entity/pig/pig_muddy_cold_baby.png",
         "assets/nice_mob_variants/textures/entity/pig/pig_muddy_cold_baby_baby.png"
-      ]
+      ],
+      "adultObjModel": {
+        "file": "tools/entity_models/pig/adult_regular.obj",
+        "requested": "cold",
+        "resolved": "adult_regular"
+      },
+      "babyObjModel": {
+        "file": "tools/entity_models/pig/baby_regular.obj",
+        "requested": "cold",
+        "resolved": "baby_regular"
+      }
     },
     {
       "type": "pig",
@@ -2237,7 +2561,17 @@
         "assets/nice_mob_variants/textures/entity/pig/muddy_creamy_baby_baby.png",
         "assets/nice_mob_variants/textures/entity/pig/pig_muddy_creamy_baby.png",
         "assets/nice_mob_variants/textures/entity/pig/pig_muddy_creamy_baby_baby.png"
-      ]
+      ],
+      "adultObjModel": {
+        "file": "tools/entity_models/pig/adult_regular.obj",
+        "requested": "regular",
+        "resolved": "adult_regular"
+      },
+      "babyObjModel": {
+        "file": "tools/entity_models/pig/baby_regular.obj",
+        "requested": "regular",
+        "resolved": "baby_regular"
+      }
     },
     {
       "type": "pig",
@@ -2262,7 +2596,17 @@
         "assets/nice_mob_variants/textures/entity/pig/muddy_dark_baby_baby.png",
         "assets/nice_mob_variants/textures/entity/pig/pig_muddy_dark_baby.png",
         "assets/nice_mob_variants/textures/entity/pig/pig_muddy_dark_baby_baby.png"
-      ]
+      ],
+      "adultObjModel": {
+        "file": "tools/entity_models/pig/adult_regular.obj",
+        "requested": "regular",
+        "resolved": "adult_regular"
+      },
+      "babyObjModel": {
+        "file": "tools/entity_models/pig/baby_regular.obj",
+        "requested": "regular",
+        "resolved": "baby_regular"
+      }
     },
     {
       "type": "pig",
@@ -2287,7 +2631,17 @@
         "assets/nice_mob_variants/textures/entity/pig/muddy_pale_baby_baby.png",
         "assets/nice_mob_variants/textures/entity/pig/pig_muddy_pale_baby.png",
         "assets/nice_mob_variants/textures/entity/pig/pig_muddy_pale_baby_baby.png"
-      ]
+      ],
+      "adultObjModel": {
+        "file": "tools/entity_models/pig/adult_regular.obj",
+        "requested": "regular",
+        "resolved": "adult_regular"
+      },
+      "babyObjModel": {
+        "file": "tools/entity_models/pig/baby_regular.obj",
+        "requested": "regular",
+        "resolved": "baby_regular"
+      }
     },
     {
       "type": "pig",
@@ -2312,7 +2666,17 @@
         "assets/nice_mob_variants/textures/entity/pig/muddy_temperate_baby_baby.png",
         "assets/nice_mob_variants/textures/entity/pig/pig_muddy_temperate_baby.png",
         "assets/nice_mob_variants/textures/entity/pig/pig_muddy_temperate_baby_baby.png"
-      ]
+      ],
+      "adultObjModel": {
+        "file": "tools/entity_models/pig/adult_regular.obj",
+        "requested": "regular",
+        "resolved": "adult_regular"
+      },
+      "babyObjModel": {
+        "file": "tools/entity_models/pig/baby_regular.obj",
+        "requested": "regular",
+        "resolved": "baby_regular"
+      }
     },
     {
       "type": "pig",
@@ -2337,7 +2701,17 @@
         "assets/nice_mob_variants/textures/entity/pig/muddy_warm_baby_baby.png",
         "assets/nice_mob_variants/textures/entity/pig/pig_muddy_warm_baby.png",
         "assets/nice_mob_variants/textures/entity/pig/pig_muddy_warm_baby_baby.png"
-      ]
+      ],
+      "adultObjModel": {
+        "file": "tools/entity_models/pig/adult_regular.obj",
+        "requested": "regular",
+        "resolved": "adult_regular"
+      },
+      "babyObjModel": {
+        "file": "tools/entity_models/pig/baby_regular.obj",
+        "requested": "regular",
+        "resolved": "baby_regular"
+      }
     },
     {
       "type": "pig",
@@ -2362,7 +2736,17 @@
         "assets/nice_mob_variants/textures/entity/pig/muddy_wild_baby_baby.png",
         "assets/nice_mob_variants/textures/entity/pig/pig_muddy_wild_baby.png",
         "assets/nice_mob_variants/textures/entity/pig/pig_muddy_wild_baby_baby.png"
-      ]
+      ],
+      "adultObjModel": {
+        "file": "tools/entity_models/pig/adult_regular.obj",
+        "requested": "regular",
+        "resolved": "adult_regular"
+      },
+      "babyObjModel": {
+        "file": "tools/entity_models/pig/baby_regular.obj",
+        "requested": "regular",
+        "resolved": "baby_regular"
+      }
     },
     {
       "type": "pig",
@@ -2387,7 +2771,17 @@
         "assets/nice_mob_variants/textures/entity/pig/pale_baby_baby.png",
         "assets/nice_mob_variants/textures/entity/pig/pig_pale_baby.png",
         "assets/nice_mob_variants/textures/entity/pig/pig_pale_baby_baby.png"
-      ]
+      ],
+      "adultObjModel": {
+        "file": "tools/entity_models/pig/adult_regular.obj",
+        "requested": "regular",
+        "resolved": "adult_regular"
+      },
+      "babyObjModel": {
+        "file": "tools/entity_models/pig/baby_regular.obj",
+        "requested": "regular",
+        "resolved": "baby_regular"
+      }
     },
     {
       "type": "pig",
@@ -2412,7 +2806,17 @@
         "assets/nice_mob_variants/textures/entity/pig/potato_baby_baby.png",
         "assets/nice_mob_variants/textures/entity/pig/pig_potato_baby.png",
         "assets/nice_mob_variants/textures/entity/pig/pig_potato_baby_baby.png"
-      ]
+      ],
+      "adultObjModel": {
+        "file": "tools/entity_models/pig/adult_regular.obj",
+        "requested": "regular",
+        "resolved": "adult_regular"
+      },
+      "babyObjModel": {
+        "file": "tools/entity_models/pig/baby_regular.obj",
+        "requested": "regular",
+        "resolved": "baby_regular"
+      }
     },
     {
       "type": "pig",
@@ -2437,7 +2841,17 @@
         "assets/nice_mob_variants/textures/entity/pig/skeleton_baby_baby.png",
         "assets/nice_mob_variants/textures/entity/pig/pig_skeleton_baby.png",
         "assets/nice_mob_variants/textures/entity/pig/pig_skeleton_baby_baby.png"
-      ]
+      ],
+      "adultObjModel": {
+        "file": "tools/entity_models/pig/adult_regular.obj",
+        "requested": "regular",
+        "resolved": "adult_regular"
+      },
+      "babyObjModel": {
+        "file": "tools/entity_models/pig/baby_regular.obj",
+        "requested": "regular",
+        "resolved": "baby_regular"
+      }
     },
     {
       "type": "pig",
@@ -2462,7 +2876,17 @@
         "assets/nice_mob_variants/textures/entity/pig/spotted_creamy_baby_baby.png",
         "assets/nice_mob_variants/textures/entity/pig/pig_spotted_creamy_baby.png",
         "assets/nice_mob_variants/textures/entity/pig/pig_spotted_creamy_baby_baby.png"
-      ]
+      ],
+      "adultObjModel": {
+        "file": "tools/entity_models/pig/adult_regular.obj",
+        "requested": "regular",
+        "resolved": "adult_regular"
+      },
+      "babyObjModel": {
+        "file": "tools/entity_models/pig/baby_regular.obj",
+        "requested": "regular",
+        "resolved": "baby_regular"
+      }
     },
     {
       "type": "pig",
@@ -2487,7 +2911,17 @@
         "assets/nice_mob_variants/textures/entity/pig/spotted_dark_baby_baby.png",
         "assets/nice_mob_variants/textures/entity/pig/pig_spotted_dark_baby.png",
         "assets/nice_mob_variants/textures/entity/pig/pig_spotted_dark_baby_baby.png"
-      ]
+      ],
+      "adultObjModel": {
+        "file": "tools/entity_models/pig/adult_regular.obj",
+        "requested": "regular",
+        "resolved": "adult_regular"
+      },
+      "babyObjModel": {
+        "file": "tools/entity_models/pig/baby_regular.obj",
+        "requested": "regular",
+        "resolved": "baby_regular"
+      }
     },
     {
       "type": "pig",
@@ -2512,7 +2946,17 @@
         "assets/nice_mob_variants/textures/entity/pig/spotted_pale_baby_baby.png",
         "assets/nice_mob_variants/textures/entity/pig/pig_spotted_pale_baby.png",
         "assets/nice_mob_variants/textures/entity/pig/pig_spotted_pale_baby_baby.png"
-      ]
+      ],
+      "adultObjModel": {
+        "file": "tools/entity_models/pig/adult_regular.obj",
+        "requested": "regular",
+        "resolved": "adult_regular"
+      },
+      "babyObjModel": {
+        "file": "tools/entity_models/pig/baby_regular.obj",
+        "requested": "regular",
+        "resolved": "baby_regular"
+      }
     },
     {
       "type": "pig",
@@ -2537,7 +2981,17 @@
         "assets/nice_mob_variants/textures/entity/pig/spotted_temperate_baby_baby.png",
         "assets/nice_mob_variants/textures/entity/pig/pig_spotted_temperate_baby.png",
         "assets/nice_mob_variants/textures/entity/pig/pig_spotted_temperate_baby_baby.png"
-      ]
+      ],
+      "adultObjModel": {
+        "file": "tools/entity_models/pig/adult_regular.obj",
+        "requested": "regular",
+        "resolved": "adult_regular"
+      },
+      "babyObjModel": {
+        "file": "tools/entity_models/pig/baby_regular.obj",
+        "requested": "regular",
+        "resolved": "baby_regular"
+      }
     },
     {
       "type": "pig",
@@ -2562,7 +3016,17 @@
         "assets/nice_mob_variants/textures/entity/pig/spotted_warm_baby_baby.png",
         "assets/nice_mob_variants/textures/entity/pig/pig_spotted_warm_baby.png",
         "assets/nice_mob_variants/textures/entity/pig/pig_spotted_warm_baby_baby.png"
-      ]
+      ],
+      "adultObjModel": {
+        "file": "tools/entity_models/pig/adult_regular.obj",
+        "requested": "regular",
+        "resolved": "adult_regular"
+      },
+      "babyObjModel": {
+        "file": "tools/entity_models/pig/baby_regular.obj",
+        "requested": "regular",
+        "resolved": "baby_regular"
+      }
     },
     {
       "type": "pig",
@@ -2587,7 +3051,17 @@
         "assets/nice_mob_variants/textures/entity/pig/wandering_baby_baby.png",
         "assets/nice_mob_variants/textures/entity/pig/pig_wandering_baby.png",
         "assets/nice_mob_variants/textures/entity/pig/pig_wandering_baby_baby.png"
-      ]
+      ],
+      "adultObjModel": {
+        "file": "tools/entity_models/pig/adult_regular.obj",
+        "requested": "regular",
+        "resolved": "adult_regular"
+      },
+      "babyObjModel": {
+        "file": "tools/entity_models/pig/baby_regular.obj",
+        "requested": "regular",
+        "resolved": "baby_regular"
+      }
     },
     {
       "type": "pig",
@@ -2612,7 +3086,17 @@
         "assets/nice_mob_variants/textures/entity/pig/wild_baby_baby.png",
         "assets/nice_mob_variants/textures/entity/pig/pig_wild_baby.png",
         "assets/nice_mob_variants/textures/entity/pig/pig_wild_baby_baby.png"
-      ]
+      ],
+      "adultObjModel": {
+        "file": "tools/entity_models/pig/adult_regular.obj",
+        "requested": "regular",
+        "resolved": "adult_regular"
+      },
+      "babyObjModel": {
+        "file": "tools/entity_models/pig/baby_regular.obj",
+        "requested": "regular",
+        "resolved": "baby_regular"
+      }
     },
     {
       "type": "cow",
@@ -2637,7 +3121,17 @@
         "assets/nice_mob_variants/textures/entity/cow/cold_dark_baby_baby.png",
         "assets/nice_mob_variants/textures/entity/cow/cow_cold_dark_baby.png",
         "assets/nice_mob_variants/textures/entity/cow/cow_cold_dark_baby_baby.png"
-      ]
+      ],
+      "adultObjModel": {
+        "file": "tools/entity_models/cow/adult_cold.obj",
+        "requested": "cold",
+        "resolved": "adult_cold"
+      },
+      "babyObjModel": {
+        "file": "tools/entity_models/cow/baby_cold.obj",
+        "requested": "cold",
+        "resolved": "baby_cold"
+      }
     },
     {
       "type": "cow",
@@ -2662,7 +3156,17 @@
         "assets/nice_mob_variants/textures/entity/cow/cold_white_baby_baby.png",
         "assets/nice_mob_variants/textures/entity/cow/cow_cold_white_baby.png",
         "assets/nice_mob_variants/textures/entity/cow/cow_cold_white_baby_baby.png"
-      ]
+      ],
+      "adultObjModel": {
+        "file": "tools/entity_models/cow/adult_cold.obj",
+        "requested": "cold",
+        "resolved": "adult_cold"
+      },
+      "babyObjModel": {
+        "file": "tools/entity_models/cow/baby_cold.obj",
+        "requested": "cold",
+        "resolved": "baby_cold"
+      }
     },
     {
       "type": "cow",
@@ -2687,7 +3191,17 @@
         "assets/nice_mob_variants/textures/entity/cow/cold_yellow_baby_baby.png",
         "assets/nice_mob_variants/textures/entity/cow/cow_cold_yellow_baby.png",
         "assets/nice_mob_variants/textures/entity/cow/cow_cold_yellow_baby_baby.png"
-      ]
+      ],
+      "adultObjModel": {
+        "file": "tools/entity_models/cow/adult_cold.obj",
+        "requested": "cold",
+        "resolved": "adult_cold"
+      },
+      "babyObjModel": {
+        "file": "tools/entity_models/cow/baby_cold.obj",
+        "requested": "cold",
+        "resolved": "baby_cold"
+      }
     },
     {
       "type": "cow",
@@ -2712,7 +3226,17 @@
         "assets/nice_mob_variants/textures/entity/cow/creamy_baby_baby.png",
         "assets/nice_mob_variants/textures/entity/cow/cow_creamy_baby.png",
         "assets/nice_mob_variants/textures/entity/cow/cow_creamy_baby_baby.png"
-      ]
+      ],
+      "adultObjModel": {
+        "file": "tools/entity_models/cow/adult_regular.obj",
+        "requested": "regular",
+        "resolved": "adult_regular"
+      },
+      "babyObjModel": {
+        "file": "tools/entity_models/cow/baby_regular.obj",
+        "requested": "regular",
+        "resolved": "baby_regular"
+      }
     },
     {
       "type": "cow",
@@ -2737,7 +3261,17 @@
         "assets/nice_mob_variants/textures/entity/cow/dark_baby_baby.png",
         "assets/nice_mob_variants/textures/entity/cow/cow_dark_baby.png",
         "assets/nice_mob_variants/textures/entity/cow/cow_dark_baby_baby.png"
-      ]
+      ],
+      "adultObjModel": {
+        "file": "tools/entity_models/cow/adult_regular.obj",
+        "requested": "regular",
+        "resolved": "adult_regular"
+      },
+      "babyObjModel": {
+        "file": "tools/entity_models/cow/baby_regular.obj",
+        "requested": "regular",
+        "resolved": "baby_regular"
+      }
     },
     {
       "type": "cow",
@@ -2762,7 +3296,17 @@
         "assets/nice_mob_variants/textures/entity/cow/ender_baby_baby.png",
         "assets/nice_mob_variants/textures/entity/cow/cow_ender_baby.png",
         "assets/nice_mob_variants/textures/entity/cow/cow_ender_baby_baby.png"
-      ]
+      ],
+      "adultObjModel": {
+        "file": "tools/entity_models/cow/adult_regular.obj",
+        "requested": "regular",
+        "resolved": "adult_regular"
+      },
+      "babyObjModel": {
+        "file": "tools/entity_models/cow/baby_regular.obj",
+        "requested": "regular",
+        "resolved": "baby_regular"
+      }
     },
     {
       "type": "cow",
@@ -2787,7 +3331,17 @@
         "assets/nice_mob_variants/textures/entity/cow/gray_baby_baby.png",
         "assets/nice_mob_variants/textures/entity/cow/cow_gray_baby.png",
         "assets/nice_mob_variants/textures/entity/cow/cow_gray_baby_baby.png"
-      ]
+      ],
+      "adultObjModel": {
+        "file": "tools/entity_models/cow/adult_regular.obj",
+        "requested": "regular",
+        "resolved": "adult_regular"
+      },
+      "babyObjModel": {
+        "file": "tools/entity_models/cow/baby_regular.obj",
+        "requested": "regular",
+        "resolved": "baby_regular"
+      }
     },
     {
       "type": "cow",
@@ -2812,7 +3366,17 @@
         "assets/nice_mob_variants/textures/entity/cow/pink_moobloom_baby_baby.png",
         "assets/nice_mob_variants/textures/entity/cow/cow_pink_moobloom_baby.png",
         "assets/nice_mob_variants/textures/entity/cow/cow_pink_moobloom_baby_baby.png"
-      ]
+      ],
+      "adultObjModel": {
+        "file": "tools/entity_models/cow/adult_regular.obj",
+        "requested": "regular",
+        "resolved": "adult_regular"
+      },
+      "babyObjModel": {
+        "file": "tools/entity_models/cow/baby_regular.obj",
+        "requested": "regular",
+        "resolved": "baby_regular"
+      }
     },
     {
       "type": "cow",
@@ -2837,7 +3401,17 @@
         "assets/nice_mob_variants/textures/entity/cow/potato_baby_baby.png",
         "assets/nice_mob_variants/textures/entity/cow/cow_potato_baby.png",
         "assets/nice_mob_variants/textures/entity/cow/cow_potato_baby_baby.png"
-      ]
+      ],
+      "adultObjModel": {
+        "file": "tools/entity_models/cow/adult_regular.obj",
+        "requested": "regular",
+        "resolved": "adult_regular"
+      },
+      "babyObjModel": {
+        "file": "tools/entity_models/cow/baby_regular.obj",
+        "requested": "regular",
+        "resolved": "baby_regular"
+      }
     },
     {
       "type": "cow",
@@ -2862,7 +3436,17 @@
         "assets/nice_mob_variants/textures/entity/cow/skeleton_baby_baby.png",
         "assets/nice_mob_variants/textures/entity/cow/cow_skeleton_baby.png",
         "assets/nice_mob_variants/textures/entity/cow/cow_skeleton_baby_baby.png"
-      ]
+      ],
+      "adultObjModel": {
+        "file": "tools/entity_models/cow/adult_warm.obj",
+        "requested": "warm",
+        "resolved": "adult_warm"
+      },
+      "babyObjModel": {
+        "file": "tools/entity_models/cow/baby_warm.obj",
+        "requested": "warm",
+        "resolved": "baby_warm"
+      }
     },
     {
       "type": "cow",
@@ -2887,7 +3471,17 @@
         "assets/nice_mob_variants/textures/entity/cow/sniffer_baby_baby.png",
         "assets/nice_mob_variants/textures/entity/cow/cow_sniffer_baby.png",
         "assets/nice_mob_variants/textures/entity/cow/cow_sniffer_baby_baby.png"
-      ]
+      ],
+      "adultObjModel": {
+        "file": "tools/entity_models/cow/adult_cold.obj",
+        "requested": "cold",
+        "resolved": "adult_cold"
+      },
+      "babyObjModel": {
+        "file": "tools/entity_models/cow/baby_cold.obj",
+        "requested": "cold",
+        "resolved": "baby_cold"
+      }
     },
     {
       "type": "cow",
@@ -2912,7 +3506,17 @@
         "assets/nice_mob_variants/textures/entity/cow/wandering_baby_baby.png",
         "assets/nice_mob_variants/textures/entity/cow/cow_wandering_baby.png",
         "assets/nice_mob_variants/textures/entity/cow/cow_wandering_baby_baby.png"
-      ]
+      ],
+      "adultObjModel": {
+        "file": "tools/entity_models/cow/adult_regular.obj",
+        "requested": "regular",
+        "resolved": "adult_regular"
+      },
+      "babyObjModel": {
+        "file": "tools/entity_models/cow/baby_regular.obj",
+        "requested": "regular",
+        "resolved": "baby_regular"
+      }
     },
     {
       "type": "cow",
@@ -2937,7 +3541,17 @@
         "assets/nice_mob_variants/textures/entity/cow/warm_brown_baby_baby.png",
         "assets/nice_mob_variants/textures/entity/cow/cow_warm_brown_baby.png",
         "assets/nice_mob_variants/textures/entity/cow/cow_warm_brown_baby_baby.png"
-      ]
+      ],
+      "adultObjModel": {
+        "file": "tools/entity_models/cow/adult_warm.obj",
+        "requested": "warm",
+        "resolved": "adult_warm"
+      },
+      "babyObjModel": {
+        "file": "tools/entity_models/cow/baby_warm.obj",
+        "requested": "warm",
+        "resolved": "baby_warm"
+      }
     },
     {
       "type": "cow",
@@ -2962,7 +3576,17 @@
         "assets/nice_mob_variants/textures/entity/cow/warm_gray_baby_baby.png",
         "assets/nice_mob_variants/textures/entity/cow/cow_warm_gray_baby.png",
         "assets/nice_mob_variants/textures/entity/cow/cow_warm_gray_baby_baby.png"
-      ]
+      ],
+      "adultObjModel": {
+        "file": "tools/entity_models/cow/adult_warm.obj",
+        "requested": "warm",
+        "resolved": "adult_warm"
+      },
+      "babyObjModel": {
+        "file": "tools/entity_models/cow/baby_warm.obj",
+        "requested": "warm",
+        "resolved": "baby_warm"
+      }
     },
     {
       "type": "cow",
@@ -2987,7 +3611,17 @@
         "assets/nice_mob_variants/textures/entity/cow/yellow_moobloom_baby_baby.png",
         "assets/nice_mob_variants/textures/entity/cow/cow_yellow_moobloom_baby.png",
         "assets/nice_mob_variants/textures/entity/cow/cow_yellow_moobloom_baby_baby.png"
-      ]
+      ],
+      "adultObjModel": {
+        "file": "tools/entity_models/cow/adult_regular.obj",
+        "requested": "regular",
+        "resolved": "adult_regular"
+      },
+      "babyObjModel": {
+        "file": "tools/entity_models/cow/baby_regular.obj",
+        "requested": "regular",
+        "resolved": "baby_regular"
+      }
     },
     {
       "type": "wolf",
@@ -3012,7 +3646,17 @@
         "assets/nice_mob_variants/textures/entity/wolf/black_baby_baby.png",
         "assets/nice_mob_variants/textures/entity/wolf/wolf_black_baby.png",
         "assets/nice_mob_variants/textures/entity/wolf/wolf_black_baby_baby.png"
-      ]
+      ],
+      "adultObjModel": {
+        "file": "tools/entity_models/wolf/adult_regular.obj",
+        "requested": "regular",
+        "resolved": "adult_regular"
+      },
+      "babyObjModel": {
+        "file": "tools/entity_models/wolf/baby_regular.obj",
+        "requested": "regular",
+        "resolved": "baby_regular"
+      }
     },
     {
       "type": "wolf",
@@ -3037,7 +3681,17 @@
         "assets/nice_mob_variants/textures/entity/wolf/creaking_baby_baby.png",
         "assets/nice_mob_variants/textures/entity/wolf/wolf_creaking_baby.png",
         "assets/nice_mob_variants/textures/entity/wolf/wolf_creaking_baby_baby.png"
-      ]
+      ],
+      "adultObjModel": {
+        "file": "tools/entity_models/wolf/adult_regular.obj",
+        "requested": "regular",
+        "resolved": "adult_regular"
+      },
+      "babyObjModel": {
+        "file": "tools/entity_models/wolf/baby_regular.obj",
+        "requested": "regular",
+        "resolved": "baby_regular"
+      }
     },
     {
       "type": "wolf",
@@ -3062,7 +3716,17 @@
         "assets/nice_mob_variants/textures/entity/wolf/dark_baby_baby.png",
         "assets/nice_mob_variants/textures/entity/wolf/wolf_dark_baby.png",
         "assets/nice_mob_variants/textures/entity/wolf/wolf_dark_baby_baby.png"
-      ]
+      ],
+      "adultObjModel": {
+        "file": "tools/entity_models/wolf/adult_regular.obj",
+        "requested": "regular",
+        "resolved": "adult_regular"
+      },
+      "babyObjModel": {
+        "file": "tools/entity_models/wolf/baby_regular.obj",
+        "requested": "regular",
+        "resolved": "baby_regular"
+      }
     },
     {
       "type": "wolf",
@@ -3087,7 +3751,17 @@
         "assets/nice_mob_variants/textures/entity/wolf/shiba_baby_baby.png",
         "assets/nice_mob_variants/textures/entity/wolf/wolf_shiba_baby.png",
         "assets/nice_mob_variants/textures/entity/wolf/wolf_shiba_baby_baby.png"
-      ]
+      ],
+      "adultObjModel": {
+        "file": "tools/entity_models/wolf/adult_regular.obj",
+        "requested": "regular",
+        "resolved": "adult_regular"
+      },
+      "babyObjModel": {
+        "file": "tools/entity_models/wolf/baby_regular.obj",
+        "requested": "regular",
+        "resolved": "baby_regular"
+      }
     },
     {
       "type": "wolf",
@@ -3112,7 +3786,17 @@
         "assets/nice_mob_variants/textures/entity/wolf/skeleton_baby_baby.png",
         "assets/nice_mob_variants/textures/entity/wolf/wolf_skeleton_baby.png",
         "assets/nice_mob_variants/textures/entity/wolf/wolf_skeleton_baby_baby.png"
-      ]
+      ],
+      "adultObjModel": {
+        "file": "tools/entity_models/wolf/adult_regular.obj",
+        "requested": "regular",
+        "resolved": "adult_regular"
+      },
+      "babyObjModel": {
+        "file": "tools/entity_models/wolf/baby_regular.obj",
+        "requested": "regular",
+        "resolved": "baby_regular"
+      }
     },
     {
       "type": "wolf",
@@ -3137,7 +3821,17 @@
         "assets/nice_mob_variants/textures/entity/wolf/timber_baby_baby.png",
         "assets/nice_mob_variants/textures/entity/wolf/wolf_timber_baby.png",
         "assets/nice_mob_variants/textures/entity/wolf/wolf_timber_baby_baby.png"
-      ]
+      ],
+      "adultObjModel": {
+        "file": "tools/entity_models/wolf/adult_regular.obj",
+        "requested": "regular",
+        "resolved": "adult_regular"
+      },
+      "babyObjModel": {
+        "file": "tools/entity_models/wolf/baby_regular.obj",
+        "requested": "regular",
+        "resolved": "baby_regular"
+      }
     },
     {
       "type": "wolf",
@@ -3162,7 +3856,17 @@
         "assets/nice_mob_variants/textures/entity/wolf/white_black_baby_baby.png",
         "assets/nice_mob_variants/textures/entity/wolf/wolf_white_black_baby.png",
         "assets/nice_mob_variants/textures/entity/wolf/wolf_white_black_baby_baby.png"
-      ]
+      ],
+      "adultObjModel": {
+        "file": "tools/entity_models/wolf/adult_regular.obj",
+        "requested": "regular",
+        "resolved": "adult_regular"
+      },
+      "babyObjModel": {
+        "file": "tools/entity_models/wolf/baby_regular.obj",
+        "requested": "regular",
+        "resolved": "baby_regular"
+      }
     },
     {
       "type": "zombie_nautilus",
@@ -3181,7 +3885,13 @@
         "assets/nice_mob_variants/textures/entity/zombie_nautilus/zombie_nautilus_cold.png",
         "assets/nice_mob_variants/textures/entity/zombie_nautilus/zombie_nautilus_cold_adult.png"
       ],
-      "babyTextureCandidates": []
+      "babyTextureCandidates": [],
+      "adultObjModel": {
+        "file": "tools/entity_models/zombie_nautilus/adult_regular.obj",
+        "requested": "regular",
+        "resolved": "adult_regular"
+      },
+      "babyObjModel": null
     },
     {
       "type": "zombie_nautilus",
@@ -3200,7 +3910,13 @@
         "assets/nice_mob_variants/textures/entity/zombie_nautilus/zombie_nautilus_guardian.png",
         "assets/nice_mob_variants/textures/entity/zombie_nautilus/zombie_nautilus_guardian_adult.png"
       ],
-      "babyTextureCandidates": []
+      "babyTextureCandidates": [],
+      "adultObjModel": {
+        "file": "tools/entity_models/zombie_nautilus/adult_regular.obj",
+        "requested": "regular",
+        "resolved": "adult_regular"
+      },
+      "babyObjModel": null
     },
     {
       "type": "zombie_nautilus",
@@ -3219,7 +3935,13 @@
         "assets/nice_mob_variants/textures/entity/zombie_nautilus/zombie_nautilus_husk.png",
         "assets/nice_mob_variants/textures/entity/zombie_nautilus/zombie_nautilus_husk_adult.png"
       ],
-      "babyTextureCandidates": []
+      "babyTextureCandidates": [],
+      "adultObjModel": {
+        "file": "tools/entity_models/zombie_nautilus/adult_regular.obj",
+        "requested": "regular",
+        "resolved": "adult_regular"
+      },
+      "babyObjModel": null
     },
     {
       "type": "zombie_nautilus",
@@ -3238,7 +3960,13 @@
         "assets/nice_mob_variants/textures/entity/zombie_nautilus/zombie_nautilus_swamp.png",
         "assets/nice_mob_variants/textures/entity/zombie_nautilus/zombie_nautilus_swamp_adult.png"
       ],
-      "babyTextureCandidates": []
+      "babyTextureCandidates": [],
+      "adultObjModel": {
+        "file": "tools/entity_models/zombie_nautilus/adult_regular.obj",
+        "requested": "regular",
+        "resolved": "adult_regular"
+      },
+      "babyObjModel": null
     }
   ]
 }
