@@ -260,13 +260,14 @@ async function renderModel(modelFile, textureFile, outputFile, type, age) {
   const tex = textureMeta.data;
   const texW = textureMeta.info.width || model.textureWidth || 64;
   const texH = textureMeta.info.height || model.textureHeight || 64;
-  const fallbackColor = averageVisibleTextureColor(tex);
-
   let quads = model.quads || [];
   if (!quads.length) throw new Error(`Model ${modelFile} has no quads`);
 
+  const uvMode = inferUvMode(quads, texW, texH);
+  debug(`render uv mode for ${modelFile}: ${JSON.stringify(uvMode)}`);
+
   const transformed = quads.map(q => {
-    const pts = q.vertices.map(v => normalizeVertex(v, texW, texH))
+    const pts = q.vertices.map(v => normalizeVertex(v, texW, texH, uvMode))
       .map(v => ({ x: v.x, y: v.y + (meta.yOffset || 0), z: v.z, u: v.u, v: v.v }))
       .map(pt => rotateX(pt, deg(meta.pitch || 0)))
       .map(pt => rotateY(pt, deg(meta.yaw || 180)))
@@ -304,22 +305,9 @@ async function renderModel(modelFile, textureFile, outputFile, type, age) {
     rasterTexturedTriangle(rgba, width, height, tex, texW, texH, pts[0], pts[2], pts[3], null);
   }
 
-  let visible = countVisiblePixels(rgba);
+  const visible = countVisiblePixels(rgba);
   if (visible < 20) {
-    console.warn(`[entity-render-warning] textured pass was blank for ${outputFile}; retrying with texture-color silhouette fallback. model=${modelFile} texture=${textureFile}`);
-    rgba = Buffer.alloc(width * height * 4, 0);
-    for (const q of transformed) {
-      const pts = q.vertices.map(project);
-      rasterTexturedTriangle(rgba, width, height, tex, texW, texH, pts[0], pts[1], pts[2], fallbackColor);
-      rasterTexturedTriangle(rgba, width, height, tex, texW, texH, pts[0], pts[2], pts[3], fallbackColor);
-    }
-    visible = countVisiblePixels(rgba);
-  }
-
-  if (visible < 20) {
-    // Last-resort debug marker, so CI never silently publishes a transparent PNG.
-    // This should only happen if the model itself projected to zero-area geometry.
-    drawDebugMarker(rgba, width, height, fallbackColor);
+    throw new Error(`Textured render produced ${visible} visible pixels before write: ${outputFile}. This usually means UV coordinates were exported in an unexpected space. uvMode=${JSON.stringify(uvMode)} model=${modelFile} texture=${textureFile}`);
   }
 
   fs.mkdirSync(path.dirname(outputFile), { recursive: true });
@@ -372,14 +360,37 @@ function drawDebugMarker(rgba, width, height, color) {
   }
 }
 
-function normalizeVertex(v, texW, texH) {
+function inferUvMode(quads, texW, texH) {
+  const us = [];
+  const vs = [];
+  for (const q of quads || []) for (const v of q.vertices || []) {
+    const u = Number(v.u);
+    const vv = Number(v.v);
+    if (Number.isFinite(u)) us.push(u);
+    if (Number.isFinite(vv)) vs.push(vv);
+  }
+  const maxU = us.length ? Math.max(...us.map(Math.abs)) : 0;
+  const maxV = vs.length ? Math.max(...vs.map(Math.abs)) : 0;
+  const minU = us.length ? Math.min(...us) : 0;
+  const minV = vs.length ? Math.min(...vs) : 0;
+
+  // 26.x baked ModelPart.Vertex UVs may be normalized floats (0..1, sometimes
+  // slightly above 1 from edge inflation). Older/named runtimes may expose
+  // pixel-space UVs directly. v14 decided per vertex and required both u and v
+  // to be <= 1, which left mixed/edge UVs near 0 and made every triangle sample
+  // the same transparent/edge texel. Decide once per model instead.
+  const normalized = maxU <= 2.25 && maxV <= 2.25;
+  return { normalized, minU, maxU, minV, maxV, texW, texH };
+}
+
+function normalizeVertex(v, texW, texH, uvMode) {
   let u = Number(v.u || 0);
   let vv = Number(v.v || 0);
-  // Some reflected runtimes expose normalized UVs; the rasterizer needs texture pixels.
-  if (u >= 0 && u <= 1 && vv >= 0 && vv <= 1) {
+  if (uvMode && uvMode.normalized) {
     u *= texW;
     vv *= texH;
   }
+  // Keep UVs in pixel space and let the sampler clamp final pixels.
   return { x: Number(v.x || 0), y: Number(v.y || 0), z: Number(v.z || 0), u, v: vv };
 }
 
@@ -433,8 +444,8 @@ function rasterTexturedTriangle(dst, dw, dh, tex, tw, th, p0, p1, p2, fallbackCo
 
       const u = w0 * p0.u + w1 * p1.u + w2 * p2.u;
       const v = w0 * p0.v + w1 * p1.v + w2 * p2.v;
-      let sx = Math.max(0, Math.min(tw - 1, Math.round(u)));
-      let sy = Math.max(0, Math.min(th - 1, Math.round(v)));
+      let sx = Math.max(0, Math.min(tw - 1, Math.floor(u)));
+      let sy = Math.max(0, Math.min(th - 1, Math.floor(v)));
       let si = (sy * tw + sx) * 4;
       let sr = tex[si], sg = tex[si + 1], sb = tex[si + 2], sa = tex[si + 3];
 
