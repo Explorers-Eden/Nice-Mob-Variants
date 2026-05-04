@@ -9,7 +9,6 @@ const path = require("path");
 const { createCanvas, loadImage } = require("canvas");
 
 const OUTPUT_ROOT = path.join("wiki", "images", "entity");
-const VANILLA_ASSET_ROOT = path.join(".cache", "vanilla-assets", "assets", "minecraft", "textures", "entity");
 const IMAGE_SIZE = 512;
 const KNOWN_TYPES = new Set(["cat", "chicken", "cow", "frog", "pig", "wolf"]);
 
@@ -318,10 +317,8 @@ async function loadTexture(file) {
 
 async function main() {
   const version = readVanillaVersion();
-  console.log(`Generating entity renders using vanilla asset cache for Minecraft ${version}.`);
-  if (!fs.existsSync(VANILLA_ASSET_ROOT)) {
-    console.warn(`Vanilla entity texture directory not found at ${VANILLA_ASSET_ROOT}. Continuing with mod textures only.`);
-  }
+  console.log(`Generating entity renders using renderer profiles for Minecraft ${version}.`);
+  console.log("Note: Java Edition entity models are client-code models, not vanilla asset JSON files; this generator uses version-aware renderer profiles and mod textures.");
 
   const variants = discoverVariantTextures();
   if (variants.length === 0) {
