@@ -30,6 +30,7 @@ const HAS_BABY_MODEL = new Set(['cat', 'chicken', 'pig', 'cow', 'wolf']);
 
 const OUTPUT_ROOT = path.join('wiki', 'images', 'entity');
 const MODEL_CACHE_ROOT = path.join('.cache', 'entity-models');
+const MODEL_EXPORT_FAILURES = new Map();
 const REPORT_PATH = path.join('wiki', 'images', 'entity', '_render-report.json');
 const DEBUG = process.env.ENTITY_RENDER_DEBUG !== '0';
 function debug(message) { if (DEBUG) console.log(`[entity-render-debug] ${message}`); }
@@ -210,6 +211,8 @@ function ensureExporterReady(version) {
 }
 
 function exportModel(version, type, model, age) {
+  const key = `${version}:${type}:${model || 'default'}:${age}`;
+  if (MODEL_EXPORT_FAILURES.has(key)) throw MODEL_EXPORT_FAILURES.get(key);
   const out = modelCacheFile(version, type, model, age);
   if (exists(out)) return out;
   fs.mkdirSync(path.dirname(out), { recursive: true });
@@ -220,8 +223,18 @@ function exportModel(version, type, model, age) {
     '--no-daemon', '--quiet', 'run',
     `--args=--minecraft-version ${version} --entity ${type} --model ${model || 'default'} --age ${age} --output ${path.resolve(out)}`
   ];
-  cp.execFileSync('gradle', args, { stdio: 'inherit' });
-  if (!exists(out)) throw new Error(`Exporter did not create ${out}`);
+  try {
+    cp.execFileSync('gradle', args, { stdio: 'inherit' });
+  } catch (error) {
+    const wrapped = new Error(`Model export failed once for ${key}; suppressing repeat attempts for the same model/age. ${error.message || error}`);
+    MODEL_EXPORT_FAILURES.set(key, wrapped);
+    throw wrapped;
+  }
+  if (!exists(out)) {
+    const wrapped = new Error(`Exporter did not create ${out}`);
+    MODEL_EXPORT_FAILURES.set(key, wrapped);
+    throw wrapped;
+  }
   return out;
 }
 
