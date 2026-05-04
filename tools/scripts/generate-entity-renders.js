@@ -208,11 +208,36 @@ function loadPng(file) {
   return { width: png.width, height: png.height, data: png.data };
 }
 
-function parseObjFile(objFile) {
+function parseObjFile(objFile, entityType) {
   const lines = fs.readFileSync(objFile, 'utf8').split(/\r?\n/);
   const pos = [null];
   const uv = [null];
   const tris = [];
+  let objectIndex = 0;
+  let currentObject = `0:root`;
+  const objectBounds = new Map();
+  function touchObject(name) {
+    if (!objectBounds.has(name)) objectBounds.set(name, { minX: Infinity, minY: Infinity, minZ: Infinity, maxX: -Infinity, maxY: -Infinity, maxZ: -Infinity, verts: 0 });
+    return objectBounds.get(name);
+  }
+  function rememberVertex(obj, v) {
+    const b = touchObject(obj);
+    b.minX = Math.min(b.minX, v.x); b.maxX = Math.max(b.maxX, v.x);
+    b.minY = Math.min(b.minY, v.y); b.maxY = Math.max(b.maxY, v.y);
+    b.minZ = Math.min(b.minZ, v.z); b.maxZ = Math.max(b.maxZ, v.z);
+    b.verts++;
+  }
+  function isFrogSheetObject(obj) {
+    if (entityType !== 'frog') return false;
+    const b = objectBounds.get(obj);
+    if (!b || b.verts < 3) return false;
+    const sx = b.maxX - b.minX, sy = b.maxY - b.minY, sz = b.maxZ - b.minZ;
+    // The supplied frog OBJ contains duplicate zero-thickness UV sheet/helper
+    // objects after the real cube objects. Rendering those sheets is what made
+    // the orange/green flat texture mats under and over the frog. Keep the
+    // actual cuboids and drop only object groups with one collapsed axis.
+    return Math.min(sx, sy, sz) < 1e-5;
+  }
   function parseIndex(token, len) {
     const n = Number(token);
     if (!Number.isFinite(n) || n === 0) return null;
@@ -222,7 +247,15 @@ function parseObjFile(objFile) {
     const line = raw.trim();
     if (!line || line.startsWith('#')) continue;
     const p = line.split(/\s+/);
-    if (p[0] === 'v' && p.length >= 4) pos.push({ x: Number(p[1]), y: Number(p[2]), z: Number(p[3]) });
+    if (p[0] === 'o') {
+      currentObject = `${++objectIndex}:${p.slice(1).join(' ') || 'object'}`;
+      touchObject(currentObject);
+    }
+    else if (p[0] === 'v' && p.length >= 4) {
+      const v = { x: Number(p[1]), y: Number(p[2]), z: Number(p[3]), object: currentObject };
+      pos.push(v);
+      rememberVertex(currentObject, v);
+    }
     else if (p[0] === 'vt' && p.length >= 3) uv.push({ u: Number(p[1]), v: Number(p[2]) });
     else if (p[0] === 'f' && p.length >= 4) {
       const verts = p.slice(1).map(tok => {
@@ -231,9 +264,14 @@ function parseObjFile(objFile) {
         const vti = vtiRaw ? parseIndex(vtiRaw, uv.length) : null;
         if (vi == null || !pos[vi]) return null;
         const t = vti != null && uv[vti] ? uv[vti] : { u: 0, v: 0 };
-        return { ...pos[vi], u: t.u, v: t.v };
+        return { ...pos[vi], u: t.u, v: t.v, object: pos[vi].object || currentObject };
       }).filter(Boolean);
-      for (let i = 1; i < verts.length - 1; i++) tris.push([verts[0], verts[i], verts[i + 1]]);
+      for (let i = 1; i < verts.length - 1; i++) {
+        const tri = [verts[0], verts[i], verts[i + 1]];
+        const obj = tri[0].object;
+        if (obj && tri.every(v => v.object === obj) && isFrogSheetObject(obj)) continue;
+        tris.push(tri);
+      }
     }
   }
   if (!tris.length) throw new Error(`OBJ model has no renderable faces: ${objFile}`);
@@ -462,7 +500,7 @@ function containToSquare(img, size) {
 
 async function renderObjEntity(objFile, textureFile, outputFile, type) {
   const texture = loadPng(textureFile);
-  const tris = parseObjFile(objFile);
+  const tris = parseObjFile(objFile, type);
   const projected = transformTriangles(tris, type);
   const uvStats = uvStatsOfTriangles(tris);
   const frogUvOptions = type === 'frog' ? { textureUvWidth: 48, textureUvHeight: 48, wrapOutOfRange: false } : {};
@@ -502,7 +540,7 @@ async function main() {
   fs.mkdirSync(OUTPUT_ROOT, { recursive: true });
   const version = resolveMinecraftVersion();
   const variants = discoverVariants();
-  const report = { minecraftVersion: version, renderer: 'obj-software-v23-frog-uv-canvas-fix', generated: [], skipped: [], errors: [], discovered: [] };
+  const report = { minecraftVersion: version, renderer: 'obj-software-v24-frog-sheet-object-fix', generated: [], skipped: [], errors: [], discovered: [] };
   console.log(`Entity render output root: ${OUTPUT_ROOT}`);
   console.log(`Discovered ${variants.length} entity variant JSON file(s).`);
   if (!variants.length) { writeJson(REPORT_PATH, report); return; }
