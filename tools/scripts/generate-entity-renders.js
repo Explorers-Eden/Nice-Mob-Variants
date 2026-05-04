@@ -250,16 +250,25 @@ function uvStatsOfTriangles(tris) {
   return s;
 }
 
-function normalizeUvForTexture(u, v, options) {
+function normalizeUvForTexture(u, v, options, tex) {
+  // Some checked-in OBJ files are exported against a smaller UV canvas than
+  // the actual PNG size used by the resource pack. Frogs are authored on the
+  // vanilla 48x48 frog UV sheet, while variant textures may be padded/larger.
+  // Convert OBJ UV-canvas coordinates into the real texture's normalized space
+  // before applying the OBJ(bottom-left) -> PNG(top-left) V flip.
+  if (options.textureUvWidth && tex?.width) u *= options.textureUvWidth / tex.width;
+  if (options.textureUvHeight && tex?.height) v *= options.textureUvHeight / tex.height;
+
   if (options.flipU) u = 1 - u;
   if (options.flipV) v = 1 - v;
 
-  // Blockbench/Minecraft OBJ exports may contain UVs slightly outside 0..1
-  // (frog does this on the right side of its texture sheet). Clamping those
-  // values smears the edge pixel across whole faces, which is the broken frog
-  // look. Repeat only true out-of-range values; keep exact 0/1 edges intact.
-  if (u < 0 || u > 1) u = ((u % 1) + 1) % 1;
-  if (v < 0 || v > 1) v = ((v % 1) + 1) % 1;
+  // Most models tolerate wrapping small out-of-range OBJ UVs. Frogs do not:
+  // wrapping their padded vanilla-sheet UVs pulls colors from the opposite side
+  // of the skin and creates the orange 'texture floor' artifact.
+  if (options.wrapOutOfRange !== false) {
+    if (u < 0 || u > 1) u = ((u % 1) + 1) % 1;
+    if (v < 0 || v > 1) v = ((v % 1) + 1) % 1;
+  }
   return { u: clamp(u, 0, 1), v: clamp(v, 0, 1) };
 }
 
@@ -321,7 +330,7 @@ function transformTriangles(tris, type) {
 }
 
 function sampleTexture(tex, uNorm, vNorm, options) {
-  const uv = normalizeUvForTexture(uNorm, vNorm, options);
+  const uv = normalizeUvForTexture(uNorm, vNorm, options, tex);
   const x = clamp(Math.floor(uv.u * tex.width), 0, tex.width - 1);
   const y = clamp(Math.floor(uv.v * tex.height), 0, tex.height - 1);
   const i = (y * tex.width + x) * 4;
@@ -456,12 +465,13 @@ async function renderObjEntity(objFile, textureFile, outputFile, type) {
   const tris = parseObjFile(objFile);
   const projected = transformTriangles(tris, type);
   const uvStats = uvStatsOfTriangles(tris);
-  const preferredFlipV = type === 'frog' ? false : true;
+  const frogUvOptions = type === 'frog' ? { textureUvWidth: 48, textureUvHeight: 48, wrapOutOfRange: false } : {};
+  const preferredFlipV = true;
   const modes = [
-    { flipU: false, flipV: preferredFlipV },
-    { flipU: false, flipV: !preferredFlipV },
-    { flipU: true, flipV: preferredFlipV },
-    { flipU: true, flipV: !preferredFlipV }
+    { flipU: false, flipV: preferredFlipV, ...frogUvOptions },
+    { flipU: false, flipV: !preferredFlipV, ...frogUvOptions },
+    { flipU: true, flipV: preferredFlipV, ...frogUvOptions },
+    { flipU: true, flipV: !preferredFlipV, ...frogUvOptions }
   ];
   let best = null;
   for (const mode of modes) {
@@ -492,7 +502,7 @@ async function main() {
   fs.mkdirSync(OUTPUT_ROOT, { recursive: true });
   const version = resolveMinecraftVersion();
   const variants = discoverVariants();
-  const report = { minecraftVersion: version, renderer: 'obj-software-v22-frog-uv-wrap', generated: [], skipped: [], errors: [], discovered: [] };
+  const report = { minecraftVersion: version, renderer: 'obj-software-v23-frog-uv-canvas-fix', generated: [], skipped: [], errors: [], discovered: [] };
   console.log(`Entity render output root: ${OUTPUT_ROOT}`);
   console.log(`Discovered ${variants.length} entity variant JSON file(s).`);
   if (!variants.length) { writeJson(REPORT_PATH, report); return; }
