@@ -263,6 +263,15 @@ function parseObjFile(objFile, entityType) {
     const info = flatObjectInfo(obj);
     if (!info) return { keep: true, voxelPlane: false };
 
+    // Frog OBJ exports include flat body/head sheets in addition to the real
+    // cuboids. Those are texture-layout/helper sheets, not feet, and they are
+    // what create the orange/green "carpet" under the frog. Keep only the
+    // intentional flat limb pads.
+    if (entityType === 'frog') {
+      const baseName = objectBaseName(obj);
+      if (baseName === 'body' || baseName === 'head') return { keep: false, voxelPlane: true };
+    }
+
     const area = triArea3D(tri);
     if (area < 1e-10) return { keep: false, voxelPlane: true };
 
@@ -584,7 +593,13 @@ async function renderObjEntity(objFile, textureFile, outputFile, type) {
   const projected = transformTriangles(tris, type);
   const uvStats = uvStatsOfTriangles(tris);
   const frogUvOptions = type === 'frog' ? { textureUvWidth: 48, textureUvHeight: 48, wrapOutOfRange: false, transparentSearchRadius: 3 } : {};
-  const voxelPlaneUvOptions = {};
+  // Frog flat limb pads are authored as Bedrock zero-height cuboids whose
+  // plane UVs are already in PNG top-left orientation after the 48x48 canvas
+  // conversion. Let solid frog cuboids keep the normal OBJ V-flip, but sample
+  // voxel planes without flipping V so the feet use the green limb texels
+  // instead of the orange belly region. Other entities, including baby chicken,
+  // keep the regular UV orientation that already renders correctly.
+  const voxelPlaneUvOptions = type === 'frog' ? { voxelPlaneFlipV: false } : {};
   const preferredFlipV = true;
   const modes = [
     { flipU: false, flipV: preferredFlipV, ...frogUvOptions, ...voxelPlaneUvOptions },
