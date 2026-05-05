@@ -1,11 +1,13 @@
 #!/usr/bin/env node
 /*
- * OBJ based Minecraft entity variant renderer.
+ * Bedrock-style Minecraft entity variant renderer backed by checked-in OBJ geometry.
  *
  * This is intentionally independent from Mojang model baking, Fabric Loom,
  * Three.js, headless-gl, or browser/WebGL APIs. It loads checked-in OBJ models
  * from tools/entity_models/<type>/<adult|baby>_<model>.obj and rasterizes them
- * in pure Node using pngjs.
+ * in pure Node using pngjs. Zero-thickness cuboids are treated like Bedrock
+ * voxel planes instead of generic meshes, which preserves frog feet and other
+ * flat entity parts without z-fighting.
  */
 const fs = require('fs');
 const path = require('path');
@@ -217,8 +219,8 @@ function parseObjFile(objFile, entityType) {
   let objectIndex = 0;
   let currentObject = `0:root`;
   const objectBounds = new Map();
-  const keptFlatObjectSignatures = new Set();
-  const skippedDuplicateFlatObjects = new Set();
+  // Bedrock-style flat planes are valid geometry, not helper meshes.
+  // They are handled face-by-face so both triangles of the visible face survive.
   function touchObject(name) {
     if (!objectBounds.has(name)) objectBounds.set(name, { minX: Infinity, minY: Infinity, minZ: Infinity, maxX: -Infinity, maxY: -Infinity, maxZ: -Infinity, verts: 0 });
     return objectBounds.get(name);
@@ -233,16 +235,6 @@ function parseObjFile(objFile, entityType) {
   function objectBaseName(obj) {
     return String(obj || '').replace(/^\d+:/, '');
   }
-  function flatObjectSignature(obj, info) {
-    const b = objectBounds.get(obj);
-    if (!b || !info) return null;
-    // Treat repeated zero-thickness parts with the same name/bounds as export duplicates.
-    // Blockbench can emit a second coplanar sheet with alternate/overflowing UVs; drawing it
-    // makes flat mob parts look like stretched texture carpet. Keep the first sheet only.
-    const q = n => snapToGrid(n, 1024).toFixed(5);
-    return [objectBaseName(obj), info.axis, q(b.minX), q(b.minY), q(b.minZ), q(b.maxX), q(b.maxY), q(b.maxZ)].join('|');
-  }
-
   function flatObjectInfo(obj) {
     const b = objectBounds.get(obj);
     if (!b || b.verts < 3) return null;
@@ -270,13 +262,6 @@ function parseObjFile(objFile, entityType) {
   function prepareFlatVoxelPlaneTriangle(tri, obj) {
     const info = flatObjectInfo(obj);
     if (!info) return { keep: true, voxelPlane: false };
-    if (skippedDuplicateFlatObjects.has(obj)) return { keep: false, voxelPlane: true };
-    const signature = flatObjectSignature(obj, info);
-    if (signature && !keptFlatObjectSignatures.has(signature)) keptFlatObjectSignatures.add(signature);
-    else if (signature) {
-      skippedDuplicateFlatObjects.add(obj);
-      return { keep: false, voxelPlane: true };
-    }
 
     const area = triArea3D(tri);
     if (area < 1e-10) return { keep: false, voxelPlane: true };
@@ -285,10 +270,10 @@ function parseObjFile(objFile, entityType) {
     const axisValue = [Math.abs(n.x), Math.abs(n.y), Math.abs(n.z)][info.axis];
     if (axisValue < 0.9) return { keep: false, voxelPlane: true };
 
-    // A zero-thickness cuboid exports both front/back coplanar faces with
-    // different UV islands. Drawing both causes z-fighting and atlas-colored
-    // "carpets". Keep the side facing the thumbnail camera, then render it as
-    // a crisp Minecraft plane.
+    // Bedrock-style zero-thickness cubes export a front and a back face on the
+    // same plane. Do not dedupe the whole object: each visible face still needs
+    // both triangles, and the two sides can legitimately use different UVs.
+    // Render only the camera-facing side to avoid z-fighting/texture carpets.
     const camera = buildCamera();
     if (dot(n, camera.forward) < -1e-6) return { keep: false, voxelPlane: true };
 
