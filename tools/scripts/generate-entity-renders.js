@@ -64,6 +64,9 @@ function add(a, b) { return { x: a.x+b.x, y: a.y+b.y, z: a.z+b.z }; }
 function mul(a, s) { return { x: a.x*s, y: a.y*s, z: a.z*s }; }
 function len(a) { return Math.sqrt(dot(a, a)) || 1; }
 function norm(a) { const l = len(a); return { x: a.x/l, y: a.y/l, z: a.z/l }; }
+function snapToGrid(n, grid = 16) { return Math.round(n * grid) / grid; }
+function triNormal3D(tri) { return norm(cross(sub(tri[1], tri[0]), sub(tri[2], tri[0]))); }
+function triArea3D(tri) { return len(cross(sub(tri[1], tri[0]), sub(tri[2], tri[0]))) / 2; }
 
 function resolveMinecraftVersion() {
   const releaseFile = 'release_infos.yml';
@@ -227,30 +230,56 @@ function parseObjFile(objFile, entityType) {
     b.minZ = Math.min(b.minZ, v.z); b.maxZ = Math.max(b.maxZ, v.z);
     b.verts++;
   }
-  function frogObjectBaseName(obj) {
+  function objectBaseName(obj) {
     return String(obj || '').replace(/^\d+:/, '');
   }
 
-  function shouldSkipFrogObject(obj) {
-    if (entityType !== 'frog') return false;
-    const baseName = frogObjectBaseName(obj);
-
-    // These are animation/helper parts in the Blockbench export, not the
-    // default standing frog body. Rendering them makes the frog look broken.
-    if (baseName === 'croaking_body' || baseName === 'tongue') return true;
-
+  function flatObjectInfo(obj) {
     const b = objectBounds.get(obj);
-    if (!b || b.verts < 3) return false;
-    const sx = b.maxX - b.minX, sy = b.maxY - b.minY, sz = b.maxZ - b.minZ;
-    const isFlat = Math.min(sx, sy, sz) < 1e-5;
-    if (!isFlat) return false;
+    if (!b || b.verts < 3) return null;
+    const spans = [b.maxX - b.minX, b.maxY - b.minY, b.maxZ - b.minZ];
+    const minSpan = Math.min(...spans);
+    const axis = spans.indexOf(minSpan);
+    if (minSpan > 1e-5) return null;
+    // Require meaningful area in the other two axes. This catches Blockbench's
+    // zero-thickness voxel planes while ignoring degenerate OBJ side faces.
+    const other = spans.filter((_, i) => i !== axis);
+    if (other[0] < 1e-5 || other[1] < 1e-5) return null;
+    return { axis, spans };
+  }
 
-    // Important: frog feet are intentionally flat planes in this OBJ
-    // (the second left/right_arm and left/right_leg groups). The old filter
-    // removed every zero-thickness frog group, which deleted the feet. Keep
-    // the flat limb pads, but still remove duplicate body/head UV sheets.
-    if (['left_arm', 'right_arm', 'left_leg', 'right_leg'].includes(baseName)) return false;
-    return true;
+  function shouldSkipHelperObject(obj) {
+    // Some entity exports contain alternate animation/helper parts. They are
+    // not part of the default pose and should never be drawn.
+    if (entityType === 'frog') {
+      const baseName = objectBaseName(obj);
+      if (baseName === 'croaking_body' || baseName === 'tongue') return true;
+    }
+    return false;
+  }
+
+  function prepareFlatVoxelPlaneTriangle(tri, obj) {
+    const info = flatObjectInfo(obj);
+    if (!info) return { keep: true, voxelPlane: false };
+
+    const area = triArea3D(tri);
+    if (area < 1e-10) return { keep: false, voxelPlane: true };
+
+    const n = triNormal3D(tri);
+    const axisValue = [Math.abs(n.x), Math.abs(n.y), Math.abs(n.z)][info.axis];
+    if (axisValue < 0.9) return { keep: false, voxelPlane: true };
+
+    // A zero-thickness cuboid exports both front/back coplanar faces with
+    // different UV islands. Drawing both causes z-fighting and atlas-colored
+    // "carpets". Keep the side facing the thumbnail camera, then render it as
+    // a crisp Minecraft plane.
+    const camera = buildCamera();
+    if (dot(n, camera.forward) < -1e-6) return { keep: false, voxelPlane: true };
+
+    for (const v of tri) {
+      v.x = snapToGrid(v.x); v.y = snapToGrid(v.y); v.z = snapToGrid(v.z);
+    }
+    return { keep: true, voxelPlane: true, flatAxis: info.axis };
   }
   function parseIndex(token, len) {
     const n = Number(token);
@@ -283,7 +312,14 @@ function parseObjFile(objFile, entityType) {
       for (let i = 1; i < verts.length - 1; i++) {
         const tri = [verts[0], verts[i], verts[i + 1]];
         const obj = tri[0].object;
-        if (obj && tri.every(v => v.object === obj) && shouldSkipFrogObject(obj)) continue;
+        if (obj && tri.every(v => v.object === obj) && shouldSkipHelperObject(obj)) continue;
+        if (obj && tri.every(v => v.object === obj)) {
+          const prepared = prepareFlatVoxelPlaneTriangle(tri, obj);
+          if (!prepared.keep) continue;
+          tri.voxelPlane = prepared.voxelPlane;
+          tri.flatAxis = prepared.flatAxis;
+        }
+        if (triArea3D(tri) < 1e-10) continue;
         tri.object = obj || currentObject;
         tris.push(tri);
       }
@@ -367,7 +403,7 @@ function transformTriangles(tris, type) {
       return { sx, sy, depth, u: p.u, v: p.v, world: p };
     });
     const light = clamp(0.72 + 0.28 * Math.max(0, dot(n, norm({ x: -0.4, y: 0.9, z: -0.6 }))), 0.72, 1.0);
-    out.push({ p: projected, light, object: tri.object || '' });
+    out.push({ p: projected, light, object: tri.object || '', voxelPlane: !!tri.voxelPlane });
   }
   const spanX = Math.max(0.001, maxSX - minSX);
   const spanY = Math.max(0.001, maxSY - minSY);
@@ -436,18 +472,19 @@ function rasterTriangle(color, depth, tri, tex, uvOptions) {
       if (w0 < -1e-5 || w1 < -1e-5 || w2 < -1e-5) continue;
       const z = w0 * a.depth + w1 * b.depth + w2 * c.depth;
       const di = y * INTERNAL_SIZE + x;
-      if (z < depth[di]) continue;
+      const zBiased = z + (tri.voxelPlane ? 1e-5 : 0);
+      if (zBiased <= depth[di] + 1e-7) continue;
       const u = w0 * a.u + w1 * b.u + w2 * c.u;
       const v = w0 * a.v + w1 * b.v + w2 * c.v;
       let [r, g, bl, alpha] = sampleTexture(tex, u, v, { ...uvOptions, object: tri.object || '' });
       if (alpha <= 8) continue;
-      const shade = tri.light;
+      const shade = tri.voxelPlane ? Math.max(0.86, tri.light) : tri.light;
       r = clamp(Math.round(r * shade), 0, 255);
       g = clamp(Math.round(g * shade), 0, 255);
       bl = clamp(Math.round(bl * shade), 0, 255);
       const oi = di * 4;
       color[oi] = r; color[oi + 1] = g; color[oi + 2] = bl; color[oi + 3] = alpha;
-      depth[di] = z;
+      depth[di] = zBiased;
       painted++;
     }
   }
@@ -581,7 +618,7 @@ async function main() {
   fs.mkdirSync(OUTPUT_ROOT, { recursive: true });
   const version = resolveMinecraftVersion();
   const variants = discoverVariants();
-  const report = { minecraftVersion: version, renderer: 'obj-software-v30-frog-flat-feet-filter', generated: [], skipped: [], errors: [], discovered: [] };
+  const report = { minecraftVersion: version, renderer: 'obj-software-v31-auto-voxel-plane-fix', generated: [], skipped: [], errors: [], discovered: [] };
   console.log(`Entity render output root: ${OUTPUT_ROOT}`);
   console.log(`Discovered ${variants.length} entity variant JSON file(s).`);
   if (!variants.length) { writeJson(REPORT_PATH, report); return; }
