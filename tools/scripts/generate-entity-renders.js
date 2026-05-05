@@ -476,13 +476,16 @@ function sampleTexture(tex, uNorm, vNorm, options) {
     return [tex.data[i], tex.data[i + 1], tex.data[i + 2], tex.data[i + 3]];
   };
   let c = read(x, y);
+  // Frog flat foot pads intentionally map to sparse/transparent texture regions.
+  // Do not borrow neighboring opaque pixels for those planes: doing so fills the
+  // transparent padding and turns each webbed foot into a solid/melted carpet.
+  if (options?.frogFootPlane) return c;
   if (c[3] > 8 || !options?.transparentSearchRadius) return c;
 
-  // Frog feet/limb UVs in the supplied OBJ sit exactly on atlas borders in a
-  // few places. Exact nearest-neighbor sampling can land on transparent padding
-  // and makes the thin feet disappear. Search only a very small neighborhood,
-  // and only for non-sheet geometry, so the old texture-sheet floor artifacts
-  // do not come back.
+  // Some non-plane frog UVs sit exactly on atlas borders in a few places. Exact
+  // nearest-neighbor sampling can land on transparent padding and make thin
+  // details disappear, so search a very small neighborhood only for normal
+  // geometry. Flat foot pads must keep alpha intact.
   const radius = Math.max(1, Math.min(6, options.transparentSearchRadius));
   let best = null;
   let bestD = Infinity;
