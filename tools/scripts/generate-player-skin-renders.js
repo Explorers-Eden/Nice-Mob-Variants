@@ -54,14 +54,28 @@ function discoverSkinTextures() {
         if (!exists(root)) continue;
         walkSkins(root, file => {
           const rel = path.relative(root, file);
-          const parts = rel.split(path.sep);
+          const parts = rel.split(path.sep).filter(Boolean);
           const first = (parts[0] || '').toLowerCase();
           const model = first === 'slim' ? 'slim' : 'wide';
           const hasModelDir = ['slim', 'wide', 'regular'].includes(first);
-          const nameParts = hasModelDir ? parts.slice(1) : parts;
-          const stemParts = nameParts.map(sanitizeName).filter(Boolean);
-          let stem = stemParts.join('_').replace(/_index$/i, '') || sanitizeName(path.basename(file));
-          out.push({ namespace, source, model, file, outputStem: stem || sanitizeName(path.basename(file)) });
+
+          // Preserve folders below assets/<namespace>/entity/{npc|mannequin}/,
+          // but do not duplicate the model folder in the output. Example:
+          //   npc/slim/aetherian/generic_1.png
+          //     -> wiki/images/entity/npc/slim/aetherian/generic_1.png
+          //   mannequin/wide/aetherian/generic_1.png
+          //     -> wiki/images/entity/npc/wide/aetherian/generic_1.png
+          const relativePartsAfterModel = hasModelDir ? parts.slice(1) : parts;
+          const folderParts = relativePartsAfterModel.slice(0, -1).map(sanitizeName).filter(Boolean);
+          const fileStem = sanitizeName(path.basename(file, path.extname(file))).replace(/_index$/i, '') || sanitizeName(path.basename(file));
+          out.push({
+            namespace,
+            source,
+            model,
+            file,
+            outputSubdir: folderParts.join(path.sep),
+            outputStem: fileStem
+          });
         });
       }
     }
@@ -318,9 +332,11 @@ async function main() {
   const renderedByDir = new Map();
   let errors = 0;
   for (const skin of skins) {
-    const outputDir = path.join(OUTPUT_ROOT, skin.model === 'slim' ? 'slim' : 'wide');
-    const baseStem = skin.source === 'mannequin' ? `mannequin_${skin.outputStem}` : skin.outputStem;
-    const outputFile = path.join(outputDir, `${baseStem}.png`);
+    const modelDir = skin.model === 'slim' ? 'slim' : 'wide';
+    const outputDir = skin.outputSubdir
+      ? path.join(OUTPUT_ROOT, modelDir, skin.outputSubdir)
+      : path.join(OUTPUT_ROOT, modelDir);
+    const outputFile = path.join(outputDir, `${skin.outputStem}.png`);
     try {
       await renderPlayerSkin(skin.file, outputFile, skin.model);
       const rec = renderedByDir.get(outputDir) || { count: 0 };
