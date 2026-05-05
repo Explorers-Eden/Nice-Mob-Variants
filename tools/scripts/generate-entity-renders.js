@@ -16,7 +16,6 @@ const ENTITY_TYPES = ['cat', 'chicken', 'frog', 'pig', 'cow', 'wolf', 'zombie_na
 const HAS_BABY_MODEL = new Set(['cat', 'chicken', 'pig', 'cow', 'wolf']);
 const OUTPUT_ROOT = path.join('wiki', 'images', 'entity');
 const ENTITY_MODEL_ROOT = path.join('tools', 'entity_models');
-const REPORT_PATH = path.join(OUTPUT_ROOT, '_render-report.json');
 const DEBUG = process.env.ENTITY_RENDER_DEBUG === '1';
 const VERBOSE = process.env.ENTITY_RENDER_VERBOSE === '1';
 
@@ -50,7 +49,6 @@ function logDebug(msg) { if (DEBUG) console.log(`[entity-render-debug] ${msg}`);
 function logVerbose(msg) { if (VERBOSE) console.log(msg); }
 function exists(file) { try { return fs.existsSync(file); } catch { return false; } }
 function readJson(file) { return JSON.parse(fs.readFileSync(file, 'utf8')); }
-function writeJson(file, value) { fs.mkdirSync(path.dirname(file), { recursive: true }); fs.writeFileSync(file, JSON.stringify(value, null, 2)); }
 function normalizeId(id) { return String(id || '').replace(/^#/, '').trim(); }
 function idNamespace(id) { const s = normalizeId(id); return s.includes(':') ? s.split(':')[0] : 'minecraft'; }
 function idPath(id) { const s = normalizeId(id); return s.includes(':') ? s.split(':').slice(1).join(':') : s; }
@@ -349,7 +347,8 @@ function normalizeUvForTexture(u, v, options, tex) {
   if (options.textureUvHeight && tex?.height) v *= options.textureUvHeight / tex.height;
 
   if (options.flipU) u = 1 - u;
-  if (options.flipV) v = 1 - v;
+  const effectiveFlipV = options.voxelPlane && options.voxelPlaneFlipV !== undefined ? options.voxelPlaneFlipV : options.flipV;
+  if (effectiveFlipV) v = 1 - v;
 
   // Most models tolerate wrapping small out-of-range OBJ UVs. Frogs do not:
   // wrapping their padded vanilla-sheet UVs pulls colors from the opposite side
@@ -476,7 +475,7 @@ function rasterTriangle(color, depth, tri, tex, uvOptions) {
       if (zBiased <= depth[di] + 1e-7) continue;
       const u = w0 * a.u + w1 * b.u + w2 * c.u;
       const v = w0 * a.v + w1 * b.v + w2 * c.v;
-      let [r, g, bl, alpha] = sampleTexture(tex, u, v, { ...uvOptions, object: tri.object || '' });
+      let [r, g, bl, alpha] = sampleTexture(tex, u, v, { ...uvOptions, object: tri.object || '', voxelPlane: !!tri.voxelPlane });
       if (alpha <= 8) continue;
       const shade = tri.voxelPlane ? Math.max(0.86, tri.light) : tri.light;
       r = clamp(Math.round(r * shade), 0, 255);
@@ -582,12 +581,13 @@ async function renderObjEntity(objFile, textureFile, outputFile, type) {
   const projected = transformTriangles(tris, type);
   const uvStats = uvStatsOfTriangles(tris);
   const frogUvOptions = type === 'frog' ? { textureUvWidth: 48, textureUvHeight: 48, wrapOutOfRange: false, transparentSearchRadius: 3 } : {};
+  const voxelPlaneUvOptions = { voxelPlaneFlipV: false };
   const preferredFlipV = true;
   const modes = [
-    { flipU: false, flipV: preferredFlipV, ...frogUvOptions },
-    { flipU: false, flipV: !preferredFlipV, ...frogUvOptions },
-    { flipU: true, flipV: preferredFlipV, ...frogUvOptions },
-    { flipU: true, flipV: !preferredFlipV, ...frogUvOptions }
+    { flipU: false, flipV: preferredFlipV, ...frogUvOptions, ...voxelPlaneUvOptions },
+    { flipU: false, flipV: !preferredFlipV, ...frogUvOptions, ...voxelPlaneUvOptions },
+    { flipU: true, flipV: preferredFlipV, ...frogUvOptions, ...voxelPlaneUvOptions },
+    { flipU: true, flipV: !preferredFlipV, ...frogUvOptions, ...voxelPlaneUvOptions }
   ];
   let best = null;
   for (const mode of modes) {
@@ -616,54 +616,58 @@ async function renderObjEntity(objFile, textureFile, outputFile, type) {
 
 async function main() {
   fs.mkdirSync(OUTPUT_ROOT, { recursive: true });
-  const version = resolveMinecraftVersion();
+  resolveMinecraftVersion();
   const variants = discoverVariants();
-  const report = { minecraftVersion: version, renderer: 'obj-software-v31-auto-voxel-plane-fix', generated: [], skipped: [], errors: [], discovered: [] };
   console.log(`Entity render output root: ${OUTPUT_ROOT}`);
   console.log(`Discovered ${variants.length} entity variant JSON file(s).`);
-  if (!variants.length) { writeJson(REPORT_PATH, report); return; }
-  try { ensureObjModelsReady(); } catch (e) { console.error(e.stack || e); report.errors.push({ type:'preflight', message:String(e.stack || e) }); writeJson(REPORT_PATH, report); process.exitCode = 1; return; }
+  if (!variants.length) return;
+  try { ensureObjModelsReady(); } catch (e) { console.error(e.stack || e); process.exitCode = 1; return; }
 
   let done = 0;
+  let skipped = 0;
+  let errors = 0;
+  let lastOutputDir = OUTPUT_ROOT;
+  let lastVariant = '';
+  let lastModel = '';
   for (const v of variants) {
-    report.discovered.push({
-      type: v.type, variant: v.variant, model: v.model, jsonFile: v.file,
-      adultTexture: v.adultTexture || null, babyTexture: v.babyTexture || null,
-      adultObjModel: resolveObjModel(v.type, v.model, 'adult'),
-      babyObjModel: HAS_BABY_MODEL.has(v.type) ? resolveObjModel(v.type, v.model, 'baby') : null
-    });
     if (!v.adultTexture) {
-      report.skipped.push({ type: v.type, variant: v.variant, age: 'adult', reason: `No adult texture found for asset_id=${v.assetId || ''}` });
+      skipped++;
+      logVerbose(`Skipping ${v.type}/${v.variant}/adult: no adult texture found for asset_id=${v.assetId || ''}`);
       continue;
     }
     for (const age of ['adult', 'baby']) {
       const texture = age === 'adult' ? v.adultTexture : v.babyTexture;
       if (age === 'baby' && !texture) {
-        report.skipped.push({ type: v.type, variant: v.variant, age, reason: HAS_BABY_MODEL.has(v.type) ? 'No baby/adult fallback texture resolved' : 'Entity type has no baby render' });
+        skipped++;
+        logVerbose(`Skipping ${v.type}/${v.variant}/${age}: ${HAS_BABY_MODEL.has(v.type) ? 'no baby/adult fallback texture resolved' : 'entity type has no baby render'}`);
         continue;
       }
       const obj = resolveObjModel(v.type, v.model, age);
       if (!obj.file) {
-        report.errors.push({ type: v.type, variant: v.variant, age, message: `No OBJ model found; tried ${(obj.candidates || []).join(', ')}` });
+        errors++;
+        console.error(`Failed ${v.type}/${v.variant}/${age}: no OBJ model found; tried ${(obj.candidates || []).join(', ')}`);
         continue;
       }
       const output = path.join(OUTPUT_ROOT, v.type, v.variant, `${age}.png`);
       try {
         logVerbose(`Rendering ${v.type}/${v.variant}/${age} with ${obj.resolved}`);
         await renderObjEntity(obj.file, texture, output, v.type);
-        report.generated.push({ type: v.type, variant: v.variant, age, model: v.model, objModel: obj.file, texture, output });
         done++;
-        if (!VERBOSE && done % 25 === 0) console.log(`Rendered ${done} entity PNG(s)...`);
+        lastOutputDir = path.dirname(output);
+        lastVariant = `${v.type}/${v.variant}/${age}`;
+        lastModel = obj.resolved || obj.requested || v.model || 'regular';
       } catch (e) {
-        report.errors.push({ type: v.type, variant: v.variant, age, model: v.model, objModel: obj.file, texture, message: String(e.stack || e.message || e) });
+        errors++;
         console.error(`Failed ${v.type}/${v.variant}/${age}: ${e.message || e}`);
       }
     }
   }
-  writeJson(REPORT_PATH, report);
-  console.log(`Entity render report written to ${REPORT_PATH}`);
-  console.log(`Generated ${report.generated.length} PNG(s), skipped ${report.skipped.length}, errors ${report.errors.length}.`);
-  if (report.generated.length === 0 || report.errors.length) process.exitCode = 1;
+  console.log(`Rendered ${done} PNG preview(s) in ${lastOutputDir} for ${lastVariant || 'entity variants'} using ${lastModel || 'regular'} model.`);
+  if (skipped) console.log(`Skipped ${skipped} preview(s).`);
+  if (done === 0 || errors) {
+    if (errors) console.error(`${errors} entity render error(s).`);
+    process.exitCode = 1;
+  }
 }
 
 main().catch(e => { console.error(e.stack || e); process.exit(1); });

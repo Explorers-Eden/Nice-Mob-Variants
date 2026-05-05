@@ -93,34 +93,13 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          echo "Generated markdown files:"
-          if [ -d wiki/markdown ]; then
-            find wiki/markdown -type f -name "*.md" -print | sort
-          else
-            echo "No wiki/markdown directory found."
-          fi
-          echo ""
-          echo "Generated structure preview images:"
-          if [ -d wiki/images/structures ]; then
-            find wiki/images/structures -type f -name "*.png" -print | sort
-          else
-            echo "No wiki/images/structures directory found."
-          fi
-          echo ""
-          echo "Generated entity render images:"
-          if [ -d wiki/images/entity ]; then
-            find wiki/images/entity -type f -name "*.png" | wc -l | xargs -I{} echo "{} entity PNG(s)"
-          else
-            echo "No wiki/images/entity directory found."
-          fi
-          echo ""
-          echo "Entity render report:"
-          if [ -f wiki/images/entity/_render-report.json ]; then
-            node -e "const r=require('./wiki/images/entity/_render-report.json'); console.log(JSON.stringify({generated:r.generated?.length||0, skipped:r.skipped?.length||0, errors:r.errors?.length||0}, null, 2)); if ((r.errors?.length||0)>0) console.log(r.errors.slice(0,5));"
-          else
-            echo "No entity render report found."
-          fi
-          echo ""
+          markdown_count=0
+          structure_count=0
+          entity_count=0
+          [ -d wiki/markdown ] && markdown_count=$(find wiki/markdown -type f -name "*.md" | wc -l | tr -d ' ')
+          [ -d wiki/images/structures ] && structure_count=$(find wiki/images/structures -type f -name "*.png" | wc -l | tr -d ' ')
+          [ -d wiki/images/entity ] && entity_count=$(find wiki/images/entity -type f -name "*.png" | wc -l | tr -d ' ')
+          echo "Wiki output: ${markdown_count} markdown file(s), ${structure_count} structure preview(s), ${entity_count} entity preview(s)."
           echo "Git status:"
           git status --short
 
