@@ -265,7 +265,9 @@ function parseObjFile(objFile, entityType) {
     if (!['left_arm', 'right_arm', 'left_leg', 'right_leg'].includes(baseName)) return null;
 
     const xs = tri.map(v => v.x), ys = tri.map(v => v.y), zs = tri.map(v => v.z);
-    const spans = [Math.max(...xs) - Math.min(...xs), Math.max(...ys) - Math.min(...ys), Math.max(...zs) - Math.min(...zs)];
+    const minX = Math.min(...xs), maxX = Math.max(...xs);
+    const minZ = Math.min(...zs), maxZ = Math.max(...zs);
+    const spans = [maxX - minX, Math.max(...ys) - Math.min(...ys), maxZ - minZ];
 
     // Frog OBJ limb objects contain two pieces: a normal small cuboid and a
     // zero-height webbed foot pad. Object-level flat detection misses these
@@ -284,8 +286,28 @@ function parseObjFile(objFile, entityType) {
     const camera = buildCamera();
     if (dot(n, camera.forward) < -1e-6) return { keep: false };
 
+    // Vanilla frog feet are not on the top limb strip of the 48x48 texture.
+    // They are the four small detached 4x4-ish islands near the bottom of the
+    // texture sheet. The OBJ export's UVs point at the limb strip, so override
+    // only these embedded foot-pad triangles to those bottom islands.
+    const footRects = {
+      left_arm:  { x0: 12, y0: 35, x1: 16, y1: 39 },
+      right_arm: { x0: 28, y0: 35, x1: 32, y1: 39 },
+      left_leg:  { x0: 13, y0: 42, x1: 17, y1: 46 },
+      right_leg: { x0: 27, y0: 42, x1: 31, y1: 46 }
+    };
+    const rect = footRects[baseName];
+    const dx = Math.max(maxX - minX, 1e-9);
+    const dz = Math.max(maxZ - minZ, 1e-9);
+
     for (const v of tri) {
       v.x = snapToGrid(v.x); v.y = snapToGrid(v.y); v.z = snapToGrid(v.z);
+      const sx = clamp((v.x - minX) / dx, 0, 1);
+      const sz = clamp((v.z - minZ) / dz, 0, 1);
+      // Store OBJ-style bottom-left UVs. normalizeUvForTexture() will apply the
+      // usual V flip before sampling PNG pixels, so invert y here from PNG space.
+      v.u = (rect.x0 + sx * (rect.x1 - rect.x0)) / 48;
+      v.v = 1 - ((rect.y0 + sz * (rect.y1 - rect.y0)) / 48);
     }
     return { keep: true, voxelPlane: true, flatAxis: 1, frogFootPlane: true };
   }
