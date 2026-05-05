@@ -99,9 +99,7 @@ jobs:
           [ -d wiki/markdown ] && markdown_count=$(find wiki/markdown -type f -name "*.md" | wc -l | tr -d ' ')
           [ -d wiki/images/structures ] && structure_count=$(find wiki/images/structures -type f -name "*.png" | wc -l | tr -d ' ')
           [ -d wiki/images/entity ] && entity_count=$(find wiki/images/entity -type f -name "*.png" | wc -l | tr -d ' ')
-          echo "Wiki output: ${markdown_count} markdown file(s), ${structure_count} structure preview(s), ${entity_count} entity preview(s)."
-          echo "Git status:"
-          git status --short
+          echo "Wiki output: ${markdown_count} markdown, ${structure_count} structure preview(s), ${entity_count} entity preview(s)."
 
       - name: Upload generated preview images as artifact
         uses: actions/upload-artifact@v4

@@ -217,6 +217,8 @@ function parseObjFile(objFile, entityType) {
   let objectIndex = 0;
   let currentObject = `0:root`;
   const objectBounds = new Map();
+  const keptFlatObjectSignatures = new Set();
+  const skippedDuplicateFlatObjects = new Set();
   function touchObject(name) {
     if (!objectBounds.has(name)) objectBounds.set(name, { minX: Infinity, minY: Infinity, minZ: Infinity, maxX: -Infinity, maxY: -Infinity, maxZ: -Infinity, verts: 0 });
     return objectBounds.get(name);
@@ -230,6 +232,15 @@ function parseObjFile(objFile, entityType) {
   }
   function objectBaseName(obj) {
     return String(obj || '').replace(/^\d+:/, '');
+  }
+  function flatObjectSignature(obj, info) {
+    const b = objectBounds.get(obj);
+    if (!b || !info) return null;
+    // Treat repeated zero-thickness parts with the same name/bounds as export duplicates.
+    // Blockbench can emit a second coplanar sheet with alternate/overflowing UVs; drawing it
+    // makes flat mob parts look like stretched texture carpet. Keep the first sheet only.
+    const q = n => snapToGrid(n, 1024).toFixed(5);
+    return [objectBaseName(obj), info.axis, q(b.minX), q(b.minY), q(b.minZ), q(b.maxX), q(b.maxY), q(b.maxZ)].join('|');
   }
 
   function flatObjectInfo(obj) {
@@ -259,6 +270,13 @@ function parseObjFile(objFile, entityType) {
   function prepareFlatVoxelPlaneTriangle(tri, obj) {
     const info = flatObjectInfo(obj);
     if (!info) return { keep: true, voxelPlane: false };
+    if (skippedDuplicateFlatObjects.has(obj)) return { keep: false, voxelPlane: true };
+    const signature = flatObjectSignature(obj, info);
+    if (signature && !keptFlatObjectSignatures.has(signature)) keptFlatObjectSignatures.add(signature);
+    else if (signature) {
+      skippedDuplicateFlatObjects.add(obj);
+      return { keep: false, voxelPlane: true };
+    }
 
     const area = triArea3D(tri);
     if (area < 1e-10) return { keep: false, voxelPlane: true };
@@ -626,9 +644,7 @@ async function main() {
   let done = 0;
   let skipped = 0;
   let errors = 0;
-  let lastOutputDir = OUTPUT_ROOT;
-  let lastVariant = '';
-  let lastModel = '';
+  const renderedByDir = new Map();
   for (const v of variants) {
     if (!v.adultTexture) {
       skipped++;
@@ -653,16 +669,21 @@ async function main() {
         logVerbose(`Rendering ${v.type}/${v.variant}/${age} with ${obj.resolved}`);
         await renderObjEntity(obj.file, texture, output, v.type);
         done++;
-        lastOutputDir = path.dirname(output);
-        lastVariant = `${v.type}/${v.variant}/${age}`;
-        lastModel = obj.resolved || obj.requested || v.model || 'regular';
+        const outputDir = path.dirname(output);
+        const rec = renderedByDir.get(outputDir) || { count: 0, variant: v.variant };
+        rec.count++;
+        rec.variant = v.variant;
+        renderedByDir.set(outputDir, rec);
       } catch (e) {
         errors++;
         console.error(`Failed ${v.type}/${v.variant}/${age}: ${e.message || e}`);
       }
     }
   }
-  console.log(`Rendered ${done} PNG preview(s) in ${lastOutputDir} for ${lastVariant || 'entity variants'} using ${lastModel || 'regular'} model.`);
+  for (const [dir, rec] of renderedByDir) {
+    console.log(`Rendered ${rec.count} PNG preview(s) in ${dir} for ${rec.variant} variant.`);
+  }
+  if (!renderedByDir.size) console.log('Rendered 0 PNG preview(s).');
   if (skipped) console.log(`Skipped ${skipped} preview(s).`);
   if (done === 0 || errors) {
     if (errors) console.error(`${errors} entity render error(s).`);
