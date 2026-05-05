@@ -89,6 +89,14 @@ jobs:
             echo "No entity variant JSON files found; skipping entity render PNG generation."
           fi
 
+      - name: Generate NPC player skin preview images
+        shell: bash
+        run: |
+          set -euo pipefail
+          if find assets -type f \( -path '*/entity/npc/*/*.png' -o -path '*/entity/mannequin/*/*.png' -o -path '*/textures/entity/npc/*/*.png' -o -path '*/textures/entity/mannequin/*/*.png' \) -print -quit 2>/dev/null | grep -q .; then
+            node tools/scripts/generate-player-skin-renders.js
+          fi
+
       - name: Show generated wiki files
         shell: bash
         run: |
