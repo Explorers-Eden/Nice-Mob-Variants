@@ -259,6 +259,37 @@ function parseObjFile(objFile, entityType) {
     return false;
   }
 
+  function frogLimbFootPlaneInfo(tri, obj) {
+    if (entityType !== 'frog') return null;
+    const baseName = objectBaseName(obj);
+    if (!['left_arm', 'right_arm', 'left_leg', 'right_leg'].includes(baseName)) return null;
+
+    const xs = tri.map(v => v.x), ys = tri.map(v => v.y), zs = tri.map(v => v.z);
+    const spans = [Math.max(...xs) - Math.min(...xs), Math.max(...ys) - Math.min(...ys), Math.max(...zs) - Math.min(...zs)];
+
+    // Frog OBJ limb objects contain two pieces: a normal small cuboid and a
+    // zero-height webbed foot pad. Object-level flat detection misses these
+    // because both pieces are stored under the same object name. Detect the
+    // large horizontal zero-height pad per triangle instead.
+    if (spans[1] > 1e-5) return null;
+    if (spans[0] < 0.35 || spans[2] < 0.35) return null;
+    if (triArea3D(tri) < 1e-10) return { keep: false };
+
+    const n = triNormal3D(tri);
+    if (Math.abs(n.y) < 0.9) return null;
+
+    // The zero-height pad exports both coincident sides. Keep only the side
+    // facing the preview camera, otherwise the two UV sheets blend into the
+    // orange/brown "melted cheese" artifact under every frog variant.
+    const camera = buildCamera();
+    if (dot(n, camera.forward) < -1e-6) return { keep: false };
+
+    for (const v of tri) {
+      v.x = snapToGrid(v.x); v.y = snapToGrid(v.y); v.z = snapToGrid(v.z);
+    }
+    return { keep: true, voxelPlane: true, flatAxis: 1, frogFootPlane: true };
+  }
+
   function prepareFlatVoxelPlaneTriangle(tri, obj) {
     const info = flatObjectInfo(obj);
     if (!info) return { keep: true, voxelPlane: false };
@@ -359,7 +390,8 @@ function normalizeUvForTexture(u, v, options, tex) {
   if (options.textureUvHeight && tex?.height) v *= options.textureUvHeight / tex.height;
 
   if (options.flipU) u = 1 - u;
-  const effectiveFlipV = options.voxelPlane && options.voxelPlaneFlipV !== undefined ? options.voxelPlaneFlipV : options.flipV;
+  let effectiveFlipV = options.voxelPlane && options.voxelPlaneFlipV !== undefined ? options.voxelPlaneFlipV : options.flipV;
+  if (options.frogFootPlane && options.frogFootPlaneFlipV !== undefined) effectiveFlipV = options.frogFootPlaneFlipV;
   if (effectiveFlipV) v = 1 - v;
 
   // Most models tolerate wrapping small out-of-range OBJ UVs. Frogs do not:
@@ -414,7 +446,7 @@ function transformTriangles(tris, type) {
       return { sx, sy, depth, u: p.u, v: p.v, world: p };
     });
     const light = clamp(0.72 + 0.28 * Math.max(0, dot(n, norm({ x: -0.4, y: 0.9, z: -0.6 }))), 0.72, 1.0);
-    out.push({ p: projected, light, object: tri.object || '', voxelPlane: !!tri.voxelPlane });
+    out.push({ p: projected, light, object: tri.object || '', voxelPlane: !!tri.voxelPlane, frogFootPlane: !!tri.frogFootPlane });
   }
   const spanX = Math.max(0.001, maxSX - minSX);
   const spanY = Math.max(0.001, maxSY - minSY);
@@ -487,7 +519,7 @@ function rasterTriangle(color, depth, tri, tex, uvOptions) {
       if (zBiased <= depth[di] + 1e-7) continue;
       const u = w0 * a.u + w1 * b.u + w2 * c.u;
       const v = w0 * a.v + w1 * b.v + w2 * c.v;
-      let [r, g, bl, alpha] = sampleTexture(tex, u, v, { ...uvOptions, object: tri.object || '', voxelPlane: !!tri.voxelPlane });
+      let [r, g, bl, alpha] = sampleTexture(tex, u, v, { ...uvOptions, object: tri.object || '', voxelPlane: !!tri.voxelPlane, frogFootPlane: !!tri.frogFootPlane });
       if (alpha <= 8) continue;
       const shade = tri.voxelPlane ? Math.max(0.86, tri.light) : tri.light;
       r = clamp(Math.round(r * shade), 0, 255);
@@ -599,7 +631,7 @@ async function renderObjEntity(objFile, textureFile, outputFile, type) {
   // voxel planes without flipping V so the feet use the green limb texels
   // instead of the orange belly region. Other entities, including baby chicken,
   // keep the regular UV orientation that already renders correctly.
-  const voxelPlaneUvOptions = type === 'frog' ? { voxelPlaneFlipV: false } : {};
+  const voxelPlaneUvOptions = type === 'frog' ? { voxelPlaneFlipV: false, frogFootPlaneFlipV: false } : {};
   const preferredFlipV = true;
   const modes = [
     { flipU: false, flipV: preferredFlipV, ...frogUvOptions, ...voxelPlaneUvOptions },
