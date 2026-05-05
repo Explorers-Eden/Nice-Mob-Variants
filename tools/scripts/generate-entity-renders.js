@@ -355,10 +355,16 @@ function parseObjFile(objFile, entityType) {
         const obj = tri[0].object;
         if (obj && tri.every(v => v.object === obj) && shouldSkipHelperObject(obj)) continue;
         if (obj && tri.every(v => v.object === obj)) {
-          const prepared = prepareFlatVoxelPlaneTriangle(tri, obj);
+          // Frog foot pads are zero-height planes embedded inside the arm/leg
+          // objects, so they need to be detected before the generic object-level
+          // flat-plane handling. Otherwise they inherit the wrong UV mode or get
+          // treated like regular cuboid side faces.
+          const frogFoot = frogLimbFootPlaneInfo(tri, obj);
+          const prepared = frogFoot || prepareFlatVoxelPlaneTriangle(tri, obj);
           if (!prepared.keep) continue;
           tri.voxelPlane = prepared.voxelPlane;
           tri.flatAxis = prepared.flatAxis;
+          tri.frogFootPlane = !!prepared.frogFootPlane;
         }
         if (triArea3D(tri) < 1e-10) continue;
         tri.object = obj || currentObject;
@@ -625,13 +631,11 @@ async function renderObjEntity(objFile, textureFile, outputFile, type) {
   const projected = transformTriangles(tris, type);
   const uvStats = uvStatsOfTriangles(tris);
   const frogUvOptions = type === 'frog' ? { textureUvWidth: 48, textureUvHeight: 48, wrapOutOfRange: false, transparentSearchRadius: 3 } : {};
-  // Frog flat limb pads are authored as Bedrock zero-height cuboids whose
-  // plane UVs are already in PNG top-left orientation after the 48x48 canvas
-  // conversion. Let solid frog cuboids keep the normal OBJ V-flip, but sample
-  // voxel planes without flipping V so the feet use the green limb texels
-  // instead of the orange belly region. Other entities, including baby chicken,
-  // keep the regular UV orientation that already renders correctly.
-  const voxelPlaneUvOptions = type === 'frog' ? { voxelPlaneFlipV: false, frogFootPlaneFlipV: false } : {};
+  // Frog helper sheets are filtered out in parseObjFile(), but the real
+  // frog foot pads should use the same OBJ(bottom-left) -> PNG(top-left) V flip
+  // as the solid limb cuboids. The chicken baby feet need the generic voxel-plane
+  // path, so do not apply any entity-wide flat-plane UV override here.
+  const voxelPlaneUvOptions = {};
   const preferredFlipV = true;
   const modes = [
     { flipU: false, flipV: preferredFlipV, ...frogUvOptions, ...voxelPlaneUvOptions },
