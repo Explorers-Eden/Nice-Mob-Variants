@@ -584,7 +584,7 @@ async function renderObjEntity(objFile, textureFile, outputFile, type) {
   const projected = transformTriangles(tris, type);
   const uvStats = uvStatsOfTriangles(tris);
   const frogUvOptions = type === 'frog' ? { textureUvWidth: 48, textureUvHeight: 48, wrapOutOfRange: false, transparentSearchRadius: 3 } : {};
-  const voxelPlaneUvOptions = { voxelPlaneFlipV: false };
+  const voxelPlaneUvOptions = {};
   const preferredFlipV = true;
   const modes = [
     { flipU: false, flipV: preferredFlipV, ...frogUvOptions, ...voxelPlaneUvOptions },
