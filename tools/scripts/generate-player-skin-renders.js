@@ -59,7 +59,8 @@ function discoverSkinTextures() {
           const model = first === 'slim' ? 'slim' : 'wide';
           const hasModelDir = ['slim', 'wide', 'regular'].includes(first);
           const nameParts = hasModelDir ? parts.slice(1) : parts;
-          const stem = nameParts.map(sanitizeName).join('/').replace(/\/index$/i, '') || sanitizeName(path.basename(file));
+          const stemParts = nameParts.map(sanitizeName).filter(Boolean);
+          let stem = stemParts.join('_').replace(/_index$/i, '') || sanitizeName(path.basename(file));
           out.push({ namespace, source, model, file, outputStem: stem || sanitizeName(path.basename(file)) });
         });
       }
@@ -165,8 +166,9 @@ function transformTriangles(tris) {
   for (const tri of tris) {
     const world = tri.map(p => ({ x:p.x-center.x, y:p.y-center.y, z:p.z-center.z, u:p.u, v:p.v }));
     const n = norm(cross(sub(world[1], world[0]), sub(world[2], world[0])));
-    // Player skin boxes are closed cubes. Cull backfaces so overlay layers do not bleed through.
-    if (dot(n, camera.forward) < -1e-6) continue;
+    // Render all cube faces and let the depth buffer choose the visible side.
+    // This avoids accidentally dropping the correct Minecraft skin face when
+    // a pack/model uses a different handedness than our preview camera.
     const projected = world.map(p => {
       const sx = dot(p, camera.right);
       const sy = dot(p, camera.up);
@@ -316,7 +318,7 @@ async function main() {
   const renderedByDir = new Map();
   let errors = 0;
   for (const skin of skins) {
-    const outputDir = OUTPUT_ROOT;
+    const outputDir = path.join(OUTPUT_ROOT, skin.model === 'slim' ? 'slim' : 'wide');
     const baseStem = skin.source === 'mannequin' ? `mannequin_${skin.outputStem}` : skin.outputStem;
     const outputFile = path.join(outputDir, `${baseStem}.png`);
     try {
@@ -330,7 +332,7 @@ async function main() {
     }
   }
   for (const [dir, rec] of renderedByDir) {
-    console.log(`Rendered ${rec.count} PNG preview(s) in ${relPosix(dir)} for player skin previews.`);
+    console.log(`Rendered ${rec.count} PNG preview(s) in ${relPosix(dir)} for ${path.basename(dir)} player skin previews.`);
   }
   if (errors) {
     console.error(`${errors} player skin render error(s).`);
