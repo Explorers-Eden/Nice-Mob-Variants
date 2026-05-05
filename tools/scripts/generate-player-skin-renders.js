@@ -112,8 +112,11 @@ function addBox(tris, box, uv, layer = false) {
     const v = faceVerts(box, face);
     const t = uvQuad(rect);
     const a = { ...v[0], ...t[0] }, b = { ...v[1], ...t[1] }, c = { ...v[2], ...t[2] }, d = { ...v[3], ...t[3] };
-    tris.push(Object.assign([a, b, c], { layer }));
-    tris.push(Object.assign([a, c, d], { layer }));
+    // faceVerts() returns corners in UV order; reverse triangle winding so
+    // normals point outward. The previous inward winding made the renderer
+    // cull the visible/player-front faces and sample the opposite/back UVs.
+    tris.push(Object.assign([a, c, b], { layer }));
+    tris.push(Object.assign([a, d, c], { layer }));
   }
 }
 
@@ -313,11 +316,12 @@ async function main() {
   const renderedByDir = new Map();
   let errors = 0;
   for (const skin of skins) {
-    const outputDir = path.join(OUTPUT_ROOT, skin.source, skin.model);
-    const outputFile = path.join(outputDir, `${skin.outputStem}.png`);
+    const outputDir = OUTPUT_ROOT;
+    const baseStem = skin.source === 'mannequin' ? `mannequin_${skin.outputStem}` : skin.outputStem;
+    const outputFile = path.join(outputDir, `${baseStem}.png`);
     try {
       await renderPlayerSkin(skin.file, outputFile, skin.model);
-      const rec = renderedByDir.get(outputDir) || { count: 0, model: skin.model, source: skin.source };
+      const rec = renderedByDir.get(outputDir) || { count: 0 };
       rec.count++;
       renderedByDir.set(outputDir, rec);
     } catch (e) {
@@ -326,7 +330,7 @@ async function main() {
     }
   }
   for (const [dir, rec] of renderedByDir) {
-    console.log(`Rendered ${rec.count} PNG preview(s) in ${relPosix(dir)} for ${rec.model} ${rec.source} skins.`);
+    console.log(`Rendered ${rec.count} PNG preview(s) in ${relPosix(dir)} for player skin previews.`);
   }
   if (errors) {
     console.error(`${errors} player skin render error(s).`);
