@@ -39,6 +39,36 @@
             },
             {
               "type": "minecraft:loot_table",
+              "value": "nice_mob_variants:entity/embroidery_cat",
+              "conditions": [
+                {
+                  "condition": "minecraft:entity_properties",
+                  "entity": "this",
+                  "predicate": {
+                    "components": {
+                      "minecraft:cat/variant": "nice_mob_variants:embroidery"
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "type": "minecraft:loot_table",
+              "value": "nice_mob_variants:entity/soul_cat",
+              "conditions": [
+                {
+                  "condition": "minecraft:entity_properties",
+                  "entity": "this",
+                  "predicate": {
+                    "components": {
+                      "minecraft:cat/variant": "nice_mob_variants:soul"
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "type": "minecraft:loot_table",
               "value": "nice_mob_variants:entity/vanilla/cat"
             }
           ]
