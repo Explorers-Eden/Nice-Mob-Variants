@@ -1,0 +1,20 @@
+{
+  "asset_id": "nice_mob_variants:entity/pig/muddy_red",
+  "baby_asset_id": "nice_mob_variants:entity/pig/muddy_red_baby",
+  "spawn_conditions": [
+    {
+      "condition": {
+        "type": "minecraft:structure",
+        "structures": "#nice_mob_variants:mob_variant_spawnable/pig/muddy_red"
+      },
+      "priority": 1
+    },
+    {
+      "condition": {
+        "type": "minecraft:biome",
+        "biomes": "#nice_mob_variants:mob_variant_spawnable/pig/muddy_red"
+      },
+      "priority": 1
+    }
+  ]
+}
