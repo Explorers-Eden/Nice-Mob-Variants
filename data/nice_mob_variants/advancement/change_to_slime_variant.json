@@ -1,0 +1,28 @@
+{
+  "criteria": {
+    "used_slime": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "item": {
+          "items": "minecraft:lime_dye",
+          "components": {
+            "minecraft:custom_data": {
+              "nice_mob_variants": "gooey_treat"
+            }
+          }
+        },
+        "entity": {
+          "minecraft:entity_type": "#nice_mob_variants:can_become_slime_variant"
+        }
+      }
+    }
+  },
+  "requirements": [
+    [
+      "used_slime"
+    ]
+  ],
+  "rewards": {
+    "function": "nice_mob_variants:slime/init"
+  }
+}

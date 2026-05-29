@@ -1,0 +1,24 @@
+{
+  "adult_sounds": {
+    "ambient_sound": "minecraft:entity.skeleton.ambient",
+    "beg_for_food_sound": "minecraft:entity.skeleton_horse.ambient",
+    "death_sound": "minecraft:entity.skeleton.death",
+    "eat_sound": "minecraft:entity.skeleton.ambient",
+    "hiss_sound": "minecraft:entity.wither_skeleton.ambient",
+    "hurt_sound": "minecraft:entity.skeleton.hurt",
+    "purr_sound": "minecraft:entity.wither_skeleton.ambient",
+    "purreow_sound": "minecraft:entity.wither_skeleton.ambient",
+    "stray_ambient_sound": "minecraft:entity.skeleton.ambient"
+  },
+  "baby_sounds": {
+    "ambient_sound": "minecraft:entity.skeleton.ambient",
+    "beg_for_food_sound": "minecraft:entity.skeleton_horse.ambient",
+    "death_sound": "minecraft:entity.skeleton.death",
+    "eat_sound": "minecraft:entity.skeleton.ambient",
+    "hiss_sound": "minecraft:entity.wither_skeleton.ambient",
+    "hurt_sound": "minecraft:entity.skeleton.hurt",
+    "purr_sound": "minecraft:entity.wither_skeleton.ambient",
+    "purreow_sound": "minecraft:entity.wither_skeleton.ambient",
+    "stray_ambient_sound": "minecraft:entity.skeleton.ambient"
+  }
+}

@@ -39,6 +39,21 @@
             },
             {
               "type": "minecraft:loot_table",
+              "value": "nice_mob_variants:entity/chicken/cluckshroom",
+              "conditions": [
+                {
+                  "condition": "minecraft:entity_properties",
+                  "entity": "this",
+                  "predicate": {
+                    "components": {
+                      "minecraft:chicken/variant": "nice_mob_variants:cluckshroom"
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "type": "minecraft:loot_table",
               "value": "minecraft:entities/strider",
               "conditions": [
                 {
@@ -69,7 +84,7 @@
             },
             {
               "type": "minecraft:loot_table",
-              "value": "nice_mob_variants:entity/duck",
+              "value": "nice_mob_variants:entity/chicken/duck",
               "conditions": [
                 {
                   "condition": "minecraft:entity_properties",
@@ -84,7 +99,7 @@
             },
             {
               "type": "minecraft:loot_table",
-              "value": "nice_mob_variants:entity/potato_chicken",
+              "value": "nice_mob_variants:entity/chicken/potato",
               "conditions": [
                 {
                   "condition": "minecraft:entity_properties",

@@ -1,0 +1,2 @@
+execute unless dimension minecraft:the_nether run return run function nice_mob_variants:chicken_jockey/zombie
+function nice_mob_variants:chicken_jockey/strider

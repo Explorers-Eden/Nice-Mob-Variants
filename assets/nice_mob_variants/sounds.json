@@ -40,5 +40,11 @@
             "nice_mob_variants:entity/penguin/penguin_1",
             "nice_mob_variants:entity/penguin/penguin_2"
         ]
+      },
+      "entity.turkey.gobbling": {
+        "sounds": [
+            "nice_mob_variants:entity/turkey/turkey_1",
+            "nice_mob_variants:entity/turkey/turkey_2"
+        ]
       }
 }

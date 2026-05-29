@@ -1,4 +1,26 @@
 # Minecraft Version(s): 26.1.x
 ## Changes:
+- Cluckshroom chicken variant now drops Red Mushroom instead of Raw Chicken
+- Swamp zombie nautilus variant now drops Lily Pads instead of Rotten Flesh
+- Cold zombie nautilus variant now drops Packed Ice instead of Rotten Flesh
+- Guardian zombie nautilus variant now drops Prismarine Crystals instead of Rotten Flesh
+- Husk zombie nautilus variant now drops Sand instead of Rotten Flesh
+- Creaking wolf variant now drops Resin Clumps
+- Added Turkey chicken variant (spawns in Taiga biomes)
+- Added Legend pig variant (spawns in Pen structures)
+- Added Glow zombie nautilus variant:
+    - Has a chance to spawn during full moon and in Lush/Dripstone Caves
+    - When fully submerged in water it starts glowing
+    - Drops Glow Ink Sacs on death
+- Added Slime wolf and cat variants:
+    - Does not spawn naturally anywhere
+    - Can only be obtained by giving a tamed cat or wolf a Gooey Treat Item
+    - Bounces a lot
+    - Drops Slime when killed
+- Added Gooey Treat Item (Can be obtained from Trial Spawner in Slime Dungeon Structures)
+- Added Slime Dungeon Structures (Generates in the same biomes underground as the Trial Chamber does)
+- Skeleton variants for Cats and Wolves now also use Skeleton sounds
 
 ## Fixes:
+- Lily Pad loot drops for chicken duck variants being able to get smelted
+- Fixed Black wolf variant using the "angry" textures when they should use the "tame" ones

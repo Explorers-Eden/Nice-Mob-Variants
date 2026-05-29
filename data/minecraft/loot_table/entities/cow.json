@@ -39,7 +39,7 @@
             },
             {
               "type": "minecraft:loot_table",
-              "value": "nice_mob_variants:entity/pink_moobloom",
+              "value": "nice_mob_variants:entity/cow/pink_moobloom",
               "conditions": [
                 {
                   "condition": "minecraft:entity_properties",
@@ -54,7 +54,7 @@
             },
             {
               "type": "minecraft:loot_table",
-              "value": "nice_mob_variants:entity/yellow_moobloom",
+              "value": "nice_mob_variants:entity/cow/yellow_moobloom",
               "conditions": [
                 {
                   "condition": "minecraft:entity_properties",
@@ -69,7 +69,7 @@
             },
             {
               "type": "minecraft:loot_table",
-              "value": "nice_mob_variants:entity/sniffer_cow",
+              "value": "nice_mob_variants:entity/cow/sniffer",
               "conditions": [
                 {
                   "condition": "minecraft:entity_properties",
@@ -84,7 +84,7 @@
             },
             {
               "type": "minecraft:loot_table",
-              "value": "nice_mob_variants:entity/potato_cow",
+              "value": "nice_mob_variants:entity/cow/potato",
               "conditions": [
                 {
                   "condition": "minecraft:entity_properties",

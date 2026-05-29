@@ -39,7 +39,7 @@
             },
             {
               "type": "minecraft:loot_table",
-              "value": "nice_mob_variants:entity/muddy_pig",
+              "value": "nice_mob_variants:entity/pig/muddy",
               "conditions": [
                 {
                   "condition": "minecraft:entity_properties",
@@ -54,7 +54,7 @@
             },
             {
               "type": "minecraft:loot_table",
-              "value": "nice_mob_variants:entity/muddy_pig",
+              "value": "nice_mob_variants:entity/pig/muddy",
               "conditions": [
                 {
                   "condition": "minecraft:entity_properties",
@@ -69,7 +69,7 @@
             },
             {
               "type": "minecraft:loot_table",
-              "value": "nice_mob_variants:entity/muddy_pig",
+              "value": "nice_mob_variants:entity/pig/muddy",
               "conditions": [
                 {
                   "condition": "minecraft:entity_properties",
@@ -84,7 +84,7 @@
             },
             {
               "type": "minecraft:loot_table",
-              "value": "nice_mob_variants:entity/muddy_pig",
+              "value": "nice_mob_variants:entity/pig/muddy",
               "conditions": [
                 {
                   "condition": "minecraft:entity_properties",
@@ -99,7 +99,7 @@
             },
             {
               "type": "minecraft:loot_table",
-              "value": "nice_mob_variants:entity/muddy_pig",
+              "value": "nice_mob_variants:entity/pig/muddy",
               "conditions": [
                 {
                   "condition": "minecraft:entity_properties",
@@ -114,7 +114,7 @@
             },
             {
               "type": "minecraft:loot_table",
-              "value": "nice_mob_variants:entity/muddy_pig",
+              "value": "nice_mob_variants:entity/pig/muddy",
               "conditions": [
                 {
                   "condition": "minecraft:entity_properties",
@@ -129,7 +129,7 @@
             },
             {
               "type": "minecraft:loot_table",
-              "value": "nice_mob_variants:entity/muddy_pig",
+              "value": "nice_mob_variants:entity/pig/muddy",
               "conditions": [
                 {
                   "condition": "minecraft:entity_properties",
@@ -144,7 +144,7 @@
             },
             {
               "type": "minecraft:loot_table",
-              "value": "nice_mob_variants:entity/potato_pig",
+              "value": "nice_mob_variants:entity/pig/potato",
               "conditions": [
                 {
                   "condition": "minecraft:entity_properties",

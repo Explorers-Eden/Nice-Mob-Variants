@@ -1,0 +1,20 @@
+{
+  "adult_sounds": {
+    "ambient_sound": "minecraft:entity.skeleton.ambient",
+    "death_sound": "minecraft:entity.skeleton.death",
+    "growl_sound": "minecraft:entity.wither_skeleton.ambient",
+    "hurt_sound": "minecraft:entity.skeleton.hurt",
+    "pant_sound": "minecraft:entity.wither_skeleton.ambient",
+    "step_sound": "minecraft:entity.skeleton.step",
+    "whine_sound": "minecraft:entity.wither_skeleton.ambient"
+  },
+  "baby_sounds": {
+    "ambient_sound": "minecraft:entity.skeleton.ambient",
+    "death_sound": "minecraft:entity.skeleton.death",
+    "growl_sound": "minecraft:entity.wither_skeleton.ambient",
+    "hurt_sound": "minecraft:entity.skeleton.hurt",
+    "pant_sound": "minecraft:entity.wither_skeleton.ambient",
+    "step_sound": "minecraft:entity.skeleton.step",
+    "whine_sound": "minecraft:entity.wither_skeleton.ambient"
+  }
+}

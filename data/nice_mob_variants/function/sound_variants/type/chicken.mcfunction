@@ -10,6 +10,7 @@ execute if data entity @s {variant:"nice_mob_variants:strider"} run return run d
 execute if data entity @s {variant:"nice_mob_variants:goose"} run return run data modify entity @s sound_variant set value "nice_mob_variants:goose"
 execute if data entity @s {variant:"nice_mob_variants:flamingo"} run return run data modify entity @s sound_variant set value "nice_mob_variants:flamingo"
 execute if data entity @s {variant:"nice_mob_variants:penguin"} run return run data modify entity @s sound_variant set value "nice_mob_variants:penguin"
+execute if data entity @s {variant:"nice_mob_variants:turkey"} run return run data modify entity @s sound_variant set value "nice_mob_variants:turkey"
 
 execute store result score $chicken_sound nice_mob_variants.technical run random value 1..3
 execute unless score $chicken_sound nice_mob_variants.technical matches 3 run return run data modify entity @s sound_variant set value "minecraft:classic"

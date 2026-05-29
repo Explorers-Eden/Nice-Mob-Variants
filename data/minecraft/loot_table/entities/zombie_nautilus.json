@@ -1,0 +1,94 @@
+{
+  "type": "minecraft:entity",
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:alternatives",
+          "children": [
+            {
+              "type": "minecraft:loot_table",
+              "value": "nice_mob_variants:entity/zombie_nautilus/glow",
+              "conditions": [
+                {
+                  "condition": "minecraft:entity_properties",
+                  "entity": "this",
+                  "predicate": {
+                    "components": {
+                      "minecraft:zombie_nautilus/variant": "nice_mob_variants:glow"
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "type": "minecraft:loot_table",
+              "value": "nice_mob_variants:entity/zombie_nautilus/cold",
+              "conditions": [
+                {
+                  "condition": "minecraft:entity_properties",
+                  "entity": "this",
+                  "predicate": {
+                    "components": {
+                      "minecraft:zombie_nautilus/variant": "nice_mob_variants:cold"
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "type": "minecraft:loot_table",
+              "value": "nice_mob_variants:entity/zombie_nautilus/guardian",
+              "conditions": [
+                {
+                  "condition": "minecraft:entity_properties",
+                  "entity": "this",
+                  "predicate": {
+                    "components": {
+                      "minecraft:zombie_nautilus/variant": "nice_mob_variants:guardian"
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "type": "minecraft:loot_table",
+              "value": "nice_mob_variants:entity/zombie_nautilus/husk",
+              "conditions": [
+                {
+                  "condition": "minecraft:entity_properties",
+                  "entity": "this",
+                  "predicate": {
+                    "components": {
+                      "minecraft:zombie_nautilus/variant": "nice_mob_variants:husk"
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "type": "minecraft:loot_table",
+              "value": "nice_mob_variants:entity/zombie_nautilus/swamp",
+              "conditions": [
+                {
+                  "condition": "minecraft:entity_properties",
+                  "entity": "this",
+                  "predicate": {
+                    "components": {
+                      "minecraft:zombie_nautilus/variant": "nice_mob_variants:swamp"
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "type": "minecraft:loot_table",
+              "value": "nice_mob_variants:entity/vanilla/zombie_nautilus"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

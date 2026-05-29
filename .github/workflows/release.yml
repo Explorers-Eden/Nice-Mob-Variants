@@ -7,30 +7,46 @@ permissions:
   contents: write
 
 jobs:
-  release:
+  sync-translations:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Check out repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
+      - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
 
-      - name: Install Python dependencies
-        run: pip install pyyaml requests
+      - name: Install dependencies
+        run: pip install pyyaml
 
-      - name: Create temporary Crowdin config
-        run: bash tools/scripts/create-crowdin-temp-config.sh
+      - name: Read project metadata
+        id: meta
+        run: python tools/scripts/read-release-metadata.py
+
+      - name: Check for translatable content
+        id: check
+        run: |
+          if [ -f "assets/${{ steps.meta.outputs.namespace }}/lang/en_us.json" ]; then
+            echo "has_lang=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "has_lang=false" >> "$GITHUB_OUTPUT"
+            echo "No lang files found, skipping translation sync"
+          fi
+
+      - name: Create Crowdin config
+        if: steps.check.outputs.has_lang == 'true'
+        run: python tools/scripts/create-crowdin-config.py
 
       - name: Backup English source lang
-        run: bash tools/scripts/backup-english-source-lang.sh
+        if: steps.check.outputs.has_lang == 'true'
+        env:
+          NAMESPACE: ${{ steps.meta.outputs.namespace }}
+        run: bash tools/scripts/backup-lang.sh
 
       - name: Upload source to Crowdin
+        if: steps.check.outputs.has_lang == 'true'
         uses: crowdin/github-action@v2
         with:
           config: .crowdin-temp.yml
@@ -42,6 +58,7 @@ jobs:
           CROWDIN_PERSONAL_TOKEN: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
 
       - name: Download translations from Crowdin
+        if: steps.check.outputs.has_lang == 'true'
         uses: crowdin/github-action@v2
         with:
           config: .crowdin-temp.yml
@@ -54,20 +71,37 @@ jobs:
         env:
           CROWDIN_PROJECT_ID: ${{ secrets.CROWDIN_PROJECT_ID }}
           CROWDIN_PERSONAL_TOKEN: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Cleanup Crowdin files and protect en_us
+      - name: Clean up Crowdin files
+        if: steps.check.outputs.has_lang == 'true'
+        env:
+          NAMESPACE: ${{ steps.meta.outputs.namespace }}
         run: bash tools/scripts/cleanup-crowdin-files.sh
 
-      - name: Normalize lang filenames
-        run: bash tools/scripts/normalize-lang-filenames.sh
+      - name: Commit translation updates
+        if: steps.check.outputs.has_lang == 'true'
+        env:
+          NAMESPACE: ${{ steps.meta.outputs.namespace }}
+          NAME: ${{ steps.meta.outputs.name }}
+        run: bash tools/scripts/commit-crowdin-updates.sh
 
-      - name: Commit Crowdin translation updates
-        run: bash tools/scripts/commit-crowdin-translation-updates.sh
+  build-and-release:
+    needs: sync-translations
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install pyyaml requests
 
       - name: Read release metadata
         id: meta
-        shell: bash
         run: python tools/scripts/read-release-metadata.py
 
       - name: Build datapack zip and universal mod jar
@@ -76,9 +110,15 @@ jobs:
           JAR_NAME: ${{ steps.meta.outputs.jar_name }}
           VERSION_NUMBER: ${{ steps.meta.outputs.version_number }}
           PROJECT_ID: ${{ steps.meta.outputs.project_id }}
+          MOD_ID: ${{ steps.meta.outputs.mod_id }}
+          NAMESPACE: ${{ steps.meta.outputs.namespace }}
+          SLUG: ${{ steps.meta.outputs.slug }}
+          NAME: ${{ steps.meta.outputs.name }}
+          DESCRIPTION: ${{ steps.meta.outputs.description }}
+          ICON: ${{ steps.meta.outputs.icon }}
         run: python tools/scripts/build-release-artifacts.py
 
-      - name: Create or update GitHub Release
+      - name: Create or update GitHub release
         env:
           GH_TOKEN: ${{ github.token }}
           TAG_NAME: ${{ steps.meta.outputs.tag_name }}

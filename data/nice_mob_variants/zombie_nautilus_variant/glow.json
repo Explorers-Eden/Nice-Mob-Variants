@@ -1,0 +1,28 @@
+{
+  "asset_id": "nice_mob_variants:entity/zombie_nautilus/glow",
+  "spawn_conditions": [
+    {
+      "condition": {
+        "type": "minecraft:biome",
+        "biomes": "#nice_mob_variants:mob_variant_spawnable/zombie_nautilus/glow"
+      },
+      "priority": 999
+    },
+    {
+      "condition": {
+        "type": "minecraft:structure",
+        "structures": "#nice_mob_variants:mob_variant_spawnable/zombie_nautilus/glow"
+      },
+      "priority": 999
+    },
+    {
+      "condition": {
+        "type": "minecraft:moon_brightness",
+        "range": {
+          "min": 0.9
+        }
+      },
+      "priority": 0
+    }
+  ]
+}

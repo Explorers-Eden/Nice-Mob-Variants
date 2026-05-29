@@ -1,0 +1,24 @@
+{
+  "adult_sounds": {
+    "ambient_sound": "minecraft:entity.slime.jump",
+    "beg_for_food_sound": "minecraft:entity.slime.squish",
+    "death_sound": "minecraft:entity.slime.death",
+    "eat_sound": "minecraft:entity.slime.squish",
+    "hiss_sound": "minecraft:entity.slime.attack",
+    "hurt_sound": "minecraft:entity.slime.hurt",
+    "purr_sound": "minecraft:entity.slime.squish",
+    "purreow_sound": "minecraft:entity.slime.squish",
+    "stray_ambient_sound": "minecraft:entity.slime.jump"
+  },
+  "baby_sounds": {
+    "ambient_sound": "minecraft:entity.slime.jump_small",
+    "beg_for_food_sound": "minecraft:entity.slime.squish_small",
+    "death_sound": "minecraft:entity.slime.death_small",
+    "eat_sound": "minecraft:entity.slime.squish_small",
+    "hiss_sound": "minecraft:entity.slime.attack",
+    "hurt_sound": "minecraft:entity.slime.hurt_small",
+    "purr_sound": "minecraft:entity.slime.squish_small",
+    "purreow_sound": "minecraft:entity.slime.squish_small",
+    "stray_ambient_sound": "minecraft:entity.slime.jump_small"
+  }
+}

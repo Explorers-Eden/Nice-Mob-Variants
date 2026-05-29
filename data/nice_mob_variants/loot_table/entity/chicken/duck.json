@@ -38,10 +38,6 @@
           "type": "minecraft:item",
           "functions": [
             {
-              "conditions": [],
-              "function": "minecraft:furnace_smelt"
-            },
-            {
               "count": {
                 "type": "minecraft:uniform",
                 "max": 1,

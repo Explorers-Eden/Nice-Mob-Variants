@@ -1,0 +1,3 @@
+execute anchored eyes align xyz positioned ^ ^ ^ unless entity @e[type=area_effect_cloud,tag=mob_variants.light,distance=..0.5] run summon area_effect_cloud ^ ^ ^ {Duration:5,Tags:["mob_variants.light"],custom_particle:{type:"block",block_state:"minecraft:air"}}
+execute anchored eyes align xyz positioned ^ ^ ^ if entity @e[type=area_effect_cloud,tag=mob_variants.light,distance=..0.5] unless entity @e[type=marker,tag=mob_variants.light,distance=..0.5] run summon marker ^ ^ ^ {Tags:["mob_variants.light"]}
+execute anchored eyes align xyz positioned ^ ^ ^ if entity @e[type=area_effect_cloud,tag=mob_variants.light,distance=..0.5] if entity @e[type=marker,tag=mob_variants.light,distance=..0.5] if block ^ ^ ^ minecraft:water run setblock ^ ^ ^ light[level=10,waterlogged=true]

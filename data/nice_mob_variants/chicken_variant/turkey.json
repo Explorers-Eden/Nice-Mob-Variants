@@ -1,0 +1,20 @@
+{
+  "asset_id": "nice_mob_variants:entity/chicken/turkey",
+  "baby_asset_id": "nice_mob_variants:entity/chicken/turkey_baby",
+  "spawn_conditions": [
+    {
+      "condition": {
+        "type": "minecraft:structure",
+        "structures": "#nice_mob_variants:mob_variant_spawnable/chicken/turkey"
+      },
+      "priority": 1
+    },
+    {
+      "condition": {
+        "type": "minecraft:biome",
+        "biomes": "#nice_mob_variants:mob_variant_spawnable/chicken/turkey"
+      },
+      "priority": 1
+    }
+  ]
+}

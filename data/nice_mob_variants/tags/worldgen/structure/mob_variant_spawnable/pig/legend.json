@@ -1,0 +1,8 @@
+{
+    "values": [
+      {"id": "nice_mob_variants:pen_cold","required": false},
+      {"id": "nice_mob_variants:pen_jungle","required": false},
+      {"id": "nice_mob_variants:pen_wild","required": false},
+      {"id": "nice_mob_variants:pen_wood","required": false}
+    ]
+  }
