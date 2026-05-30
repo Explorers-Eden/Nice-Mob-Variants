@@ -1,0 +1,14 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 94248787,
+    "separation": 12,
+    "spacing": 28
+  },
+  "structures": [
+    {
+      "structure": "nice_mob_variants:slime_dungeon",
+      "weight": 1
+    }
+  ]
+}
