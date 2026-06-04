@@ -3,7 +3,7 @@
       "condition": "minecraft:entity_properties",
       "entity": "this",
       "predicate": {
-        "nbt": "{AngerTime:0}"
+        "nbt": "{anger_end_time:-1L}"
       }
     }
   ]
