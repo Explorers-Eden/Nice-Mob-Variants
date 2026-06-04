@@ -1,0 +1,32 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "frequency": 0.2,
+    "frequency_reduction_method": "default",
+    "salt": 30725787,
+    "separation": 32,
+    "spacing": 64,
+    "exclusion_zone": {
+      "other_set": "minecraft:villages",
+      "chunk_count": 1
+    }
+  },
+  "structures": [
+    {
+      "structure": "nice_mob_variants:archaeological_site",
+      "weight": 100
+    },
+    {
+      "structure": "nice_mob_variants:graveyard",
+      "weight": 50
+    },
+    {
+      "structure": "nice_mob_variants:pale_oak_tree",
+      "weight": 100
+    },
+    {
+      "structure": "nice_mob_variants:potato_farm",
+      "weight": 80
+    }
+  ]
+}

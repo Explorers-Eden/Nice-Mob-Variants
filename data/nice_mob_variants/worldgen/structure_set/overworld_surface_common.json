@@ -1,0 +1,60 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "frequency": 0.8,
+    "frequency_reduction_method": "default",
+    "salt": 94225787,
+    "separation": 12,
+    "spacing": 32,
+    "exclusion_zone": {
+      "other_set": "minecraft:villages",
+      "chunk_count": 1
+    }
+  },
+  "structures": [
+    {
+      "structure": "nice_mob_variants:barn",
+      "weight": 60
+    },
+    {
+      "structure": "nice_mob_variants:coop_bamboo",
+      "weight": 100
+    },
+    {
+      "structure": "nice_mob_variants:coop_cold",
+      "weight": 100
+    },
+    {
+      "structure": "nice_mob_variants:coop_shroom",
+      "weight": 100
+    },
+    {
+      "structure": "nice_mob_variants:coop_wood",
+      "weight": 100
+    },
+    {
+      "structure": "nice_mob_variants:fallen_mushroom",
+      "weight": 100
+    },
+    {
+      "structure": "nice_mob_variants:hot_spring",
+      "weight": 100
+    },
+    {
+      "structure": "nice_mob_variants:pen_cold",
+      "weight": 80
+    },
+    {
+      "structure": "nice_mob_variants:pen_wild",
+      "weight": 80
+    },
+    {
+      "structure": "nice_mob_variants:pen_wood",
+      "weight": 80
+    },
+    {
+      "structure": "nice_mob_variants:pen_jungle",
+      "weight": 80
+    }
+  ]
+}

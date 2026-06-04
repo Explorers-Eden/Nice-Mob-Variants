@@ -20,6 +20,7 @@
 - Added Gooey Treat Item (Can be obtained from Trial Spawner in Slime Dungeon Structures)
 - Added Slime Dungeon Structures (Generates in the same biomes underground as the Trial Chamber does)
 - Skeleton variants for Cats and Wolves now also use Skeleton sounds
+- Updated structure sets to distribute included structures better
 
 ## Fixes:
 - Lily Pad loot drops for chicken duck variants being able to get smelted
