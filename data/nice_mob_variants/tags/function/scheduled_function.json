@@ -9,6 +9,7 @@
         "nice_mob_variants:husk/init",
         "nice_mob_variants:frog_feeder/spawn_food/init",
         "nice_mob_variants:livestock_breeder/breed/init",
-        "nice_mob_variants:glow/init"
+        "nice_mob_variants:glow/init",
+        "nice_mob_variants:sulfur_cube/init"
     ]
 }

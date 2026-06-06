@@ -1,5 +1,6 @@
 {
   "values": [
-    "#minecraft:shulker_boxes"
+    "#minecraft:shulker_boxes",
+    "#nice_mob_variants:glass"
   ]
 }
