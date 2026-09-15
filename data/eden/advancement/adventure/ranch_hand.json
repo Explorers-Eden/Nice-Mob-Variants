@@ -1,0 +1,27 @@
+{
+  "parent": "eden:adventure/nice_mob_variants",
+  "display": {
+    "icon": {
+      "id": "minecraft:hay_block"
+    },
+    "title": {
+      "translate": "advancement.eden.adventure.nice_mob_variants.ranch_hand.title",
+      "fallback": "Ranch Hand"
+    },
+    "description": {
+      "translate": "advancement.eden.adventure.nice_mob_variants.ranch_hand.description",
+      "fallback": "Craft the Livestock Breeder."
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true
+  },
+  "criteria": {
+    "crafted_breeder": {
+      "trigger": "minecraft:recipe_crafted",
+      "conditions": {
+        "recipes": "nice_mob_variants:crafting_shaped/livestock_breeder"
+      }
+    }
+  }
+}

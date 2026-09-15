@@ -10,77 +10,67 @@
             {
               "type": "minecraft:loot_table",
               "value": "minecraft:entities/skeleton_horse",
-              "conditions": [
-                {
-                  "condition": "minecraft:entity_properties",
-                  "entity": "this",
-                  "predicate": {
-                    "components": {
-                      "minecraft:cat/variant": "nice_mob_variants:skeleton"
-                    }
+              "condition": {
+                "type": "minecraft:entity_properties",
+                "entity": "this",
+                "predicate": {
+                  "components": {
+                    "minecraft:cat/variant": "nice_mob_variants:skeleton"
                   }
                 }
-              ]
+              }
             },
             {
               "type": "minecraft:loot_table",
               "value": "nice_mob_variants:entity/cat/creeper",
-              "conditions": [
-                {
-                  "condition": "minecraft:entity_properties",
-                  "entity": "this",
-                  "predicate": {
-                    "components": {
-                      "minecraft:cat/variant": "nice_mob_variants:creeper"
-                    }
+              "condition": {
+                "type": "minecraft:entity_properties",
+                "entity": "this",
+                "predicate": {
+                  "components": {
+                    "minecraft:cat/variant": "nice_mob_variants:creeper"
                   }
                 }
-              ]
+              }
             },
             {
               "type": "minecraft:loot_table",
               "value": "nice_mob_variants:entity/cat/embroidery",
-              "conditions": [
-                {
-                  "condition": "minecraft:entity_properties",
-                  "entity": "this",
-                  "predicate": {
-                    "components": {
-                      "minecraft:cat/variant": "nice_mob_variants:embroidery"
-                    }
+              "condition": {
+                "type": "minecraft:entity_properties",
+                "entity": "this",
+                "predicate": {
+                  "components": {
+                    "minecraft:cat/variant": "nice_mob_variants:embroidery"
                   }
                 }
-              ]
+              }
             },
             {
               "type": "minecraft:loot_table",
               "value": "nice_mob_variants:entity/cat/soul",
-              "conditions": [
-                {
-                  "condition": "minecraft:entity_properties",
-                  "entity": "this",
-                  "predicate": {
-                    "components": {
-                      "minecraft:cat/variant": "nice_mob_variants:soul"
-                    }
+              "condition": {
+                "type": "minecraft:entity_properties",
+                "entity": "this",
+                "predicate": {
+                  "components": {
+                    "minecraft:cat/variant": "nice_mob_variants:soul"
                   }
                 }
-              ]
+              }
             },
             {
               "type": "minecraft:loot_table",
               "value": "nice_mob_variants:entity/cat/slime",
-              "conditions": [
-                {
-                  "condition": "minecraft:entity_properties",
-                  "entity": "this",
-                  "predicate": {
-                    "components": {
-                      "minecraft:cat/variant": "nice_mob_variants:slime"
-                    }
+              "condition": {
+                "type": "minecraft:entity_properties",
+                "entity": "this",
+                "predicate": {
+                  "components": {
+                    "minecraft:cat/variant": "nice_mob_variants:slime"
                   }
                 }
-              ]
+              }
             },
             {
               "type": "minecraft:loot_table",

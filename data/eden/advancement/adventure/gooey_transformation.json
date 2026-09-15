@@ -1,0 +1,41 @@
+{
+  "parent": "eden:adventure/nice_mob_variants",
+  "display": {
+    "icon": {
+      "id": "minecraft:slime_ball"
+    },
+    "title": {
+      "translate": "advancement.eden.adventure.nice_mob_variants.gooey_transformation.title",
+      "fallback": "Gooey Transformation"
+    },
+    "description": {
+      "translate": "advancement.eden.adventure.nice_mob_variants.gooey_transformation.description",
+      "fallback": "Use a Gooey Treat to turn a Cat or Wolf into its Slime variant."
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true
+  },
+  "criteria": {
+    "used_gooey_treat": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "item": {
+          "items": "minecraft:lime_dye",
+          "components": {
+            "minecraft:custom_data": {
+              "nice_mob_variants": "gooey_treat"
+            }
+          }
+        },
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "minecraft:entity_type": "#nice_mob_variants:can_become_slime_variant"
+          }
+        }
+      }
+    }
+  }
+}

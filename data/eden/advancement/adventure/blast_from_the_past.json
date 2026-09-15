@@ -1,0 +1,35 @@
+{
+  "parent": "eden:adventure/ghost_town",
+  "display": {
+    "icon": {
+      "id": "minecraft:tnt"
+    },
+    "title": {
+      "translate": "advancement.eden.adventure.nice_mob_variants.blast_from_the_past.title",
+      "fallback": "Blast from the Past"
+    },
+    "description": {
+      "translate": "advancement.eden.adventure.nice_mob_variants.blast_from_the_past.description",
+      "fallback": "Discover the Creeper Ruins."
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true
+  },
+  "criteria": {
+    "found_structure": {
+      "trigger": "minecraft:location",
+      "conditions": {
+        "player": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "location": {
+              "structures": "nice_mob_variants:creeper_ruins"
+            }
+          }
+        }
+      }
+    }
+  }
+}

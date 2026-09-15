@@ -1,5 +1,5 @@
 {
-    "values": [
-      {"id": "minecraft:village_snowy","required": false}
-    ]
-  }
+  "values": [
+    { "id": "minecraft:village_snowy", "required": false }
+  ]
+}

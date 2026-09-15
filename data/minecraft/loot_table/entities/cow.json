@@ -10,92 +10,80 @@
             {
               "type": "minecraft:loot_table",
               "value": "minecraft:entities/skeleton_horse",
-              "conditions": [
-                {
-                  "condition": "minecraft:entity_properties",
-                  "entity": "this",
-                  "predicate": {
-                    "components": {
-                      "minecraft:cow/variant": "nice_mob_variants:skeleton"
-                    }
+              "condition": {
+                "type": "minecraft:entity_properties",
+                "entity": "this",
+                "predicate": {
+                  "components": {
+                    "minecraft:cow/variant": "nice_mob_variants:skeleton"
                   }
                 }
-              ]
+              }
             },
             {
               "type": "minecraft:loot_table",
               "value": "minecraft:entities/enderman",
-              "conditions": [
-                {
-                  "condition": "minecraft:entity_properties",
-                  "entity": "this",
-                  "predicate": {
-                    "components": {
-                      "minecraft:cow/variant": "nice_mob_variants:ender"
-                    }
+              "condition": {
+                "type": "minecraft:entity_properties",
+                "entity": "this",
+                "predicate": {
+                  "components": {
+                    "minecraft:cow/variant": "nice_mob_variants:ender"
                   }
                 }
-              ]
+              }
             },
             {
               "type": "minecraft:loot_table",
               "value": "nice_mob_variants:entity/cow/pink_moobloom",
-              "conditions": [
-                {
-                  "condition": "minecraft:entity_properties",
-                  "entity": "this",
-                  "predicate": {
-                    "components": {
-                      "minecraft:cow/variant": "nice_mob_variants:pink_moobloom"
-                    }
+              "condition": {
+                "type": "minecraft:entity_properties",
+                "entity": "this",
+                "predicate": {
+                  "components": {
+                    "minecraft:cow/variant": "nice_mob_variants:pink_moobloom"
                   }
                 }
-              ]
+              }
             },
             {
               "type": "minecraft:loot_table",
               "value": "nice_mob_variants:entity/cow/yellow_moobloom",
-              "conditions": [
-                {
-                  "condition": "minecraft:entity_properties",
-                  "entity": "this",
-                  "predicate": {
-                    "components": {
-                      "minecraft:cow/variant": "nice_mob_variants:yellow_moobloom"
-                    }
+              "condition": {
+                "type": "minecraft:entity_properties",
+                "entity": "this",
+                "predicate": {
+                  "components": {
+                    "minecraft:cow/variant": "nice_mob_variants:yellow_moobloom"
                   }
                 }
-              ]
+              }
             },
             {
               "type": "minecraft:loot_table",
               "value": "nice_mob_variants:entity/cow/sniffer",
-              "conditions": [
-                {
-                  "condition": "minecraft:entity_properties",
-                  "entity": "this",
-                  "predicate": {
-                    "components": {
-                      "minecraft:cow/variant": "nice_mob_variants:sniffer"
-                    }
+              "condition": {
+                "type": "minecraft:entity_properties",
+                "entity": "this",
+                "predicate": {
+                  "components": {
+                    "minecraft:cow/variant": "nice_mob_variants:sniffer"
                   }
                 }
-              ]
+              }
             },
             {
               "type": "minecraft:loot_table",
               "value": "nice_mob_variants:entity/cow/potato",
-              "conditions": [
-                {
-                  "condition": "minecraft:entity_properties",
-                  "entity": "this",
-                  "predicate": {
-                    "components": {
-                      "minecraft:cow/variant": "nice_mob_variants:potato"
-                    }
+              "condition": {
+                "type": "minecraft:entity_properties",
+                "entity": "this",
+                "predicate": {
+                  "components": {
+                    "minecraft:cow/variant": "nice_mob_variants:potato"
                   }
                 }
-              ]
+              }
             },
             {
               "type": "minecraft:loot_table",

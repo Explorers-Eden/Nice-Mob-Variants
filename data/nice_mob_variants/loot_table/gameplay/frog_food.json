@@ -6,147 +6,135 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "conditions": [
-            {
-              "condition": "minecraft:damage_source_properties",
-              "predicate": {
-                "source_entity": {
-                  "minecraft:entity_type": "minecraft:frog",
-                  "components": {
-                    "minecraft:frog/variant": "minecraft:warm"
-                  }
+          "condition": {
+            "type": "minecraft:damage_source_properties",
+            "predicate": {
+              "source_entity": {
+                "minecraft:entity_type": "minecraft:frog",
+                "components": {
+                  "minecraft:frog/variant": "minecraft:warm"
                 }
               }
             }
-          ],
-          "functions": [
+          },
+          "name": "minecraft:pearlescent_froglight",
+          "modifier": [
             {
               "add": false,
               "count": 1,
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "minecraft:pearlescent_froglight"
+          ]
         },
         {
           "type": "minecraft:item",
-          "conditions": [
-            {
-              "condition": "minecraft:damage_source_properties",
-              "predicate": {
-                "source_entity": {
-                  "minecraft:entity_type": "minecraft:frog",
-                  "components": {
-                    "minecraft:frog/variant": "nice_mob_variants:ender"
-                  }
+          "condition": {
+            "type": "minecraft:damage_source_properties",
+            "predicate": {
+              "source_entity": {
+                "minecraft:entity_type": "minecraft:frog",
+                "components": {
+                  "minecraft:frog/variant": "nice_mob_variants:ender"
                 }
               }
             }
-          ],
-          "functions": [
+          },
+          "name": "minecraft:crying_obsidian",
+          "modifier": [
             {
               "add": false,
               "count": 1,
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "minecraft:crying_obsidian"
+          ]
         },
         {
           "type": "minecraft:item",
-          "conditions": [
-            {
-              "condition": "minecraft:damage_source_properties",
-              "predicate": {
-                "source_entity": {
-                  "minecraft:entity_type": "minecraft:frog",
-                  "components": {
-                    "minecraft:frog/variant": "nice_mob_variants:muddy"
-                  }
+          "condition": {
+            "type": "minecraft:damage_source_properties",
+            "predicate": {
+              "source_entity": {
+                "minecraft:entity_type": "minecraft:frog",
+                "components": {
+                  "minecraft:frog/variant": "nice_mob_variants:muddy"
                 }
               }
             }
-          ],
-          "functions": [
+          },
+          "name": "minecraft:mud",
+          "modifier": [
             {
               "add": false,
               "count": 1,
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "minecraft:mud"
+          ]
         },
         {
           "type": "minecraft:item",
-          "conditions": [
-            {
-              "condition": "minecraft:damage_source_properties",
-              "predicate": {
-                "source_entity": {
-                  "minecraft:entity_type": "minecraft:frog",
-                  "components": {
-                    "minecraft:frog/variant": "nice_mob_variants:nether"
-                  }
+          "condition": {
+            "type": "minecraft:damage_source_properties",
+            "predicate": {
+              "source_entity": {
+                "minecraft:entity_type": "minecraft:frog",
+                "components": {
+                  "minecraft:frog/variant": "nice_mob_variants:nether"
                 }
               }
             }
-          ],
-          "functions": [
+          },
+          "name": "minecraft:shroomlight",
+          "modifier": [
             {
               "add": false,
               "count": 1,
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "minecraft:shroomlight"
+          ]
         },
         {
           "type": "minecraft:item",
-          "conditions": [
-            {
-              "condition": "minecraft:damage_source_properties",
-              "predicate": {
-                "source_entity": {
-                  "minecraft:entity_type": "minecraft:frog",
-                  "components": {
-                    "minecraft:frog/variant": "nice_mob_variants:sculk"
-                  }
+          "condition": {
+            "type": "minecraft:damage_source_properties",
+            "predicate": {
+              "source_entity": {
+                "minecraft:entity_type": "minecraft:frog",
+                "components": {
+                  "minecraft:frog/variant": "nice_mob_variants:sculk"
                 }
               }
             }
-          ],
-          "functions": [
+          },
+          "name": "minecraft:sculk",
+          "modifier": [
             {
               "add": false,
               "count": 1,
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "minecraft:sculk"
+          ]
         },
         {
           "type": "minecraft:item",
-          "conditions": [
-            {
-              "condition": "minecraft:damage_source_properties",
-              "predicate": {
-                "source_entity": {
-                  "minecraft:entity_type": "minecraft:frog",
-                  "components": {
-                    "minecraft:frog/variant": "nice_mob_variants:creaking"
-                  }
+          "condition": {
+            "type": "minecraft:damage_source_properties",
+            "predicate": {
+              "source_entity": {
+                "minecraft:entity_type": "minecraft:frog",
+                "components": {
+                  "minecraft:frog/variant": "nice_mob_variants:creaking"
                 }
               }
             }
-          ],
-          "functions": [
+          },
+          "name": "minecraft:pale_moss_block",
+          "modifier": [
             {
               "add": false,
               "count": 1,
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "minecraft:pale_moss_block"
+          ]
         },
         {
           "type": "minecraft:alternatives",
@@ -154,159 +142,167 @@
             {
               "type": "minecraft:item",
               "name": "minecraft:raw_gold",
-              "conditions": [
-                {
-                  "condition": "minecraft:random_chance",
-                  "chance": 0.9
-                }
-              ]
+              "condition": {
+                "type": "minecraft:random_chance",
+                "chance": 0.9
+              }
             },
             {
               "type": "minecraft:item",
               "name": "minecraft:emerald"
             }
           ],
-          "conditions": [
-            {
-              "condition": "minecraft:damage_source_properties",
-              "predicate": {
-                "source_entity": {
-                  "minecraft:entity_type": "minecraft:frog",
-                  "components": {
-                    "minecraft:frog/variant": "nice_mob_variants:golden"
-                  }
+          "condition": {
+            "type": "minecraft:damage_source_properties",
+            "predicate": {
+              "source_entity": {
+                "minecraft:entity_type": "minecraft:frog",
+                "components": {
+                  "minecraft:frog/variant": "nice_mob_variants:golden"
                 }
               }
             }
-          ],
-          "functions": [
+          },
+          "name": "minecraft:raw_gold",
+          "modifier": [
             {
               "add": false,
               "count": 1,
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "minecraft:raw_gold"
+          ]
         },
         {
           "type": "minecraft:item",
-          "conditions": [
-            {
-              "condition": "minecraft:damage_source_properties",
-              "predicate": {
-                "source_entity": {
-                  "minecraft:entity_type": "minecraft:frog",
-                  "components": {
-                    "minecraft:frog/variant": "nice_mob_variants:dry"
-                  }
+          "condition": {
+            "type": "minecraft:damage_source_properties",
+            "predicate": {
+              "source_entity": {
+                "minecraft:entity_type": "minecraft:frog",
+                "components": {
+                  "minecraft:frog/variant": "nice_mob_variants:dry"
                 }
               }
             }
-          ],
-          "functions": [
+          },
+          "name": "minecraft:sand",
+          "modifier": [
             {
               "add": false,
               "count": 1,
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "minecraft:sand"
+          ]
         },
         {
           "type": "minecraft:item",
-          "conditions": [
-            {
-              "condition": "minecraft:damage_source_properties",
-              "predicate": {
-                "source_entity": {
-                  "minecraft:entity_type": "minecraft:frog",
-                  "components": {
-                    "minecraft:frog/variant": "nice_mob_variants:frozen"
-                  }
+          "condition": {
+            "type": "minecraft:damage_source_properties",
+            "predicate": {
+              "source_entity": {
+                "minecraft:entity_type": "minecraft:frog",
+                "components": {
+                  "minecraft:frog/variant": "nice_mob_variants:frozen"
                 }
               }
             }
-          ],
-          "functions": [
+          },
+          "name": "minecraft:ice",
+          "modifier": [
             {
               "add": false,
               "count": 1,
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "minecraft:ice"
+          ]
         },
         {
           "type": "minecraft:item",
-          "conditions": [
-            {
-              "condition": "minecraft:damage_source_properties",
-              "predicate": {
-                "source_entity": {
-                  "minecraft:entity_type": "minecraft:frog",
-                  "components": {
-                    "minecraft:frog/variant": "nice_mob_variants:guardian"
-                  }
+          "condition": {
+            "type": "minecraft:damage_source_properties",
+            "predicate": {
+              "source_entity": {
+                "minecraft:entity_type": "minecraft:frog",
+                "components": {
+                  "minecraft:frog/variant": "nice_mob_variants:guardian"
                 }
               }
             }
-          ],
-          "functions": [
+          },
+          "name": "minecraft:sea_lantern",
+          "modifier": [
             {
               "add": false,
               "count": 1,
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "minecraft:sea_lantern"
+          ]
         },
         {
           "type": "minecraft:item",
-          "conditions": [
-            {
-              "condition": "minecraft:damage_source_properties",
-              "predicate": {
-                "source_entity": {
-                  "minecraft:entity_type": "minecraft:frog",
-                  "components": {
-                    "minecraft:frog/variant": "minecraft:cold"
-                  }
+          "condition": {
+            "type": "minecraft:damage_source_properties",
+            "predicate": {
+              "source_entity": {
+                "minecraft:entity_type": "minecraft:frog",
+                "components": {
+                  "minecraft:frog/variant": "nice_mob_variants:creeper"
                 }
               }
             }
-          ],
-          "functions": [
+          },
+          "name": "minecraft:gunpowder",
+          "modifier": [
             {
               "add": false,
               "count": 1,
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "minecraft:verdant_froglight"
+          ]
         },
         {
           "type": "minecraft:item",
-          "conditions": [
-            {
-              "condition": "minecraft:damage_source_properties",
-              "predicate": {
-                "source_entity": {
-                  "minecraft:entity_type": "minecraft:frog",
-                  "components": {
-                    "minecraft:frog/variant": "minecraft:temperate"
-                  }
+          "condition": {
+            "type": "minecraft:damage_source_properties",
+            "predicate": {
+              "source_entity": {
+                "minecraft:entity_type": "minecraft:frog",
+                "components": {
+                  "minecraft:frog/variant": "minecraft:cold"
                 }
               }
             }
-          ],
-          "functions": [
+          },
+          "name": "minecraft:verdant_froglight",
+          "modifier": [
             {
               "add": false,
               "count": 1,
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "minecraft:ochre_froglight"
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "condition": {
+            "type": "minecraft:damage_source_properties",
+            "predicate": {
+              "source_entity": {
+                "minecraft:entity_type": "minecraft:frog",
+                "components": {
+                  "minecraft:frog/variant": "minecraft:temperate"
+                }
+              }
+            }
+          },
+          "name": "minecraft:ochre_froglight",
+          "modifier": [
+            {
+              "add": false,
+              "count": 1,
+              "type": "minecraft:set_count"
+            }
+          ]
         }
       ],
       "rolls": 1

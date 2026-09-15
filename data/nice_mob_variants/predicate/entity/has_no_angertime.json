@@ -1,9 +1,7 @@
-[
-    {
-      "condition": "minecraft:entity_properties",
-      "entity": "this",
-      "predicate": {
-        "nbt": "{anger_end_time:-1L}"
-      }
-    }
-  ]
+{
+  "type": "minecraft:entity_properties",
+  "entity": "this",
+  "predicate": {
+    "nbt": "{anger_end_time:-1L}"
+  }
+}

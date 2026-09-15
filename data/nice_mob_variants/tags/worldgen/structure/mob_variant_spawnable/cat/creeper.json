@@ -1,8 +1,5 @@
 {
   "values": [
-    {
-      "id": "minecraft:village_plains",
-      "required": false
-    }
+    { "id": "minecraft:village_plains", "required": false }
   ]
 }

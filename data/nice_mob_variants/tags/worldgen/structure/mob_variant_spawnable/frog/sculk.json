@@ -1,5 +1,5 @@
 {
-    "values": [
-      {"id": "minecraft:ancient_city","required": false}
-    ]
-  }
+  "values": [
+    { "id": "minecraft:ancient_city", "required": false }
+  ]
+}

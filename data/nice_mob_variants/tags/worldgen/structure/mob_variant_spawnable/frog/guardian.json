@@ -1,6 +1,6 @@
 {
-    "values": [
-      {"id": "minecraft:monument","required": false},
-      {"id": "kattersstructures:villager_ocean","required": false}
-    ]
-  }
+  "values": [
+    { "id": "kattersstructures:villager_ocean", "required": false },
+    { "id": "minecraft:monument", "required": false }
+  ]
+}

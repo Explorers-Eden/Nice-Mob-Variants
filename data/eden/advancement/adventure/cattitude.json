@@ -1,0 +1,133 @@
+{
+  "parent": "eden:adventure/variant_hunter",
+  "display": {
+    "icon": {
+      "id": "minecraft:cat_spawn_egg"
+    },
+    "title": {
+      "translate": "advancement.eden.adventure.nice_mob_variants.cattitude.title",
+      "fallback": "Cattitude"
+    },
+    "description": {
+      "translate": "advancement.eden.adventure.nice_mob_variants.cattitude.description",
+      "fallback": "Encounter all 8 Cat variants."
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true
+  },
+  "criteria": {
+    "all_black_green_eyes": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:cat/variant": "nice_mob_variants:all_black_green_eyes"
+            }
+          }
+        }
+      }
+    },
+    "creeper": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:cat/variant": "nice_mob_variants:creeper"
+            }
+          }
+        }
+      }
+    },
+    "embroidery": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:cat/variant": "nice_mob_variants:embroidery"
+            }
+          }
+        }
+      }
+    },
+    "simba": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:cat/variant": "nice_mob_variants:simba"
+            }
+          }
+        }
+      }
+    },
+    "skeleton": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:cat/variant": "nice_mob_variants:skeleton"
+            }
+          }
+        }
+      }
+    },
+    "slime": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:cat/variant": "nice_mob_variants:slime"
+            }
+          }
+        }
+      }
+    },
+    "soul": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:cat/variant": "nice_mob_variants:soul"
+            }
+          }
+        }
+      }
+    },
+    "tiger": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:cat/variant": "nice_mob_variants:tiger"
+            }
+          }
+        }
+      }
+    }
+  }
+}

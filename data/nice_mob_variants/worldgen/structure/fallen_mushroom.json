@@ -7,8 +7,7 @@
         {
           "type": "minecraft:chicken",
           "weight": 10,
-          "minCount": 4,
-          "maxCount": 4
+          "count": 4
         }
       ]
     }

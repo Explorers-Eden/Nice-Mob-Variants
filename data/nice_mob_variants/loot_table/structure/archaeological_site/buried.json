@@ -6,9 +6,9 @@
       "entries": [
         {
           "type": "minecraft:tag",
-          "name": "nice_mob_variants:banner_patterns",
           "expand": true,
-          "weight": 5
+          "weight": 5,
+          "items": "#nice_mob_variants:banner_patterns"
         },
         {
           "type": "minecraft:item",

@@ -1,0 +1,41 @@
+{
+  "parent": "eden:adventure/spud_central",
+  "display": {
+    "icon": {
+      "id": "minecraft:chorus_fruit"
+    },
+    "title": {
+      "translate": "advancement.eden.adventure.nice_mob_variants.end_of_the_line.title",
+      "fallback": "End of the Line"
+    },
+    "description": {
+      "translate": "advancement.eden.adventure.nice_mob_variants.end_of_the_line.description",
+      "fallback": "Discover the End Farm and encounter an Ender variant mob."
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true
+  },
+  "criteria": {
+    "found_end_farm": {
+      "trigger": "minecraft:location",
+      "conditions": {
+        "player": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "location": {
+              "structures": "nice_mob_variants:end_farm"
+            }
+          }
+        }
+      }
+    },
+    "found_ender_variant": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": "nice_mob_variants:entity/is_ender_variant"
+      }
+    }
+  }
+}

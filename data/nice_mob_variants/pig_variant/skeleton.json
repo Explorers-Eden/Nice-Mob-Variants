@@ -12,7 +12,7 @@
     {
       "condition": {
         "type": "minecraft:structure",
-        "structures": "#nice_mob_variants:mob_variant_spawnable/wolf/skeleton"
+        "structures": "#nice_mob_variants:mob_variant_spawnable/pig/skeleton"
       },
       "priority": 999
     }

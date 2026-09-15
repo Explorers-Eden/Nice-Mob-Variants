@@ -1,0 +1,35 @@
+{
+  "parent": "eden:adventure/blast_from_the_past",
+  "display": {
+    "icon": {
+      "id": "minecraft:baked_potato"
+    },
+    "title": {
+      "translate": "advancement.eden.adventure.nice_mob_variants.spud_central.title",
+      "fallback": "Spud Central"
+    },
+    "description": {
+      "translate": "advancement.eden.adventure.nice_mob_variants.spud_central.description",
+      "fallback": "Discover the Potato Farm."
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true
+  },
+  "criteria": {
+    "found_structure": {
+      "trigger": "minecraft:location",
+      "conditions": {
+        "player": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "location": {
+              "structures": "nice_mob_variants:potato_farm"
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,12 +1,6 @@
 {
   "values": [
-    {
-      "id": "minecraft:plains",
-      "required": false
-    },
-    {
-      "id": "minecraft:meadow",
-      "required": false
-    }
+    { "id": "minecraft:meadow", "required": false },
+    { "id": "minecraft:plains", "required": false }
   ]
 }

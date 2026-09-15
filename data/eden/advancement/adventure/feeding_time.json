@@ -1,0 +1,27 @@
+{
+  "parent": "eden:adventure/ranch_hand",
+  "display": {
+    "icon": {
+      "id": "minecraft:composter"
+    },
+    "title": {
+      "translate": "advancement.eden.adventure.nice_mob_variants.feeding_time.title",
+      "fallback": "Feeding Time"
+    },
+    "description": {
+      "translate": "advancement.eden.adventure.nice_mob_variants.feeding_time.description",
+      "fallback": "Craft the Frog Feeder."
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true
+  },
+  "criteria": {
+    "crafted_feeder": {
+      "trigger": "minecraft:recipe_crafted",
+      "conditions": {
+        "recipes": "nice_mob_variants:crafting_shaped/frog_feeder"
+      }
+    }
+  }
+}

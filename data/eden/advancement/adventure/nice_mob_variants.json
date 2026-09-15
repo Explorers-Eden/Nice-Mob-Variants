@@ -1,0 +1,1345 @@
+{
+  "parent": "eden:adventure/root",
+  "display": {
+    "icon": {
+      "id": "minecraft:egg"
+    },
+    "title": {
+      "translate": "advancement.eden.adventure.nice_mob_variants.chapter.title",
+      "fallback": "Something's Different"
+    },
+    "description": {
+      "translate": "advancement.eden.adventure.nice_mob_variants.chapter.description",
+      "fallback": "Encounter a mob touched by Nice Mob Variants."
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true
+  },
+  "criteria": {
+    "cat_all_black_green_eyes": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:cat/variant": "nice_mob_variants:all_black_green_eyes"
+            }
+          }
+        }
+      }
+    },
+    "cat_creeper": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:cat/variant": "nice_mob_variants:creeper"
+            }
+          }
+        }
+      }
+    },
+    "cat_embroidery": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:cat/variant": "nice_mob_variants:embroidery"
+            }
+          }
+        }
+      }
+    },
+    "cat_simba": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:cat/variant": "nice_mob_variants:simba"
+            }
+          }
+        }
+      }
+    },
+    "cat_skeleton": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:cat/variant": "nice_mob_variants:skeleton"
+            }
+          }
+        }
+      }
+    },
+    "cat_slime": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:cat/variant": "nice_mob_variants:slime"
+            }
+          }
+        }
+      }
+    },
+    "cat_soul": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:cat/variant": "nice_mob_variants:soul"
+            }
+          }
+        }
+      }
+    },
+    "cat_tiger": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:cat/variant": "nice_mob_variants:tiger"
+            }
+          }
+        }
+      }
+    },
+    "chicken_cluckshroom": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:chicken/variant": "nice_mob_variants:cluckshroom"
+            }
+          }
+        }
+      }
+    },
+    "chicken_creamy": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:chicken/variant": "nice_mob_variants:creamy"
+            }
+          }
+        }
+      }
+    },
+    "chicken_dark_brown": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:chicken/variant": "nice_mob_variants:dark_brown"
+            }
+          }
+        }
+      }
+    },
+    "chicken_duck": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:chicken/variant": "nice_mob_variants:duck"
+            }
+          }
+        }
+      }
+    },
+    "chicken_ender": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:chicken/variant": "nice_mob_variants:ender"
+            }
+          }
+        }
+      }
+    },
+    "chicken_flamingo": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:chicken/variant": "nice_mob_variants:flamingo"
+            }
+          }
+        }
+      }
+    },
+    "chicken_golden": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:chicken/variant": "nice_mob_variants:golden"
+            }
+          }
+        }
+      }
+    },
+    "chicken_goose": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:chicken/variant": "nice_mob_variants:goose"
+            }
+          }
+        }
+      }
+    },
+    "chicken_ostrich": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:chicken/variant": "nice_mob_variants:ostrich"
+            }
+          }
+        }
+      }
+    },
+    "chicken_penguin": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:chicken/variant": "nice_mob_variants:penguin"
+            }
+          }
+        }
+      }
+    },
+    "chicken_pigeon": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:chicken/variant": "nice_mob_variants:pigeon"
+            }
+          }
+        }
+      }
+    },
+    "chicken_potato": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:chicken/variant": "nice_mob_variants:potato"
+            }
+          }
+        }
+      }
+    },
+    "chicken_rooster": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:chicken/variant": "nice_mob_variants:rooster"
+            }
+          }
+        }
+      }
+    },
+    "chicken_skeleton": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:chicken/variant": "nice_mob_variants:skeleton"
+            }
+          }
+        }
+      }
+    },
+    "chicken_strider": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:chicken/variant": "nice_mob_variants:strider"
+            }
+          }
+        }
+      }
+    },
+    "chicken_turkey": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:chicken/variant": "nice_mob_variants:turkey"
+            }
+          }
+        }
+      }
+    },
+    "chicken_zombie": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:chicken/variant": "nice_mob_variants:zombie"
+            }
+          }
+        }
+      }
+    },
+    "cow_cold_dark": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:cow/variant": "nice_mob_variants:cold_dark"
+            }
+          }
+        }
+      }
+    },
+    "cow_cold_white": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:cow/variant": "nice_mob_variants:cold_white"
+            }
+          }
+        }
+      }
+    },
+    "cow_cold_yellow": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:cow/variant": "nice_mob_variants:cold_yellow"
+            }
+          }
+        }
+      }
+    },
+    "cow_creamy": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:cow/variant": "nice_mob_variants:creamy"
+            }
+          }
+        }
+      }
+    },
+    "cow_dark": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:cow/variant": "nice_mob_variants:dark"
+            }
+          }
+        }
+      }
+    },
+    "cow_ender": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:cow/variant": "nice_mob_variants:ender"
+            }
+          }
+        }
+      }
+    },
+    "cow_gray": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:cow/variant": "nice_mob_variants:gray"
+            }
+          }
+        }
+      }
+    },
+    "cow_pink_moobloom": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:cow/variant": "nice_mob_variants:pink_moobloom"
+            }
+          }
+        }
+      }
+    },
+    "cow_potato": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:cow/variant": "nice_mob_variants:potato"
+            }
+          }
+        }
+      }
+    },
+    "cow_skeleton": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:cow/variant": "nice_mob_variants:skeleton"
+            }
+          }
+        }
+      }
+    },
+    "cow_sniffer": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:cow/variant": "nice_mob_variants:sniffer"
+            }
+          }
+        }
+      }
+    },
+    "cow_wandering": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:cow/variant": "nice_mob_variants:wandering"
+            }
+          }
+        }
+      }
+    },
+    "cow_warm_brown": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:cow/variant": "nice_mob_variants:warm_brown"
+            }
+          }
+        }
+      }
+    },
+    "cow_warm_gray": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:cow/variant": "nice_mob_variants:warm_gray"
+            }
+          }
+        }
+      }
+    },
+    "cow_yellow_moobloom": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:cow/variant": "nice_mob_variants:yellow_moobloom"
+            }
+          }
+        }
+      }
+    },
+    "frog_creaking": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:frog/variant": "nice_mob_variants:creaking"
+            }
+          }
+        }
+      }
+    },
+    "frog_creeper": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:frog/variant": "nice_mob_variants:creeper"
+            }
+          }
+        }
+      }
+    },
+    "frog_dry": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:frog/variant": "nice_mob_variants:dry"
+            }
+          }
+        }
+      }
+    },
+    "frog_ender": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:frog/variant": "nice_mob_variants:ender"
+            }
+          }
+        }
+      }
+    },
+    "frog_frozen": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:frog/variant": "nice_mob_variants:frozen"
+            }
+          }
+        }
+      }
+    },
+    "frog_golden": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:frog/variant": "nice_mob_variants:golden"
+            }
+          }
+        }
+      }
+    },
+    "frog_guardian": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:frog/variant": "nice_mob_variants:guardian"
+            }
+          }
+        }
+      }
+    },
+    "frog_muddy": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:frog/variant": "nice_mob_variants:muddy"
+            }
+          }
+        }
+      }
+    },
+    "frog_nether": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:frog/variant": "nice_mob_variants:nether"
+            }
+          }
+        }
+      }
+    },
+    "frog_sculk": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:frog/variant": "nice_mob_variants:sculk"
+            }
+          }
+        }
+      }
+    },
+    "pig_creamy": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:pig/variant": "nice_mob_variants:creamy"
+            }
+          }
+        }
+      }
+    },
+    "pig_dark": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:pig/variant": "nice_mob_variants:dark"
+            }
+          }
+        }
+      }
+    },
+    "pig_ender": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:pig/variant": "nice_mob_variants:ender"
+            }
+          }
+        }
+      }
+    },
+    "pig_legend": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:pig/variant": "nice_mob_variants:legend"
+            }
+          }
+        }
+      }
+    },
+    "pig_muddy_cold": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:pig/variant": "nice_mob_variants:muddy_cold"
+            }
+          }
+        }
+      }
+    },
+    "pig_muddy_creamy": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:pig/variant": "nice_mob_variants:muddy_creamy"
+            }
+          }
+        }
+      }
+    },
+    "pig_muddy_dark": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:pig/variant": "nice_mob_variants:muddy_dark"
+            }
+          }
+        }
+      }
+    },
+    "pig_muddy_pale": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:pig/variant": "nice_mob_variants:muddy_pale"
+            }
+          }
+        }
+      }
+    },
+    "pig_muddy_red": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:pig/variant": "nice_mob_variants:muddy_red"
+            }
+          }
+        }
+      }
+    },
+    "pig_muddy_temperate": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:pig/variant": "nice_mob_variants:muddy_temperate"
+            }
+          }
+        }
+      }
+    },
+    "pig_muddy_warm": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:pig/variant": "nice_mob_variants:muddy_warm"
+            }
+          }
+        }
+      }
+    },
+    "pig_muddy_wild": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:pig/variant": "nice_mob_variants:muddy_wild"
+            }
+          }
+        }
+      }
+    },
+    "pig_pale": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:pig/variant": "nice_mob_variants:pale"
+            }
+          }
+        }
+      }
+    },
+    "pig_potato": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:pig/variant": "nice_mob_variants:potato"
+            }
+          }
+        }
+      }
+    },
+    "pig_red": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:pig/variant": "nice_mob_variants:red"
+            }
+          }
+        }
+      }
+    },
+    "pig_skeleton": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:pig/variant": "nice_mob_variants:skeleton"
+            }
+          }
+        }
+      }
+    },
+    "pig_spotted_creamy": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:pig/variant": "nice_mob_variants:spotted_creamy"
+            }
+          }
+        }
+      }
+    },
+    "pig_spotted_dark": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:pig/variant": "nice_mob_variants:spotted_dark"
+            }
+          }
+        }
+      }
+    },
+    "pig_spotted_pale": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:pig/variant": "nice_mob_variants:spotted_pale"
+            }
+          }
+        }
+      }
+    },
+    "pig_spotted_red": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:pig/variant": "nice_mob_variants:spotted_red"
+            }
+          }
+        }
+      }
+    },
+    "pig_spotted_temperate": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:pig/variant": "nice_mob_variants:spotted_temperate"
+            }
+          }
+        }
+      }
+    },
+    "pig_spotted_warm": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:pig/variant": "nice_mob_variants:spotted_warm"
+            }
+          }
+        }
+      }
+    },
+    "pig_wandering": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:pig/variant": "nice_mob_variants:wandering"
+            }
+          }
+        }
+      }
+    },
+    "pig_wild": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:pig/variant": "nice_mob_variants:wild"
+            }
+          }
+        }
+      }
+    },
+    "pig_zombified": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:pig/variant": "nice_mob_variants:zombified"
+            }
+          }
+        }
+      }
+    },
+    "wolf_black": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:wolf/variant": "nice_mob_variants:black"
+            }
+          }
+        }
+      }
+    },
+    "wolf_creaking": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:wolf/variant": "nice_mob_variants:creaking"
+            }
+          }
+        }
+      }
+    },
+    "wolf_dark": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:wolf/variant": "nice_mob_variants:dark"
+            }
+          }
+        }
+      }
+    },
+    "wolf_shiba": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:wolf/variant": "nice_mob_variants:shiba"
+            }
+          }
+        }
+      }
+    },
+    "wolf_skeleton": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:wolf/variant": "nice_mob_variants:skeleton"
+            }
+          }
+        }
+      }
+    },
+    "wolf_slime": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:wolf/variant": "nice_mob_variants:slime"
+            }
+          }
+        }
+      }
+    },
+    "wolf_timber": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:wolf/variant": "nice_mob_variants:timber"
+            }
+          }
+        }
+      }
+    },
+    "wolf_white_black": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:wolf/variant": "nice_mob_variants:white_black"
+            }
+          }
+        }
+      }
+    },
+    "zombie_nautilus_cold": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:zombie_nautilus/variant": "nice_mob_variants:cold"
+            }
+          }
+        }
+      }
+    },
+    "zombie_nautilus_glow": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:zombie_nautilus/variant": "nice_mob_variants:glow"
+            }
+          }
+        }
+      }
+    },
+    "zombie_nautilus_guardian": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:zombie_nautilus/variant": "nice_mob_variants:guardian"
+            }
+          }
+        }
+      }
+    },
+    "zombie_nautilus_husk": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:zombie_nautilus/variant": "nice_mob_variants:husk"
+            }
+          }
+        }
+      }
+    },
+    "zombie_nautilus_swamp": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:zombie_nautilus/variant": "nice_mob_variants:swamp"
+            }
+          }
+        }
+      }
+    }
+  },
+  "requirements": [
+    [
+      "cat_all_black_green_eyes",
+      "cat_creeper",
+      "cat_embroidery",
+      "cat_simba",
+      "cat_skeleton",
+      "cat_slime",
+      "cat_soul",
+      "cat_tiger",
+      "chicken_cluckshroom",
+      "chicken_creamy",
+      "chicken_dark_brown",
+      "chicken_duck",
+      "chicken_ender",
+      "chicken_flamingo",
+      "chicken_golden",
+      "chicken_goose",
+      "chicken_ostrich",
+      "chicken_penguin",
+      "chicken_pigeon",
+      "chicken_potato",
+      "chicken_rooster",
+      "chicken_skeleton",
+      "chicken_strider",
+      "chicken_turkey",
+      "chicken_zombie",
+      "cow_cold_dark",
+      "cow_cold_white",
+      "cow_cold_yellow",
+      "cow_creamy",
+      "cow_dark",
+      "cow_ender",
+      "cow_gray",
+      "cow_pink_moobloom",
+      "cow_potato",
+      "cow_skeleton",
+      "cow_sniffer",
+      "cow_wandering",
+      "cow_warm_brown",
+      "cow_warm_gray",
+      "cow_yellow_moobloom",
+      "frog_creaking",
+      "frog_creeper",
+      "frog_dry",
+      "frog_ender",
+      "frog_frozen",
+      "frog_golden",
+      "frog_guardian",
+      "frog_muddy",
+      "frog_nether",
+      "frog_sculk",
+      "pig_creamy",
+      "pig_dark",
+      "pig_ender",
+      "pig_legend",
+      "pig_muddy_cold",
+      "pig_muddy_creamy",
+      "pig_muddy_dark",
+      "pig_muddy_pale",
+      "pig_muddy_red",
+      "pig_muddy_temperate",
+      "pig_muddy_warm",
+      "pig_muddy_wild",
+      "pig_pale",
+      "pig_potato",
+      "pig_red",
+      "pig_skeleton",
+      "pig_spotted_creamy",
+      "pig_spotted_dark",
+      "pig_spotted_pale",
+      "pig_spotted_red",
+      "pig_spotted_temperate",
+      "pig_spotted_warm",
+      "pig_wandering",
+      "pig_wild",
+      "pig_zombified",
+      "wolf_black",
+      "wolf_creaking",
+      "wolf_dark",
+      "wolf_shiba",
+      "wolf_skeleton",
+      "wolf_slime",
+      "wolf_timber",
+      "wolf_white_black",
+      "zombie_nautilus_cold",
+      "zombie_nautilus_glow",
+      "zombie_nautilus_guardian",
+      "zombie_nautilus_husk",
+      "zombie_nautilus_swamp"
+    ]
+  ]
+}

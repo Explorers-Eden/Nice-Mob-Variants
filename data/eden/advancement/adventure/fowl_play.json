@@ -1,0 +1,259 @@
+{
+  "parent": "eden:adventure/variant_hunter",
+  "display": {
+    "icon": {
+      "id": "minecraft:chicken_spawn_egg"
+    },
+    "title": {
+      "translate": "advancement.eden.adventure.nice_mob_variants.fowl_play.title",
+      "fallback": "Fowl Play"
+    },
+    "description": {
+      "translate": "advancement.eden.adventure.nice_mob_variants.fowl_play.description",
+      "fallback": "Encounter all 17 Chicken variants."
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true
+  },
+  "criteria": {
+    "cluckshroom": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:chicken/variant": "nice_mob_variants:cluckshroom"
+            }
+          }
+        }
+      }
+    },
+    "creamy": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:chicken/variant": "nice_mob_variants:creamy"
+            }
+          }
+        }
+      }
+    },
+    "dark_brown": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:chicken/variant": "nice_mob_variants:dark_brown"
+            }
+          }
+        }
+      }
+    },
+    "duck": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:chicken/variant": "nice_mob_variants:duck"
+            }
+          }
+        }
+      }
+    },
+    "ender": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:chicken/variant": "nice_mob_variants:ender"
+            }
+          }
+        }
+      }
+    },
+    "flamingo": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:chicken/variant": "nice_mob_variants:flamingo"
+            }
+          }
+        }
+      }
+    },
+    "golden": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:chicken/variant": "nice_mob_variants:golden"
+            }
+          }
+        }
+      }
+    },
+    "goose": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:chicken/variant": "nice_mob_variants:goose"
+            }
+          }
+        }
+      }
+    },
+    "ostrich": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:chicken/variant": "nice_mob_variants:ostrich"
+            }
+          }
+        }
+      }
+    },
+    "penguin": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:chicken/variant": "nice_mob_variants:penguin"
+            }
+          }
+        }
+      }
+    },
+    "pigeon": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:chicken/variant": "nice_mob_variants:pigeon"
+            }
+          }
+        }
+      }
+    },
+    "potato": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:chicken/variant": "nice_mob_variants:potato"
+            }
+          }
+        }
+      }
+    },
+    "rooster": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:chicken/variant": "nice_mob_variants:rooster"
+            }
+          }
+        }
+      }
+    },
+    "skeleton": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:chicken/variant": "nice_mob_variants:skeleton"
+            }
+          }
+        }
+      }
+    },
+    "strider": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:chicken/variant": "nice_mob_variants:strider"
+            }
+          }
+        }
+      }
+    },
+    "turkey": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:chicken/variant": "nice_mob_variants:turkey"
+            }
+          }
+        }
+      }
+    },
+    "zombie": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:chicken/variant": "nice_mob_variants:zombie"
+            }
+          }
+        }
+      }
+    }
+  }
+}

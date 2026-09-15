@@ -1,6 +1,7 @@
 {
-    "values": [
-      {"id": "#minecraft:village","required": false},
-       {"id": "#kattersstructures:village","required": false}
-    ]
-  }
+  "values": [
+    { "id": "#kattersstructures:village", "required": false },
+    { "id": "#minecraft:village", "required": false },
+    { "id": "#minecraft:abandoned_camp", "required": false }
+  ]
+}

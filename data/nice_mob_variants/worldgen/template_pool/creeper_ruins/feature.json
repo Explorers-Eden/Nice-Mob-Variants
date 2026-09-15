@@ -1,0 +1,35 @@
+
+
+{
+    "name": "nice_mob_variants:creeper_ruins/feature",
+    "fallback": "minecraft:empty",
+    "elements": [
+    {
+        "weight": 30,
+        "element": {
+            "location": "nice_mob_variants:creeper_ruins/feature_1",
+            "processors": "minecraft:empty",
+            "projection": "rigid",
+            "element_type": "minecraft:single_pool_element"
+        }
+    },
+    {
+        "weight": 10,
+        "element": {
+            "location": "nice_mob_variants:creeper_ruins/feature_2",
+            "processors": "minecraft:empty",
+            "projection": "rigid",
+            "element_type": "minecraft:single_pool_element"
+        }
+    },
+    {
+        "weight": 10,
+        "element": {
+            "location": "nice_mob_variants:creeper_ruins/feature_3",
+            "processors": "minecraft:empty",
+            "projection": "rigid",
+            "element_type": "minecraft:single_pool_element"
+        }
+    }
+]
+}

@@ -1,0 +1,231 @@
+{
+  "parent": "eden:adventure/variant_hunter",
+  "display": {
+    "icon": {
+      "id": "minecraft:cow_spawn_egg"
+    },
+    "title": {
+      "translate": "advancement.eden.adventure.nice_mob_variants.udderly_unique.title",
+      "fallback": "Udderly Unique"
+    },
+    "description": {
+      "translate": "advancement.eden.adventure.nice_mob_variants.udderly_unique.description",
+      "fallback": "Encounter all 15 Cow variants."
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true
+  },
+  "criteria": {
+    "cold_dark": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:cow/variant": "nice_mob_variants:cold_dark"
+            }
+          }
+        }
+      }
+    },
+    "cold_white": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:cow/variant": "nice_mob_variants:cold_white"
+            }
+          }
+        }
+      }
+    },
+    "cold_yellow": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:cow/variant": "nice_mob_variants:cold_yellow"
+            }
+          }
+        }
+      }
+    },
+    "creamy": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:cow/variant": "nice_mob_variants:creamy"
+            }
+          }
+        }
+      }
+    },
+    "dark": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:cow/variant": "nice_mob_variants:dark"
+            }
+          }
+        }
+      }
+    },
+    "ender": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:cow/variant": "nice_mob_variants:ender"
+            }
+          }
+        }
+      }
+    },
+    "gray": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:cow/variant": "nice_mob_variants:gray"
+            }
+          }
+        }
+      }
+    },
+    "pink_moobloom": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:cow/variant": "nice_mob_variants:pink_moobloom"
+            }
+          }
+        }
+      }
+    },
+    "potato": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:cow/variant": "nice_mob_variants:potato"
+            }
+          }
+        }
+      }
+    },
+    "skeleton": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:cow/variant": "nice_mob_variants:skeleton"
+            }
+          }
+        }
+      }
+    },
+    "sniffer": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:cow/variant": "nice_mob_variants:sniffer"
+            }
+          }
+        }
+      }
+    },
+    "wandering": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:cow/variant": "nice_mob_variants:wandering"
+            }
+          }
+        }
+      }
+    },
+    "warm_brown": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:cow/variant": "nice_mob_variants:warm_brown"
+            }
+          }
+        }
+      }
+    },
+    "warm_gray": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:cow/variant": "nice_mob_variants:warm_gray"
+            }
+          }
+        }
+      }
+    },
+    "yellow_moobloom": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:cow/variant": "nice_mob_variants:yellow_moobloom"
+            }
+          }
+        }
+      }
+    }
+  }
+}

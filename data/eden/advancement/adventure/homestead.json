@@ -1,0 +1,33 @@
+{
+  "parent": "eden:adventure/feeding_time",
+  "display": {
+    "icon": {
+      "id": "minecraft:barrel"
+    },
+    "title": {
+      "translate": "advancement.eden.adventure.nice_mob_variants.homestead.title",
+      "fallback": "Homestead"
+    },
+    "description": {
+      "translate": "advancement.eden.adventure.nice_mob_variants.homestead.description",
+      "fallback": "Craft both the Livestock Breeder and the Frog Feeder."
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true
+  },
+  "criteria": {
+    "crafted_breeder": {
+      "trigger": "minecraft:recipe_crafted",
+      "conditions": {
+        "recipes": "nice_mob_variants:crafting_shaped/livestock_breeder"
+      }
+    },
+    "crafted_feeder": {
+      "trigger": "minecraft:recipe_crafted",
+      "conditions": {
+        "recipes": "nice_mob_variants:crafting_shaped/frog_feeder"
+      }
+    }
+  }
+}

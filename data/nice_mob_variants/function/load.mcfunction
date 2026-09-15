@@ -5,6 +5,7 @@ data remove storage eden:temp nice_mob_variants
 scoreboard objectives add nice_mob_variants.technical dummy
 scoreboard objectives add nice_mob_variants.frog_feeder dummy
 scoreboard objectives add nice_mob_variants.livestock_breeder dummy
+scoreboard objectives add nice_mob_variants.zombified.counter dummy
 
 ##set data pack version
-data modify storage eden:datapack nice_mob_variants.version set value "1.8"
+data modify storage eden:datapack nice_mob_variants.version set value "1.9"

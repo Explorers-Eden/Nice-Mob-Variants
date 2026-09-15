@@ -1,5 +1,5 @@
 {
-    "values": [
-      {"id": "minecraft:swamp","required": false}
-    ]
-  }
+  "values": [
+    { "id": "minecraft:swamp", "required": false }
+  ]
+}

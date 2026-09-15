@@ -1,28 +1,28 @@
 {
     "pools": [
-      {
-        "rolls": 1,
-        "entries": [
-          {
-            "type": "minecraft:item",
-            "name": "minecraft:egg",
-            "functions": [
-              {
-                "function": "minecraft:set_count",
-                "count": 1
-              },
-              {
-                "function": "minecraft:set_components",
-                "components": {
-                  "minecraft:item_name": {
-                    "translate": "item.nice_mob_variants.creamy_egg"
-                  },
-                  "minecraft:chicken/variant": "nice_mob_variants:creamy"
+        {
+            "rolls": 1,
+            "entries": [
+                {
+                    "type": "minecraft:item",
+                    "name": "minecraft:egg",
+                    "modifier": [
+                        {
+                            "type": "minecraft:set_count",
+                            "count": 1
+                        },
+                        {
+                            "type": "minecraft:set_components",
+                            "components": {
+                                "minecraft:item_name": {
+                                    "translate": "item.nice_mob_variants.creamy_egg"
+                                },
+                                "minecraft:chicken/variant": "nice_mob_variants:creamy"
+                            }
+                        }
+                    ]
                 }
-              }
             ]
-          }
-        ]
-      }
+        }
     ]
-  }
+}

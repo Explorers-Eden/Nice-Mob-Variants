@@ -55,6 +55,10 @@
     {
       "structure": "nice_mob_variants:pen_jungle",
       "weight": 80
+    },
+    {
+      "structure": "nice_mob_variants:creeper_ruins",
+      "weight": 40
     }
   ]
 }

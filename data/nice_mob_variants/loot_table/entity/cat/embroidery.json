@@ -7,18 +7,18 @@
         {
           "type": "minecraft:tag",
           "expand": true,
-          "functions": [
+          "items": "#minecraft:dyes",
+          "modifier": [
             {
               "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "max": 2,
-                "min": 0
+                "min": 0,
+                "max": 2
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "minecraft:dyes"
+          ]
         }
       ],
       "rolls": 1

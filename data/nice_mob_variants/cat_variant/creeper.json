@@ -5,6 +5,13 @@
     {
       "condition": {
         "type": "minecraft:structure",
+        "structures": "nice_mob_variants:creeper_ruins"
+      },
+      "priority": 999
+    },
+    {
+      "condition": {
+        "type": "minecraft:structure",
         "structures": "#nice_mob_variants:mob_variant_spawnable/cat/creeper"
       },
       "priority": 0

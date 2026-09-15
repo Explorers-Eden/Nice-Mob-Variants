@@ -1,0 +1,175 @@
+{
+  "parent": "eden:adventure/ribbiting_discovery",
+  "display": {
+    "icon": {
+      "id": "minecraft:lily_pad"
+    },
+    "title": {
+      "translate": "advancement.eden.adventure.nice_mob_variants.frog_whisperer.title",
+      "fallback": "Frog Whisperer"
+    },
+    "description": {
+      "translate": "advancement.eden.adventure.nice_mob_variants.frog_whisperer.description",
+      "fallback": "Breed a frog carrying one of the 10 themed Frog variants."
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true
+  },
+  "criteria": {
+    "bred_creaking": {
+      "trigger": "minecraft:bred_animals",
+      "conditions": {
+        "parent": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:frog/variant": "nice_mob_variants:creaking"
+            }
+          }
+        }
+      }
+    },
+    "bred_creeper": {
+      "trigger": "minecraft:bred_animals",
+      "conditions": {
+        "parent": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:frog/variant": "nice_mob_variants:creeper"
+            }
+          }
+        }
+      }
+    },
+    "bred_dry": {
+      "trigger": "minecraft:bred_animals",
+      "conditions": {
+        "parent": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:frog/variant": "nice_mob_variants:dry"
+            }
+          }
+        }
+      }
+    },
+    "bred_ender": {
+      "trigger": "minecraft:bred_animals",
+      "conditions": {
+        "parent": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:frog/variant": "nice_mob_variants:ender"
+            }
+          }
+        }
+      }
+    },
+    "bred_frozen": {
+      "trigger": "minecraft:bred_animals",
+      "conditions": {
+        "parent": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:frog/variant": "nice_mob_variants:frozen"
+            }
+          }
+        }
+      }
+    },
+    "bred_golden": {
+      "trigger": "minecraft:bred_animals",
+      "conditions": {
+        "parent": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:frog/variant": "nice_mob_variants:golden"
+            }
+          }
+        }
+      }
+    },
+    "bred_guardian": {
+      "trigger": "minecraft:bred_animals",
+      "conditions": {
+        "parent": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:frog/variant": "nice_mob_variants:guardian"
+            }
+          }
+        }
+      }
+    },
+    "bred_muddy": {
+      "trigger": "minecraft:bred_animals",
+      "conditions": {
+        "parent": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:frog/variant": "nice_mob_variants:muddy"
+            }
+          }
+        }
+      }
+    },
+    "bred_nether": {
+      "trigger": "minecraft:bred_animals",
+      "conditions": {
+        "parent": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:frog/variant": "nice_mob_variants:nether"
+            }
+          }
+        }
+      }
+    },
+    "bred_sculk": {
+      "trigger": "minecraft:bred_animals",
+      "conditions": {
+        "parent": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:frog/variant": "nice_mob_variants:sculk"
+            }
+          }
+        }
+      }
+    }
+  },
+  "requirements": [
+    [
+      "bred_creaking",
+      "bred_creeper",
+      "bred_dry",
+      "bred_ender",
+      "bred_frozen",
+      "bred_golden",
+      "bred_guardian",
+      "bred_muddy",
+      "bred_nether",
+      "bred_sculk"
+    ]
+  ]
+}

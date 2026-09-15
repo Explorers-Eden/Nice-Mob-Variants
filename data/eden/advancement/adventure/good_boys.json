@@ -1,0 +1,133 @@
+{
+  "parent": "eden:adventure/variant_hunter",
+  "display": {
+    "icon": {
+      "id": "minecraft:wolf_spawn_egg"
+    },
+    "title": {
+      "translate": "advancement.eden.adventure.nice_mob_variants.good_boys.title",
+      "fallback": "Good Boys"
+    },
+    "description": {
+      "translate": "advancement.eden.adventure.nice_mob_variants.good_boys.description",
+      "fallback": "Encounter all 8 Wolf variants."
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true
+  },
+  "criteria": {
+    "black": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:wolf/variant": "nice_mob_variants:black"
+            }
+          }
+        }
+      }
+    },
+    "creaking": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:wolf/variant": "nice_mob_variants:creaking"
+            }
+          }
+        }
+      }
+    },
+    "dark": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:wolf/variant": "nice_mob_variants:dark"
+            }
+          }
+        }
+      }
+    },
+    "shiba": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:wolf/variant": "nice_mob_variants:shiba"
+            }
+          }
+        }
+      }
+    },
+    "skeleton": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:wolf/variant": "nice_mob_variants:skeleton"
+            }
+          }
+        }
+      }
+    },
+    "slime": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:wolf/variant": "nice_mob_variants:slime"
+            }
+          }
+        }
+      }
+    },
+    "timber": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:wolf/variant": "nice_mob_variants:timber"
+            }
+          }
+        }
+      }
+    },
+    "white_black": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:wolf/variant": "nice_mob_variants:white_black"
+            }
+          }
+        }
+      }
+    }
+  }
+}

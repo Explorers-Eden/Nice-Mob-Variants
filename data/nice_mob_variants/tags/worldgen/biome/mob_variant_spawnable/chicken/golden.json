@@ -1,5 +1,5 @@
 {
-    "values": [
-      {"id": "#minecraft:is_savanna","required": false}
-    ]
-  }
+  "values": [
+    { "id": "#minecraft:is_savanna", "required": false }
+  ]
+}

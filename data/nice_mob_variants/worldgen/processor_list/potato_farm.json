@@ -13,8 +13,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:potatoes",
-            "Properties": {
+            "id": "minecraft:potatoes",
+            "properties": {
               "age": "7"
             }
           }
@@ -29,8 +29,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:potatoes",
-            "Properties": {
+            "id": "minecraft:potatoes",
+            "properties": {
               "age": "1"
             }
           }
@@ -45,8 +45,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:potatoes",
-            "Properties": {
+            "id": "minecraft:potatoes",
+            "properties": {
               "age": "2"
             }
           }
@@ -61,8 +61,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:potatoes",
-            "Properties": {
+            "id": "minecraft:potatoes",
+            "properties": {
               "age": "3"
             }
           }
@@ -77,8 +77,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:potatoes",
-            "Properties": {
+            "id": "minecraft:potatoes",
+            "properties": {
               "age": "4"
             }
           }
@@ -93,8 +93,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:potatoes",
-            "Properties": {
+            "id": "minecraft:potatoes",
+            "properties": {
               "age": "5"
             }
           }
@@ -109,8 +109,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:potatoes",
-            "Properties": {
+            "id": "minecraft:potatoes",
+            "properties": {
               "age": "6"
             }
           }

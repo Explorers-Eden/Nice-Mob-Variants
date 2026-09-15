@@ -10,152 +10,145 @@
             {
               "type": "minecraft:loot_table",
               "value": "minecraft:entities/enderman",
-              "conditions": [
-                {
-                  "condition": "minecraft:entity_properties",
-                  "entity": "this",
-                  "predicate": {
-                    "components": {
-                      "minecraft:pig/variant": "nice_mob_variants:ender"
-                    }
+              "condition": {
+                "type": "minecraft:entity_properties",
+                "entity": "this",
+                "predicate": {
+                  "components": {
+                    "minecraft:pig/variant": "nice_mob_variants:ender"
                   }
                 }
-              ]
+              }
             },
             {
               "type": "minecraft:loot_table",
               "value": "minecraft:entities/skeleton_horse",
-              "conditions": [
-                {
-                  "condition": "minecraft:entity_properties",
-                  "entity": "this",
-                  "predicate": {
-                    "components": {
-                      "minecraft:pig/variant": "nice_mob_variants:skeleton"
-                    }
+              "condition": {
+                "type": "minecraft:entity_properties",
+                "entity": "this",
+                "predicate": {
+                  "components": {
+                    "minecraft:pig/variant": "nice_mob_variants:skeleton"
                   }
                 }
-              ]
+              }
             },
             {
               "type": "minecraft:loot_table",
               "value": "nice_mob_variants:entity/pig/muddy",
-              "conditions": [
-                {
-                  "condition": "minecraft:entity_properties",
-                  "entity": "this",
-                  "predicate": {
-                    "components": {
-                      "minecraft:pig/variant": "nice_mob_variants:muddy_cold"
-                    }
+              "condition": {
+                "type": "minecraft:entity_properties",
+                "entity": "this",
+                "predicate": {
+                  "components": {
+                    "minecraft:pig/variant": "nice_mob_variants:muddy_cold"
                   }
                 }
-              ]
+              }
             },
             {
               "type": "minecraft:loot_table",
               "value": "nice_mob_variants:entity/pig/muddy",
-              "conditions": [
-                {
-                  "condition": "minecraft:entity_properties",
-                  "entity": "this",
-                  "predicate": {
-                    "components": {
-                      "minecraft:pig/variant": "nice_mob_variants:muddy_creamy"
-                    }
+              "condition": {
+                "type": "minecraft:entity_properties",
+                "entity": "this",
+                "predicate": {
+                  "components": {
+                    "minecraft:pig/variant": "nice_mob_variants:muddy_creamy"
                   }
                 }
-              ]
+              }
             },
             {
               "type": "minecraft:loot_table",
               "value": "nice_mob_variants:entity/pig/muddy",
-              "conditions": [
-                {
-                  "condition": "minecraft:entity_properties",
-                  "entity": "this",
-                  "predicate": {
-                    "components": {
-                      "minecraft:pig/variant": "nice_mob_variants:muddy_dark"
-                    }
+              "condition": {
+                "type": "minecraft:entity_properties",
+                "entity": "this",
+                "predicate": {
+                  "components": {
+                    "minecraft:pig/variant": "nice_mob_variants:muddy_dark"
                   }
                 }
-              ]
+              }
             },
             {
               "type": "minecraft:loot_table",
               "value": "nice_mob_variants:entity/pig/muddy",
-              "conditions": [
-                {
-                  "condition": "minecraft:entity_properties",
-                  "entity": "this",
-                  "predicate": {
-                    "components": {
-                      "minecraft:pig/variant": "nice_mob_variants:muddy_pale"
-                    }
+              "condition": {
+                "type": "minecraft:entity_properties",
+                "entity": "this",
+                "predicate": {
+                  "components": {
+                    "minecraft:pig/variant": "nice_mob_variants:muddy_pale"
                   }
                 }
-              ]
+              }
             },
             {
               "type": "minecraft:loot_table",
               "value": "nice_mob_variants:entity/pig/muddy",
-              "conditions": [
-                {
-                  "condition": "minecraft:entity_properties",
-                  "entity": "this",
-                  "predicate": {
-                    "components": {
-                      "minecraft:pig/variant": "nice_mob_variants:muddy_temperate"
-                    }
+              "condition": {
+                "type": "minecraft:entity_properties",
+                "entity": "this",
+                "predicate": {
+                  "components": {
+                    "minecraft:pig/variant": "nice_mob_variants:muddy_temperate"
                   }
                 }
-              ]
+              }
             },
             {
               "type": "minecraft:loot_table",
               "value": "nice_mob_variants:entity/pig/muddy",
-              "conditions": [
-                {
-                  "condition": "minecraft:entity_properties",
-                  "entity": "this",
-                  "predicate": {
-                    "components": {
-                      "minecraft:pig/variant": "nice_mob_variants:muddy_warm"
-                    }
+              "condition": {
+                "type": "minecraft:entity_properties",
+                "entity": "this",
+                "predicate": {
+                  "components": {
+                    "minecraft:pig/variant": "nice_mob_variants:muddy_warm"
                   }
                 }
-              ]
+              }
             },
             {
               "type": "minecraft:loot_table",
               "value": "nice_mob_variants:entity/pig/muddy",
-              "conditions": [
-                {
-                  "condition": "minecraft:entity_properties",
-                  "entity": "this",
-                  "predicate": {
-                    "components": {
-                      "minecraft:pig/variant": "nice_mob_variants:muddy_wild"
-                    }
+              "condition": {
+                "type": "minecraft:entity_properties",
+                "entity": "this",
+                "predicate": {
+                  "components": {
+                    "minecraft:pig/variant": "nice_mob_variants:muddy_wild"
                   }
                 }
-              ]
+              }
             },
             {
               "type": "minecraft:loot_table",
               "value": "nice_mob_variants:entity/pig/potato",
-              "conditions": [
-                {
-                  "condition": "minecraft:entity_properties",
-                  "entity": "this",
-                  "predicate": {
-                    "components": {
-                      "minecraft:pig/variant": "nice_mob_variants:potato"
-                    }
+              "condition": {
+                "type": "minecraft:entity_properties",
+                "entity": "this",
+                "predicate": {
+                  "components": {
+                    "minecraft:pig/variant": "nice_mob_variants:potato"
                   }
                 }
-              ]
+              }
+            },
+            {
+              "type": "minecraft:loot_table",
+              "value": "nice_mob_variants:entity/pig/zombified",
+              "condition": {
+                "type": "minecraft:entity_properties",
+                "entity": "this",
+                "predicate": {
+                  "components": {
+                    "minecraft:pig/variant": "nice_mob_variants:zombified"
+                  }
+                }
+              }
             },
             {
               "type": "minecraft:loot_table",

@@ -1,5 +1,6 @@
 {
-    "values": [
-      {"id": "#minecraft:is_forest","required": false}
-    ]
-  }
+  "values": [
+    { "id": "#minecraft:is_forest", "required": false },
+    { "id": "minecraft:dappled_forest", "required": false }
+  ]
+}

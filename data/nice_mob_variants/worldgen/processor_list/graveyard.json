@@ -12,9 +12,7 @@
             "block": "minecraft:cobweb",
             "probability": 0.65
           },
-          "output_state": {
-            "Name": "minecraft:air"
-          }
+          "output_state": "minecraft:air"
         },
         {
           "location_predicate": {
@@ -25,9 +23,7 @@
             "block": "minecraft:stone_bricks",
             "probability": 0.4
           },
-          "output_state": {
-            "Name": "minecraft:cracked_stone_bricks"
-          }
+          "output_state": "minecraft:cracked_stone_bricks"
         },
         {
           "location_predicate": {
@@ -38,9 +34,7 @@
             "block": "minecraft:stone_bricks",
             "probability": 0.2
           },
-          "output_state": {
-            "Name": "minecraft:mossy_stone_bricks"
-          }
+          "output_state": "minecraft:mossy_stone_bricks"
         },
         {
           "location_predicate": {
@@ -51,9 +45,7 @@
             "block": "minecraft:tuff",
             "probability": 0.5
           },
-          "output_state": {
-            "Name": "minecraft:dirt"
-          }
+          "output_state": "minecraft:dirt"
         },
         {
           "location_predicate": {
@@ -64,9 +56,7 @@
             "block": "minecraft:iron_bars",
             "probability": 0.3
           },
-          "output_state": {
-            "Name": "minecraft:air"
-          }
+          "output_state": "minecraft:air"
         }
       ]
     },

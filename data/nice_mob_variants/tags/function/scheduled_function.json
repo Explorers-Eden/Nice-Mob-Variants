@@ -1,15 +1,17 @@
 {
-	"values": [
-        "nice_mob_variants:sound_variants/init",
-        "nice_mob_variants:benny/init",
-        "nice_mob_variants:chicken_jockey/init",
-        "nice_mob_variants:ender/init",
-        "nice_mob_variants:skeleton_trap/init",
-        "nice_mob_variants:wandering/init",
-        "nice_mob_variants:husk/init",
-        "nice_mob_variants:frog_feeder/spawn_food/init",
-        "nice_mob_variants:livestock_breeder/breed/init",
-        "nice_mob_variants:glow/init",
-        "nice_mob_variants:sulfur_cube/init"
-    ]
+  "values": [
+    "nice_mob_variants:benny/init",
+    "nice_mob_variants:chicken_jockey/init",
+    "nice_mob_variants:ender/init",
+    "nice_mob_variants:frog_feeder/spawn_food/init",
+    "nice_mob_variants:glow/init",
+    "nice_mob_variants:husk/init",
+    "nice_mob_variants:livestock_breeder/breed/init",
+    "nice_mob_variants:skeleton_trap/init",
+    "nice_mob_variants:sound_variants/init",
+    "nice_mob_variants:sulfur_cube/init",
+    "nice_mob_variants:wandering/init",
+    "nice_mob_variants:creeper/init",
+    "nice_mob_variants:zombified/init"
+  ]
 }

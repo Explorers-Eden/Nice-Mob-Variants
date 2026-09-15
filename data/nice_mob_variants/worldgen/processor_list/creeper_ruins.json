@@ -1,0 +1,68 @@
+{
+  "processors": [
+    {
+      "processor_type": "minecraft:rule",
+      "rules": [
+        {
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          },
+          "input_predicate": {
+            "predicate_type": "minecraft:random_block_match",
+            "block": "minecraft:cobblestone_slab",
+            "probability": 0.45
+          },
+          "output_state": "minecraft:mossy_cobblestone_slab"
+        },
+        {
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          },
+          "input_predicate": {
+            "predicate_type": "minecraft:random_block_match",
+            "block": "minecraft:cobblestone_slab",
+            "probability": 0.3
+          },
+          "output_state": "minecraft:air"
+        },
+        {
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          },
+          "input_predicate": {
+            "predicate_type": "minecraft:random_block_match",
+            "block": "minecraft:cobblestone",
+            "probability": 0.3
+          },
+          "output_state": "minecraft:air"
+        },
+        {
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          },
+          "input_predicate": {
+            "predicate_type": "minecraft:random_block_match",
+            "block": "minecraft:cobblestone",
+            "probability": 0.65
+          },
+          "output_state": "minecraft:mossy_cobblestone"
+        },
+        {
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          },
+          "input_predicate": {
+            "predicate_type": "minecraft:random_block_match",
+            "block": "minecraft:cobblestone",
+            "probability": 0.2
+          },
+          "output_state": "minecraft:cobweb"
+        }
+      ]
+    },
+    {
+      "processor_type": "minecraft:protected_blocks",
+      "value": "#minecraft:features_cannot_replace"
+    }
+  ]
+}

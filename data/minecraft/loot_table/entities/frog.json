@@ -8,19 +8,58 @@
           "type": "minecraft:alternatives",
           "children": [
             {
-              "type": "minecraft:loot_table",
-              "value": "minecraft:entities/enderman",
-              "conditions": [
-                {
-                  "condition": "minecraft:entity_properties",
-                  "entity": "this",
-                  "predicate": {
-                    "components": {
-                      "minecraft:frog/variant": "nice_mob_variants:ender"
-                    }
+              "type": "minecraft:item",
+              "name": "minecraft:acacia_button",
+              "modifier": {
+                "type": "minecraft:set_custom_data",
+                "tag": {
+                  "nice_mob_variants": {
+                    "variant_spawner": "creeper"
                   }
                 }
-              ]
+              },
+              "condition": {
+                "type": "minecraft:all_of",
+                "terms": [
+                  {
+                    "type": "minecraft:random_chance",
+                    "chance": 0.33
+                  },
+                  {
+                    "type": "minecraft:inverted",
+                    "term": {
+                      "type": "minecraft:entity_properties",
+                      "entity": "this",
+                      "predicate": {
+                        "minecraft:components": {
+                          "minecraft:frog/variant": "nice_mob_variants:creeper"
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "type": "minecraft:damage_source_properties",
+                    "predicate": {
+                      "source_entity": {
+                        "minecraft:entity_type": "minecraft:creeper"
+                      }
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "type": "minecraft:loot_table",
+              "value": "minecraft:entities/enderman",
+              "condition": {
+                "type": "minecraft:entity_properties",
+                "entity": "this",
+                "predicate": {
+                  "components": {
+                    "minecraft:frog/variant": "nice_mob_variants:ender"
+                  }
+                }
+              }
             },
             {
               "type": "minecraft:loot_table",

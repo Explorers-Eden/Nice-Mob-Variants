@@ -1,0 +1,35 @@
+
+
+{
+    "name": "nice_mob_variants:creeper_ruins/entity",
+    "fallback": "minecraft:empty",
+    "elements": [
+    {
+        "weight": 30,
+        "element": {
+            "location": "nice_mob_variants:creeper_ruins/creeper",
+            "processors": "minecraft:empty",
+            "projection": "rigid",
+            "element_type": "minecraft:single_pool_element"
+        }
+    },
+    {
+        "weight": 10,
+        "element": {
+            "location": "nice_mob_variants:creeper_ruins/frog",
+            "processors": "minecraft:empty",
+            "projection": "rigid",
+            "element_type": "minecraft:single_pool_element"
+        }
+    },
+    {
+        "weight": 10,
+        "element": {
+            "location": "nice_mob_variants:creeper_ruins/cat",
+            "processors": "minecraft:empty",
+            "projection": "rigid",
+            "element_type": "minecraft:single_pool_element"
+        }
+    }
+]
+}

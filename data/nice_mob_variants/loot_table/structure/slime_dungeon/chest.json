@@ -7,9 +7,9 @@
           "type": "minecraft:item",
           "name": "minecraft:lime_dye",
           "weight": 4,
-          "functions": [
+          "modifier": [
             {
-              "function": "minecraft:set_count",
+              "type": "minecraft:set_count",
               "count": {
                 "type": "minecraft:uniform",
                 "min": 1,
@@ -22,9 +22,9 @@
           "type": "minecraft:item",
           "name": "minecraft:green_dye",
           "weight": 4,
-          "functions": [
+          "modifier": [
             {
-              "function": "minecraft:set_count",
+              "type": "minecraft:set_count",
               "count": {
                 "type": "minecraft:uniform",
                 "min": 1,
@@ -42,9 +42,9 @@
           "type": "minecraft:item",
           "name": "minecraft:slime_block",
           "weight": 10,
-          "functions": [
+          "modifier": [
             {
-              "function": "minecraft:set_count",
+              "type": "minecraft:set_count",
               "count": {
                 "type": "minecraft:uniform",
                 "min": 1,
@@ -57,9 +57,9 @@
           "type": "minecraft:item",
           "name": "minecraft:slime_ball",
           "weight": 15,
-          "functions": [
+          "modifier": [
             {
-              "function": "minecraft:set_count",
+              "type": "minecraft:set_count",
               "count": {
                 "type": "minecraft:uniform",
                 "min": 1,
@@ -72,9 +72,9 @@
           "type": "minecraft:item",
           "name": "minecraft:stone_sword",
           "weight": 5,
-          "functions": [
+          "modifier": [
             {
-              "function": "minecraft:set_enchantments",
+              "type": "minecraft:set_enchantments",
               "enchantments": {
                 "minecraft:sweeping_edge": 1
               }
@@ -85,9 +85,9 @@
           "type": "minecraft:item",
           "name": "minecraft:bread",
           "weight": 5,
-          "functions": [
+          "modifier": [
             {
-              "function": "minecraft:set_count",
+              "type": "minecraft:set_count",
               "count": {
                 "type": "minecraft:uniform",
                 "min": 1,
@@ -100,9 +100,9 @@
           "type": "minecraft:item",
           "name": "minecraft:cobblestone",
           "weight": 7,
-          "functions": [
+          "modifier": [
             {
-              "function": "minecraft:set_count",
+              "type": "minecraft:set_count",
               "count": {
                 "type": "minecraft:uniform",
                 "min": 1,
@@ -115,9 +115,9 @@
           "type": "minecraft:item",
           "name": "minecraft:copper_torch",
           "weight": 4,
-          "functions": [
+          "modifier": [
             {
-              "function": "minecraft:set_count",
+              "type": "minecraft:set_count",
               "count": {
                 "type": "minecraft:uniform",
                 "min": 1,
@@ -134,8 +134,8 @@
       ],
       "rolls": {
         "type": "minecraft:uniform",
-        "max": 5,
-        "min": 1
+        "min": 1,
+        "max": 5
       }
     }
   ],

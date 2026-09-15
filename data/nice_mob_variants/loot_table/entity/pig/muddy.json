@@ -6,63 +6,61 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "minecraft:porkchop",
+          "modifier": [
             {
               "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "max": 3,
-                "min": 1
+                "min": 1,
+                "max": 3
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             },
             {
-              "conditions": [
-                {
-                  "condition": "minecraft:any_of",
-                  "terms": [
-                    {
-                      "condition": "minecraft:entity_properties",
-                      "entity": "this",
-                      "predicate": {
-                        "flags": {
-                          "is_on_fire": true
-                        }
+              "condition": {
+                "type": "minecraft:any_of",
+                "terms": [
+                  {
+                    "type": "minecraft:entity_properties",
+                    "entity": "this",
+                    "predicate": {
+                      "flags": {
+                        "is_on_fire": true
                       }
-                    },
-                    {
-                      "condition": "minecraft:entity_properties",
-                      "entity": "direct_attacker",
-                      "predicate": {
-                        "equipment": {
-                          "mainhand": {
-                            "predicates": {
-                              "minecraft:enchantments": [
-                                {
-                                  "enchantments": "#minecraft:smelts_loot"
-                                }
-                              ]
-                            }
+                    }
+                  },
+                  {
+                    "type": "minecraft:entity_properties",
+                    "entity": "direct_attacker",
+                    "predicate": {
+                      "equipment": {
+                        "mainhand": {
+                          "predicates": {
+                            "minecraft:enchantments": [
+                              {
+                                "enchantments": "#minecraft:smelts_loot"
+                              }
+                            ]
                           }
                         }
                       }
                     }
-                  ]
-                }
-              ],
-              "function": "minecraft:furnace_smelt"
+                  }
+                ]
+              },
+              "type": "minecraft:furnace_smelt"
             },
             {
               "count": {
                 "type": "minecraft:uniform",
-                "max": 1,
-                "min": 0
+                "min": 0,
+                "max": 1
               },
               "enchantment": "minecraft:looting",
-              "function": "minecraft:enchanted_count_increase"
+              "type": "minecraft:enchanted_count_increase"
             }
-          ],
-          "name": "minecraft:porkchop"
+          ]
         }
       ],
       "rolls": 1
@@ -73,12 +71,10 @@
         {
           "type": "minecraft:item",
           "name": "minecraft:mud",
-          "conditions": [
-            {
-              "condition": "minecraft:random_chance",
-              "chance": 0.5
-            }
-          ]
+          "condition": {
+            "type": "minecraft:random_chance",
+            "chance": 0.5
+          }
         }
       ]
     }

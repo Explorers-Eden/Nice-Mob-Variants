@@ -1,0 +1,91 @@
+{
+  "parent": "eden:adventure/variant_hunter",
+  "display": {
+    "icon": {
+      "id": "minecraft:nautilus_shell"
+    },
+    "title": {
+      "translate": "advancement.eden.adventure.nice_mob_variants.abyssal_family.title",
+      "fallback": "Abyssal Family"
+    },
+    "description": {
+      "translate": "advancement.eden.adventure.nice_mob_variants.abyssal_family.description",
+      "fallback": "Defeat all 5 Zombie Nautilus variants."
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true
+  },
+  "criteria": {
+    "cold": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:zombie_nautilus/variant": "nice_mob_variants:cold"
+            }
+          }
+        }
+      }
+    },
+    "glow": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:zombie_nautilus/variant": "nice_mob_variants:glow"
+            }
+          }
+        }
+      }
+    },
+    "guardian": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:zombie_nautilus/variant": "nice_mob_variants:guardian"
+            }
+          }
+        }
+      }
+    },
+    "husk": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:zombie_nautilus/variant": "nice_mob_variants:husk"
+            }
+          }
+        }
+      }
+    },
+    "swamp": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:zombie_nautilus/variant": "nice_mob_variants:swamp"
+            }
+          }
+        }
+      }
+    }
+  }
+}

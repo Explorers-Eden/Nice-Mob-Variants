@@ -12,7 +12,11 @@
           }
         },
         "entity": {
-          "minecraft:entity_type": "#nice_mob_variants:can_become_slime_variant"
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "minecraft:entity_type": "#nice_mob_variants:can_become_slime_variant"
+          }
         }
       }
     }

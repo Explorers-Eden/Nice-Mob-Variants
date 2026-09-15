@@ -6,18 +6,18 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "minecraft:slime_ball",
+          "modifier": [
             {
               "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "max": 2,
-                "min": 0
+                "min": 0,
+                "max": 2
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             }
-          ],
-          "name": "minecraft:slime_ball"
+          ]
         }
       ],
       "rolls": 1

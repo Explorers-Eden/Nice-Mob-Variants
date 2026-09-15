@@ -1,0 +1,161 @@
+{
+  "parent": "eden:adventure/variant_hunter",
+  "display": {
+    "icon": {
+      "id": "minecraft:frog_spawn_egg"
+    },
+    "title": {
+      "translate": "advancement.eden.adventure.nice_mob_variants.ribbiting_discovery.title",
+      "fallback": "Ribbiting Discovery"
+    },
+    "description": {
+      "translate": "advancement.eden.adventure.nice_mob_variants.ribbiting_discovery.description",
+      "fallback": "Encounter all 10 Frog variants."
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true
+  },
+  "criteria": {
+    "creaking": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:frog/variant": "nice_mob_variants:creaking"
+            }
+          }
+        }
+      }
+    },
+    "creeper": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:frog/variant": "nice_mob_variants:creeper"
+            }
+          }
+        }
+      }
+    },
+    "dry": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:frog/variant": "nice_mob_variants:dry"
+            }
+          }
+        }
+      }
+    },
+    "ender": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:frog/variant": "nice_mob_variants:ender"
+            }
+          }
+        }
+      }
+    },
+    "frozen": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:frog/variant": "nice_mob_variants:frozen"
+            }
+          }
+        }
+      }
+    },
+    "golden": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:frog/variant": "nice_mob_variants:golden"
+            }
+          }
+        }
+      }
+    },
+    "guardian": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:frog/variant": "nice_mob_variants:guardian"
+            }
+          }
+        }
+      }
+    },
+    "muddy": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:frog/variant": "nice_mob_variants:muddy"
+            }
+          }
+        }
+      }
+    },
+    "nether": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:frog/variant": "nice_mob_variants:nether"
+            }
+          }
+        }
+      }
+    },
+    "sculk": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "components": {
+              "minecraft:frog/variant": "nice_mob_variants:sculk"
+            }
+          }
+        }
+      }
+    }
+  }
+}
