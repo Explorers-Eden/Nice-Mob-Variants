@@ -1,6 +1,3 @@
-<img src="https://explorerseden.eu/nmv_title.png" alt="header" width=100%> 
-<br><br>
-
 ## 📖 Description
 **Nice Mob Variants** introduces a variety of new mob variants, enhancing the game’s diversity and making encounters feel more vibrant. The data pack also adds two new blocks: the Livestock Breeder and the Frog Feeder.
 
