@@ -496,7 +496,7 @@ _(This is not needed for the auto converted mod versions)_
 <br>
 
 ## 📝 Translations
-Want to play in your own language? You can help us out by contributing on our **[Crowdin Page](https://crowdin.com/project/explorers-eden)**! Once a translation for a language is finished, it’ll be added to the data pack for you to enjoy.
+Want to play in your own language? You can help us out by contributing on our **[Website]([https://crowdin.com/project/explorers-eden](https://explorerseden.eu/translate/))**!
 
 <br>
 
