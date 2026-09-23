@@ -1,17 +1,5 @@
 # Minecraft Version(s): 26.3
-## The Wilderness Bound update had lots of small technical changes which added up - so please report any Bugs you catch on our Discord server. 
-## We also moved away from crowdin for our translations and now have our own solution. Feel free to contribute: https://explorerseden.eu/translate/
-## Thank you!
-
 ## Changes:
-- Muddy Pig Variants can now also spawn in Dappled Forest Biomes
-- Turkey Chicken Variant can now also spawn in Dappled Forrest Biomes
-- Golden Chicken Variant can now also spawn in Abandoned Camp Structures
-- Added Creeper Ruins Structure (Generates in Forest Biomes)
-- Added Creeper Frog Variant (Frogs blown up by Creepers have a 33% chance to turn into this variant; can also spawn in Creeper Ruins Structures; Poops out Gunpowder when eating food entities)
-- Creeper Cat Variant can now also spawn in Creeper Ruins Structures
-- Added Zombified Pig Variant (Pigs have a 10% chance to turn into the Zombified Variant when 30 seconds or longer in the Nether)
-- Added 18 progression advancements
 
 ## Fixes:
-- Skeleton Pig variant having the wrong biome references for spawning
+- Removed leftover Sulfur Cube Balloon debug message

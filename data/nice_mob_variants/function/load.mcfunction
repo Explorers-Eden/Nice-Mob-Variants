@@ -8,4 +8,4 @@ scoreboard objectives add nice_mob_variants.livestock_breeder dummy
 scoreboard objectives add nice_mob_variants.zombified.counter dummy
 
 ##set data pack version
-data modify storage eden:datapack nice_mob_variants.version set value "1.9"
+data modify storage eden:datapack nice_mob_variants.version set value "2.0"
