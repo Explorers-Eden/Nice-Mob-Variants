@@ -201,6 +201,45 @@
                   }
                 }
               }
+            },
+            {
+              "type": "minecraft:loot_table",
+              "value": "nice_mob_variants:item/eggs/sniffer_egg",
+              "condition": {
+                "type": "minecraft:entity_properties",
+                "entity": "this",
+                "predicate": {
+                  "components": {
+                    "minecraft:chicken/variant": "nice_mob_variants:sniffer"
+                  }
+                }
+              }
+            },
+            {
+              "type": "minecraft:alternatives",
+              "children": [
+                {
+                  "type": "minecraft:item",
+                  "name": "minecraft:diamond",
+                  "condition": {
+                    "type": "minecraft:random_chance",
+                    "chance": 0.01
+                  }
+                },
+                {
+                  "type": "minecraft:item",
+                  "name": "minecraft:lapis_lazuli"
+                }
+              ],
+              "condition": {
+                "type": "minecraft:entity_properties",
+                "entity": "this",
+                "predicate": {
+                  "components": {
+                    "minecraft:chicken/variant": "nice_mob_variants:diamond"
+                  }
+                }
+              }
             }
           ]
         }

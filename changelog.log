@@ -1,5 +1,7 @@
 # Minecraft Version(s): 26.3
 ## Changes:
+- Added Sniffer Chicken variant (Spawns in the same biomes as the Sniffer Cow variant. Drops Torchflower/Pitcher Plant when killed)
+- Added Blue Mooshroom Cow variant (Spawns in the same biomes as the other Moobloom Cow variants. Drops Blue Orchid when killed)
+- Added Diamond Chicken Variant from Java Edition 2.0 (Can spawn in Villager Outpost Cages. Instead of Eggs it lays Lapis Lazuli and very rarely Diamonds.)
 
 ## Fixes:
-- Removed leftover Sulfur Cube Balloon debug message

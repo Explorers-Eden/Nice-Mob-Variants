@@ -5,9 +5,8 @@
       "bonus_rolls": 0,
       "entries": [
         {
-          "type": "minecraft:tag",
-          "expand": true,
-          "items": "#nice_mob_variants:sniffer_drops",
+          "type": "minecraft:item",
+          "name": "minecraft:blue_orchid",
           "modifier": [
             {
               "add": false,

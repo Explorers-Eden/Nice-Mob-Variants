@@ -48,6 +48,19 @@
             },
             {
               "type": "minecraft:loot_table",
+              "value": "nice_mob_variants:entity/cow/blue_moobloom",
+              "condition": {
+                "type": "minecraft:entity_properties",
+                "entity": "this",
+                "predicate": {
+                  "components": {
+                    "minecraft:cow/variant": "nice_mob_variants:blue_moobloom"
+                  }
+                }
+              }
+            },
+            {
+              "type": "minecraft:loot_table",
               "value": "nice_mob_variants:entity/cow/yellow_moobloom",
               "condition": {
                 "type": "minecraft:entity_properties",

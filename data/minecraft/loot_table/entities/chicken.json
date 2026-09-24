@@ -100,6 +100,19 @@
             },
             {
               "type": "minecraft:loot_table",
+              "value": "nice_mob_variants:entity/chicken/sniffer",
+              "condition": {
+                "type": "minecraft:entity_properties",
+                "entity": "this",
+                "predicate": {
+                  "components": {
+                    "minecraft:chicken/variant": "nice_mob_variants:sniffer"
+                  }
+                }
+              }
+            },
+            {
+              "type": "minecraft:loot_table",
               "value": "nice_mob_variants:entity/vanilla/chicken"
             }
           ]

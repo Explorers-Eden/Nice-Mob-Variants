@@ -1,0 +1,20 @@
+{
+  "asset_id": "nice_mob_variants:entity/chicken/diamond",
+  "baby_asset_id": "nice_mob_variants:entity/chicken/diamond_baby",
+  "spawn_conditions": [
+    {
+      "condition": {
+        "type": "minecraft:structure",
+        "structures": "#nice_mob_variants:mob_variant_spawnable/chicken/diamond"
+      },
+      "priority": 0
+    },
+    {
+      "condition": {
+        "type": "minecraft:biome",
+        "biomes": "#nice_mob_variants:mob_variant_spawnable/chicken/diamond"
+      },
+      "priority": 0
+    }
+  ]
+}
