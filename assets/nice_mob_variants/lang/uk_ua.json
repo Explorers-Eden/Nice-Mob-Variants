@@ -51,5 +51,6 @@
     "advancement.eden.adventure.nice_mob_variants.udderly_unique.description": "Encounter all 15 Cow variants.",
     "advancement.eden.adventure.nice_mob_variants.udderly_unique.title": "Udderly Unique",
     "advancement.eden.adventure.nice_mob_variants.variant_hunter.description": "Encounter one variant of each of the 7 species Nice Mob Variants touches.",
-    "advancement.eden.adventure.nice_mob_variants.variant_hunter.title": "Variant Hunter"
+    "advancement.eden.adventure.nice_mob_variants.variant_hunter.title": "Variant Hunter",
+    "item.nice_mob_variants.sniffer_egg": "Sniffer Egg"
 }
