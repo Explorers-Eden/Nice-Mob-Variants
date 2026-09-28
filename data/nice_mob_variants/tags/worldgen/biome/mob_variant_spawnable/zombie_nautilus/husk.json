@@ -1,6 +1,6 @@
 {
   "values": [
-    "#minecraft:has_structure/ocean_ruin_warm",
-    "minecraft:desert"
+    { "id": "#minecraft:has_structure/ocean_ruin_warm", "required": false },
+    { "id": "minecraft:desert", "required": false }
   ]
 }

@@ -1,5 +1,5 @@
 {
   "values": [
-    "minecraft:monument"
+    { "id": "minecraft:monument", "required": false }
   ]
 }

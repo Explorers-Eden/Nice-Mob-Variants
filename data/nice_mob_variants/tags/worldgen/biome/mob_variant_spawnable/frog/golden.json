@@ -1,5 +1,5 @@
 {
   "values": [
-    "#minecraft:is_badlands"
+    { "id": "#minecraft:is_badlands", "required": false }
   ]
 }
