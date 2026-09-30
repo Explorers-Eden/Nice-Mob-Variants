@@ -165,6 +165,32 @@
             },
             {
               "type": "minecraft:loot_table",
+              "value": "nice_mob_variants:item/eggs/golden_egg",
+              "condition": {
+                "type": "minecraft:entity_properties",
+                "entity": "this",
+                "predicate": {
+                  "components": {
+                    "minecraft:chicken/variant": "nice_mob_variants:golden"
+                  }
+                }
+              }
+            },
+            {
+              "type": "minecraft:loot_table",
+              "value": "nice_mob_variants:item/eggs/turkey_egg",
+              "condition": {
+                "type": "minecraft:entity_properties",
+                "entity": "this",
+                "predicate": {
+                  "components": {
+                    "minecraft:chicken/variant": "nice_mob_variants:turkey"
+                  }
+                }
+              }
+            },
+            {
+              "type": "minecraft:loot_table",
               "value": "nice_mob_variants:item/eggs/potato_egg",
               "condition": {
                 "type": "minecraft:entity_properties",

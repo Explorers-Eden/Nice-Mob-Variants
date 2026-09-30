@@ -1,6 +1,9 @@
 # Minecraft Version(s): 26.3
 ## Changes:
-- Livestock Breeder now puts up to 16 random animals that aren't already in love into love mode
-- Performance improvements for the Frog Feeder & Livestock Breeder (Livestock Breeder pauses when no player is within 64 blocks)
+- Golden & Turkey Chickens now lay their own eggs
 
 ## Fixes:
+- White Black Wolf variant not spawning in Taiga biomes
+- Creaking Wolf variant not dropping Resin Clumps
+- Wandering Traders only leashing one of their two Wandering Cows
+- Only one chicken being converted per cycle when renaming chickens to/from "Benny" or when multiple Chicken Jockeys spawn at once

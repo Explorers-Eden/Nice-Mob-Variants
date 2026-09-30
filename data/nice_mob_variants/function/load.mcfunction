@@ -9,4 +9,4 @@ scoreboard objectives add nice_mob_variants.placed_frame minecraft.used:minecraf
 scoreboard objectives add nice_mob_variants.zombified.counter dummy
 
 ##set data pack version
-data modify storage eden:datapack nice_mob_variants.version set value "2.3"
+data modify storage eden:datapack nice_mob_variants.version set value "2.4"
