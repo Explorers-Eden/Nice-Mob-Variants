@@ -1,5 +1,6 @@
 # Minecraft Version(s): 26.3
 ## Changes:
+- Livestock Breeder now puts up to 16 random animals that aren't already in love into love mode
+- Performance improvements for the Frog Feeder & Livestock Breeder (Livestock Breeder pauses when no player is within 64 blocks)
 
 ## Fixes:
-- Data PAck failing to load if Katters Structures isn't also installed

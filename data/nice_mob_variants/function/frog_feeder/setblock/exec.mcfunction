@@ -27,9 +27,7 @@ execute if entity @p[y_rotation=45..135] run data modify entity @n[type=item_dis
 #east
 execute if entity @p[y_rotation=-135..-45] run data modify entity @n[type=item_display,tag=nice_mob_variants.frog_feeder.block,distance=..10] Rotation[0] set value -90.0f
 #north
-execute if entity @p[y_rotation=-179.99..-135] run data modify entity @n[type=item_display,tag=nice_mob_variants.frog_feeder.block,distance=..10] Rotation[0] set value -180.0f
-execute if entity @p[y_rotation=135..179.99] run data modify entity @n[type=item_display,tag=nice_mob_variants.frog_feeder.block,distance=..10] Rotation[0] set value -180.0f
-
-data modify entity @s Rotation[1] set value 0.0f
+execute if entity @p[y_rotation=-180..-135] run data modify entity @n[type=item_display,tag=nice_mob_variants.frog_feeder.block,distance=..10] Rotation[0] set value -180.0f
+execute if entity @p[y_rotation=135..180] run data modify entity @n[type=item_display,tag=nice_mob_variants.frog_feeder.block,distance=..10] Rotation[0] set value -180.0f
 
 kill @s

@@ -20,6 +20,4 @@ execute align xyz run summon item_display ~.5 ~1.01 ~.5 \
         }\
     }
 
-data modify entity @s Rotation set value [0.0f,0.0f]
-
 kill @s

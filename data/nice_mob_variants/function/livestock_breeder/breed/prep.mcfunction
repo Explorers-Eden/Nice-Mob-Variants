@@ -1,5 +1,4 @@
-execute as @e[type=#nice_mob_variants:is_livestock,distance=..12] store result score @s nice_mob_variants.livestock_breeder run data get entity @s InLove
-execute as @e[type=#nice_mob_variants:is_livestock,distance=..12,scores={nice_mob_variants.livestock_breeder=..0}] at @s run function nice_mob_variants:livestock_breeder/breed/exec
+execute as @e[type=#nice_mob_variants:is_livestock,distance=..12,nbt={InLove:0},limit=16,sort=random] at @s run function nice_mob_variants:livestock_breeder/breed/exec
 
 setblock ~ ~-1 ~ minecraft:petrified_oak_slab[type=top]
 

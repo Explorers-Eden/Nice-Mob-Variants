@@ -1,2 +1,1 @@
-execute as @e[type=minecraft:item_frame,tag=nice_mob_variants.livestock_breeder.spawner] at @s run function nice_mob_variants:livestock_breeder/setblock/exec
-execute as @e[type=minecraft:item_display,tag=nice_mob_variants.livestock_breeder.block] at @s unless block ~ ~-.5 ~ petrified_oak_slab run function nice_mob_variants:livestock_breeder/setblock/remove
+execute if entity @a[scores={nice_mob_variants.placed_frame=1..}] as @e[type=minecraft:item_frame,tag=nice_mob_variants.livestock_breeder.spawner] at @s run function nice_mob_variants:livestock_breeder/setblock/exec

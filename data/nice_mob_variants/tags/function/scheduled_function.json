@@ -12,6 +12,8 @@
     "nice_mob_variants:sulfur_cube/init",
     "nice_mob_variants:wandering/init",
     "nice_mob_variants:creeper/init",
-    "nice_mob_variants:zombified/init"
+    "nice_mob_variants:zombified/init",
+    "nice_mob_variants:frog_feeder/setblock/check",
+    "nice_mob_variants:livestock_breeder/setblock/check"
   ]
 }
