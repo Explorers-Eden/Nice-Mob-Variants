@@ -8,5 +8,8 @@ scoreboard objectives add nice_mob_variants.livestock_breeder dummy
 scoreboard objectives add nice_mob_variants.placed_frame minecraft.used:minecraft.item_frame
 scoreboard objectives add nice_mob_variants.zombified.counter dummy
 
+##start repeating loops
+function nice_mob_variants:start
+
 ##set data pack version
 data modify storage eden:datapack nice_mob_variants.version set value "2.4"
