@@ -1,0 +1,1 @@
+$execute as @e[tag=nice_mob_variants.wanderer.leashed,distance=..16] if data entity @s leash{UUID:$(UUID)} at @s run function nice_mob_variants:kill

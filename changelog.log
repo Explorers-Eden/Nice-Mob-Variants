@@ -1,10 +1,3 @@
 # Minecraft Version(s): 26.3
 ## Changes:
-- Repeating background tasks now start a few ticks apart after loading instead of all on the same tick, spreading out server load
-- Golden & Turkey Chickens now lay their own eggs
-
-## Fixes:
-- White Black Wolf variant not spawning in Taiga biomes
-- Creaking Wolf variant not dropping Resin Clumps
-- Wandering Traders only leashing one of their two Wandering Cows
-- Only one chicken being converted per cycle when renaming chickens to/from "Benny" or when multiple Chicken Jockeys spawn at once
+- Wandering Cows & Pigs now despawn together with their Wandering Trader while still leashed to it

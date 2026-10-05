@@ -1,6 +1,7 @@
 execute if predicate nice_mob_variants:percentages/80 run return run tag @s add nice_mob_variants.companions.done
 
 tag @s add nice_mob_variants.companions.done
+tag @s add nice_mob_variants.companions.spawned
 
 $execute as @e[type=minecraft:trader_llama,distance=..8] if data entity @s leash{UUID:$(UUID)} at @s run function nice_mob_variants:kill
 
