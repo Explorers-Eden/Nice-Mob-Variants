@@ -12,4 +12,4 @@ scoreboard objectives add nice_mob_variants.zombified.counter dummy
 function nice_mob_variants:start
 
 ##set data pack version
-data modify storage eden:datapack nice_mob_variants.version set value "2.5"
+data modify storage eden:datapack nice_mob_variants.version set value "2.6"
