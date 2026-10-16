@@ -1,5 +1,5 @@
 ## 📖 Description
-**Nice Mob Variants** adds **90+ new mob variants** for cats, chickens, cows, frogs, pigs, wolves and zombie nautiluses, making the world feel more diverse and alive. Many of them can be found in **20 new structures**, from cozy Barns and Coops to Graveyards and Slime Dungeons. On top of that, the data pack adds two new blocks, the **Livestock Breeder** and the **Frog Feeder**, along with the **Gooey Treat** item.
+**Nice Mob Variants** adds **90+ new mob variants** for cats, chickens, cows, frogs, pigs, wolves and zombie nautiluses, making the world feel more diverse and alive. Many of them can be found in **20+ new structures**, from cozy Barns and Coops to Graveyards and Slime Dungeons. On top of that, the data pack adds two new blocks, the **Livestock Breeder** and the **Frog Feeder**, along with the **Gooey Treat** item.
 
 <br>
 
