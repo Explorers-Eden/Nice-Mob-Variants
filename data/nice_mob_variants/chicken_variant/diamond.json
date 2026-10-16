@@ -7,14 +7,14 @@
         "type": "minecraft:structure",
         "structures": "#nice_mob_variants:mob_variant_spawnable/chicken/diamond"
       },
-      "priority": 0
+      "priority": 999
     },
     {
       "condition": {
         "type": "minecraft:biome",
         "biomes": "#nice_mob_variants:mob_variant_spawnable/chicken/diamond"
       },
-      "priority": 0
+      "priority": 999
     }
   ]
 }
